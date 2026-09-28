@@ -1,0 +1,32 @@
+# Weekly: re-vendor flow-as-code's conformance/ from its main branch and run the
+# suite against it, to see early whether the next sync will pass. It never
+# gates anything and writes nothing back; a red run is a note to sync, not a
+# broken build. The vendored commit stays what COMMIT says until a pull
+# request changes it.
+name: conformance-canary
+
+on:
+  schedule:
+    - cron: "17 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  canary:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: go.mod
+      - name: re-vendor main
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          sha=$(gh api repos/flow-as-code/flow-as-code/commits/main --jq .sha)
+          echo "upstream main is $sha; vendored is $(cat internal/conformance/COMMIT)"
+          scripts/sync-conformance.sh "$sha"
+          git diff --stat -- internal/conformance
+      - run: go test ./...

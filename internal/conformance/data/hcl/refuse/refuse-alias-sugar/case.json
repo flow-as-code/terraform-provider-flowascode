@@ -1,0 +1,3 @@
+{
+  "description": "A module alias is key-form only: an alias resource's address is not in address-sugar.json, so the parser refuses it rather than guess the key."
+}

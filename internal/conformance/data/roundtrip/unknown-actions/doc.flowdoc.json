@@ -1,0 +1,115 @@
+{
+  "flowdoc": "0.2",
+  "kind": "flow",
+  "name": "unknown-actions",
+  "connectType": "CONTACT_FLOW",
+  "content": {
+    "Version": "2019-10-30",
+    "StartAction": "create-task",
+    "Actions": [
+      {
+        "Identifier": "create-task",
+        "Type": "CreateTask",
+        "Parameters": {
+          "Attributes": {
+            "CustomerPhoneNumber": "$.CustomerEndpoint.Address",
+            "queue": "${cdref:queue:support}"
+          },
+          "ContactFlowId": "${cdref:flow:task-flow}",
+          "Description": "A task for the agent, with the customer's number.",
+          "Name": "Follow up"
+        },
+        "Transitions": {
+          "NextAction": "resume-participant",
+          "Errors": [
+            {
+              "ErrorType": "NoMatchingError",
+              "NextAction": "hand-off"
+            }
+          ],
+          "Conditions": []
+        }
+      },
+      {
+        "Identifier": "resume-participant",
+        "Type": "UpdatePreviousContactParticipantState",
+        "Parameters": {
+          "PreviousContactParticipantState": "OffHold"
+        },
+        "Transitions": {
+          "NextAction": "transfer-third-party",
+          "Errors": [
+            {
+              "ErrorType": "NoMatchingError",
+              "NextAction": "hand-off"
+            }
+          ],
+          "Conditions": []
+        }
+      },
+      {
+        "Identifier": "transfer-third-party",
+        "Type": "TransferParticipantToThirdParty",
+        "Parameters": {
+          "ContinueFlowExecution": "True",
+          "ThirdPartyConnectionTimeLimitSeconds": "30",
+          "ThirdPartyPhoneNumber": "$.Attributes.deskPhone"
+        },
+        "Transitions": {
+          "NextAction": "hand-off",
+          "Errors": [
+            {
+              "ErrorType": "CallFailed",
+              "NextAction": "hand-off"
+            },
+            {
+              "ErrorType": "ConnectionTimeLimitExceeded",
+              "NextAction": "hand-off"
+            },
+            {
+              "ErrorType": "NoMatchingError",
+              "NextAction": "hand-off"
+            }
+          ],
+          "Conditions": []
+        }
+      },
+      {
+        "Identifier": "hand-off",
+        "Type": "ResumeContact",
+        "Parameters": {},
+        "Transitions": {}
+      }
+    ]
+  },
+  "layout": {
+    "create-task": {
+      "x": 20,
+      "y": 20
+    },
+    "hand-off": {
+      "x": 800,
+      "y": 20
+    },
+    "resume-participant": {
+      "x": 280,
+      "y": 20
+    },
+    "transfer-third-party": {
+      "x": 540,
+      "y": 20
+    }
+  },
+  "refs": [
+    {
+      "token": "${cdref:flow:task-flow}",
+      "type": "flow",
+      "name": "task-flow"
+    },
+    {
+      "token": "${cdref:queue:support}",
+      "type": "queue",
+      "name": "support"
+    }
+  ]
+}
