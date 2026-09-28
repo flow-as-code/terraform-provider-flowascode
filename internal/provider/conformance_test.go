@@ -6,6 +6,7 @@ package provider
 import (
 	"encoding/json"
 	"io/fs"
+	"math"
 	"os"
 	"os/exec"
 	"path"
@@ -74,6 +75,53 @@ func expectedFlowDoc(t *testing.T, docPath string) string {
 	o := v.(jsonv.Object)
 	o.Delete("meta")
 	return string(flowdoc.Serialize(o))
+}
+
+// viewedFlowDoc is expectedFlowDoc for a document that may not be in synth
+// normal form (conformance/hcl/README.md rule 26: the invariant holds of its
+// view): refs derived, a module's Settings present, every action laid out
+// with positions rounded, and no content.Metadata.
+func viewedFlowDoc(t *testing.T, docPath string) string {
+	t.Helper()
+	v, err := jsonv.Decode(readVendored(t, docPath))
+	if err != nil {
+		t.Fatal(err)
+	}
+	doc := v.(jsonv.Object)
+	doc.Delete("meta")
+	cv, _ := doc.Get("content")
+	content := cv.(jsonv.Object)
+	content.Delete("Metadata")
+	if k, _ := doc.Get("kind"); k == "module" {
+		if _, ok := content.Get("Settings"); !ok {
+			content.Set("Settings", jsonv.Object{})
+		}
+	}
+	doc.Set("content", content)
+	av, _ := content.Get("Actions")
+	actions, _ := av.([]any)
+	start, _ := content.Get("StartAction")
+	s, _ := start.(string)
+	layout := flowdoc.AutoLayout(actions, &s)
+	if lv, ok := doc.Get("layout"); ok {
+		for _, m := range lv.(jsonv.Object) {
+			p := m.Value.(jsonv.Object)
+			x, _ := p.Get("x")
+			y, _ := p.Get("y")
+			layout[m.Key] = flowdoc.Point{X: math.Round(x.(float64)), Y: math.Round(y.(float64))}
+		}
+	}
+	doc.Set("layout", flowdoc.LayoutJSON(actions, layout))
+	refs := []any{}
+	for _, e := range flowdoc.CollectRefs(content) {
+		o := jsonv.Object{{Key: "token", Value: e.Token}, {Key: "type", Value: e.Type}, {Key: "name", Value: e.Name}}
+		if e.Alias != "" {
+			o = append(o, jsonv.Member{Key: "alias", Value: e.Alias})
+		}
+		refs = append(refs, o)
+	}
+	doc.Set("refs", refs)
+	return string(flowdoc.Serialize(doc))
 }
 
 var (

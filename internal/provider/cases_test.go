@@ -156,3 +156,58 @@ func TestHCLParseCases(t *testing.T) {
 		})
 	}
 }
+
+// Every flow and module resource in an emit case's flows.tf plans to its
+// document (conformance/hcl/README.md: emit, in the sense of rule 26).
+func TestHCLEmitCases(t *testing.T) {
+	terraformBinary(t)
+	for _, name := range caseNames(t, "hcl/emit") {
+		t.Run(name, func(t *testing.T) {
+			dir := "hcl/emit/" + name
+			var spec struct {
+				Docs []string `json:"docs"`
+			}
+			if err := json.Unmarshal(readVendored(t, dir+"/case.json"), &spec); err != nil {
+				t.Fatal(err)
+			}
+			flows := standalone(string(readVendored(t, dir+"/expected/flows.tf")))
+			files := map[string]string{"main.tf": flows}
+			for _, docPath := range spec.Docs {
+				doc := viewedFlowDoc(t, pathJoin(dir, docPath))
+				var head struct {
+					Kind string `json:"kind"`
+					Name string `json:"name"`
+				}
+				if err := json.Unmarshal([]byte(doc), &head); err != nil {
+					t.Fatal(err)
+				}
+				typ := "flowascode_contact_flow"
+				if head.Kind == "module" {
+					typ = "flowascode_contact_flow_module"
+				}
+				address := typ + "." + strings.ReplaceAll(head.Name, "-", "_")
+				after, failed := planFiles(t, files, address)
+				if failed != "" {
+					t.Fatalf("plan failed:\n%s", failed)
+				}
+				if after["flowdoc"] != doc {
+					t.Errorf("%s: planned flowdoc differs from %s\ngot:\n%v\nwant:\n%s", address, docPath, after["flowdoc"], doc)
+				}
+			}
+		})
+	}
+}
+
+func pathJoin(dir, rel string) string {
+	parts := strings.Split(dir, "/")
+	for _, p := range strings.Split(rel, "/") {
+		switch p {
+		case "..":
+			parts = parts[:len(parts)-1]
+		case ".", "":
+		default:
+			parts = append(parts, p)
+		}
+	}
+	return strings.Join(parts, "/")
+}
