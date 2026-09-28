@@ -45,7 +45,17 @@ emitter's. `regenerate` and
 `address-sugar.json` describe what the TypeScript side does to a file it is
 rewriting, which the provider never does; the three `parse` cases named
 `sugar-*` are the TypeScript parser's, and the provider refuses those inputs
-with `REF_EXPRESSION_REFUSED`. A sidecar's `normalized` entries name the
+with `REF_EXPRESSION_REFUSED`. Three fields of a `refuse` case's
+`case.json` say where the provider parts from the TypeScript reader, each
+observed by running the case through Terraform and OpenTofu rather than
+argued: `typescriptOnly` (a sentence saying why) marks a case outside what
+the provider can see; `terraformError` names the error Terraform or OpenTofu
+itself reports, before the provider sees a value, and the provider passes
+the case on it; `providerCode`, with `providerWhy`, is the code the provider
+reports instead, because it sees a value where the reader sees an
+expression. The provider stands in for what a case refers to and does not
+declare (a resource address becomes a resource not yet created, a variable
+holds an ARN, a local or module output names a resource). A sidecar's `normalized` entries name the
 attribute by path (`action[<id>].<block>.<attr>`), the value read (`from`),
 the key written (`to`) and, for sugar, the address bound (`binding`); `keep`
 lists the kept comment lines, for the resource and by action id. `options` in a `case.json` may carry
@@ -207,7 +217,9 @@ resource "flowascode_contact_flow" "appointment_line" {
     - `string`, `enum`, `jsonPath`, `stringOrJsonPath`: a quoted string.
     - `ref`: the reference key, quoted (`"queue:front-desk"`); a JSONPath is
       written as itself.
-    - `integer`: a number. `integerString`: a number when the value is a
+    - `integer`: a number; an `integer` parameter holding anything else (a
+      JSONPath) makes the action generic, since the provider's attribute is
+      a number. `integerString`: a number when the value is a
       decimal integer a JavaScript number holds exactly (so not `-0`, and
       nothing past 2^53), the string itself otherwise.
     - `map`: an object literal with keys in byte order, values by the map's
@@ -291,7 +303,14 @@ resource "flowascode_contact_flow" "appointment_line" {
     the right type, a JSONPath, or the full token (written `"$${cdref:...}"`,
     as any quoted string holding `${` must be); the reader normalizes the
     token to the key and records the normalization. A literal ARN there, or
-    as a `refs` value, is refused (`LITERAL_ARN`). A key of the wrong type, or
+    as a `refs` value, is refused (`LITERAL_ARN`). The provider refuses the
+    first but cannot refuse the second: it sees values, not expressions, and
+    Terraform validates a resource twice per plan, the second time with
+    references to existing resources resolved, so a literal ARN and a
+    resolved `aws_connect_queue.x.arn` are the same known string there
+    (observed with OpenTofu 1.12.6, 2026-09-28). `refuse/refuse-literal-arn-in-refs`
+    is therefore `typescriptOnly`; the provider's lint still refuses an ARN
+    in the flow's content. A key of the wrong type, or
     one that is not a reference key, is refused (`REF_KEY_MALFORMED`).
 21. A reference attribute holding a bare expression is refused with
     `REF_EXPRESSION_REFUSED`, naming the file, line and attribute, and the

@@ -28,6 +28,11 @@ import (
 // attribute named `references` (UpdateContactData's References parameter),
 // because the name collides with its own field.
 func planWithTofu(t *testing.T, config, address string) (map[string]any, string) {
+	return planFiles(t, map[string]string{"main.tf": config}, address)
+}
+
+// planFiles is planWithTofu over several files (a local module, say).
+func planFiles(t *testing.T, files map[string]string, address string) (map[string]any, string) {
 	t.Helper()
 	terraformBinary(t)
 	bin := os.Getenv("TF_ACC_TERRAFORM_PATH")
@@ -54,8 +59,14 @@ func planWithTofu(t *testing.T, config, address string) (map[string]any, string)
 		},
 	})
 	dir := t.TempDir()
-	if err := os.WriteFile(filepath.Join(dir, "main.tf"), []byte(config), 0o600); err != nil {
-		t.Fatal(err)
+	for name, text := range files {
+		p := filepath.Join(dir, name)
+		if err := os.MkdirAll(filepath.Dir(p), 0o700); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(p, []byte(text), 0o600); err != nil {
+			t.Fatal(err)
+		}
 	}
 	run := func(args ...string) (string, error) {
 		cmd := exec.Command(bin, args...)
@@ -64,8 +75,10 @@ func planWithTofu(t *testing.T, config, address string) (map[string]any, string)
 		out, err := cmd.CombinedOutput()
 		return string(out), err
 	}
+	// A configuration HCL cannot parse fails at init already; that is a
+	// refusal too, returned like a plan's.
 	if out, err := run("init", "-input=false", "-no-color"); err != nil {
-		t.Fatalf("init: %v\n%s", err, out)
+		return nil, out
 	}
 	if out, err := run("plan", "-input=false", "-no-color", "-out=plan"); err != nil {
 		return nil, out
