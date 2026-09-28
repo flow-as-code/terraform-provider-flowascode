@@ -5,6 +5,7 @@ package provider
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"strings"
 
@@ -183,7 +184,7 @@ func (r *flowResource) getAttrs(ctx context.Context, src interface {
 
 // live is a flow or module as Describe returns it.
 type live struct {
-	arn, name, description, state, content string
+	arn, name, description, state, content, typ string
 	tags                                   map[string]string
 	external                               *bool
 }
@@ -210,7 +211,7 @@ func (r *flowResource) describe(ctx context.Context, instance, id string) (live,
 	}
 	f := out.ContactFlow
 	return live{arn: aws.ToString(f.Arn), name: aws.ToString(f.Name), description: aws.ToString(f.Description),
-		state: string(f.State), content: aws.ToString(f.Content), tags: f.Tags}, nil
+		state: string(f.State), content: aws.ToString(f.Content), tags: f.Tags, typ: string(f.Type)}, nil
 }
 
 func (r *flowResource) create(ctx context.Context, a flowAttrs, content string, tags map[string]string) (string, string, error) {
@@ -351,6 +352,10 @@ func (r *flowResource) Read(ctx context.Context, req resource.ReadRequest, resp 
 		set("description", types.StringNull())
 	}
 	set("state", types.StringValue(l.state))
+	if !r.module() {
+		set("type", types.StringValue(l.typ))
+		a.Type = types.StringValue(l.typ)
+	}
 	if len(l.tags) > 0 || !a.Tags.IsNull() {
 		tags, d := types.MapValueFrom(ctx, types.StringType, userTags(l.tags))
 		resp.Diagnostics.Append(d...)
@@ -393,9 +398,30 @@ func (r *flowResource) reconstruct(ctx context.Context, a flowAttrs, l live, sta
 	if !r.module() {
 		connectType = a.Type.ValueString()
 	}
-	doc, err := export.ExportFlow(l.content, export.ReverseMapOfResourceMap(bound), export.ExportFlowOptions{
+	options := export.ExportFlowOptions{
 		Name: name, ConnectType: connectType, Kind: r.kind, Description: l.description, OmitMeta: true,
-	})
+	}
+	reverse := export.ReverseMapOfResourceMap(bound)
+	doc, err := export.ExportFlow(l.content, reverse, options)
+	var unknown *export.ExportError
+	if errors.As(err, &unknown) && len(unknown.UnknownArns) > 0 {
+		// An ARN no binding in state names (every one, after an import): list
+		// the instance once and map through its inventory, the bindings in
+		// state taking precedence so a key the user chose stays theirs.
+		inv, ierr := export.CollectInventory(ctx, connectapi.NewInventory(r.client.Connect, a.InstanceID.ValueString()), export.CollectInventoryOptions{})
+		if ierr == nil {
+			reverse = export.BuildReverseMap(inv)
+			for arn, entry := range export.ReverseMapOfResourceMap(bound).ByArn {
+				reverse.ByArn[arn] = entry
+			}
+			for arn, entry := range reverse.ByArn {
+				if _, ok := bound[entry.Token]; !ok {
+					bound[entry.Token] = arn
+				}
+			}
+			doc, err = export.ExportFlow(l.content, reverse, options)
+		}
+	}
 	if err != nil {
 		diags.AddWarning("The live "+r.kind+" is not shown as blocks",
 			fmt.Sprintf("%s. Bind each ARN in refs to see the live actions in the plan.", err.Error()))
