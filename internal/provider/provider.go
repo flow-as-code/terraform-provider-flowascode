@@ -261,7 +261,7 @@ func fromBase(in basediag.Diagnostics) diag.Diagnostics {
 }
 
 func (p *flowascode) Resources(_ context.Context) []func() resource.Resource {
-	return []func() resource.Resource{NewContactFlow}
+	return []func() resource.Resource{NewContactFlow, NewContactFlowModule}
 }
 
 func (p *flowascode) DataSources(_ context.Context) []func() datasource.DataSource {

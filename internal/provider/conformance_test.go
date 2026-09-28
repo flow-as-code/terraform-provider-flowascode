@@ -111,9 +111,6 @@ func TestHCLRoundtripGoldensPlanToTheirDocuments(t *testing.T) {
 			}
 			golden := string(readVendored(t, dir+"/expected.flow.tf"))
 			m := resourceHdr.FindStringSubmatch(golden)
-			if m[1] != "flowascode_contact_flow" {
-				t.Skipf("%s is not implemented yet (B04h)", m[1])
-			}
 			after, failed := planWithTofu(t, standalone(golden), m[1]+"."+m[2])
 			if failed != "" {
 				t.Fatalf("plan failed:\n%s", failed)
@@ -164,9 +161,6 @@ func TestHCLRoundtripGoldensApplyAndReadBack(t *testing.T) {
 			}
 			golden := string(readVendored(t, dir+"/expected.flow.tf"))
 			m := resourceHdr.FindStringSubmatch(golden)
-			if m[1] != "flowascode_contact_flow" {
-				t.Skipf("%s is not implemented yet (B04h)", m[1])
-			}
 			if strings.Contains(golden, "references = {") {
 				t.Skip("terraform-json cannot decode a plan with an attribute named references")
 			}

@@ -36,6 +36,30 @@ type API interface {
 	UpdateContactFlowMetadata(ctx context.Context, in *connect.UpdateContactFlowMetadataInput, opts ...func(*connect.Options)) (*connect.UpdateContactFlowMetadataOutput, error)
 	// https://docs.aws.amazon.com/connect/latest/APIReference/API_DeleteContactFlow.html
 	DeleteContactFlow(ctx context.Context, in *connect.DeleteContactFlowInput, opts ...func(*connect.Options)) (*connect.DeleteContactFlowOutput, error)
+	// https://docs.aws.amazon.com/connect/latest/APIReference/API_CreateContactFlowModule.html
+	CreateContactFlowModule(ctx context.Context, in *connect.CreateContactFlowModuleInput, opts ...func(*connect.Options)) (*connect.CreateContactFlowModuleOutput, error)
+	// https://docs.aws.amazon.com/connect/latest/APIReference/API_DescribeContactFlowModule.html
+	DescribeContactFlowModule(ctx context.Context, in *connect.DescribeContactFlowModuleInput, opts ...func(*connect.Options)) (*connect.DescribeContactFlowModuleOutput, error)
+	// https://docs.aws.amazon.com/connect/latest/APIReference/API_UpdateContactFlowModuleContent.html
+	UpdateContactFlowModuleContent(ctx context.Context, in *connect.UpdateContactFlowModuleContentInput, opts ...func(*connect.Options)) (*connect.UpdateContactFlowModuleContentOutput, error)
+	// https://docs.aws.amazon.com/connect/latest/APIReference/API_UpdateContactFlowModuleMetadata.html
+	UpdateContactFlowModuleMetadata(ctx context.Context, in *connect.UpdateContactFlowModuleMetadataInput, opts ...func(*connect.Options)) (*connect.UpdateContactFlowModuleMetadataOutput, error)
+	// https://docs.aws.amazon.com/connect/latest/APIReference/API_DeleteContactFlowModule.html
+	DeleteContactFlowModule(ctx context.Context, in *connect.DeleteContactFlowModuleInput, opts ...func(*connect.Options)) (*connect.DeleteContactFlowModuleOutput, error)
+	// https://docs.aws.amazon.com/connect/latest/APIReference/API_CreateContactFlowModuleVersion.html
+	CreateContactFlowModuleVersion(ctx context.Context, in *connect.CreateContactFlowModuleVersionInput, opts ...func(*connect.Options)) (*connect.CreateContactFlowModuleVersionOutput, error)
+	// https://docs.aws.amazon.com/connect/latest/APIReference/API_DeleteContactFlowModuleVersion.html
+	DeleteContactFlowModuleVersion(ctx context.Context, in *connect.DeleteContactFlowModuleVersionInput, opts ...func(*connect.Options)) (*connect.DeleteContactFlowModuleVersionOutput, error)
+	// https://docs.aws.amazon.com/connect/latest/APIReference/API_CreateContactFlowModuleAlias.html
+	CreateContactFlowModuleAlias(ctx context.Context, in *connect.CreateContactFlowModuleAliasInput, opts ...func(*connect.Options)) (*connect.CreateContactFlowModuleAliasOutput, error)
+	// https://docs.aws.amazon.com/connect/latest/APIReference/API_DescribeContactFlowModuleAlias.html
+	DescribeContactFlowModuleAlias(ctx context.Context, in *connect.DescribeContactFlowModuleAliasInput, opts ...func(*connect.Options)) (*connect.DescribeContactFlowModuleAliasOutput, error)
+	// https://docs.aws.amazon.com/connect/latest/APIReference/API_UpdateContactFlowModuleAlias.html
+	UpdateContactFlowModuleAlias(ctx context.Context, in *connect.UpdateContactFlowModuleAliasInput, opts ...func(*connect.Options)) (*connect.UpdateContactFlowModuleAliasOutput, error)
+	// https://docs.aws.amazon.com/connect/latest/APIReference/API_DeleteContactFlowModuleAlias.html
+	DeleteContactFlowModuleAlias(ctx context.Context, in *connect.DeleteContactFlowModuleAliasInput, opts ...func(*connect.Options)) (*connect.DeleteContactFlowModuleAliasOutput, error)
+	// https://docs.aws.amazon.com/connect/latest/APIReference/API_ListViews.html
+	ListViews(ctx context.Context, in *connect.ListViewsInput, opts ...func(*connect.Options)) (*connect.ListViewsOutput, error)
 	// https://docs.aws.amazon.com/connect/latest/APIReference/API_TagResource.html
 	TagResource(ctx context.Context, in *connect.TagResourceInput, opts ...func(*connect.Options)) (*connect.TagResourceOutput, error)
 	// https://docs.aws.amazon.com/connect/latest/APIReference/API_UntagResource.html

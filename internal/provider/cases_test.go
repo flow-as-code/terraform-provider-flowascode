@@ -116,9 +116,6 @@ func TestHCLRefuseCases(t *testing.T) {
 			}
 			input := string(readVendored(t, dir+"/input.flow.tf"))
 			m := resourceHdr.FindStringSubmatch(input)
-			if m != nil && m[1] != "flowascode_contact_flow" {
-				t.Skipf("%s is not implemented yet (B04h)", m[1])
-			}
 			_, failed := planFiles(t, standIn(input), m[1]+"."+m[2])
 			if failed == "" {
 				t.Fatalf("planned without error; want %q", expect)
@@ -143,9 +140,6 @@ func TestHCLParseCases(t *testing.T) {
 			}
 			input := string(readVendored(t, dir+"/input.flow.tf"))
 			m := resourceHdr.FindStringSubmatch(input)
-			if m[1] != "flowascode_contact_flow" {
-				t.Skipf("%s is not implemented yet (B04h)", m[1])
-			}
 			after, failed := planFiles(t, standIn(input), m[1]+"."+m[2])
 			if strings.HasPrefix(name, "sugar-") {
 				if !strings.Contains(failed, "Error: REF_EXPRESSION_REFUSED") {

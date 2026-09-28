@@ -17,9 +17,11 @@ import (
 // behavior the resources rely on (NotFound for a missing flow, tags on the
 // ARN). Account and instance ids are AWS's documentation placeholders.
 type Fake struct {
-	mu    sync.Mutex
-	next  int
-	flows map[string]*types.ContactFlow
+	mu      sync.Mutex
+	next    int
+	flows   map[string]*types.ContactFlow
+	modules map[string]*fakeModule
+	views   []types.ViewSummary
 	// Calls records every operation, in order, for assertions.
 	Calls []string
 }

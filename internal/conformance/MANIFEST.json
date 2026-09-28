@@ -182,7 +182,7 @@
   "hcl/refuse/non-literal-value/case.json": "656eed09188d7ffa6b615a43781852b79fe3d4196153b1400c917ec85f52723e",
   "hcl/refuse/non-literal-value/expected-error.json": "0bac4720cf4138feab8947f072ff3da14589de491ac433c6359d6361a8b6a03e",
   "hcl/refuse/non-literal-value/input.flow.tf": "8936fb1c71d87e1b36780fdcf7753503077f0020fd51aa9e928c18b901219663",
-  "hcl/refuse/refuse-alias-sugar/case.json": "c89501127221288fde97c7e3dd107121ffc7c9c0d1be2ccf76d474845b4dbec3",
+  "hcl/refuse/refuse-alias-sugar/case.json": "7d1cb8a691d081239b779a27776ae898178c557c862ef219ec3d1c5c27754ed2",
   "hcl/refuse/refuse-alias-sugar/expected-error.json": "38a03cf4a26eb49360add8259b525d22fb4d6fb74419755231533d318a99d22a",
   "hcl/refuse/refuse-alias-sugar/input.flow.tf": "398c6e17399fbb8c35cc0506ca4a5869018372d85116fa72948439d3013d2e57",
   "hcl/refuse/refuse-function-call/case.json": "cf787369a519aee80e888890df5fae12bf8130cc70bc0104ab5a8cfd8569411e",
