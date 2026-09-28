@@ -1,0 +1,1456 @@
+{
+  "generatedFrom": "5480276b2bc354fdb7628a55cf2ed71fc33c0a7c",
+  "parseConnectArn": [
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/q1",
+      "output": {
+        "partition": "aws",
+        "region": "us-east-1",
+        "account": "111122223333",
+        "instanceId": "11111111-2222-3333-4444-555555555555",
+        "resourceType": "queue",
+        "resourceId": "q1"
+      }
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/m1",
+      "output": {
+        "partition": "aws",
+        "region": "us-east-1",
+        "account": "111122223333",
+        "instanceId": "11111111-2222-3333-4444-555555555555",
+        "resourceType": "flow-module",
+        "resourceId": "m1"
+      }
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/operating-hours/h1",
+      "output": {
+        "partition": "aws",
+        "region": "us-east-1",
+        "account": "111122223333",
+        "instanceId": "11111111-2222-3333-4444-555555555555",
+        "resourceType": "operating-hours",
+        "resourceId": "h1"
+      }
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f1:$SAVED",
+      "output": {
+        "partition": "aws",
+        "region": "us-east-1",
+        "account": "111122223333",
+        "instanceId": "11111111-2222-3333-4444-555555555555",
+        "resourceType": "contact-flow",
+        "resourceId": "f1",
+        "qualifier": "$SAVED"
+      }
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f1:3",
+      "output": {
+        "partition": "aws",
+        "region": "us-east-1",
+        "account": "111122223333",
+        "instanceId": "11111111-2222-3333-4444-555555555555",
+        "resourceType": "contact-flow",
+        "resourceId": "f1",
+        "qualifier": "3"
+      }
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f1:a:b",
+      "output": {
+        "partition": "aws",
+        "region": "us-east-1",
+        "account": "111122223333",
+        "instanceId": "11111111-2222-3333-4444-555555555555",
+        "resourceType": "contact-flow",
+        "resourceId": "f1",
+        "qualifier": "a:b"
+      }
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f1:",
+      "output": {
+        "partition": "aws",
+        "region": "us-east-1",
+        "account": "111122223333",
+        "instanceId": "11111111-2222-3333-4444-555555555555",
+        "resourceType": "contact-flow",
+        "resourceId": "f1",
+        "qualifier": ""
+      }
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555",
+      "output": {
+        "partition": "aws",
+        "region": "us-east-1",
+        "account": "111122223333",
+        "instanceId": "11111111-2222-3333-4444-555555555555"
+      }
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/",
+      "output": {
+        "partition": "aws",
+        "region": "us-east-1",
+        "account": "111122223333",
+        "instanceId": "11111111-2222-3333-4444-555555555555"
+      }
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue",
+      "output": {
+        "partition": "aws",
+        "region": "us-east-1",
+        "account": "111122223333",
+        "instanceId": "11111111-2222-3333-4444-555555555555"
+      }
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/",
+      "output": {
+        "partition": "aws",
+        "region": "us-east-1",
+        "account": "111122223333",
+        "instanceId": "11111111-2222-3333-4444-555555555555",
+        "resourceType": "queue",
+        "resourceId": ""
+      }
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/a/b/c",
+      "output": {
+        "partition": "aws",
+        "region": "us-east-1",
+        "account": "111122223333",
+        "instanceId": "11111111-2222-3333-4444-555555555555",
+        "resourceType": "queue",
+        "resourceId": "a/b/c"
+      }
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:instance/",
+      "output": null
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:instance",
+      "output": null
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:aws:view/after-contact-work:1",
+      "output": {
+        "partition": "aws",
+        "region": "us-east-1",
+        "account": "aws",
+        "instanceId": "",
+        "resourceType": "view",
+        "resourceId": "after-contact-work",
+        "qualifier": "1"
+      }
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:aws:view/",
+      "output": null
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:aws:view",
+      "output": null
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:aws:view/a/b:$LATEST",
+      "output": {
+        "partition": "aws",
+        "region": "us-east-1",
+        "account": "aws",
+        "instanceId": "",
+        "resourceType": "view",
+        "resourceId": "a/b",
+        "qualifier": "$LATEST"
+      }
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/view/v1:2",
+      "output": {
+        "partition": "aws",
+        "region": "us-east-1",
+        "account": "111122223333",
+        "instanceId": "11111111-2222-3333-4444-555555555555",
+        "resourceType": "view",
+        "resourceId": "v1",
+        "qualifier": "2"
+      }
+    },
+    {
+      "input": "arn:aws:lambda:us-east-1:1:function:x",
+      "output": null
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:1",
+      "output": null
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:1:",
+      "output": null
+    },
+    {
+      "input": "xarn:aws:connect:r:1:instance/i/queue/q",
+      "output": null
+    },
+    {
+      "input": "arn:aws-cn:connect:cn-north-1:1:instance/i/prompt/p",
+      "output": {
+        "partition": "aws-cn",
+        "region": "cn-north-1",
+        "account": "1",
+        "instanceId": "i",
+        "resourceType": "prompt",
+        "resourceId": "p"
+      }
+    },
+    {
+      "input": "",
+      "output": null
+    },
+    {
+      "input": ":::::",
+      "output": null
+    },
+    {
+      "input": "arn:aws:connect:r:1:other/i/queue/q",
+      "output": null
+    }
+  ],
+  "parseLambdaFunctionArn": [
+    {
+      "input": "arn:aws:lambda:us-east-1:111122223333:function:appointment-lookup",
+      "output": "appointment-lookup"
+    },
+    {
+      "input": "arn:aws:lambda:us-east-1:111122223333:function:lookup:PROD",
+      "output": "lookup"
+    },
+    {
+      "input": "arn:aws:lambda:us-east-1:1:function:",
+      "output": null
+    },
+    {
+      "input": "arn:aws:lambda:us-east-1:1:function",
+      "output": null
+    },
+    {
+      "input": "arn:aws:lambda:us-east-1:1:layer:x",
+      "output": null
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/q1",
+      "output": null
+    },
+    {
+      "input": "arn:aws:connect:r:1:function:x",
+      "output": null
+    }
+  ],
+  "normalizeArn": [
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/q1",
+      "output": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/q1"
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/m1",
+      "output": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/m1"
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/operating-hours/h1",
+      "output": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/operating-hours/h1"
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f1:$SAVED",
+      "output": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f1"
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f1:3",
+      "output": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f1"
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f1:a:b",
+      "output": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f1"
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f1:",
+      "output": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f1"
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555",
+      "output": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555"
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/",
+      "output": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/"
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue",
+      "output": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue"
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/",
+      "output": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/"
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/a/b/c",
+      "output": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/a/b/c"
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:instance/",
+      "output": "arn:aws:connect:us-east-1:111122223333:instance/"
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:instance",
+      "output": "arn:aws:connect:us-east-1:111122223333:instance"
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:aws:view/after-contact-work:1",
+      "output": "arn:aws:connect:us-east-1:aws:view/after-contact-work"
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:aws:view/",
+      "output": "arn:aws:connect:us-east-1:aws:view/"
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:aws:view",
+      "output": "arn:aws:connect:us-east-1:aws:view"
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:aws:view/a/b:$LATEST",
+      "output": "arn:aws:connect:us-east-1:aws:view/a/b"
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/view/v1:2",
+      "output": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/view/v1"
+    },
+    {
+      "input": "arn:aws:lambda:us-east-1:1:function:x",
+      "output": "arn:aws:lambda:us-east-1:1:function:x"
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:1",
+      "output": "arn:aws:connect:us-east-1:1"
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:1:",
+      "output": "arn:aws:connect:us-east-1:1:"
+    },
+    {
+      "input": "xarn:aws:connect:r:1:instance/i/queue/q",
+      "output": "xarn:aws:connect:r:1:instance/i/queue/q"
+    },
+    {
+      "input": "arn:aws-cn:connect:cn-north-1:1:instance/i/prompt/p",
+      "output": "arn:aws-cn:connect:cn-north-1:1:instance/i/prompt/p"
+    },
+    {
+      "input": "",
+      "output": ""
+    },
+    {
+      "input": ":::::",
+      "output": ":::::"
+    },
+    {
+      "input": "arn:aws:connect:r:1:other/i/queue/q",
+      "output": "arn:aws:connect:r:1:other/i/queue/q"
+    },
+    {
+      "input": "arn:aws:lambda:us-east-1:111122223333:function:appointment-lookup",
+      "output": "arn:aws:lambda:us-east-1:111122223333:function:appointment-lookup"
+    },
+    {
+      "input": "arn:aws:lambda:us-east-1:111122223333:function:lookup:PROD",
+      "output": "arn:aws:lambda:us-east-1:111122223333:function:lookup"
+    },
+    {
+      "input": "arn:aws:lambda:us-east-1:1:function:",
+      "output": "arn:aws:lambda:us-east-1:1:function:"
+    },
+    {
+      "input": "arn:aws:lambda:us-east-1:1:function",
+      "output": "arn:aws:lambda:us-east-1:1:function"
+    },
+    {
+      "input": "arn:aws:lambda:us-east-1:1:layer:x",
+      "output": "arn:aws:lambda:us-east-1:1:layer:x"
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/q1",
+      "output": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/q1"
+    },
+    {
+      "input": "arn:aws:connect:r:1:function:x",
+      "output": "arn:aws:connect:r:1:function"
+    },
+    {
+      "input": "arn:aws:lex:us-east-1:1:bot-alias/A/B",
+      "output": "arn:aws:lex:us-east-1:1:bot-alias/A/B"
+    },
+    {
+      "input": "arn:aws:lambda:r:1:function",
+      "output": "arn:aws:lambda:r:1:function"
+    },
+    {
+      "input": "not an arn",
+      "output": "not an arn"
+    },
+    {
+      "input": "arn:x:y",
+      "output": "arn:x:y"
+    }
+  ],
+  "slugifyResourceName": [
+    {
+      "input": "Main Line",
+      "output": "main-line"
+    },
+    {
+      "input": "  Front_Desk (US) ",
+      "output": "front-desk-us"
+    },
+    {
+      "input": "Café Ñandú",
+      "output": "cafe-nandu"
+    },
+    {
+      "input": "ﬁle",
+      "output": "file"
+    },
+    {
+      "input": "Ｆｕｌｌ",
+      "output": "full"
+    },
+    {
+      "input": "①②",
+      "output": "12"
+    },
+    {
+      "input": "İstanbul",
+      "output": "istanbul"
+    },
+    {
+      "input": "Kelvin",
+      "output": "kelvin"
+    },
+    {
+      "input": "Straße",
+      "output": "stra-e"
+    },
+    {
+      "input": "--a--",
+      "output": "a"
+    },
+    {
+      "input": "",
+      "output": ""
+    },
+    {
+      "input": "日本",
+      "output": ""
+    },
+    {
+      "input": "a b",
+      "output": "a-b"
+    },
+    {
+      "input": "x²",
+      "output": "x2"
+    },
+    {
+      "input": "emoji 😀 name",
+      "output": "emoji-name"
+    },
+    {
+      "input": "ÁB",
+      "output": "ab"
+    },
+    {
+      "input": "ÆØÅ",
+      "output": "a"
+    },
+    {
+      "input": "Ǆ",
+      "output": "dz"
+    },
+    {
+      "input": "ⓐⓑ",
+      "output": "ab"
+    },
+    {
+      "input": "½ price",
+      "output": "1-2-price"
+    },
+    {
+      "input": "ｱ",
+      "output": ""
+    },
+    {
+      "input": "Ω",
+      "output": ""
+    },
+    {
+      "input": "ﬀ",
+      "output": "ff"
+    },
+    {
+      "input": "ȧ",
+      "output": "a"
+    },
+    {
+      "input": "1st - 2nd",
+      "output": "1st-2nd"
+    }
+  ],
+  "buildReverseMap": [
+    {
+      "inventory": "{\"contactFlows\":[{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000001\",\"id\":\"cccc3333-0000-4000-8000-000000000001\",\"name\":\"Appointment Line\",\"contactFlowType\":\"CONTACT_FLOW\",\"contactFlowState\":\"ACTIVE\",\"contactFlowStatus\":\"PUBLISHED\"},{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000002\",\"id\":\"cccc3333-0000-4000-8000-000000000002\",\"name\":\"Draft Line\",\"contactFlowType\":\"CONTACT_FLOW\",\"contactFlowState\":\"ACTIVE\",\"contactFlowStatus\":\"SAVED\"},{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000003\",\"id\":\"cccc3333-0000-4000-8000-000000000003\",\"name\":\"Outbound Campaign\",\"contactFlowType\":\"CAMPAIGN\",\"contactFlowState\":\"ACTIVE\",\"contactFlowStatus\":\"PUBLISHED\"}],\"contactFlowModules\":[{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/eeee5555-0000-4000-8000-000000000001\",\"id\":\"eeee5555-0000-4000-8000-000000000001\",\"name\":\"Recording Consent\",\"state\":\"ACTIVE\"}],\"queues\":[{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000001\",\"id\":\"aaaa1111-0000-4000-8000-000000000001\",\"name\":\"Appointments\"},{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000002\",\"id\":\"aaaa1111-0000-4000-8000-000000000002\",\"name\":\"Overflow\"}],\"hoursOfOperations\":[{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/operating-hours/bbbb2222-0000-4000-8000-000000000001\",\"id\":\"bbbb2222-0000-4000-8000-000000000001\",\"name\":\"Main Line\"}],\"prompts\":[{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/prompt/dddd4444-0000-4000-8000-000000000001\",\"id\":\"dddd4444-0000-4000-8000-000000000001\",\"name\":\"Consent Notice\"}],\"lambdaFunctions\":[\"arn:aws:lambda:us-east-1:111122223333:function:appointment-lookup\"],\"lexBots\":[{\"lexVersion\":\"V2\",\"aliasArn\":\"arn:aws:lex:us-east-1:111122223333:bot-alias/ABCDEF1234/TSTALIASID\"},{\"lexVersion\":\"V1\",\"name\":\"LegacyBot\",\"lexRegion\":\"us-east-1\"}],\"views\":[]}",
+      "byArn": [
+        {
+          "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000001",
+          "token": "${cdref:flow:appointment-line}",
+          "type": "flow",
+          "name": "appointment-line"
+        },
+        {
+          "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000002",
+          "token": "${cdref:flow:draft-line}",
+          "type": "flow",
+          "name": "draft-line"
+        },
+        {
+          "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000003",
+          "token": "${cdref:flow:outbound-campaign}",
+          "type": "flow",
+          "name": "outbound-campaign"
+        },
+        {
+          "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/eeee5555-0000-4000-8000-000000000001",
+          "token": "${cdref:module:recording-consent}",
+          "type": "module",
+          "name": "recording-consent"
+        },
+        {
+          "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/operating-hours/bbbb2222-0000-4000-8000-000000000001",
+          "token": "${cdref:hours:main-line}",
+          "type": "hours",
+          "name": "main-line"
+        },
+        {
+          "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/prompt/dddd4444-0000-4000-8000-000000000001",
+          "token": "${cdref:prompt:consent-notice}",
+          "type": "prompt",
+          "name": "consent-notice"
+        },
+        {
+          "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000001",
+          "token": "${cdref:queue:appointments}",
+          "type": "queue",
+          "name": "appointments"
+        },
+        {
+          "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000002",
+          "token": "${cdref:queue:overflow}",
+          "type": "queue",
+          "name": "overflow"
+        },
+        {
+          "arn": "arn:aws:lambda:us-east-1:111122223333:function:appointment-lookup",
+          "token": "${cdref:lambda:appointment-lookup}",
+          "type": "lambda",
+          "name": "appointment-lookup"
+        },
+        {
+          "arn": "arn:aws:lex:us-east-1:111122223333:bot-alias/ABCDEF1234/TSTALIASID",
+          "token": "${cdref:lex:bot-alias-abcdef1234-tstaliasid}",
+          "type": "lex",
+          "name": "bot-alias-abcdef1234-tstaliasid"
+        }
+      ],
+      "warnings": [
+        "Amazon Lex V1 bot \"LegacyBot\" has no ARN and is not reverse-mapped."
+      ]
+    },
+    {
+      "inventory": "{\"contactFlows\":[],\"contactFlowModules\":[],\"queues\":[{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/q2\",\"name\":\"front_desk\"},{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/q1\",\"name\":\"Front Desk\"},{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/q3\",\"name\":\"Front-Desk\"},{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/q4\",\"name\":\"front desk 2\"}],\"hoursOfOperations\":[],\"prompts\":[],\"lambdaFunctions\":[],\"lexBots\":[],\"views\":[]}",
+      "byArn": [
+        {
+          "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/q1",
+          "token": "${cdref:queue:front-desk}",
+          "type": "queue",
+          "name": "front-desk"
+        },
+        {
+          "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/q2",
+          "token": "${cdref:queue:front-desk-2}",
+          "type": "queue",
+          "name": "front-desk-2"
+        },
+        {
+          "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/q3",
+          "token": "${cdref:queue:front-desk-3}",
+          "type": "queue",
+          "name": "front-desk-3"
+        },
+        {
+          "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/q4",
+          "token": "${cdref:queue:front-desk-2-2}",
+          "type": "queue",
+          "name": "front-desk-2-2"
+        }
+      ],
+      "warnings": [
+        "Two queue resources slug to \"front-desk\"; arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/q2 exported as \"front-desk-2\".",
+        "Two queue resources slug to \"front-desk\"; arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/q3 exported as \"front-desk-3\".",
+        "Two queue resources slug to \"front-desk-2\"; arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/q4 exported as \"front-desk-2-2\"."
+      ]
+    },
+    {
+      "inventory": "{\"contactFlows\":[],\"contactFlowModules\":[],\"queues\":[{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/q1\",\"name\":\"!!!\"},{\"arn\":\"\",\"name\":\"x\"},{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/q1:$SAVED\",\"name\":\"dup\"},{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/q1\",\"name\":\"Zed\"}],\"hoursOfOperations\":[{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/q1\",\"name\":\"aaa\"}],\"prompts\":[],\"lambdaFunctions\":[],\"lexBots\":[],\"views\":[]}",
+      "byArn": [
+        {
+          "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/q1",
+          "token": "${cdref:hours:aaa}",
+          "type": "hours",
+          "name": "aaa"
+        }
+      ],
+      "warnings": [
+        "Skipping queue arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/q1: name \"!!!\" has no slug form."
+      ]
+    },
+    {
+      "inventory": "{\"contactFlows\":[],\"contactFlowModules\":[],\"queues\":[],\"hoursOfOperations\":[],\"prompts\":[],\"lambdaFunctions\":[\"arn:aws:lambda:r:1:function:Upper_Case\",\"arn:aws:lambda:r:1:layer:x\",\"arn:aws:lambda:r:1:function:f:PROD\",\"arn:aws:lambda:r:1:function:f\"],\"lexBots\":[],\"views\":[]}",
+      "byArn": [
+        {
+          "arn": "arn:aws:lambda:r:1:function:Upper_Case",
+          "token": "${cdref:lambda:upper-case}",
+          "type": "lambda",
+          "name": "upper-case"
+        },
+        {
+          "arn": "arn:aws:lambda:r:1:function:f",
+          "token": "${cdref:lambda:f}",
+          "type": "lambda",
+          "name": "f"
+        }
+      ],
+      "warnings": [
+        "Skipping Lambda ARN with no function segment: arn:aws:lambda:r:1:layer:x"
+      ]
+    },
+    {
+      "inventory": "{\"contactFlows\":[],\"contactFlowModules\":[],\"queues\":[],\"hoursOfOperations\":[],\"prompts\":[],\"lambdaFunctions\":[],\"lexBots\":[{\"lexVersion\":\"V1\"},{\"lexVersion\":\"V1\",\"name\":\"\"},{\"lexVersion\":\"V2\",\"aliasArn\":\"\"},{\"lexVersion\":\"V2\",\"aliasArn\":\"arn:aws:lex:r:1:bot-alias/AB/CD\",\"name\":\"Named Bot\"},{\"lexVersion\":\"V2\",\"aliasArn\":\"arn:aws:lex:r:1\"},{\"lexVersion\":\"V2\",\"aliasArn\":\"arn:aws:lex:r:1:bot-alias/AB/CD2\"}],\"views\":[]}",
+      "byArn": [
+        {
+          "arn": "arn:aws:lex:r:1:bot-alias/AB/CD",
+          "token": "${cdref:lex:named-bot}",
+          "type": "lex",
+          "name": "named-bot"
+        },
+        {
+          "arn": "arn:aws:lex:r:1:bot-alias/AB/CD2",
+          "token": "${cdref:lex:bot-alias-ab-cd2}",
+          "type": "lex",
+          "name": "bot-alias-ab-cd2"
+        }
+      ],
+      "warnings": [
+        "Amazon Lex V1 bot \"(unnamed)\" has no ARN and is not reverse-mapped.",
+        "Amazon Lex V1 bot \"\" has no ARN and is not reverse-mapped.",
+        "Amazon Lex V2 bot \"(unnamed)\" has no ARN and is not reverse-mapped.",
+        "Skipping lex arn:aws:lex:r:1: name \"\" has no slug form."
+      ]
+    },
+    {
+      "inventory": "{\"contactFlows\":[],\"contactFlowModules\":[{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/m1\",\"name\":\"Böse Modul\"}],\"queues\":[],\"hoursOfOperations\":[],\"prompts\":[{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/prompt/p\",\"name\":\"b\"},{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/prompt/o\",\"name\":\"B\"},{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/prompt/n\",\"name\":\"a\"}],\"lambdaFunctions\":[],\"lexBots\":[],\"views\":[{\"arn\":\"arn:aws:connect:us-east-1:aws:view/after-contact-work\",\"id\":\"a\",\"name\":\"after-contact-work\",\"type\":\"AWS_MANAGED\"},{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/view/v1\",\"id\":\"v1\",\"name\":\"Order Lookup\",\"type\":\"CUSTOMER_MANAGED\"}]}",
+      "byArn": [
+        {
+          "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/m1",
+          "token": "${cdref:module:bose-modul}",
+          "type": "module",
+          "name": "bose-modul"
+        },
+        {
+          "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/prompt/n",
+          "token": "${cdref:prompt:a}",
+          "type": "prompt",
+          "name": "a"
+        },
+        {
+          "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/prompt/o",
+          "token": "${cdref:prompt:b}",
+          "type": "prompt",
+          "name": "b"
+        },
+        {
+          "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/prompt/p",
+          "token": "${cdref:prompt:b-2}",
+          "type": "prompt",
+          "name": "b-2"
+        },
+        {
+          "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/view/v1",
+          "token": "${cdref:view:order-lookup}",
+          "type": "view",
+          "name": "order-lookup"
+        },
+        {
+          "arn": "arn:aws:connect:us-east-1:aws:view/after-contact-work",
+          "token": "${cdref:view:after-contact-work}",
+          "type": "view",
+          "name": "after-contact-work"
+        }
+      ],
+      "warnings": [
+        "Two prompt resources slug to \"b\"; arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/prompt/p exported as \"b-2\"."
+      ]
+    }
+  ],
+  "reverseMapOfResourceMap": [
+    {
+      "map": {
+        "${cdref:queue:b}": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/q1",
+        "${cdref:queue:a}": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/q1:$SAVED",
+        "not-a-token": "x",
+        "${cdref:view:v@1}": "arn:aws:connect:r:aws:view/v:1"
+      },
+      "byArn": [
+        {
+          "arn": "arn:aws:connect:r:aws:view/v",
+          "token": "${cdref:view:v@1}",
+          "type": "view",
+          "name": "v",
+          "alias": "1"
+        },
+        {
+          "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/q1",
+          "token": "${cdref:queue:a}",
+          "type": "queue",
+          "name": "a"
+        }
+      ],
+      "warnings": [
+        "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/q1 is mapped by both ${cdref:queue:a} and ${cdref:queue:b}; keeping the first.",
+        "Skipping map key that is not a reference token: not-a-token"
+      ]
+    }
+  ],
+  "exportFlow": [
+    {
+      "content": "[1]",
+      "inv": "{\n  \"contactFlows\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000001\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000001\",\n      \"name\": \"Appointment Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000002\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000002\",\n      \"name\": \"Draft Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"SAVED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000003\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000003\",\n      \"name\": \"Outbound Campaign\",\n      \"contactFlowType\": \"CAMPAIGN\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    }\n  ],\n  \"contactFlowModules\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/eeee5555-0000-4000-8000-000000000001\",\n      \"id\": \"eeee5555-0000-4000-8000-000000000001\",\n      \"name\": \"Recording Consent\",\n      \"state\": \"ACTIVE\"\n    }\n  ],\n  \"queues\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000001\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000001\",\n      \"name\": \"Appointments\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000002\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000002\",\n      \"name\": \"Overflow\"\n    }\n  ],\n  \"hoursOfOperations\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/operating-hours/bbbb2222-0000-4000-8000-000000000001\",\n      \"id\": \"bbbb2222-0000-4000-8000-000000000001\",\n      \"name\": \"Main Line\"\n    }\n  ],\n  \"prompts\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/prompt/dddd4444-0000-4000-8000-000000000001\",\n      \"id\": \"dddd4444-0000-4000-8000-000000000001\",\n      \"name\": \"Consent Notice\"\n    }\n  ],\n  \"lambdaFunctions\": [\n    \"arn:aws:lambda:us-east-1:111122223333:function:appointment-lookup\"\n  ],\n  \"lexBots\": [\n    {\n      \"lexVersion\": \"V2\",\n      \"aliasArn\": \"arn:aws:lex:us-east-1:111122223333:bot-alias/ABCDEF1234/TSTALIASID\"\n    },\n    {\n      \"lexVersion\": \"V1\",\n      \"name\": \"LegacyBot\",\n      \"lexRegion\": \"us-east-1\"\n    }\n  ],\n  \"views\": []\n}\n",
+      "options": {
+        "name": "x",
+        "connectType": "CONTACT_FLOW"
+      },
+      "result": {
+        "error": {
+          "name": "Error",
+          "message": "Cannot export: flow content is not a JSON object."
+        }
+      }
+    },
+    {
+      "content": "null",
+      "inv": "{\n  \"contactFlows\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000001\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000001\",\n      \"name\": \"Appointment Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000002\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000002\",\n      \"name\": \"Draft Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"SAVED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000003\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000003\",\n      \"name\": \"Outbound Campaign\",\n      \"contactFlowType\": \"CAMPAIGN\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    }\n  ],\n  \"contactFlowModules\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/eeee5555-0000-4000-8000-000000000001\",\n      \"id\": \"eeee5555-0000-4000-8000-000000000001\",\n      \"name\": \"Recording Consent\",\n      \"state\": \"ACTIVE\"\n    }\n  ],\n  \"queues\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000001\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000001\",\n      \"name\": \"Appointments\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000002\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000002\",\n      \"name\": \"Overflow\"\n    }\n  ],\n  \"hoursOfOperations\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/operating-hours/bbbb2222-0000-4000-8000-000000000001\",\n      \"id\": \"bbbb2222-0000-4000-8000-000000000001\",\n      \"name\": \"Main Line\"\n    }\n  ],\n  \"prompts\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/prompt/dddd4444-0000-4000-8000-000000000001\",\n      \"id\": \"dddd4444-0000-4000-8000-000000000001\",\n      \"name\": \"Consent Notice\"\n    }\n  ],\n  \"lambdaFunctions\": [\n    \"arn:aws:lambda:us-east-1:111122223333:function:appointment-lookup\"\n  ],\n  \"lexBots\": [\n    {\n      \"lexVersion\": \"V2\",\n      \"aliasArn\": \"arn:aws:lex:us-east-1:111122223333:bot-alias/ABCDEF1234/TSTALIASID\"\n    },\n    {\n      \"lexVersion\": \"V1\",\n      \"name\": \"LegacyBot\",\n      \"lexRegion\": \"us-east-1\"\n    }\n  ],\n  \"views\": []\n}\n",
+      "options": {
+        "name": "x",
+        "connectType": "CONTACT_FLOW"
+      },
+      "result": {
+        "error": {
+          "name": "Error",
+          "message": "Cannot export: flow content is not a JSON object."
+        }
+      }
+    },
+    {
+      "content": "{}",
+      "inv": "{\n  \"contactFlows\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000001\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000001\",\n      \"name\": \"Appointment Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000002\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000002\",\n      \"name\": \"Draft Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"SAVED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000003\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000003\",\n      \"name\": \"Outbound Campaign\",\n      \"contactFlowType\": \"CAMPAIGN\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    }\n  ],\n  \"contactFlowModules\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/eeee5555-0000-4000-8000-000000000001\",\n      \"id\": \"eeee5555-0000-4000-8000-000000000001\",\n      \"name\": \"Recording Consent\",\n      \"state\": \"ACTIVE\"\n    }\n  ],\n  \"queues\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000001\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000001\",\n      \"name\": \"Appointments\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000002\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000002\",\n      \"name\": \"Overflow\"\n    }\n  ],\n  \"hoursOfOperations\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/operating-hours/bbbb2222-0000-4000-8000-000000000001\",\n      \"id\": \"bbbb2222-0000-4000-8000-000000000001\",\n      \"name\": \"Main Line\"\n    }\n  ],\n  \"prompts\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/prompt/dddd4444-0000-4000-8000-000000000001\",\n      \"id\": \"dddd4444-0000-4000-8000-000000000001\",\n      \"name\": \"Consent Notice\"\n    }\n  ],\n  \"lambdaFunctions\": [\n    \"arn:aws:lambda:us-east-1:111122223333:function:appointment-lookup\"\n  ],\n  \"lexBots\": [\n    {\n      \"lexVersion\": \"V2\",\n      \"aliasArn\": \"arn:aws:lex:us-east-1:111122223333:bot-alias/ABCDEF1234/TSTALIASID\"\n    },\n    {\n      \"lexVersion\": \"V1\",\n      \"name\": \"LegacyBot\",\n      \"lexRegion\": \"us-east-1\"\n    }\n  ],\n  \"views\": []\n}\n",
+      "options": {
+        "name": "x",
+        "connectType": "CONTACT_FLOW"
+      },
+      "result": {
+        "error": {
+          "name": "Error",
+          "message": "Cannot export: flow content Version is undefined, expected \"2019-10-30\"."
+        }
+      }
+    },
+    {
+      "content": "{\"Version\":{\"b\":1,\"2\":2,\"a\":[3]}}",
+      "inv": "{\n  \"contactFlows\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000001\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000001\",\n      \"name\": \"Appointment Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000002\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000002\",\n      \"name\": \"Draft Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"SAVED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000003\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000003\",\n      \"name\": \"Outbound Campaign\",\n      \"contactFlowType\": \"CAMPAIGN\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    }\n  ],\n  \"contactFlowModules\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/eeee5555-0000-4000-8000-000000000001\",\n      \"id\": \"eeee5555-0000-4000-8000-000000000001\",\n      \"name\": \"Recording Consent\",\n      \"state\": \"ACTIVE\"\n    }\n  ],\n  \"queues\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000001\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000001\",\n      \"name\": \"Appointments\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000002\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000002\",\n      \"name\": \"Overflow\"\n    }\n  ],\n  \"hoursOfOperations\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/operating-hours/bbbb2222-0000-4000-8000-000000000001\",\n      \"id\": \"bbbb2222-0000-4000-8000-000000000001\",\n      \"name\": \"Main Line\"\n    }\n  ],\n  \"prompts\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/prompt/dddd4444-0000-4000-8000-000000000001\",\n      \"id\": \"dddd4444-0000-4000-8000-000000000001\",\n      \"name\": \"Consent Notice\"\n    }\n  ],\n  \"lambdaFunctions\": [\n    \"arn:aws:lambda:us-east-1:111122223333:function:appointment-lookup\"\n  ],\n  \"lexBots\": [\n    {\n      \"lexVersion\": \"V2\",\n      \"aliasArn\": \"arn:aws:lex:us-east-1:111122223333:bot-alias/ABCDEF1234/TSTALIASID\"\n    },\n    {\n      \"lexVersion\": \"V1\",\n      \"name\": \"LegacyBot\",\n      \"lexRegion\": \"us-east-1\"\n    }\n  ],\n  \"views\": []\n}\n",
+      "options": {
+        "name": "x",
+        "connectType": "CONTACT_FLOW"
+      },
+      "result": {
+        "error": {
+          "name": "Error",
+          "message": "Cannot export: flow content Version is {\"2\":2,\"b\":1,\"a\":[3]}, expected \"2019-10-30\"."
+        }
+      }
+    },
+    {
+      "content": "{\"Version\":\"2019-10-30\",\"StartAction\":\"\"}",
+      "inv": "{\n  \"contactFlows\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000001\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000001\",\n      \"name\": \"Appointment Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000002\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000002\",\n      \"name\": \"Draft Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"SAVED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000003\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000003\",\n      \"name\": \"Outbound Campaign\",\n      \"contactFlowType\": \"CAMPAIGN\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    }\n  ],\n  \"contactFlowModules\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/eeee5555-0000-4000-8000-000000000001\",\n      \"id\": \"eeee5555-0000-4000-8000-000000000001\",\n      \"name\": \"Recording Consent\",\n      \"state\": \"ACTIVE\"\n    }\n  ],\n  \"queues\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000001\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000001\",\n      \"name\": \"Appointments\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000002\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000002\",\n      \"name\": \"Overflow\"\n    }\n  ],\n  \"hoursOfOperations\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/operating-hours/bbbb2222-0000-4000-8000-000000000001\",\n      \"id\": \"bbbb2222-0000-4000-8000-000000000001\",\n      \"name\": \"Main Line\"\n    }\n  ],\n  \"prompts\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/prompt/dddd4444-0000-4000-8000-000000000001\",\n      \"id\": \"dddd4444-0000-4000-8000-000000000001\",\n      \"name\": \"Consent Notice\"\n    }\n  ],\n  \"lambdaFunctions\": [\n    \"arn:aws:lambda:us-east-1:111122223333:function:appointment-lookup\"\n  ],\n  \"lexBots\": [\n    {\n      \"lexVersion\": \"V2\",\n      \"aliasArn\": \"arn:aws:lex:us-east-1:111122223333:bot-alias/ABCDEF1234/TSTALIASID\"\n    },\n    {\n      \"lexVersion\": \"V1\",\n      \"name\": \"LegacyBot\",\n      \"lexRegion\": \"us-east-1\"\n    }\n  ],\n  \"views\": []\n}\n",
+      "options": {
+        "name": "x",
+        "connectType": "CONTACT_FLOW"
+      },
+      "result": {
+        "error": {
+          "name": "Error",
+          "message": "Cannot export: flow content has no StartAction."
+        }
+      }
+    },
+    {
+      "content": "{\"Version\":\"2019-10-30\",\"StartAction\":\"a\",\"Actions\":[]}",
+      "inv": "{\n  \"contactFlows\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000001\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000001\",\n      \"name\": \"Appointment Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000002\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000002\",\n      \"name\": \"Draft Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"SAVED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000003\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000003\",\n      \"name\": \"Outbound Campaign\",\n      \"contactFlowType\": \"CAMPAIGN\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    }\n  ],\n  \"contactFlowModules\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/eeee5555-0000-4000-8000-000000000001\",\n      \"id\": \"eeee5555-0000-4000-8000-000000000001\",\n      \"name\": \"Recording Consent\",\n      \"state\": \"ACTIVE\"\n    }\n  ],\n  \"queues\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000001\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000001\",\n      \"name\": \"Appointments\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000002\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000002\",\n      \"name\": \"Overflow\"\n    }\n  ],\n  \"hoursOfOperations\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/operating-hours/bbbb2222-0000-4000-8000-000000000001\",\n      \"id\": \"bbbb2222-0000-4000-8000-000000000001\",\n      \"name\": \"Main Line\"\n    }\n  ],\n  \"prompts\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/prompt/dddd4444-0000-4000-8000-000000000001\",\n      \"id\": \"dddd4444-0000-4000-8000-000000000001\",\n      \"name\": \"Consent Notice\"\n    }\n  ],\n  \"lambdaFunctions\": [\n    \"arn:aws:lambda:us-east-1:111122223333:function:appointment-lookup\"\n  ],\n  \"lexBots\": [\n    {\n      \"lexVersion\": \"V2\",\n      \"aliasArn\": \"arn:aws:lex:us-east-1:111122223333:bot-alias/ABCDEF1234/TSTALIASID\"\n    },\n    {\n      \"lexVersion\": \"V1\",\n      \"name\": \"LegacyBot\",\n      \"lexRegion\": \"us-east-1\"\n    }\n  ],\n  \"views\": []\n}\n",
+      "options": {
+        "name": "x",
+        "connectType": "CONTACT_FLOW"
+      },
+      "result": {
+        "error": {
+          "name": "Error",
+          "message": "Cannot export: flow content has no Actions."
+        }
+      }
+    },
+    {
+      "content": "{\"Version\":\"2019-10-30\",\"StartAction\":\"a\",\"Actions\":{}}",
+      "inv": "{\n  \"contactFlows\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000001\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000001\",\n      \"name\": \"Appointment Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000002\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000002\",\n      \"name\": \"Draft Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"SAVED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000003\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000003\",\n      \"name\": \"Outbound Campaign\",\n      \"contactFlowType\": \"CAMPAIGN\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    }\n  ],\n  \"contactFlowModules\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/eeee5555-0000-4000-8000-000000000001\",\n      \"id\": \"eeee5555-0000-4000-8000-000000000001\",\n      \"name\": \"Recording Consent\",\n      \"state\": \"ACTIVE\"\n    }\n  ],\n  \"queues\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000001\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000001\",\n      \"name\": \"Appointments\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000002\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000002\",\n      \"name\": \"Overflow\"\n    }\n  ],\n  \"hoursOfOperations\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/operating-hours/bbbb2222-0000-4000-8000-000000000001\",\n      \"id\": \"bbbb2222-0000-4000-8000-000000000001\",\n      \"name\": \"Main Line\"\n    }\n  ],\n  \"prompts\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/prompt/dddd4444-0000-4000-8000-000000000001\",\n      \"id\": \"dddd4444-0000-4000-8000-000000000001\",\n      \"name\": \"Consent Notice\"\n    }\n  ],\n  \"lambdaFunctions\": [\n    \"arn:aws:lambda:us-east-1:111122223333:function:appointment-lookup\"\n  ],\n  \"lexBots\": [\n    {\n      \"lexVersion\": \"V2\",\n      \"aliasArn\": \"arn:aws:lex:us-east-1:111122223333:bot-alias/ABCDEF1234/TSTALIASID\"\n    },\n    {\n      \"lexVersion\": \"V1\",\n      \"name\": \"LegacyBot\",\n      \"lexRegion\": \"us-east-1\"\n    }\n  ],\n  \"views\": []\n}\n",
+      "options": {
+        "name": "x",
+        "connectType": "CONTACT_FLOW"
+      },
+      "result": {
+        "error": {
+          "name": "Error",
+          "message": "Cannot export: flow content has no Actions."
+        }
+      }
+    },
+    {
+      "content": "{\"Version\":\"2019-10-30\",\"StartAction\":\"a\",\"Actions\":[{\"Identifier\":\"a\",\"Type\":\"DisconnectParticipant\",\"Parameters\":{},\"Transitions\":{}}]}",
+      "inv": "{\n  \"contactFlows\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000001\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000001\",\n      \"name\": \"Appointment Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000002\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000002\",\n      \"name\": \"Draft Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"SAVED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000003\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000003\",\n      \"name\": \"Outbound Campaign\",\n      \"contactFlowType\": \"CAMPAIGN\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    }\n  ],\n  \"contactFlowModules\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/eeee5555-0000-4000-8000-000000000001\",\n      \"id\": \"eeee5555-0000-4000-8000-000000000001\",\n      \"name\": \"Recording Consent\",\n      \"state\": \"ACTIVE\"\n    }\n  ],\n  \"queues\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000001\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000001\",\n      \"name\": \"Appointments\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000002\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000002\",\n      \"name\": \"Overflow\"\n    }\n  ],\n  \"hoursOfOperations\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/operating-hours/bbbb2222-0000-4000-8000-000000000001\",\n      \"id\": \"bbbb2222-0000-4000-8000-000000000001\",\n      \"name\": \"Main Line\"\n    }\n  ],\n  \"prompts\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/prompt/dddd4444-0000-4000-8000-000000000001\",\n      \"id\": \"dddd4444-0000-4000-8000-000000000001\",\n      \"name\": \"Consent Notice\"\n    }\n  ],\n  \"lambdaFunctions\": [\n    \"arn:aws:lambda:us-east-1:111122223333:function:appointment-lookup\"\n  ],\n  \"lexBots\": [\n    {\n      \"lexVersion\": \"V2\",\n      \"aliasArn\": \"arn:aws:lex:us-east-1:111122223333:bot-alias/ABCDEF1234/TSTALIASID\"\n    },\n    {\n      \"lexVersion\": \"V1\",\n      \"name\": \"LegacyBot\",\n      \"lexRegion\": \"us-east-1\"\n    }\n  ],\n  \"views\": []\n}\n",
+      "options": {
+        "name": "Bad Name",
+        "connectType": "CONTACT_FLOW"
+      },
+      "result": {
+        "error": {
+          "name": "Error",
+          "message": "Cannot export: \"Bad Name\" is not a valid FlowDoc name. Names are lowercase words separated by single hyphens."
+        }
+      }
+    },
+    {
+      "content": "{\"Version\":\"2019-10-30\",\"StartAction\":\"a\",\"Actions\":[{\"Identifier\":\"a\",\"Type\":\"X\",\"Parameters\":{\"z\":\"arn:aws:connect:r:1:instance/i/queue/zz\",\"10\":\"arn:aws:connect:r:1:instance/i/queue/ten\",\"2\":[\"arn:aws:lambda:r:1:function:gone\", \"see arn:aws:lambda:r:1:function:gone and arn:aws-cn:s3:::bucket/key's\"]},\"Transitions\":{}}],\"Metadata\":{\"x\":\"arn:aws:connect:r:1:instance/i/queue/zz\",\"y\":\"prefix arn:aws:connect:r:aws:view/v:1\"}}",
+      "inv": "{\n  \"contactFlows\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000001\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000001\",\n      \"name\": \"Appointment Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000002\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000002\",\n      \"name\": \"Draft Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"SAVED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000003\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000003\",\n      \"name\": \"Outbound Campaign\",\n      \"contactFlowType\": \"CAMPAIGN\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    }\n  ],\n  \"contactFlowModules\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/eeee5555-0000-4000-8000-000000000001\",\n      \"id\": \"eeee5555-0000-4000-8000-000000000001\",\n      \"name\": \"Recording Consent\",\n      \"state\": \"ACTIVE\"\n    }\n  ],\n  \"queues\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000001\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000001\",\n      \"name\": \"Appointments\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000002\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000002\",\n      \"name\": \"Overflow\"\n    }\n  ],\n  \"hoursOfOperations\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/operating-hours/bbbb2222-0000-4000-8000-000000000001\",\n      \"id\": \"bbbb2222-0000-4000-8000-000000000001\",\n      \"name\": \"Main Line\"\n    }\n  ],\n  \"prompts\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/prompt/dddd4444-0000-4000-8000-000000000001\",\n      \"id\": \"dddd4444-0000-4000-8000-000000000001\",\n      \"name\": \"Consent Notice\"\n    }\n  ],\n  \"lambdaFunctions\": [\n    \"arn:aws:lambda:us-east-1:111122223333:function:appointment-lookup\"\n  ],\n  \"lexBots\": [\n    {\n      \"lexVersion\": \"V2\",\n      \"aliasArn\": \"arn:aws:lex:us-east-1:111122223333:bot-alias/ABCDEF1234/TSTALIASID\"\n    },\n    {\n      \"lexVersion\": \"V1\",\n      \"name\": \"LegacyBot\",\n      \"lexRegion\": \"us-east-1\"\n    }\n  ],\n  \"views\": []\n}\n",
+      "options": {
+        "name": "unk",
+        "connectType": "CONTACT_FLOW"
+      },
+      "result": {
+        "error": {
+          "name": "ExportError",
+          "message": "Cannot export \"unk\": 3 ARN(s) not found in the instance inventory: arn:aws:connect:r:1:instance/i/queue/ten, arn:aws:connect:r:1:instance/i/queue/zz, arn:aws:lambda:r:1:function:gone; 3 ARN(s) embedded in a longer string, which cannot hold a reference: arn:aws-cn:s3:::bucket/key, arn:aws:connect:r:aws:view/v:1, arn:aws:lambda:r:1:function:gone",
+          "unknownArns": [
+            "arn:aws:connect:r:1:instance/i/queue/ten",
+            "arn:aws:connect:r:1:instance/i/queue/zz",
+            "arn:aws:lambda:r:1:function:gone"
+          ],
+          "interpolatedArns": [
+            "arn:aws-cn:s3:::bucket/key",
+            "arn:aws:connect:r:aws:view/v:1",
+            "arn:aws:lambda:r:1:function:gone"
+          ],
+          "locations": {
+            "arn:aws:lambda:r:1:function:gone": [
+              "Actions[0].Parameters.2[1]"
+            ],
+            "arn:aws:connect:r:1:instance/i/queue/ten": [
+              "Actions[0].Parameters.10"
+            ],
+            "arn:aws:connect:r:1:instance/i/queue/zz": [
+              "Actions[0].Parameters.z",
+              "Metadata.x"
+            ],
+            "arn:aws-cn:s3:::bucket/key": [
+              "Actions[0].Parameters.2[1]"
+            ],
+            "arn:aws:connect:r:aws:view/v:1": [
+              "Metadata.y"
+            ]
+          },
+          "resource": "unk"
+        }
+      }
+    },
+    {
+      "content": "{\"Version\":\"2019-10-30\",\"StartAction\":\"a\",\"Actions\":[{\"Identifier\":\"a\",\"Type\":\"X\",\"Parameters\":{\"z\":\"arn:aws:connect:r:1:instance/i/queue/same\",\"10\":\"arn:aws:connect:r:1:instance/i/queue/same\",\"m\":{\"b\":\"x arn:aws:lambda:r:1:function:f\",\"3\":\"y arn:aws:lambda:r:1:function:f\"}},\"Transitions\":{}}]}",
+      "inv": "{\n  \"contactFlows\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000001\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000001\",\n      \"name\": \"Appointment Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000002\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000002\",\n      \"name\": \"Draft Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"SAVED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000003\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000003\",\n      \"name\": \"Outbound Campaign\",\n      \"contactFlowType\": \"CAMPAIGN\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    }\n  ],\n  \"contactFlowModules\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/eeee5555-0000-4000-8000-000000000001\",\n      \"id\": \"eeee5555-0000-4000-8000-000000000001\",\n      \"name\": \"Recording Consent\",\n      \"state\": \"ACTIVE\"\n    }\n  ],\n  \"queues\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000001\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000001\",\n      \"name\": \"Appointments\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000002\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000002\",\n      \"name\": \"Overflow\"\n    }\n  ],\n  \"hoursOfOperations\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/operating-hours/bbbb2222-0000-4000-8000-000000000001\",\n      \"id\": \"bbbb2222-0000-4000-8000-000000000001\",\n      \"name\": \"Main Line\"\n    }\n  ],\n  \"prompts\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/prompt/dddd4444-0000-4000-8000-000000000001\",\n      \"id\": \"dddd4444-0000-4000-8000-000000000001\",\n      \"name\": \"Consent Notice\"\n    }\n  ],\n  \"lambdaFunctions\": [\n    \"arn:aws:lambda:us-east-1:111122223333:function:appointment-lookup\"\n  ],\n  \"lexBots\": [\n    {\n      \"lexVersion\": \"V2\",\n      \"aliasArn\": \"arn:aws:lex:us-east-1:111122223333:bot-alias/ABCDEF1234/TSTALIASID\"\n    },\n    {\n      \"lexVersion\": \"V1\",\n      \"name\": \"LegacyBot\",\n      \"lexRegion\": \"us-east-1\"\n    }\n  ],\n  \"views\": []\n}\n",
+      "options": {
+        "name": "order",
+        "connectType": "CONTACT_FLOW"
+      },
+      "result": {
+        "error": {
+          "name": "ExportError",
+          "message": "Cannot export \"order\": 1 ARN(s) not found in the instance inventory: arn:aws:connect:r:1:instance/i/queue/same; 1 ARN(s) embedded in a longer string, which cannot hold a reference: arn:aws:lambda:r:1:function:f",
+          "unknownArns": [
+            "arn:aws:connect:r:1:instance/i/queue/same"
+          ],
+          "interpolatedArns": [
+            "arn:aws:lambda:r:1:function:f"
+          ],
+          "locations": {
+            "arn:aws:connect:r:1:instance/i/queue/same": [
+              "Actions[0].Parameters.10",
+              "Actions[0].Parameters.z"
+            ],
+            "arn:aws:lambda:r:1:function:f": [
+              "Actions[0].Parameters.m.3",
+              "Actions[0].Parameters.m.b"
+            ]
+          },
+          "resource": "order"
+        }
+      }
+    },
+    {
+      "content": "{\"Version\":\"2019-10-30\",\"StartAction\":\"a\",\"Actions\":[{\"Identifier\":\"a\",\"Type\":\"DisconnectParticipant\",\"Parameters\":{\"A\":\"arn:aws:connect:r:1:instance/i/queue/x y\",\"B\":\"arn:aws:connect:r:1:instance/i/queue/x﻿\",\"C\":\"arn:aws:connect:r:1:instance/i/queue/x\\u000by\",\"D\":\"arn:aws:connect:r:1:instance/i/queue/x \"},\"Transitions\":{}}]}",
+      "inv": "{\n  \"contactFlows\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000001\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000001\",\n      \"name\": \"Appointment Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000002\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000002\",\n      \"name\": \"Draft Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"SAVED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000003\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000003\",\n      \"name\": \"Outbound Campaign\",\n      \"contactFlowType\": \"CAMPAIGN\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    }\n  ],\n  \"contactFlowModules\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/eeee5555-0000-4000-8000-000000000001\",\n      \"id\": \"eeee5555-0000-4000-8000-000000000001\",\n      \"name\": \"Recording Consent\",\n      \"state\": \"ACTIVE\"\n    }\n  ],\n  \"queues\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000001\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000001\",\n      \"name\": \"Appointments\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000002\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000002\",\n      \"name\": \"Overflow\"\n    }\n  ],\n  \"hoursOfOperations\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/operating-hours/bbbb2222-0000-4000-8000-000000000001\",\n      \"id\": \"bbbb2222-0000-4000-8000-000000000001\",\n      \"name\": \"Main Line\"\n    }\n  ],\n  \"prompts\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/prompt/dddd4444-0000-4000-8000-000000000001\",\n      \"id\": \"dddd4444-0000-4000-8000-000000000001\",\n      \"name\": \"Consent Notice\"\n    }\n  ],\n  \"lambdaFunctions\": [\n    \"arn:aws:lambda:us-east-1:111122223333:function:appointment-lookup\"\n  ],\n  \"lexBots\": [\n    {\n      \"lexVersion\": \"V2\",\n      \"aliasArn\": \"arn:aws:lex:us-east-1:111122223333:bot-alias/ABCDEF1234/TSTALIASID\"\n    },\n    {\n      \"lexVersion\": \"V1\",\n      \"name\": \"LegacyBot\",\n      \"lexRegion\": \"us-east-1\"\n    }\n  ],\n  \"views\": []\n}\n",
+      "options": {
+        "name": "ws",
+        "connectType": "CONTACT_FLOW"
+      },
+      "result": {
+        "error": {
+          "name": "ExportError",
+          "message": "Cannot export \"ws\": 1 ARN(s) embedded in a longer string, which cannot hold a reference: arn:aws:connect:r:1:instance/i/queue/x",
+          "unknownArns": [],
+          "interpolatedArns": [
+            "arn:aws:connect:r:1:instance/i/queue/x"
+          ],
+          "locations": {
+            "arn:aws:connect:r:1:instance/i/queue/x": [
+              "Actions[0].Parameters.A",
+              "Actions[0].Parameters.B",
+              "Actions[0].Parameters.C",
+              "Actions[0].Parameters.D"
+            ]
+          },
+          "resource": "ws"
+        }
+      }
+    },
+    {
+      "content": "{\"Version\":\"2019-10-30\",\"StartAction\":\"a\",\"Actions\":[{\"Identifier\":\"a\",\"Type\":\"UpdateContactTargetQueue\",\"Parameters\":{\"QueueId\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000001\",\"Flow\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000001:$SAVED\",\"Mod\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/eeee5555-0000-4000-8000-000000000001:7\",\"L\":\"arn:aws:lambda:us-east-1:111122223333:function:appointment-lookup:PROD\"},\"Transitions\":{\"NextAction\":\"b\"}},{\"Identifier\":\"b\",\"Type\":\"DisconnectParticipant\",\"Parameters\":{},\"Transitions\":{}}]}",
+      "inv": "{\n  \"contactFlows\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000001\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000001\",\n      \"name\": \"Appointment Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000002\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000002\",\n      \"name\": \"Draft Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"SAVED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000003\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000003\",\n      \"name\": \"Outbound Campaign\",\n      \"contactFlowType\": \"CAMPAIGN\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    }\n  ],\n  \"contactFlowModules\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/eeee5555-0000-4000-8000-000000000001\",\n      \"id\": \"eeee5555-0000-4000-8000-000000000001\",\n      \"name\": \"Recording Consent\",\n      \"state\": \"ACTIVE\"\n    }\n  ],\n  \"queues\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000001\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000001\",\n      \"name\": \"Appointments\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000002\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000002\",\n      \"name\": \"Overflow\"\n    }\n  ],\n  \"hoursOfOperations\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/operating-hours/bbbb2222-0000-4000-8000-000000000001\",\n      \"id\": \"bbbb2222-0000-4000-8000-000000000001\",\n      \"name\": \"Main Line\"\n    }\n  ],\n  \"prompts\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/prompt/dddd4444-0000-4000-8000-000000000001\",\n      \"id\": \"dddd4444-0000-4000-8000-000000000001\",\n      \"name\": \"Consent Notice\"\n    }\n  ],\n  \"lambdaFunctions\": [\n    \"arn:aws:lambda:us-east-1:111122223333:function:appointment-lookup\"\n  ],\n  \"lexBots\": [\n    {\n      \"lexVersion\": \"V2\",\n      \"aliasArn\": \"arn:aws:lex:us-east-1:111122223333:bot-alias/ABCDEF1234/TSTALIASID\"\n    },\n    {\n      \"lexVersion\": \"V1\",\n      \"name\": \"LegacyBot\",\n      \"lexRegion\": \"us-east-1\"\n    }\n  ],\n  \"views\": []\n}\n",
+      "options": {
+        "name": "ok",
+        "connectType": "CONTACT_FLOW",
+        "description": "Desc",
+        "generator": "",
+        "meta": {
+          "1": "one",
+          "generator": "over",
+          "z": {
+            "b": 1,
+            "a": 2
+          }
+        }
+      },
+      "result": {
+        "doc": "{\n  \"flowdoc\": \"0.2\",\n  \"kind\": \"flow\",\n  \"name\": \"ok\",\n  \"description\": \"Desc\",\n  \"connectType\": \"CONTACT_FLOW\",\n  \"content\": {\n    \"Version\": \"2019-10-30\",\n    \"StartAction\": \"a\",\n    \"Actions\": [\n      {\n        \"Identifier\": \"a\",\n        \"Type\": \"UpdateContactTargetQueue\",\n        \"Parameters\": {\n          \"Flow\": \"${cdref:flow:appointment-line}\",\n          \"L\": \"${cdref:lambda:appointment-lookup}\",\n          \"Mod\": \"${cdref:module:recording-consent}\",\n          \"QueueId\": \"${cdref:queue:appointments}\"\n        },\n        \"Transitions\": {\n          \"NextAction\": \"b\"\n        }\n      },\n      {\n        \"Identifier\": \"b\",\n        \"Type\": \"DisconnectParticipant\",\n        \"Parameters\": {},\n        \"Transitions\": {}\n      }\n    ]\n  },\n  \"layout\": {\n    \"a\": {\n      \"x\": 20,\n      \"y\": 20\n    },\n    \"b\": {\n      \"x\": 280,\n      \"y\": 20\n    }\n  },\n  \"refs\": [\n    {\n      \"token\": \"${cdref:flow:appointment-line}\",\n      \"type\": \"flow\",\n      \"name\": \"appointment-line\"\n    },\n    {\n      \"token\": \"${cdref:lambda:appointment-lookup}\",\n      \"type\": \"lambda\",\n      \"name\": \"appointment-lookup\"\n    },\n    {\n      \"token\": \"${cdref:module:recording-consent}\",\n      \"type\": \"module\",\n      \"name\": \"recording-consent\"\n    },\n    {\n      \"token\": \"${cdref:queue:appointments}\",\n      \"type\": \"queue\",\n      \"name\": \"appointments\"\n    }\n  ],\n  \"meta\": {\n    \"1\": \"one\",\n    \"generator\": \"over\",\n    \"z\": {\n      \"a\": 2,\n      \"b\": 1\n    }\n  }\n}\n",
+        "refs": "[{\"token\":\"${cdref:flow:appointment-line}\",\"type\":\"flow\",\"name\":\"appointment-line\"},{\"token\":\"${cdref:lambda:appointment-lookup}\",\"type\":\"lambda\",\"name\":\"appointment-lookup\"},{\"token\":\"${cdref:module:recording-consent}\",\"type\":\"module\",\"name\":\"recording-consent\"},{\"token\":\"${cdref:queue:appointments}\",\"type\":\"queue\",\"name\":\"appointments\"}]"
+      }
+    },
+    {
+      "content": "{\"Version\":\"2019-10-30\",\"StartAction\":\"a\",\"Actions\":[{\"Identifier\":\"a\",\"Type\":\"T\"},{\"Identifier\":\"b\",\"Type\":\"T\",\"Parameters\":[],\"Transitions\":\"x\"},{\"Identifier\":\"c\",\"Parameters\":{},\"Transitions\":{},\"Type\":\"T\"}]}",
+      "inv": "{\n  \"contactFlows\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000001\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000001\",\n      \"name\": \"Appointment Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000002\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000002\",\n      \"name\": \"Draft Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"SAVED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000003\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000003\",\n      \"name\": \"Outbound Campaign\",\n      \"contactFlowType\": \"CAMPAIGN\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    }\n  ],\n  \"contactFlowModules\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/eeee5555-0000-4000-8000-000000000001\",\n      \"id\": \"eeee5555-0000-4000-8000-000000000001\",\n      \"name\": \"Recording Consent\",\n      \"state\": \"ACTIVE\"\n    }\n  ],\n  \"queues\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000001\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000001\",\n      \"name\": \"Appointments\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000002\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000002\",\n      \"name\": \"Overflow\"\n    }\n  ],\n  \"hoursOfOperations\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/operating-hours/bbbb2222-0000-4000-8000-000000000001\",\n      \"id\": \"bbbb2222-0000-4000-8000-000000000001\",\n      \"name\": \"Main Line\"\n    }\n  ],\n  \"prompts\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/prompt/dddd4444-0000-4000-8000-000000000001\",\n      \"id\": \"dddd4444-0000-4000-8000-000000000001\",\n      \"name\": \"Consent Notice\"\n    }\n  ],\n  \"lambdaFunctions\": [\n    \"arn:aws:lambda:us-east-1:111122223333:function:appointment-lookup\"\n  ],\n  \"lexBots\": [\n    {\n      \"lexVersion\": \"V2\",\n      \"aliasArn\": \"arn:aws:lex:us-east-1:111122223333:bot-alias/ABCDEF1234/TSTALIASID\"\n    },\n    {\n      \"lexVersion\": \"V1\",\n      \"name\": \"LegacyBot\",\n      \"lexRegion\": \"us-east-1\"\n    }\n  ],\n  \"views\": []\n}\n",
+      "options": {
+        "name": "norm",
+        "connectType": "MODULE",
+        "includeMeta": false
+      },
+      "result": {
+        "doc": "{\n  \"flowdoc\": \"0.2\",\n  \"kind\": \"module\",\n  \"name\": \"norm\",\n  \"connectType\": \"MODULE\",\n  \"content\": {\n    \"Version\": \"2019-10-30\",\n    \"StartAction\": \"a\",\n    \"Actions\": [\n      {\n        \"Identifier\": \"a\",\n        \"Type\": \"T\",\n        \"Parameters\": {},\n        \"Transitions\": {}\n      },\n      {\n        \"Identifier\": \"b\",\n        \"Type\": \"T\",\n        \"Parameters\": {},\n        \"Transitions\": {}\n      },\n      {\n        \"Identifier\": \"c\",\n        \"Type\": \"T\",\n        \"Parameters\": {},\n        \"Transitions\": {}\n      }\n    ]\n  },\n  \"layout\": {\n    \"a\": {\n      \"x\": 20,\n      \"y\": 20\n    },\n    \"b\": {\n      \"x\": 280,\n      \"y\": 20\n    },\n    \"c\": {\n      \"x\": 280,\n      \"y\": 120\n    }\n  },\n  \"refs\": []\n}\n",
+        "refs": "[]"
+      }
+    },
+    {
+      "content": "{\"Version\":\"2019-10-30\",\"StartAction\":\"a\",\"Actions\":[{\"Identifier\":\"a\",\"Type\":\"T\"},5,true,\"ab\",[1,{\"k\":2}]]}",
+      "inv": "{\n  \"contactFlows\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000001\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000001\",\n      \"name\": \"Appointment Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000002\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000002\",\n      \"name\": \"Draft Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"SAVED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000003\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000003\",\n      \"name\": \"Outbound Campaign\",\n      \"contactFlowType\": \"CAMPAIGN\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    }\n  ],\n  \"contactFlowModules\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/eeee5555-0000-4000-8000-000000000001\",\n      \"id\": \"eeee5555-0000-4000-8000-000000000001\",\n      \"name\": \"Recording Consent\",\n      \"state\": \"ACTIVE\"\n    }\n  ],\n  \"queues\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000001\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000001\",\n      \"name\": \"Appointments\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000002\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000002\",\n      \"name\": \"Overflow\"\n    }\n  ],\n  \"hoursOfOperations\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/operating-hours/bbbb2222-0000-4000-8000-000000000001\",\n      \"id\": \"bbbb2222-0000-4000-8000-000000000001\",\n      \"name\": \"Main Line\"\n    }\n  ],\n  \"prompts\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/prompt/dddd4444-0000-4000-8000-000000000001\",\n      \"id\": \"dddd4444-0000-4000-8000-000000000001\",\n      \"name\": \"Consent Notice\"\n    }\n  ],\n  \"lambdaFunctions\": [\n    \"arn:aws:lambda:us-east-1:111122223333:function:appointment-lookup\"\n  ],\n  \"lexBots\": [\n    {\n      \"lexVersion\": \"V2\",\n      \"aliasArn\": \"arn:aws:lex:us-east-1:111122223333:bot-alias/ABCDEF1234/TSTALIASID\"\n    },\n    {\n      \"lexVersion\": \"V1\",\n      \"name\": \"LegacyBot\",\n      \"lexRegion\": \"us-east-1\"\n    }\n  ],\n  \"views\": []\n}\n",
+      "options": {
+        "name": "odd",
+        "connectType": "CONTACT_FLOW",
+        "kind": "module"
+      },
+      "result": {
+        "doc": "{\n  \"flowdoc\": \"0.2\",\n  \"kind\": \"module\",\n  \"name\": \"odd\",\n  \"connectType\": \"CONTACT_FLOW\",\n  \"content\": {\n    \"Version\": \"2019-10-30\",\n    \"StartAction\": \"a\",\n    \"Actions\": [\n      {\n        \"Identifier\": \"a\",\n        \"Type\": \"T\",\n        \"Parameters\": {},\n        \"Transitions\": {}\n      },\n      {\n        \"Parameters\": {},\n        \"Transitions\": {}\n      },\n      {\n        \"Parameters\": {},\n        \"Transitions\": {}\n      },\n      {\n        \"Parameters\": {},\n        \"Transitions\": {}\n      },\n      {\n        \"Parameters\": {},\n        \"Transitions\": {}\n      }\n    ]\n  },\n  \"layout\": {\n    \"a\": {\n      \"x\": 20,\n      \"y\": 20\n    },\n    \"undefined\": {\n      \"x\": 280,\n      \"y\": 20\n    }\n  },\n  \"refs\": [],\n  \"meta\": {\n    \"generator\": \"core@0.2\"\n  }\n}\n",
+        "refs": "[]"
+      }
+    },
+    {
+      "content": "{\"Version\":\"2019-10-30\",\"StartAction\":\"a\",\"Actions\":[{\"Identifier\":\"a\",\"Type\":\"T\"},[\"${cdref:queue:in-array}\"],\"${cdref:queue:in-string}\"]}",
+      "inv": "{\n  \"contactFlows\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000001\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000001\",\n      \"name\": \"Appointment Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000002\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000002\",\n      \"name\": \"Draft Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"SAVED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000003\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000003\",\n      \"name\": \"Outbound Campaign\",\n      \"contactFlowType\": \"CAMPAIGN\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    }\n  ],\n  \"contactFlowModules\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/eeee5555-0000-4000-8000-000000000001\",\n      \"id\": \"eeee5555-0000-4000-8000-000000000001\",\n      \"name\": \"Recording Consent\",\n      \"state\": \"ACTIVE\"\n    }\n  ],\n  \"queues\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000001\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000001\",\n      \"name\": \"Appointments\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000002\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000002\",\n      \"name\": \"Overflow\"\n    }\n  ],\n  \"hoursOfOperations\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/operating-hours/bbbb2222-0000-4000-8000-000000000001\",\n      \"id\": \"bbbb2222-0000-4000-8000-000000000001\",\n      \"name\": \"Main Line\"\n    }\n  ],\n  \"prompts\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/prompt/dddd4444-0000-4000-8000-000000000001\",\n      \"id\": \"dddd4444-0000-4000-8000-000000000001\",\n      \"name\": \"Consent Notice\"\n    }\n  ],\n  \"lambdaFunctions\": [\n    \"arn:aws:lambda:us-east-1:111122223333:function:appointment-lookup\"\n  ],\n  \"lexBots\": [\n    {\n      \"lexVersion\": \"V2\",\n      \"aliasArn\": \"arn:aws:lex:us-east-1:111122223333:bot-alias/ABCDEF1234/TSTALIASID\"\n    },\n    {\n      \"lexVersion\": \"V1\",\n      \"name\": \"LegacyBot\",\n      \"lexRegion\": \"us-east-1\"\n    }\n  ],\n  \"views\": []\n}\n",
+      "options": {
+        "name": "spread",
+        "connectType": "CONTACT_FLOW"
+      },
+      "result": {
+        "doc": "{\n  \"flowdoc\": \"0.2\",\n  \"kind\": \"flow\",\n  \"name\": \"spread\",\n  \"connectType\": \"CONTACT_FLOW\",\n  \"content\": {\n    \"Version\": \"2019-10-30\",\n    \"StartAction\": \"a\",\n    \"Actions\": [\n      {\n        \"Identifier\": \"a\",\n        \"Type\": \"T\",\n        \"Parameters\": {},\n        \"Transitions\": {}\n      },\n      {\n        \"Parameters\": {},\n        \"Transitions\": {}\n      },\n      {\n        \"Parameters\": {},\n        \"Transitions\": {}\n      }\n    ]\n  },\n  \"layout\": {\n    \"a\": {\n      \"x\": 20,\n      \"y\": 20\n    },\n    \"undefined\": {\n      \"x\": 280,\n      \"y\": 20\n    }\n  },\n  \"refs\": [\n    {\n      \"token\": \"${cdref:queue:in-array}\",\n      \"type\": \"queue\",\n      \"name\": \"in-array\"\n    }\n  ],\n  \"meta\": {\n    \"generator\": \"core@0.2\"\n  }\n}\n",
+        "refs": "[{\"token\":\"${cdref:queue:in-array}\",\"type\":\"queue\",\"name\":\"in-array\"}]"
+      }
+    },
+    {
+      "content": "{\"Version\":\"2019-10-30\",\"StartAction\":\"a\",\"Actions\":[{\"Identifier\":\"a\",\"Type\":\"T\"},null]}",
+      "inv": "{\n  \"contactFlows\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000001\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000001\",\n      \"name\": \"Appointment Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000002\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000002\",\n      \"name\": \"Draft Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"SAVED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000003\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000003\",\n      \"name\": \"Outbound Campaign\",\n      \"contactFlowType\": \"CAMPAIGN\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    }\n  ],\n  \"contactFlowModules\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/eeee5555-0000-4000-8000-000000000001\",\n      \"id\": \"eeee5555-0000-4000-8000-000000000001\",\n      \"name\": \"Recording Consent\",\n      \"state\": \"ACTIVE\"\n    }\n  ],\n  \"queues\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000001\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000001\",\n      \"name\": \"Appointments\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000002\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000002\",\n      \"name\": \"Overflow\"\n    }\n  ],\n  \"hoursOfOperations\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/operating-hours/bbbb2222-0000-4000-8000-000000000001\",\n      \"id\": \"bbbb2222-0000-4000-8000-000000000001\",\n      \"name\": \"Main Line\"\n    }\n  ],\n  \"prompts\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/prompt/dddd4444-0000-4000-8000-000000000001\",\n      \"id\": \"dddd4444-0000-4000-8000-000000000001\",\n      \"name\": \"Consent Notice\"\n    }\n  ],\n  \"lambdaFunctions\": [\n    \"arn:aws:lambda:us-east-1:111122223333:function:appointment-lookup\"\n  ],\n  \"lexBots\": [\n    {\n      \"lexVersion\": \"V2\",\n      \"aliasArn\": \"arn:aws:lex:us-east-1:111122223333:bot-alias/ABCDEF1234/TSTALIASID\"\n    },\n    {\n      \"lexVersion\": \"V1\",\n      \"name\": \"LegacyBot\",\n      \"lexRegion\": \"us-east-1\"\n    }\n  ],\n  \"views\": []\n}\n",
+      "options": {
+        "name": "odd",
+        "connectType": "CONTACT_FLOW"
+      },
+      "result": {
+        "error": {
+          "name": "TypeError",
+          "message": "Cannot read properties of null (reading 'Parameters')"
+        }
+      }
+    },
+    {
+      "content": "{\"Version\":\"2019-10-30\",\"StartAction\":\"a\",\"Settings\":{\"k\":1},\"Extra\":true,\"Metadata\":{\"entryPointPosition\":{\"x\":1,\"y\":2},\"EntryPointPosition\":{\"x\":1,\"y\":2},\"name\":\"n\",\"ActionMetadata\":{\"b\":{\"Position\":null,\"position\":{\"x\":5,\"y\":6},\"keep\":1},\"a\":{\"Position\":{\"x\":1.5,\"y\":-2}},\"ghost\":{\"position\":{\"x\":9,\"y\":9}},\"c\":{\"position\":{\"x\":\"1\",\"y\":2}},\"d\":7,\"e\":null,\"f\":[1],\"7\":{\"Position\":{\"x\":7,\"y\":7}},\"g\":{}}},\"Actions\":[{\"Identifier\":\"a\",\"Type\":\"T\",\"Parameters\":{},\"Transitions\":{\"NextAction\":\"b\"}},{\"Identifier\":\"b\",\"Type\":\"T\",\"Parameters\":{},\"Transitions\":{\"NextAction\":\"c\"}},{\"Identifier\":\"c\",\"Type\":\"T\",\"Parameters\":{},\"Transitions\":{}},{\"Identifier\":\"7\",\"Type\":\"T\",\"Parameters\":{},\"Transitions\":{}}]}",
+      "inv": "{\n  \"contactFlows\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000001\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000001\",\n      \"name\": \"Appointment Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000002\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000002\",\n      \"name\": \"Draft Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"SAVED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000003\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000003\",\n      \"name\": \"Outbound Campaign\",\n      \"contactFlowType\": \"CAMPAIGN\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    }\n  ],\n  \"contactFlowModules\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/eeee5555-0000-4000-8000-000000000001\",\n      \"id\": \"eeee5555-0000-4000-8000-000000000001\",\n      \"name\": \"Recording Consent\",\n      \"state\": \"ACTIVE\"\n    }\n  ],\n  \"queues\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000001\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000001\",\n      \"name\": \"Appointments\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000002\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000002\",\n      \"name\": \"Overflow\"\n    }\n  ],\n  \"hoursOfOperations\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/operating-hours/bbbb2222-0000-4000-8000-000000000001\",\n      \"id\": \"bbbb2222-0000-4000-8000-000000000001\",\n      \"name\": \"Main Line\"\n    }\n  ],\n  \"prompts\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/prompt/dddd4444-0000-4000-8000-000000000001\",\n      \"id\": \"dddd4444-0000-4000-8000-000000000001\",\n      \"name\": \"Consent Notice\"\n    }\n  ],\n  \"lambdaFunctions\": [\n    \"arn:aws:lambda:us-east-1:111122223333:function:appointment-lookup\"\n  ],\n  \"lexBots\": [\n    {\n      \"lexVersion\": \"V2\",\n      \"aliasArn\": \"arn:aws:lex:us-east-1:111122223333:bot-alias/ABCDEF1234/TSTALIASID\"\n    },\n    {\n      \"lexVersion\": \"V1\",\n      \"name\": \"LegacyBot\",\n      \"lexRegion\": \"us-east-1\"\n    }\n  ],\n  \"views\": []\n}\n",
+      "options": {
+        "name": "meta",
+        "connectType": "CONTACT_FLOW"
+      },
+      "result": {
+        "doc": "{\n  \"flowdoc\": \"0.2\",\n  \"kind\": \"flow\",\n  \"name\": \"meta\",\n  \"connectType\": \"CONTACT_FLOW\",\n  \"content\": {\n    \"Version\": \"2019-10-30\",\n    \"StartAction\": \"a\",\n    \"Metadata\": {\n      \"ActionMetadata\": {\n        \"b\": {\n          \"keep\": 1\n        },\n        \"c\": {\n          \"position\": {\n            \"x\": \"1\",\n            \"y\": 2\n          }\n        },\n        \"d\": 7,\n        \"e\": null,\n        \"f\": [\n          1\n        ],\n        \"ghost\": {\n          \"position\": {\n            \"x\": 9,\n            \"y\": 9\n          }\n        }\n      },\n      \"name\": \"n\"\n    },\n    \"Actions\": [\n      {\n        \"Identifier\": \"a\",\n        \"Type\": \"T\",\n        \"Parameters\": {},\n        \"Transitions\": {\n          \"NextAction\": \"b\"\n        }\n      },\n      {\n        \"Identifier\": \"b\",\n        \"Type\": \"T\",\n        \"Parameters\": {},\n        \"Transitions\": {\n          \"NextAction\": \"c\"\n        }\n      },\n      {\n        \"Identifier\": \"c\",\n        \"Type\": \"T\",\n        \"Parameters\": {},\n        \"Transitions\": {}\n      },\n      {\n        \"Identifier\": \"7\",\n        \"Type\": \"T\",\n        \"Parameters\": {},\n        \"Transitions\": {}\n      }\n    ]\n  },\n  \"layout\": {\n    \"7\": {\n      \"x\": 7,\n      \"y\": 7\n    },\n    \"a\": {\n      \"x\": 1.5,\n      \"y\": -2\n    },\n    \"b\": {\n      \"x\": 5,\n      \"y\": 6\n    },\n    \"c\": {\n      \"x\": 540,\n      \"y\": 20\n    }\n  },\n  \"refs\": [],\n  \"meta\": {\n    \"generator\": \"core@0.2\"\n  }\n}\n",
+        "refs": "[]"
+      }
+    },
+    {
+      "content": "{\"Version\":\"2019-10-30\",\"StartAction\":\"a\",\"Metadata\":{\"EntryPointPosition\":{\"x\":0,\"y\":0},\"ActionMetadata\":{\"a\":{\"position\":{\"x\":3,\"y\":4}}}},\"Actions\":[{\"Identifier\":\"a\",\"Type\":\"T\",\"Parameters\":{},\"Transitions\":{}}]}",
+      "inv": "{\n  \"contactFlows\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000001\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000001\",\n      \"name\": \"Appointment Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000002\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000002\",\n      \"name\": \"Draft Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"SAVED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000003\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000003\",\n      \"name\": \"Outbound Campaign\",\n      \"contactFlowType\": \"CAMPAIGN\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    }\n  ],\n  \"contactFlowModules\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/eeee5555-0000-4000-8000-000000000001\",\n      \"id\": \"eeee5555-0000-4000-8000-000000000001\",\n      \"name\": \"Recording Consent\",\n      \"state\": \"ACTIVE\"\n    }\n  ],\n  \"queues\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000001\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000001\",\n      \"name\": \"Appointments\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000002\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000002\",\n      \"name\": \"Overflow\"\n    }\n  ],\n  \"hoursOfOperations\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/operating-hours/bbbb2222-0000-4000-8000-000000000001\",\n      \"id\": \"bbbb2222-0000-4000-8000-000000000001\",\n      \"name\": \"Main Line\"\n    }\n  ],\n  \"prompts\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/prompt/dddd4444-0000-4000-8000-000000000001\",\n      \"id\": \"dddd4444-0000-4000-8000-000000000001\",\n      \"name\": \"Consent Notice\"\n    }\n  ],\n  \"lambdaFunctions\": [\n    \"arn:aws:lambda:us-east-1:111122223333:function:appointment-lookup\"\n  ],\n  \"lexBots\": [\n    {\n      \"lexVersion\": \"V2\",\n      \"aliasArn\": \"arn:aws:lex:us-east-1:111122223333:bot-alias/ABCDEF1234/TSTALIASID\"\n    },\n    {\n      \"lexVersion\": \"V1\",\n      \"name\": \"LegacyBot\",\n      \"lexRegion\": \"us-east-1\"\n    }\n  ],\n  \"views\": []\n}\n",
+      "options": {
+        "name": "all-pos",
+        "connectType": "CONTACT_FLOW"
+      },
+      "result": {
+        "doc": "{\n  \"flowdoc\": \"0.2\",\n  \"kind\": \"flow\",\n  \"name\": \"all-pos\",\n  \"connectType\": \"CONTACT_FLOW\",\n  \"content\": {\n    \"Version\": \"2019-10-30\",\n    \"StartAction\": \"a\",\n    \"Actions\": [\n      {\n        \"Identifier\": \"a\",\n        \"Type\": \"T\",\n        \"Parameters\": {},\n        \"Transitions\": {}\n      }\n    ]\n  },\n  \"layout\": {\n    \"a\": {\n      \"x\": 3,\n      \"y\": 4\n    }\n  },\n  \"refs\": [],\n  \"meta\": {\n    \"generator\": \"core@0.2\"\n  }\n}\n",
+        "refs": "[]"
+      }
+    },
+    {
+      "content": "{\"Version\":\"2019-10-30\",\"StartAction\":\"a\",\"Metadata\":{\"ActionMetadata\":{\"a\":{\"position\":{\"x\":3,\"y\":4}}, \"b\":{\"position\":{\"x\":1,\"y\":1}}}},\"Actions\":[{\"Identifier\":\"a\",\"Type\":\"T\",\"Parameters\":{},\"Transitions\":{\"NextAction\":\"c\"}},{\"Identifier\":\"a\",\"Type\":\"T\",\"Parameters\":{},\"Transitions\":{}},{\"Identifier\":\"c\",\"Type\":\"T\",\"Parameters\":{},\"Transitions\":{}}]}",
+      "inv": "{\n  \"contactFlows\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000001\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000001\",\n      \"name\": \"Appointment Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000002\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000002\",\n      \"name\": \"Draft Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"SAVED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000003\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000003\",\n      \"name\": \"Outbound Campaign\",\n      \"contactFlowType\": \"CAMPAIGN\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    }\n  ],\n  \"contactFlowModules\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/eeee5555-0000-4000-8000-000000000001\",\n      \"id\": \"eeee5555-0000-4000-8000-000000000001\",\n      \"name\": \"Recording Consent\",\n      \"state\": \"ACTIVE\"\n    }\n  ],\n  \"queues\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000001\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000001\",\n      \"name\": \"Appointments\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000002\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000002\",\n      \"name\": \"Overflow\"\n    }\n  ],\n  \"hoursOfOperations\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/operating-hours/bbbb2222-0000-4000-8000-000000000001\",\n      \"id\": \"bbbb2222-0000-4000-8000-000000000001\",\n      \"name\": \"Main Line\"\n    }\n  ],\n  \"prompts\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/prompt/dddd4444-0000-4000-8000-000000000001\",\n      \"id\": \"dddd4444-0000-4000-8000-000000000001\",\n      \"name\": \"Consent Notice\"\n    }\n  ],\n  \"lambdaFunctions\": [\n    \"arn:aws:lambda:us-east-1:111122223333:function:appointment-lookup\"\n  ],\n  \"lexBots\": [\n    {\n      \"lexVersion\": \"V2\",\n      \"aliasArn\": \"arn:aws:lex:us-east-1:111122223333:bot-alias/ABCDEF1234/TSTALIASID\"\n    },\n    {\n      \"lexVersion\": \"V1\",\n      \"name\": \"LegacyBot\",\n      \"lexRegion\": \"us-east-1\"\n    }\n  ],\n  \"views\": []\n}\n",
+      "options": {
+        "name": "dups",
+        "connectType": "CONTACT_FLOW"
+      },
+      "result": {
+        "doc": "{\n  \"flowdoc\": \"0.2\",\n  \"kind\": \"flow\",\n  \"name\": \"dups\",\n  \"connectType\": \"CONTACT_FLOW\",\n  \"content\": {\n    \"Version\": \"2019-10-30\",\n    \"StartAction\": \"a\",\n    \"Metadata\": {\n      \"ActionMetadata\": {\n        \"b\": {\n          \"position\": {\n            \"x\": 1,\n            \"y\": 1\n          }\n        }\n      }\n    },\n    \"Actions\": [\n      {\n        \"Identifier\": \"a\",\n        \"Type\": \"T\",\n        \"Parameters\": {},\n        \"Transitions\": {\n          \"NextAction\": \"c\"\n        }\n      },\n      {\n        \"Identifier\": \"a\",\n        \"Type\": \"T\",\n        \"Parameters\": {},\n        \"Transitions\": {}\n      },\n      {\n        \"Identifier\": \"c\",\n        \"Type\": \"T\",\n        \"Parameters\": {},\n        \"Transitions\": {}\n      }\n    ]\n  },\n  \"layout\": {\n    \"a\": {\n      \"x\": 3,\n      \"y\": 4\n    },\n    \"c\": {\n      \"x\": 280,\n      \"y\": 20\n    }\n  },\n  \"refs\": [],\n  \"meta\": {\n    \"generator\": \"core@0.2\"\n  }\n}\n",
+        "refs": "[]"
+      }
+    },
+    {
+      "content": "{\"Version\":\"2019-10-30\",\"StartAction\":\"a\",\"Metadata\":[1],\"Actions\":[{\"Identifier\":\"a\",\"Type\":\"T\",\"Parameters\":{},\"Transitions\":{}}]}",
+      "inv": "{\n  \"contactFlows\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000001\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000001\",\n      \"name\": \"Appointment Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000002\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000002\",\n      \"name\": \"Draft Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"SAVED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000003\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000003\",\n      \"name\": \"Outbound Campaign\",\n      \"contactFlowType\": \"CAMPAIGN\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    }\n  ],\n  \"contactFlowModules\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/eeee5555-0000-4000-8000-000000000001\",\n      \"id\": \"eeee5555-0000-4000-8000-000000000001\",\n      \"name\": \"Recording Consent\",\n      \"state\": \"ACTIVE\"\n    }\n  ],\n  \"queues\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000001\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000001\",\n      \"name\": \"Appointments\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000002\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000002\",\n      \"name\": \"Overflow\"\n    }\n  ],\n  \"hoursOfOperations\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/operating-hours/bbbb2222-0000-4000-8000-000000000001\",\n      \"id\": \"bbbb2222-0000-4000-8000-000000000001\",\n      \"name\": \"Main Line\"\n    }\n  ],\n  \"prompts\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/prompt/dddd4444-0000-4000-8000-000000000001\",\n      \"id\": \"dddd4444-0000-4000-8000-000000000001\",\n      \"name\": \"Consent Notice\"\n    }\n  ],\n  \"lambdaFunctions\": [\n    \"arn:aws:lambda:us-east-1:111122223333:function:appointment-lookup\"\n  ],\n  \"lexBots\": [\n    {\n      \"lexVersion\": \"V2\",\n      \"aliasArn\": \"arn:aws:lex:us-east-1:111122223333:bot-alias/ABCDEF1234/TSTALIASID\"\n    },\n    {\n      \"lexVersion\": \"V1\",\n      \"name\": \"LegacyBot\",\n      \"lexRegion\": \"us-east-1\"\n    }\n  ],\n  \"views\": []\n}\n",
+      "options": {
+        "name": "m1",
+        "connectType": "CONTACT_FLOW"
+      },
+      "result": {
+        "doc": "{\n  \"flowdoc\": \"0.2\",\n  \"kind\": \"flow\",\n  \"name\": \"m1\",\n  \"connectType\": \"CONTACT_FLOW\",\n  \"content\": {\n    \"Version\": \"2019-10-30\",\n    \"StartAction\": \"a\",\n    \"Actions\": [\n      {\n        \"Identifier\": \"a\",\n        \"Type\": \"T\",\n        \"Parameters\": {},\n        \"Transitions\": {}\n      }\n    ]\n  },\n  \"layout\": {\n    \"a\": {\n      \"x\": 20,\n      \"y\": 20\n    }\n  },\n  \"refs\": [],\n  \"meta\": {\n    \"generator\": \"core@0.2\"\n  }\n}\n",
+        "refs": "[]"
+      }
+    },
+    {
+      "content": "{\"Version\":\"2019-10-30\",\"StartAction\":\"a\",\"Metadata\":{\"ActionMetadata\":\"s\"},\"Actions\":[{\"Identifier\":\"a\",\"Type\":\"T\",\"Parameters\":{},\"Transitions\":{}}]}",
+      "inv": "{\n  \"contactFlows\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000001\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000001\",\n      \"name\": \"Appointment Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000002\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000002\",\n      \"name\": \"Draft Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"SAVED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000003\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000003\",\n      \"name\": \"Outbound Campaign\",\n      \"contactFlowType\": \"CAMPAIGN\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    }\n  ],\n  \"contactFlowModules\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/eeee5555-0000-4000-8000-000000000001\",\n      \"id\": \"eeee5555-0000-4000-8000-000000000001\",\n      \"name\": \"Recording Consent\",\n      \"state\": \"ACTIVE\"\n    }\n  ],\n  \"queues\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000001\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000001\",\n      \"name\": \"Appointments\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000002\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000002\",\n      \"name\": \"Overflow\"\n    }\n  ],\n  \"hoursOfOperations\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/operating-hours/bbbb2222-0000-4000-8000-000000000001\",\n      \"id\": \"bbbb2222-0000-4000-8000-000000000001\",\n      \"name\": \"Main Line\"\n    }\n  ],\n  \"prompts\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/prompt/dddd4444-0000-4000-8000-000000000001\",\n      \"id\": \"dddd4444-0000-4000-8000-000000000001\",\n      \"name\": \"Consent Notice\"\n    }\n  ],\n  \"lambdaFunctions\": [\n    \"arn:aws:lambda:us-east-1:111122223333:function:appointment-lookup\"\n  ],\n  \"lexBots\": [\n    {\n      \"lexVersion\": \"V2\",\n      \"aliasArn\": \"arn:aws:lex:us-east-1:111122223333:bot-alias/ABCDEF1234/TSTALIASID\"\n    },\n    {\n      \"lexVersion\": \"V1\",\n      \"name\": \"LegacyBot\",\n      \"lexRegion\": \"us-east-1\"\n    }\n  ],\n  \"views\": []\n}\n",
+      "options": {
+        "name": "m2",
+        "connectType": "CONTACT_FLOW"
+      },
+      "result": {
+        "doc": "{\n  \"flowdoc\": \"0.2\",\n  \"kind\": \"flow\",\n  \"name\": \"m2\",\n  \"connectType\": \"CONTACT_FLOW\",\n  \"content\": {\n    \"Version\": \"2019-10-30\",\n    \"StartAction\": \"a\",\n    \"Metadata\": {\n      \"ActionMetadata\": \"s\"\n    },\n    \"Actions\": [\n      {\n        \"Identifier\": \"a\",\n        \"Type\": \"T\",\n        \"Parameters\": {},\n        \"Transitions\": {}\n      }\n    ]\n  },\n  \"layout\": {\n    \"a\": {\n      \"x\": 20,\n      \"y\": 20\n    }\n  },\n  \"refs\": [],\n  \"meta\": {\n    \"generator\": \"core@0.2\"\n  }\n}\n",
+        "refs": "[]"
+      }
+    },
+    {
+      "content": "{\"Version\":\"2019-10-30\",\"StartAction\":\"a\",\"Metadata\":null,\"Actions\":[{\"Identifier\":\"a\",\"Type\":\"T\",\"Parameters\":{},\"Transitions\":{}}]}",
+      "inv": "{\n  \"contactFlows\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000001\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000001\",\n      \"name\": \"Appointment Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000002\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000002\",\n      \"name\": \"Draft Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"SAVED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000003\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000003\",\n      \"name\": \"Outbound Campaign\",\n      \"contactFlowType\": \"CAMPAIGN\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    }\n  ],\n  \"contactFlowModules\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/eeee5555-0000-4000-8000-000000000001\",\n      \"id\": \"eeee5555-0000-4000-8000-000000000001\",\n      \"name\": \"Recording Consent\",\n      \"state\": \"ACTIVE\"\n    }\n  ],\n  \"queues\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000001\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000001\",\n      \"name\": \"Appointments\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000002\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000002\",\n      \"name\": \"Overflow\"\n    }\n  ],\n  \"hoursOfOperations\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/operating-hours/bbbb2222-0000-4000-8000-000000000001\",\n      \"id\": \"bbbb2222-0000-4000-8000-000000000001\",\n      \"name\": \"Main Line\"\n    }\n  ],\n  \"prompts\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/prompt/dddd4444-0000-4000-8000-000000000001\",\n      \"id\": \"dddd4444-0000-4000-8000-000000000001\",\n      \"name\": \"Consent Notice\"\n    }\n  ],\n  \"lambdaFunctions\": [\n    \"arn:aws:lambda:us-east-1:111122223333:function:appointment-lookup\"\n  ],\n  \"lexBots\": [\n    {\n      \"lexVersion\": \"V2\",\n      \"aliasArn\": \"arn:aws:lex:us-east-1:111122223333:bot-alias/ABCDEF1234/TSTALIASID\"\n    },\n    {\n      \"lexVersion\": \"V1\",\n      \"name\": \"LegacyBot\",\n      \"lexRegion\": \"us-east-1\"\n    }\n  ],\n  \"views\": []\n}\n",
+      "options": {
+        "name": "m3",
+        "connectType": "CONTACT_FLOW"
+      },
+      "result": {
+        "doc": "{\n  \"flowdoc\": \"0.2\",\n  \"kind\": \"flow\",\n  \"name\": \"m3\",\n  \"connectType\": \"CONTACT_FLOW\",\n  \"content\": {\n    \"Version\": \"2019-10-30\",\n    \"StartAction\": \"a\",\n    \"Actions\": [\n      {\n        \"Identifier\": \"a\",\n        \"Type\": \"T\",\n        \"Parameters\": {},\n        \"Transitions\": {}\n      }\n    ]\n  },\n  \"layout\": {\n    \"a\": {\n      \"x\": 20,\n      \"y\": 20\n    }\n  },\n  \"refs\": [],\n  \"meta\": {\n    \"generator\": \"core@0.2\"\n  }\n}\n",
+        "refs": "[]"
+      }
+    },
+    {
+      "content": "{\"Version\":\"2019-10-30\",\"StartAction\":\"constructor\",\"Metadata\":{\"ActionMetadata\":{\"toString\":{\"position\":{\"x\":3,\"y\":4}},\"__proto__\":{\"position\":{\"x\":8,\"y\":8},\"k\":1},\"valueOf\":5}},\"Actions\":[{\"Identifier\":\"constructor\",\"Type\":\"T\",\"Parameters\":{},\"Transitions\":{\"NextAction\":\"toString\"}},{\"Identifier\":\"toString\",\"Type\":\"T\",\"Parameters\":{},\"Transitions\":{\"NextAction\":\"z\"}},{\"Identifier\":\"z\",\"Type\":\"T\",\"Parameters\":{},\"Transitions\":{}},{\"Identifier\":\"__proto__\",\"Type\":\"T\",\"Parameters\":{},\"Transitions\":{}}]}",
+      "inv": "{\n  \"contactFlows\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000001\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000001\",\n      \"name\": \"Appointment Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000002\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000002\",\n      \"name\": \"Draft Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"SAVED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000003\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000003\",\n      \"name\": \"Outbound Campaign\",\n      \"contactFlowType\": \"CAMPAIGN\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    }\n  ],\n  \"contactFlowModules\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/eeee5555-0000-4000-8000-000000000001\",\n      \"id\": \"eeee5555-0000-4000-8000-000000000001\",\n      \"name\": \"Recording Consent\",\n      \"state\": \"ACTIVE\"\n    }\n  ],\n  \"queues\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000001\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000001\",\n      \"name\": \"Appointments\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000002\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000002\",\n      \"name\": \"Overflow\"\n    }\n  ],\n  \"hoursOfOperations\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/operating-hours/bbbb2222-0000-4000-8000-000000000001\",\n      \"id\": \"bbbb2222-0000-4000-8000-000000000001\",\n      \"name\": \"Main Line\"\n    }\n  ],\n  \"prompts\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/prompt/dddd4444-0000-4000-8000-000000000001\",\n      \"id\": \"dddd4444-0000-4000-8000-000000000001\",\n      \"name\": \"Consent Notice\"\n    }\n  ],\n  \"lambdaFunctions\": [\n    \"arn:aws:lambda:us-east-1:111122223333:function:appointment-lookup\"\n  ],\n  \"lexBots\": [\n    {\n      \"lexVersion\": \"V2\",\n      \"aliasArn\": \"arn:aws:lex:us-east-1:111122223333:bot-alias/ABCDEF1234/TSTALIASID\"\n    },\n    {\n      \"lexVersion\": \"V1\",\n      \"name\": \"LegacyBot\",\n      \"lexRegion\": \"us-east-1\"\n    }\n  ],\n  \"views\": []\n}\n",
+      "options": {
+        "name": "proto",
+        "connectType": "CONTACT_FLOW"
+      },
+      "result": {
+        "doc": "{\n  \"flowdoc\": \"0.2\",\n  \"kind\": \"flow\",\n  \"name\": \"proto\",\n  \"connectType\": \"CONTACT_FLOW\",\n  \"content\": {\n    \"Version\": \"2019-10-30\",\n    \"StartAction\": \"constructor\",\n    \"Metadata\": {\n      \"ActionMetadata\": {\n        \"valueOf\": 5\n      }\n    },\n    \"Actions\": [\n      {\n        \"Identifier\": \"constructor\",\n        \"Type\": \"T\",\n        \"Parameters\": {},\n        \"Transitions\": {\n          \"NextAction\": \"toString\"\n        }\n      },\n      {\n        \"Identifier\": \"toString\",\n        \"Type\": \"T\",\n        \"Parameters\": {},\n        \"Transitions\": {\n          \"NextAction\": \"z\"\n        }\n      },\n      {\n        \"Identifier\": \"z\",\n        \"Type\": \"T\",\n        \"Parameters\": {},\n        \"Transitions\": {}\n      },\n      {\n        \"Identifier\": \"__proto__\",\n        \"Type\": \"T\",\n        \"Parameters\": {},\n        \"Transitions\": {}\n      }\n    ]\n  },\n  \"layout\": {\n    \"toString\": {\n      \"x\": 3,\n      \"y\": 4\n    },\n    \"z\": {\n      \"x\": 540,\n      \"y\": 20\n    }\n  },\n  \"refs\": [],\n  \"meta\": {\n    \"generator\": \"core@0.2\"\n  }\n}\n",
+        "refs": "[]"
+      }
+    },
+    {
+      "content": "{\"Version\":\"2019-10-30\",\"StartAction\":\"a\",\"Actions\":[{\"Identifier\":\"a\",\"Type\":\"DisconnectParticipant\",\"Parameters\":{\"V\":\"arn:aws:connect:us-east-1:aws:view/after-contact-work:1\",\"W\":\"arn:aws:connect:us-east-1:aws:view/after-contact-work\",\"X\":\"arn:aws:connect:us-east-1:aws:view/after-contact-work:1-2\"},\"Transitions\":{}}]}",
+      "inv": "{\n  \"contactFlows\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000021\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000021\",\n      \"name\": \"Sample after contact work flow\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    }\n  ],\n  \"contactFlowModules\": [],\n  \"queues\": [],\n  \"hoursOfOperations\": [],\n  \"prompts\": [],\n  \"lambdaFunctions\": [],\n  \"lexBots\": [],\n  \"views\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:aws:view/after-contact-work\",\n      \"id\": \"after-contact-work\",\n      \"name\": \"after-contact-work\",\n      \"type\": \"AWS_MANAGED\",\n      \"status\": \"PUBLISHED\"\n    }\n  ]\n}\n",
+      "options": {
+        "name": "views",
+        "connectType": "CONTACT_FLOW"
+      },
+      "result": {
+        "doc": "{\n  \"flowdoc\": \"0.2\",\n  \"kind\": \"flow\",\n  \"name\": \"views\",\n  \"connectType\": \"CONTACT_FLOW\",\n  \"content\": {\n    \"Version\": \"2019-10-30\",\n    \"StartAction\": \"a\",\n    \"Actions\": [\n      {\n        \"Identifier\": \"a\",\n        \"Type\": \"DisconnectParticipant\",\n        \"Parameters\": {\n          \"V\": \"${cdref:view:after-contact-work@1}\",\n          \"W\": \"${cdref:view:after-contact-work}\",\n          \"X\": \"${cdref:view:after-contact-work@1-2}\"\n        },\n        \"Transitions\": {}\n      }\n    ]\n  },\n  \"layout\": {\n    \"a\": {\n      \"x\": 20,\n      \"y\": 20\n    }\n  },\n  \"refs\": [\n    {\n      \"token\": \"${cdref:view:after-contact-work@1-2}\",\n      \"type\": \"view\",\n      \"name\": \"after-contact-work\",\n      \"alias\": \"1-2\"\n    },\n    {\n      \"token\": \"${cdref:view:after-contact-work@1}\",\n      \"type\": \"view\",\n      \"name\": \"after-contact-work\",\n      \"alias\": \"1\"\n    },\n    {\n      \"token\": \"${cdref:view:after-contact-work}\",\n      \"type\": \"view\",\n      \"name\": \"after-contact-work\"\n    }\n  ],\n  \"meta\": {\n    \"generator\": \"core@0.2\"\n  }\n}\n",
+        "refs": "[{\"token\":\"${cdref:view:after-contact-work@1-2}\",\"type\":\"view\",\"name\":\"after-contact-work\",\"alias\":\"1-2\"},{\"token\":\"${cdref:view:after-contact-work@1}\",\"type\":\"view\",\"name\":\"after-contact-work\",\"alias\":\"1\"},{\"token\":\"${cdref:view:after-contact-work}\",\"type\":\"view\",\"name\":\"after-contact-work\"}]"
+      }
+    },
+    {
+      "content": "{\"Version\":\"2019-10-30\",\"StartAction\":\"a\",\"Actions\":[{\"Identifier\":\"a\",\"Type\":\"DisconnectParticipant\",\"Parameters\":{\"V\":\"arn:aws:connect:us-east-1:aws:view/after-contact-work:$LATEST\",\"W\":\"arn:aws:connect:us-east-1:aws:view/after-contact-work:A\"},\"Transitions\":{}}]}",
+      "inv": "{\n  \"contactFlows\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000021\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000021\",\n      \"name\": \"Sample after contact work flow\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    }\n  ],\n  \"contactFlowModules\": [],\n  \"queues\": [],\n  \"hoursOfOperations\": [],\n  \"prompts\": [],\n  \"lambdaFunctions\": [],\n  \"lexBots\": [],\n  \"views\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:aws:view/after-contact-work\",\n      \"id\": \"after-contact-work\",\n      \"name\": \"after-contact-work\",\n      \"type\": \"AWS_MANAGED\",\n      \"status\": \"PUBLISHED\"\n    }\n  ]\n}\n",
+      "options": {
+        "name": "views-bad",
+        "connectType": "CONTACT_FLOW"
+      },
+      "result": {
+        "error": {
+          "name": "ExportError",
+          "message": "Cannot export \"views-bad\": 2 ARN(s) not found in the instance inventory: arn:aws:connect:us-east-1:aws:view/after-contact-work:$LATEST, arn:aws:connect:us-east-1:aws:view/after-contact-work:A",
+          "unknownArns": [
+            "arn:aws:connect:us-east-1:aws:view/after-contact-work:$LATEST",
+            "arn:aws:connect:us-east-1:aws:view/after-contact-work:A"
+          ],
+          "interpolatedArns": [],
+          "locations": {
+            "arn:aws:connect:us-east-1:aws:view/after-contact-work:$LATEST": [
+              "Actions[0].Parameters.V"
+            ],
+            "arn:aws:connect:us-east-1:aws:view/after-contact-work:A": [
+              "Actions[0].Parameters.W"
+            ]
+          },
+          "resource": "views-bad"
+        }
+      }
+    },
+    {
+      "content": "{\"Version\":\"2019-10-30\",\"StartAction\":\"a\",\"Actions\":[{\"Identifier\":\"a\",\"Type\":\"DisconnectParticipant\",\"Parameters\":{\"${cdref:queue:as-key}\":1,\"Q\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000001\"},\"Transitions\":{}}]}",
+      "inv": "{\n  \"contactFlows\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000001\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000001\",\n      \"name\": \"Appointment Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000002\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000002\",\n      \"name\": \"Draft Line\",\n      \"contactFlowType\": \"CONTACT_FLOW\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"SAVED\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000003\",\n      \"id\": \"cccc3333-0000-4000-8000-000000000003\",\n      \"name\": \"Outbound Campaign\",\n      \"contactFlowType\": \"CAMPAIGN\",\n      \"contactFlowState\": \"ACTIVE\",\n      \"contactFlowStatus\": \"PUBLISHED\"\n    }\n  ],\n  \"contactFlowModules\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/eeee5555-0000-4000-8000-000000000001\",\n      \"id\": \"eeee5555-0000-4000-8000-000000000001\",\n      \"name\": \"Recording Consent\",\n      \"state\": \"ACTIVE\"\n    }\n  ],\n  \"queues\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000001\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000001\",\n      \"name\": \"Appointments\"\n    },\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/aaaa1111-0000-4000-8000-000000000002\",\n      \"id\": \"aaaa1111-0000-4000-8000-000000000002\",\n      \"name\": \"Overflow\"\n    }\n  ],\n  \"hoursOfOperations\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/operating-hours/bbbb2222-0000-4000-8000-000000000001\",\n      \"id\": \"bbbb2222-0000-4000-8000-000000000001\",\n      \"name\": \"Main Line\"\n    }\n  ],\n  \"prompts\": [\n    {\n      \"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/prompt/dddd4444-0000-4000-8000-000000000001\",\n      \"id\": \"dddd4444-0000-4000-8000-000000000001\",\n      \"name\": \"Consent Notice\"\n    }\n  ],\n  \"lambdaFunctions\": [\n    \"arn:aws:lambda:us-east-1:111122223333:function:appointment-lookup\"\n  ],\n  \"lexBots\": [\n    {\n      \"lexVersion\": \"V2\",\n      \"aliasArn\": \"arn:aws:lex:us-east-1:111122223333:bot-alias/ABCDEF1234/TSTALIASID\"\n    },\n    {\n      \"lexVersion\": \"V1\",\n      \"name\": \"LegacyBot\",\n      \"lexRegion\": \"us-east-1\"\n    }\n  ],\n  \"views\": []\n}\n",
+      "options": {
+        "name": "keys",
+        "connectType": "CONTACT_FLOW",
+        "description": ""
+      },
+      "result": {
+        "doc": "{\n  \"flowdoc\": \"0.2\",\n  \"kind\": \"flow\",\n  \"name\": \"keys\",\n  \"connectType\": \"CONTACT_FLOW\",\n  \"content\": {\n    \"Version\": \"2019-10-30\",\n    \"StartAction\": \"a\",\n    \"Actions\": [\n      {\n        \"Identifier\": \"a\",\n        \"Type\": \"DisconnectParticipant\",\n        \"Parameters\": {\n          \"${cdref:queue:as-key}\": 1,\n          \"Q\": \"${cdref:queue:appointments}\"\n        },\n        \"Transitions\": {}\n      }\n    ]\n  },\n  \"layout\": {\n    \"a\": {\n      \"x\": 20,\n      \"y\": 20\n    }\n  },\n  \"refs\": [\n    {\n      \"token\": \"${cdref:queue:appointments}\",\n      \"type\": \"queue\",\n      \"name\": \"appointments\"\n    },\n    {\n      \"token\": \"${cdref:queue:as-key}\",\n      \"type\": \"queue\",\n      \"name\": \"as-key\"\n    }\n  ],\n  \"meta\": {\n    \"generator\": \"core@0.2\"\n  }\n}\n",
+        "refs": "[{\"token\":\"${cdref:queue:appointments}\",\"type\":\"queue\",\"name\":\"appointments\"},{\"token\":\"${cdref:queue:as-key}\",\"type\":\"queue\",\"name\":\"as-key\"}]"
+      }
+    },
+    {
+      "content": "{\"Version\":\"2019-10-30\",\"StartAction\":\"a\",\"Actions\":[{\"Identifier\":\"a\",\"Type\":\"DisconnectParticipant\",\"Parameters\":{\"V\":\"arn:aws:connect:r:aws:view/v:1\",\"Q\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/q1\"},\"Transitions\":{}}]}",
+      "resourceMap": {
+        "${cdref:queue:b}": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/q1",
+        "${cdref:queue:a}": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/q1:$SAVED",
+        "not-a-token": "x",
+        "${cdref:view:v@1}": "arn:aws:connect:r:aws:view/v:1"
+      },
+      "options": {
+        "name": "rm",
+        "connectType": "AGENT_WHISPER"
+      },
+      "result": {
+        "doc": "{\n  \"flowdoc\": \"0.2\",\n  \"kind\": \"flow\",\n  \"name\": \"rm\",\n  \"connectType\": \"AGENT_WHISPER\",\n  \"content\": {\n    \"Version\": \"2019-10-30\",\n    \"StartAction\": \"a\",\n    \"Actions\": [\n      {\n        \"Identifier\": \"a\",\n        \"Type\": \"DisconnectParticipant\",\n        \"Parameters\": {\n          \"Q\": \"${cdref:queue:a}\",\n          \"V\": \"${cdref:view:v@1}\"\n        },\n        \"Transitions\": {}\n      }\n    ]\n  },\n  \"layout\": {\n    \"a\": {\n      \"x\": 20,\n      \"y\": 20\n    }\n  },\n  \"refs\": [\n    {\n      \"token\": \"${cdref:queue:a}\",\n      \"type\": \"queue\",\n      \"name\": \"a\"\n    },\n    {\n      \"token\": \"${cdref:view:v@1}\",\n      \"type\": \"view\",\n      \"name\": \"v\",\n      \"alias\": \"1\"\n    }\n  ],\n  \"meta\": {\n    \"generator\": \"core@0.2\"\n  }\n}\n",
+        "refs": "[{\"token\":\"${cdref:queue:a}\",\"type\":\"queue\",\"name\":\"a\"},{\"token\":\"${cdref:view:v@1}\",\"type\":\"view\",\"name\":\"v\",\"alias\":\"1\"}]"
+      }
+    }
+  ],
+  "exportInstance": [
+    {
+      "spec": "{\"inventory\":{\"contactFlows\":[{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f2\",\"id\":\"f2\",\"name\":\"Second\",\"contactFlowType\":\"QUEUE_TRANSFER\"},{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f1\",\"name\":\"First\"},{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f3\",\"id\":\"f3\",\"name\":\"!!!\"},{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f4\",\"id\":\"f4\",\"name\":\"Campaign\",\"contactFlowType\":\"CAMPAIGN\"},{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f5\",\"id\":\"f5\",\"name\":\"Stale\"},{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f6\",\"id\":\"f6\",\"name\":\"Draft\"},{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f7\",\"id\":\"f7\",\"name\":\"Missing\"},{\"arn\":\"arn:aws:other:r:1:x\",\"id\":\"f8\",\"name\":\"Not Connect\"}],\"contactFlowModules\":[{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/m2\",\"id\":\"m2\",\"name\":\"Mod Two\"},{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/m1\",\"id\":\"m1\",\"name\":\"Mod One\"}],\"queues\":[{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/q\",\"name\":\"Q\"}],\"hoursOfOperations\":[],\"prompts\":[],\"lambdaFunctions\":[],\"lexBots\":[],\"views\":[]},\"flows\":{\"f2\":{\"content\":\"{\\\"Version\\\":\\\"2019-10-30\\\",\\\"StartAction\\\":\\\"a\\\",\\\"Actions\\\":[{\\\"Identifier\\\":\\\"a\\\",\\\"Type\\\":\\\"DisconnectParticipant\\\",\\\"Parameters\\\":{},\\\"Transitions\\\":{}}]}\",\"name\":\"Second\",\"extra\":{\"description\":\"d\",\"version\":\"4\",\"contentSha256\":\"abc\"}},\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f1\":{\"content\":\"{\\\"Version\\\":\\\"2019-10-30\\\",\\\"StartAction\\\":\\\"a\\\",\\\"Actions\\\":[{\\\"Identifier\\\":\\\"a\\\",\\\"Type\\\":\\\"DisconnectParticipant\\\",\\\"Parameters\\\":{\\\"Q\\\":\\\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/q\\\"},\\\"Transitions\\\":{}}]}\",\"name\":\"First\"},\"f3\":{\"content\":\"{\\\"Version\\\":\\\"2019-10-30\\\",\\\"StartAction\\\":\\\"a\\\",\\\"Actions\\\":[{\\\"Identifier\\\":\\\"a\\\",\\\"Type\\\":\\\"DisconnectParticipant\\\",\\\"Parameters\\\":{},\\\"Transitions\\\":{}}]}\",\"name\":\"!!!\"},\"f5\":{\"content\":\"{\\\"Version\\\":\\\"2019-10-30\\\",\\\"StartAction\\\":\\\"a\\\",\\\"Actions\\\":[{\\\"Identifier\\\":\\\"a\\\",\\\"Type\\\":\\\"DisconnectParticipant\\\",\\\"Parameters\\\":{\\\"Q\\\":\\\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/gone\\\"},\\\"Transitions\\\":{}}]}\",\"name\":\"Stale\"},\"f6\":{\"content\":\"{\\\"Version\\\":\\\"2019-10-30\\\",\\\"StartAction\\\":\\\"a\\\",\\\"Actions\\\":[{\\\"Identifier\\\":\\\"a\\\",\\\"Type\\\":\\\"DisconnectParticipant\\\",\\\"Parameters\\\":{},\\\"Transitions\\\":{}}]}\",\"name\":\"Draft\",\"draft\":true},\"f8\":{\"content\":\"{\\\"Version\\\":\\\"2019-10-30\\\",\\\"StartAction\\\":\\\"a\\\",\\\"Actions\\\":[{\\\"Identifier\\\":\\\"a\\\",\\\"Type\\\":\\\"DisconnectParticipant\\\",\\\"Parameters\\\":{},\\\"Transitions\\\":{}}]}\",\"name\":\"Not Connect\"},\"m1\":{\"content\":\"{\\\"Version\\\":\\\"2019-10-30\\\",\\\"StartAction\\\":\\\"a\\\",\\\"Actions\\\":[{\\\"Identifier\\\":\\\"a\\\",\\\"Type\\\":\\\"DisconnectParticipant\\\",\\\"Parameters\\\":{},\\\"Transitions\\\":{}}]}\",\"name\":\"Mod One\",\"extra\":{\"settings\":\"{}\"}},\"m2\":{\"content\":\"{\\\"Version\\\":\\\"2019-10-30\\\",\\\"StartAction\\\":\\\"a\\\",\\\"Actions\\\":[{\\\"Identifier\\\":\\\"a\\\",\\\"Type\\\":\\\"DisconnectParticipant\\\",\\\"Parameters\\\":{},\\\"Transitions\\\":{}}]}\",\"name\":\"Mod Two\",\"extra\":{\"externalInvocationEnabled\":false},\"draft\":true}}}",
+      "options": {
+        "onError": "collect"
+      },
+      "calls": [
+        "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f1",
+        "f2",
+        "f3",
+        "f5",
+        "f6",
+        "f6:$SAVED",
+        "f7",
+        "f8",
+        "m1",
+        "m2",
+        "m2:$SAVED"
+      ],
+      "result": {
+        "flows": [
+          {
+            "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f1",
+            "id": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f1",
+            "sourceName": "First",
+            "saved": false,
+            "doc": "{\n  \"flowdoc\": \"0.2\",\n  \"kind\": \"flow\",\n  \"name\": \"first\",\n  \"connectType\": \"CONTACT_FLOW\",\n  \"content\": {\n    \"Version\": \"2019-10-30\",\n    \"StartAction\": \"a\",\n    \"Actions\": [\n      {\n        \"Identifier\": \"a\",\n        \"Type\": \"DisconnectParticipant\",\n        \"Parameters\": {\n          \"Q\": \"${cdref:queue:q}\"\n        },\n        \"Transitions\": {}\n      }\n    ]\n  },\n  \"layout\": {\n    \"a\": {\n      \"x\": 20,\n      \"y\": 20\n    }\n  },\n  \"refs\": [\n    {\n      \"token\": \"${cdref:queue:q}\",\n      \"type\": \"queue\",\n      \"name\": \"q\"\n    }\n  ],\n  \"meta\": {\n    \"generator\": \"core@0.2\",\n    \"source\": {\n      \"id\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f1\",\n      \"instanceId\": \"11111111-2222-3333-4444-555555555555\",\n      \"name\": \"First\"\n    }\n  }\n}\n"
+          },
+          {
+            "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f2",
+            "id": "f2",
+            "sourceName": "Second",
+            "saved": false,
+            "doc": "{\n  \"flowdoc\": \"0.2\",\n  \"kind\": \"flow\",\n  \"name\": \"second\",\n  \"description\": \"d\",\n  \"connectType\": \"QUEUE_TRANSFER\",\n  \"content\": {\n    \"Version\": \"2019-10-30\",\n    \"StartAction\": \"a\",\n    \"Actions\": [\n      {\n        \"Identifier\": \"a\",\n        \"Type\": \"DisconnectParticipant\",\n        \"Parameters\": {},\n        \"Transitions\": {}\n      }\n    ]\n  },\n  \"layout\": {\n    \"a\": {\n      \"x\": 20,\n      \"y\": 20\n    }\n  },\n  \"refs\": [],\n  \"meta\": {\n    \"generator\": \"core@0.2\",\n    \"source\": {\n      \"contentSha256\": \"abc\",\n      \"id\": \"f2\",\n      \"instanceId\": \"11111111-2222-3333-4444-555555555555\",\n      \"name\": \"Second\",\n      \"version\": \"4\"\n    }\n  }\n}\n"
+          },
+          {
+            "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f6",
+            "id": "f6",
+            "sourceName": "Draft",
+            "saved": true,
+            "doc": "{\n  \"flowdoc\": \"0.2\",\n  \"kind\": \"flow\",\n  \"name\": \"draft\",\n  \"connectType\": \"CONTACT_FLOW\",\n  \"content\": {\n    \"Version\": \"2019-10-30\",\n    \"StartAction\": \"a\",\n    \"Actions\": [\n      {\n        \"Identifier\": \"a\",\n        \"Type\": \"DisconnectParticipant\",\n        \"Parameters\": {},\n        \"Transitions\": {}\n      }\n    ]\n  },\n  \"layout\": {\n    \"a\": {\n      \"x\": 20,\n      \"y\": 20\n    }\n  },\n  \"refs\": [],\n  \"meta\": {\n    \"generator\": \"core@0.2\",\n    \"source\": {\n      \"alias\": \"$SAVED\",\n      \"id\": \"f6\",\n      \"instanceId\": \"11111111-2222-3333-4444-555555555555\",\n      \"name\": \"Draft\"\n    }\n  }\n}\n"
+          },
+          {
+            "arn": "arn:aws:other:r:1:x",
+            "id": "f8",
+            "sourceName": "Not Connect",
+            "saved": false,
+            "doc": "{\n  \"flowdoc\": \"0.2\",\n  \"kind\": \"flow\",\n  \"name\": \"not-connect\",\n  \"connectType\": \"CONTACT_FLOW\",\n  \"content\": {\n    \"Version\": \"2019-10-30\",\n    \"StartAction\": \"a\",\n    \"Actions\": [\n      {\n        \"Identifier\": \"a\",\n        \"Type\": \"DisconnectParticipant\",\n        \"Parameters\": {},\n        \"Transitions\": {}\n      }\n    ]\n  },\n  \"layout\": {\n    \"a\": {\n      \"x\": 20,\n      \"y\": 20\n    }\n  },\n  \"refs\": [],\n  \"meta\": {\n    \"generator\": \"core@0.2\",\n    \"source\": {\n      \"id\": \"f8\",\n      \"name\": \"Not Connect\"\n    }\n  }\n}\n"
+          },
+          {
+            "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/m1",
+            "id": "m1",
+            "sourceName": "Mod One",
+            "saved": false,
+            "doc": "{\n  \"flowdoc\": \"0.2\",\n  \"kind\": \"module\",\n  \"name\": \"mod-one\",\n  \"connectType\": \"MODULE\",\n  \"content\": {\n    \"Version\": \"2019-10-30\",\n    \"StartAction\": \"a\",\n    \"Actions\": [\n      {\n        \"Identifier\": \"a\",\n        \"Type\": \"DisconnectParticipant\",\n        \"Parameters\": {},\n        \"Transitions\": {}\n      }\n    ]\n  },\n  \"layout\": {\n    \"a\": {\n      \"x\": 20,\n      \"y\": 20\n    }\n  },\n  \"refs\": [],\n  \"meta\": {\n    \"generator\": \"core@0.2\",\n    \"source\": {\n      \"id\": \"m1\",\n      \"instanceId\": \"11111111-2222-3333-4444-555555555555\",\n      \"name\": \"Mod One\"\n    }\n  }\n}\n"
+          },
+          {
+            "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/m2",
+            "id": "m2",
+            "sourceName": "Mod Two",
+            "saved": true,
+            "doc": "{\n  \"flowdoc\": \"0.2\",\n  \"kind\": \"module\",\n  \"name\": \"mod-two\",\n  \"connectType\": \"MODULE\",\n  \"content\": {\n    \"Version\": \"2019-10-30\",\n    \"StartAction\": \"a\",\n    \"Actions\": [\n      {\n        \"Identifier\": \"a\",\n        \"Type\": \"DisconnectParticipant\",\n        \"Parameters\": {},\n        \"Transitions\": {}\n      }\n    ]\n  },\n  \"layout\": {\n    \"a\": {\n      \"x\": 20,\n      \"y\": 20\n    }\n  },\n  \"refs\": [],\n  \"meta\": {\n    \"generator\": \"core@0.2\",\n    \"source\": {\n      \"alias\": \"$SAVED\",\n      \"id\": \"m2\",\n      \"instanceId\": \"11111111-2222-3333-4444-555555555555\",\n      \"name\": \"Mod Two\"\n    }\n  }\n}\n"
+          }
+        ],
+        "warnings": [
+          "Skipping flow arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f3: name \"!!!\" has no slug form.",
+          "Skipping arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f4: ContactFlowType CAMPAIGN has no FlowDoc connectType.",
+          "Module arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/m1 carries Settings or ExternalInvocationConfiguration, which FlowDoc does not model; they are not exported.",
+          "Module arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/m2 carries Settings or ExternalInvocationConfiguration, which FlowDoc does not model; they are not exported."
+        ],
+        "failures": [
+          {
+            "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f3",
+            "name": "!!!",
+            "reason": "Cannot export arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f3: the instance inventory has no entry for it, so it has no name."
+          },
+          {
+            "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f5",
+            "name": "Stale",
+            "reason": "Cannot export \"stale\": 1 ARN(s) not found in the instance inventory: arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/gone",
+            "unknownArns": [
+              "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/gone"
+            ]
+          },
+          {
+            "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f7",
+            "name": "Missing",
+            "reason": "No fixture for f7"
+          }
+        ]
+      }
+    },
+    {
+      "spec": "{\"inventory\":{\"contactFlows\":[{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f2\",\"id\":\"f2\",\"name\":\"Second\",\"contactFlowType\":\"QUEUE_TRANSFER\"},{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f1\",\"name\":\"First\"},{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f3\",\"id\":\"f3\",\"name\":\"!!!\"},{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f4\",\"id\":\"f4\",\"name\":\"Campaign\",\"contactFlowType\":\"CAMPAIGN\"},{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f5\",\"id\":\"f5\",\"name\":\"Stale\"},{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f6\",\"id\":\"f6\",\"name\":\"Draft\"},{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f7\",\"id\":\"f7\",\"name\":\"Missing\"},{\"arn\":\"arn:aws:other:r:1:x\",\"id\":\"f8\",\"name\":\"Not Connect\"}],\"contactFlowModules\":[{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/m2\",\"id\":\"m2\",\"name\":\"Mod Two\"},{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/m1\",\"id\":\"m1\",\"name\":\"Mod One\"}],\"queues\":[{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/q\",\"name\":\"Q\"}],\"hoursOfOperations\":[],\"prompts\":[],\"lambdaFunctions\":[],\"lexBots\":[],\"views\":[]},\"flows\":{\"f2\":{\"content\":\"{\\\"Version\\\":\\\"2019-10-30\\\",\\\"StartAction\\\":\\\"a\\\",\\\"Actions\\\":[{\\\"Identifier\\\":\\\"a\\\",\\\"Type\\\":\\\"DisconnectParticipant\\\",\\\"Parameters\\\":{},\\\"Transitions\\\":{}}]}\",\"name\":\"Second\",\"extra\":{\"description\":\"d\",\"version\":\"4\",\"contentSha256\":\"abc\"}},\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f1\":{\"content\":\"{\\\"Version\\\":\\\"2019-10-30\\\",\\\"StartAction\\\":\\\"a\\\",\\\"Actions\\\":[{\\\"Identifier\\\":\\\"a\\\",\\\"Type\\\":\\\"DisconnectParticipant\\\",\\\"Parameters\\\":{\\\"Q\\\":\\\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/q\\\"},\\\"Transitions\\\":{}}]}\",\"name\":\"First\"},\"f3\":{\"content\":\"{\\\"Version\\\":\\\"2019-10-30\\\",\\\"StartAction\\\":\\\"a\\\",\\\"Actions\\\":[{\\\"Identifier\\\":\\\"a\\\",\\\"Type\\\":\\\"DisconnectParticipant\\\",\\\"Parameters\\\":{},\\\"Transitions\\\":{}}]}\",\"name\":\"!!!\"},\"f5\":{\"content\":\"{\\\"Version\\\":\\\"2019-10-30\\\",\\\"StartAction\\\":\\\"a\\\",\\\"Actions\\\":[{\\\"Identifier\\\":\\\"a\\\",\\\"Type\\\":\\\"DisconnectParticipant\\\",\\\"Parameters\\\":{\\\"Q\\\":\\\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/gone\\\"},\\\"Transitions\\\":{}}]}\",\"name\":\"Stale\"},\"f6\":{\"content\":\"{\\\"Version\\\":\\\"2019-10-30\\\",\\\"StartAction\\\":\\\"a\\\",\\\"Actions\\\":[{\\\"Identifier\\\":\\\"a\\\",\\\"Type\\\":\\\"DisconnectParticipant\\\",\\\"Parameters\\\":{},\\\"Transitions\\\":{}}]}\",\"name\":\"Draft\",\"draft\":true},\"f8\":{\"content\":\"{\\\"Version\\\":\\\"2019-10-30\\\",\\\"StartAction\\\":\\\"a\\\",\\\"Actions\\\":[{\\\"Identifier\\\":\\\"a\\\",\\\"Type\\\":\\\"DisconnectParticipant\\\",\\\"Parameters\\\":{},\\\"Transitions\\\":{}}]}\",\"name\":\"Not Connect\"},\"m1\":{\"content\":\"{\\\"Version\\\":\\\"2019-10-30\\\",\\\"StartAction\\\":\\\"a\\\",\\\"Actions\\\":[{\\\"Identifier\\\":\\\"a\\\",\\\"Type\\\":\\\"DisconnectParticipant\\\",\\\"Parameters\\\":{},\\\"Transitions\\\":{}}]}\",\"name\":\"Mod One\",\"extra\":{\"settings\":\"{}\"}},\"m2\":{\"content\":\"{\\\"Version\\\":\\\"2019-10-30\\\",\\\"StartAction\\\":\\\"a\\\",\\\"Actions\\\":[{\\\"Identifier\\\":\\\"a\\\",\\\"Type\\\":\\\"DisconnectParticipant\\\",\\\"Parameters\\\":{},\\\"Transitions\\\":{}}]}\",\"name\":\"Mod Two\",\"extra\":{\"externalInvocationEnabled\":false},\"draft\":true}}}",
+      "options": {
+        "onError": "collect",
+        "savedFallback": false,
+        "generator": "g@1"
+      },
+      "calls": [
+        "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f1",
+        "f2",
+        "f3",
+        "f5",
+        "f6",
+        "f7",
+        "f8",
+        "m1",
+        "m2"
+      ],
+      "result": {
+        "flows": [
+          {
+            "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f1",
+            "id": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f1",
+            "sourceName": "First",
+            "saved": false,
+            "doc": "{\n  \"flowdoc\": \"0.2\",\n  \"kind\": \"flow\",\n  \"name\": \"first\",\n  \"connectType\": \"CONTACT_FLOW\",\n  \"content\": {\n    \"Version\": \"2019-10-30\",\n    \"StartAction\": \"a\",\n    \"Actions\": [\n      {\n        \"Identifier\": \"a\",\n        \"Type\": \"DisconnectParticipant\",\n        \"Parameters\": {\n          \"Q\": \"${cdref:queue:q}\"\n        },\n        \"Transitions\": {}\n      }\n    ]\n  },\n  \"layout\": {\n    \"a\": {\n      \"x\": 20,\n      \"y\": 20\n    }\n  },\n  \"refs\": [\n    {\n      \"token\": \"${cdref:queue:q}\",\n      \"type\": \"queue\",\n      \"name\": \"q\"\n    }\n  ],\n  \"meta\": {\n    \"generator\": \"g@1\",\n    \"source\": {\n      \"id\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f1\",\n      \"instanceId\": \"11111111-2222-3333-4444-555555555555\",\n      \"name\": \"First\"\n    }\n  }\n}\n"
+          },
+          {
+            "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f2",
+            "id": "f2",
+            "sourceName": "Second",
+            "saved": false,
+            "doc": "{\n  \"flowdoc\": \"0.2\",\n  \"kind\": \"flow\",\n  \"name\": \"second\",\n  \"description\": \"d\",\n  \"connectType\": \"QUEUE_TRANSFER\",\n  \"content\": {\n    \"Version\": \"2019-10-30\",\n    \"StartAction\": \"a\",\n    \"Actions\": [\n      {\n        \"Identifier\": \"a\",\n        \"Type\": \"DisconnectParticipant\",\n        \"Parameters\": {},\n        \"Transitions\": {}\n      }\n    ]\n  },\n  \"layout\": {\n    \"a\": {\n      \"x\": 20,\n      \"y\": 20\n    }\n  },\n  \"refs\": [],\n  \"meta\": {\n    \"generator\": \"g@1\",\n    \"source\": {\n      \"contentSha256\": \"abc\",\n      \"id\": \"f2\",\n      \"instanceId\": \"11111111-2222-3333-4444-555555555555\",\n      \"name\": \"Second\",\n      \"version\": \"4\"\n    }\n  }\n}\n"
+          },
+          {
+            "arn": "arn:aws:other:r:1:x",
+            "id": "f8",
+            "sourceName": "Not Connect",
+            "saved": false,
+            "doc": "{\n  \"flowdoc\": \"0.2\",\n  \"kind\": \"flow\",\n  \"name\": \"not-connect\",\n  \"connectType\": \"CONTACT_FLOW\",\n  \"content\": {\n    \"Version\": \"2019-10-30\",\n    \"StartAction\": \"a\",\n    \"Actions\": [\n      {\n        \"Identifier\": \"a\",\n        \"Type\": \"DisconnectParticipant\",\n        \"Parameters\": {},\n        \"Transitions\": {}\n      }\n    ]\n  },\n  \"layout\": {\n    \"a\": {\n      \"x\": 20,\n      \"y\": 20\n    }\n  },\n  \"refs\": [],\n  \"meta\": {\n    \"generator\": \"g@1\",\n    \"source\": {\n      \"id\": \"f8\",\n      \"name\": \"Not Connect\"\n    }\n  }\n}\n"
+          },
+          {
+            "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/m1",
+            "id": "m1",
+            "sourceName": "Mod One",
+            "saved": false,
+            "doc": "{\n  \"flowdoc\": \"0.2\",\n  \"kind\": \"module\",\n  \"name\": \"mod-one\",\n  \"connectType\": \"MODULE\",\n  \"content\": {\n    \"Version\": \"2019-10-30\",\n    \"StartAction\": \"a\",\n    \"Actions\": [\n      {\n        \"Identifier\": \"a\",\n        \"Type\": \"DisconnectParticipant\",\n        \"Parameters\": {},\n        \"Transitions\": {}\n      }\n    ]\n  },\n  \"layout\": {\n    \"a\": {\n      \"x\": 20,\n      \"y\": 20\n    }\n  },\n  \"refs\": [],\n  \"meta\": {\n    \"generator\": \"g@1\",\n    \"source\": {\n      \"id\": \"m1\",\n      \"instanceId\": \"11111111-2222-3333-4444-555555555555\",\n      \"name\": \"Mod One\"\n    }\n  }\n}\n"
+          }
+        ],
+        "warnings": [
+          "Skipping flow arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f3: name \"!!!\" has no slug form.",
+          "Skipping arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f4: ContactFlowType CAMPAIGN has no FlowDoc connectType.",
+          "Module arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/m1 carries Settings or ExternalInvocationConfiguration, which FlowDoc does not model; they are not exported."
+        ],
+        "failures": [
+          {
+            "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f3",
+            "name": "!!!",
+            "reason": "Cannot export arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f3: the instance inventory has no entry for it, so it has no name."
+          },
+          {
+            "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f5",
+            "name": "Stale",
+            "reason": "Cannot export \"stale\": 1 ARN(s) not found in the instance inventory: arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/gone",
+            "unknownArns": [
+              "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/gone"
+            ]
+          },
+          {
+            "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f6",
+            "name": "Draft",
+            "reason": "Flow f6 has not been published."
+          },
+          {
+            "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f7",
+            "name": "Missing",
+            "reason": "No fixture for f7"
+          },
+          {
+            "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/m2",
+            "name": "Mod Two",
+            "reason": "Flow m2 has not been published."
+          }
+        ]
+      }
+    },
+    {
+      "spec": "{\"inventory\":{\"contactFlows\":[{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f2\",\"id\":\"f2\",\"name\":\"Second\",\"contactFlowType\":\"QUEUE_TRANSFER\"},{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f1\",\"name\":\"First\"},{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f3\",\"id\":\"f3\",\"name\":\"!!!\"},{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f4\",\"id\":\"f4\",\"name\":\"Campaign\",\"contactFlowType\":\"CAMPAIGN\"},{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f5\",\"id\":\"f5\",\"name\":\"Stale\"},{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f6\",\"id\":\"f6\",\"name\":\"Draft\"},{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f7\",\"id\":\"f7\",\"name\":\"Missing\"},{\"arn\":\"arn:aws:other:r:1:x\",\"id\":\"f8\",\"name\":\"Not Connect\"}],\"contactFlowModules\":[{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/m2\",\"id\":\"m2\",\"name\":\"Mod Two\"},{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/m1\",\"id\":\"m1\",\"name\":\"Mod One\"}],\"queues\":[{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/q\",\"name\":\"Q\"}],\"hoursOfOperations\":[],\"prompts\":[],\"lambdaFunctions\":[],\"lexBots\":[],\"views\":[]},\"flows\":{\"f2\":{\"content\":\"{\\\"Version\\\":\\\"2019-10-30\\\",\\\"StartAction\\\":\\\"a\\\",\\\"Actions\\\":[{\\\"Identifier\\\":\\\"a\\\",\\\"Type\\\":\\\"DisconnectParticipant\\\",\\\"Parameters\\\":{},\\\"Transitions\\\":{}}]}\",\"name\":\"Second\",\"extra\":{\"description\":\"d\",\"version\":\"4\",\"contentSha256\":\"abc\"}},\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f1\":{\"content\":\"{\\\"Version\\\":\\\"2019-10-30\\\",\\\"StartAction\\\":\\\"a\\\",\\\"Actions\\\":[{\\\"Identifier\\\":\\\"a\\\",\\\"Type\\\":\\\"DisconnectParticipant\\\",\\\"Parameters\\\":{\\\"Q\\\":\\\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/q\\\"},\\\"Transitions\\\":{}}]}\",\"name\":\"First\"},\"f3\":{\"content\":\"{\\\"Version\\\":\\\"2019-10-30\\\",\\\"StartAction\\\":\\\"a\\\",\\\"Actions\\\":[{\\\"Identifier\\\":\\\"a\\\",\\\"Type\\\":\\\"DisconnectParticipant\\\",\\\"Parameters\\\":{},\\\"Transitions\\\":{}}]}\",\"name\":\"!!!\"},\"f5\":{\"content\":\"{\\\"Version\\\":\\\"2019-10-30\\\",\\\"StartAction\\\":\\\"a\\\",\\\"Actions\\\":[{\\\"Identifier\\\":\\\"a\\\",\\\"Type\\\":\\\"DisconnectParticipant\\\",\\\"Parameters\\\":{\\\"Q\\\":\\\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/gone\\\"},\\\"Transitions\\\":{}}]}\",\"name\":\"Stale\"},\"f6\":{\"content\":\"{\\\"Version\\\":\\\"2019-10-30\\\",\\\"StartAction\\\":\\\"a\\\",\\\"Actions\\\":[{\\\"Identifier\\\":\\\"a\\\",\\\"Type\\\":\\\"DisconnectParticipant\\\",\\\"Parameters\\\":{},\\\"Transitions\\\":{}}]}\",\"name\":\"Draft\",\"draft\":true},\"f8\":{\"content\":\"{\\\"Version\\\":\\\"2019-10-30\\\",\\\"StartAction\\\":\\\"a\\\",\\\"Actions\\\":[{\\\"Identifier\\\":\\\"a\\\",\\\"Type\\\":\\\"DisconnectParticipant\\\",\\\"Parameters\\\":{},\\\"Transitions\\\":{}}]}\",\"name\":\"Not Connect\"},\"m1\":{\"content\":\"{\\\"Version\\\":\\\"2019-10-30\\\",\\\"StartAction\\\":\\\"a\\\",\\\"Actions\\\":[{\\\"Identifier\\\":\\\"a\\\",\\\"Type\\\":\\\"DisconnectParticipant\\\",\\\"Parameters\\\":{},\\\"Transitions\\\":{}}]}\",\"name\":\"Mod One\",\"extra\":{\"settings\":\"{}\"}},\"m2\":{\"content\":\"{\\\"Version\\\":\\\"2019-10-30\\\",\\\"StartAction\\\":\\\"a\\\",\\\"Actions\\\":[{\\\"Identifier\\\":\\\"a\\\",\\\"Type\\\":\\\"DisconnectParticipant\\\",\\\"Parameters\\\":{},\\\"Transitions\\\":{}}]}\",\"name\":\"Mod Two\",\"extra\":{\"externalInvocationEnabled\":false},\"draft\":true}}}",
+      "options": {},
+      "calls": [
+        "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f1",
+        "f2",
+        "f3"
+      ],
+      "result": {
+        "error": {
+          "name": "Error",
+          "message": "Cannot export arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f3: the instance inventory has no entry for it, so it has no name."
+        }
+      }
+    },
+    {
+      "spec": "{\"inventory\":{\"contactFlows\":[{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f2\",\"id\":\"f2\",\"name\":\"Second\",\"contactFlowType\":\"QUEUE_TRANSFER\"},{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f1\",\"name\":\"First\"},{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f3\",\"id\":\"f3\",\"name\":\"!!!\"},{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f4\",\"id\":\"f4\",\"name\":\"Campaign\",\"contactFlowType\":\"CAMPAIGN\"},{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f5\",\"id\":\"f5\",\"name\":\"Stale\"},{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f6\",\"id\":\"f6\",\"name\":\"Draft\"},{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f7\",\"id\":\"f7\",\"name\":\"Missing\"},{\"arn\":\"arn:aws:other:r:1:x\",\"id\":\"f8\",\"name\":\"Not Connect\"}],\"contactFlowModules\":[{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/m2\",\"id\":\"m2\",\"name\":\"Mod Two\"},{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/m1\",\"id\":\"m1\",\"name\":\"Mod One\"}],\"queues\":[{\"arn\":\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/q\",\"name\":\"Q\"}],\"hoursOfOperations\":[],\"prompts\":[],\"lambdaFunctions\":[],\"lexBots\":[],\"views\":[]},\"flows\":{\"f2\":{\"content\":\"{\\\"Version\\\":\\\"2019-10-30\\\",\\\"StartAction\\\":\\\"a\\\",\\\"Actions\\\":[{\\\"Identifier\\\":\\\"a\\\",\\\"Type\\\":\\\"DisconnectParticipant\\\",\\\"Parameters\\\":{},\\\"Transitions\\\":{}}]}\",\"name\":\"Second\",\"extra\":{\"description\":\"d\",\"version\":\"4\",\"contentSha256\":\"abc\"}},\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f1\":{\"content\":\"{\\\"Version\\\":\\\"2019-10-30\\\",\\\"StartAction\\\":\\\"a\\\",\\\"Actions\\\":[{\\\"Identifier\\\":\\\"a\\\",\\\"Type\\\":\\\"DisconnectParticipant\\\",\\\"Parameters\\\":{\\\"Q\\\":\\\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/q\\\"},\\\"Transitions\\\":{}}]}\",\"name\":\"First\"},\"f3\":{\"content\":\"{\\\"Version\\\":\\\"2019-10-30\\\",\\\"StartAction\\\":\\\"a\\\",\\\"Actions\\\":[{\\\"Identifier\\\":\\\"a\\\",\\\"Type\\\":\\\"DisconnectParticipant\\\",\\\"Parameters\\\":{},\\\"Transitions\\\":{}}]}\",\"name\":\"!!!\"},\"f5\":{\"content\":\"{\\\"Version\\\":\\\"2019-10-30\\\",\\\"StartAction\\\":\\\"a\\\",\\\"Actions\\\":[{\\\"Identifier\\\":\\\"a\\\",\\\"Type\\\":\\\"DisconnectParticipant\\\",\\\"Parameters\\\":{\\\"Q\\\":\\\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/gone\\\"},\\\"Transitions\\\":{}}]}\",\"name\":\"Stale\"},\"f6\":{\"content\":\"{\\\"Version\\\":\\\"2019-10-30\\\",\\\"StartAction\\\":\\\"a\\\",\\\"Actions\\\":[{\\\"Identifier\\\":\\\"a\\\",\\\"Type\\\":\\\"DisconnectParticipant\\\",\\\"Parameters\\\":{},\\\"Transitions\\\":{}}]}\",\"name\":\"Draft\",\"draft\":true},\"f8\":{\"content\":\"{\\\"Version\\\":\\\"2019-10-30\\\",\\\"StartAction\\\":\\\"a\\\",\\\"Actions\\\":[{\\\"Identifier\\\":\\\"a\\\",\\\"Type\\\":\\\"DisconnectParticipant\\\",\\\"Parameters\\\":{},\\\"Transitions\\\":{}}]}\",\"name\":\"Not Connect\"},\"m1\":{\"content\":\"{\\\"Version\\\":\\\"2019-10-30\\\",\\\"StartAction\\\":\\\"a\\\",\\\"Actions\\\":[{\\\"Identifier\\\":\\\"a\\\",\\\"Type\\\":\\\"DisconnectParticipant\\\",\\\"Parameters\\\":{},\\\"Transitions\\\":{}}]}\",\"name\":\"Mod One\",\"extra\":{\"settings\":\"{}\"}},\"m2\":{\"content\":\"{\\\"Version\\\":\\\"2019-10-30\\\",\\\"StartAction\\\":\\\"a\\\",\\\"Actions\\\":[{\\\"Identifier\\\":\\\"a\\\",\\\"Type\\\":\\\"DisconnectParticipant\\\",\\\"Parameters\\\":{},\\\"Transitions\\\":{}}]}\",\"name\":\"Mod Two\",\"extra\":{\"externalInvocationEnabled\":false},\"draft\":true}}}",
+      "options": {
+        "includeModules": false,
+        "onError": "collect"
+      },
+      "calls": [
+        "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f1",
+        "f2",
+        "f3",
+        "f5",
+        "f6",
+        "f6:$SAVED",
+        "f7",
+        "f8"
+      ],
+      "result": {
+        "flows": [
+          {
+            "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f1",
+            "id": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f1",
+            "sourceName": "First",
+            "saved": false,
+            "doc": "{\n  \"flowdoc\": \"0.2\",\n  \"kind\": \"flow\",\n  \"name\": \"first\",\n  \"connectType\": \"CONTACT_FLOW\",\n  \"content\": {\n    \"Version\": \"2019-10-30\",\n    \"StartAction\": \"a\",\n    \"Actions\": [\n      {\n        \"Identifier\": \"a\",\n        \"Type\": \"DisconnectParticipant\",\n        \"Parameters\": {\n          \"Q\": \"${cdref:queue:q}\"\n        },\n        \"Transitions\": {}\n      }\n    ]\n  },\n  \"layout\": {\n    \"a\": {\n      \"x\": 20,\n      \"y\": 20\n    }\n  },\n  \"refs\": [\n    {\n      \"token\": \"${cdref:queue:q}\",\n      \"type\": \"queue\",\n      \"name\": \"q\"\n    }\n  ],\n  \"meta\": {\n    \"generator\": \"core@0.2\",\n    \"source\": {\n      \"id\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f1\",\n      \"instanceId\": \"11111111-2222-3333-4444-555555555555\",\n      \"name\": \"First\"\n    }\n  }\n}\n"
+          },
+          {
+            "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f2",
+            "id": "f2",
+            "sourceName": "Second",
+            "saved": false,
+            "doc": "{\n  \"flowdoc\": \"0.2\",\n  \"kind\": \"flow\",\n  \"name\": \"second\",\n  \"description\": \"d\",\n  \"connectType\": \"QUEUE_TRANSFER\",\n  \"content\": {\n    \"Version\": \"2019-10-30\",\n    \"StartAction\": \"a\",\n    \"Actions\": [\n      {\n        \"Identifier\": \"a\",\n        \"Type\": \"DisconnectParticipant\",\n        \"Parameters\": {},\n        \"Transitions\": {}\n      }\n    ]\n  },\n  \"layout\": {\n    \"a\": {\n      \"x\": 20,\n      \"y\": 20\n    }\n  },\n  \"refs\": [],\n  \"meta\": {\n    \"generator\": \"core@0.2\",\n    \"source\": {\n      \"contentSha256\": \"abc\",\n      \"id\": \"f2\",\n      \"instanceId\": \"11111111-2222-3333-4444-555555555555\",\n      \"name\": \"Second\",\n      \"version\": \"4\"\n    }\n  }\n}\n"
+          },
+          {
+            "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f6",
+            "id": "f6",
+            "sourceName": "Draft",
+            "saved": true,
+            "doc": "{\n  \"flowdoc\": \"0.2\",\n  \"kind\": \"flow\",\n  \"name\": \"draft\",\n  \"connectType\": \"CONTACT_FLOW\",\n  \"content\": {\n    \"Version\": \"2019-10-30\",\n    \"StartAction\": \"a\",\n    \"Actions\": [\n      {\n        \"Identifier\": \"a\",\n        \"Type\": \"DisconnectParticipant\",\n        \"Parameters\": {},\n        \"Transitions\": {}\n      }\n    ]\n  },\n  \"layout\": {\n    \"a\": {\n      \"x\": 20,\n      \"y\": 20\n    }\n  },\n  \"refs\": [],\n  \"meta\": {\n    \"generator\": \"core@0.2\",\n    \"source\": {\n      \"alias\": \"$SAVED\",\n      \"id\": \"f6\",\n      \"instanceId\": \"11111111-2222-3333-4444-555555555555\",\n      \"name\": \"Draft\"\n    }\n  }\n}\n"
+          },
+          {
+            "arn": "arn:aws:other:r:1:x",
+            "id": "f8",
+            "sourceName": "Not Connect",
+            "saved": false,
+            "doc": "{\n  \"flowdoc\": \"0.2\",\n  \"kind\": \"flow\",\n  \"name\": \"not-connect\",\n  \"connectType\": \"CONTACT_FLOW\",\n  \"content\": {\n    \"Version\": \"2019-10-30\",\n    \"StartAction\": \"a\",\n    \"Actions\": [\n      {\n        \"Identifier\": \"a\",\n        \"Type\": \"DisconnectParticipant\",\n        \"Parameters\": {},\n        \"Transitions\": {}\n      }\n    ]\n  },\n  \"layout\": {\n    \"a\": {\n      \"x\": 20,\n      \"y\": 20\n    }\n  },\n  \"refs\": [],\n  \"meta\": {\n    \"generator\": \"core@0.2\",\n    \"source\": {\n      \"id\": \"f8\",\n      \"name\": \"Not Connect\"\n    }\n  }\n}\n"
+          }
+        ],
+        "warnings": [
+          "Skipping flow arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f3: name \"!!!\" has no slug form.",
+          "Skipping arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f4: ContactFlowType CAMPAIGN has no FlowDoc connectType."
+        ],
+        "failures": [
+          {
+            "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f3",
+            "name": "!!!",
+            "reason": "Cannot export arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f3: the instance inventory has no entry for it, so it has no name."
+          },
+          {
+            "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f5",
+            "name": "Stale",
+            "reason": "Cannot export \"stale\": 1 ARN(s) not found in the instance inventory: arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/gone",
+            "unknownArns": [
+              "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/gone"
+            ]
+          },
+          {
+            "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f7",
+            "name": "Missing",
+            "reason": "No fixture for f7"
+          }
+        ]
+      }
+    }
+  ]
+}
