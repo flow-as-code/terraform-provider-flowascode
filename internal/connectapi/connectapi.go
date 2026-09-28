@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 // Package connectapi is the seam between the provider and Amazon Connect:
-// exactly the operations the resources call, each with its API reference, so
-// the resources can be tested against a fake.
+// exactly the operations the resources and the export inventory adapter call,
+// each with its API reference, so both can be tested against a fake.
 package connectapi
 
 import (
@@ -58,6 +58,20 @@ type API interface {
 	UpdateContactFlowModuleAlias(ctx context.Context, in *connect.UpdateContactFlowModuleAliasInput, opts ...func(*connect.Options)) (*connect.UpdateContactFlowModuleAliasOutput, error)
 	// https://docs.aws.amazon.com/connect/latest/APIReference/API_DeleteContactFlowModuleAlias.html
 	DeleteContactFlowModuleAlias(ctx context.Context, in *connect.DeleteContactFlowModuleAliasInput, opts ...func(*connect.Options)) (*connect.DeleteContactFlowModuleAliasOutput, error)
+	// https://docs.aws.amazon.com/connect/latest/APIReference/API_ListContactFlows.html
+	ListContactFlows(ctx context.Context, in *connect.ListContactFlowsInput, opts ...func(*connect.Options)) (*connect.ListContactFlowsOutput, error)
+	// https://docs.aws.amazon.com/connect/latest/APIReference/API_ListContactFlowModules.html
+	ListContactFlowModules(ctx context.Context, in *connect.ListContactFlowModulesInput, opts ...func(*connect.Options)) (*connect.ListContactFlowModulesOutput, error)
+	// https://docs.aws.amazon.com/connect/latest/APIReference/API_ListQueues.html
+	ListQueues(ctx context.Context, in *connect.ListQueuesInput, opts ...func(*connect.Options)) (*connect.ListQueuesOutput, error)
+	// https://docs.aws.amazon.com/connect/latest/APIReference/API_ListHoursOfOperations.html
+	ListHoursOfOperations(ctx context.Context, in *connect.ListHoursOfOperationsInput, opts ...func(*connect.Options)) (*connect.ListHoursOfOperationsOutput, error)
+	// https://docs.aws.amazon.com/connect/latest/APIReference/API_ListPrompts.html
+	ListPrompts(ctx context.Context, in *connect.ListPromptsInput, opts ...func(*connect.Options)) (*connect.ListPromptsOutput, error)
+	// https://docs.aws.amazon.com/connect/latest/APIReference/API_ListLambdaFunctions.html
+	ListLambdaFunctions(ctx context.Context, in *connect.ListLambdaFunctionsInput, opts ...func(*connect.Options)) (*connect.ListLambdaFunctionsOutput, error)
+	// https://docs.aws.amazon.com/connect/latest/APIReference/API_ListBots.html
+	ListBots(ctx context.Context, in *connect.ListBotsInput, opts ...func(*connect.Options)) (*connect.ListBotsOutput, error)
 	// https://docs.aws.amazon.com/connect/latest/APIReference/API_ListViews.html
 	ListViews(ctx context.Context, in *connect.ListViewsInput, opts ...func(*connect.Options)) (*connect.ListViewsOutput, error)
 	// https://docs.aws.amazon.com/connect/latest/APIReference/API_TagResource.html

@@ -218,6 +218,9 @@ func (f *Fake) DeleteContactFlowModuleAlias(_ context.Context, in *connect.Delet
 
 // Views are what ListViews returns, set by a test.
 func (f *Fake) SetViews(views []types.ViewSummary) {
+	for _, v := range views {
+		mustBePlaceholder(aws.ToString(v.Arn))
+	}
 	f.mu.Lock()
 	defer f.mu.Unlock()
 	f.views = views
@@ -227,11 +230,17 @@ func (f *Fake) ListViews(_ context.Context, in *connect.ListViewsInput, _ ...fun
 	f.mu.Lock()
 	defer f.mu.Unlock()
 	f.record("ListViews")
-	var out []types.ViewSummary
+	var all []types.ViewSummary
 	for _, v := range f.views {
 		if in.Type == "" || v.Type == in.Type {
-			out = append(out, v)
+			all = append(all, v)
 		}
 	}
-	return &connect.ListViewsOutput{ViewsSummaryList: out}, nil
+	// MaxResults runs 1 to 100 here.
+	// https://docs.aws.amazon.com/connect/latest/APIReference/API_ListViews.html
+	page, next, err := fakePage("ListViews", all, in.MaxResults, 100, in.NextToken)
+	if err != nil {
+		return nil, err
+	}
+	return &connect.ListViewsOutput{ViewsSummaryList: page, NextToken: next}, nil
 }

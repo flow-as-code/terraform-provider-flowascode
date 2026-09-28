@@ -6,6 +6,7 @@ package connectapi
 import (
 	"context"
 	"fmt"
+	"strings"
 	"sync"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
@@ -22,6 +23,14 @@ type Fake struct {
 	flows   map[string]*types.ContactFlow
 	modules map[string]*fakeModule
 	views   []types.ViewSummary
+	// Resources only the List* operations read, set by a test.
+	queues  []types.QueueSummary
+	hours   []types.HoursOfOperationSummary
+	prompts []types.PromptSummary
+	lambdas []string
+	bots    []types.LexBotConfig
+	// neverPublished holds the ids of flows that have only ever been saved.
+	neverPublished map[string]bool
 	// Calls records every operation, in order, for assertions.
 	Calls []string
 }
@@ -82,9 +91,16 @@ func (f *Fake) DescribeContactFlow(_ context.Context, in *connect.DescribeContac
 	f.mu.Lock()
 	defer f.mu.Unlock()
 	f.record("DescribeContactFlow")
-	c, ok := f.flows[aws.ToString(in.ContactFlowId)]
+	// "Use the $SAVED alias in the request to describe the SAVED content of a
+	// Flow." A never-published flow is readable only through it.
+	// https://docs.aws.amazon.com/connect/latest/APIReference/API_DescribeContactFlow.html
+	id, saved := strings.CutSuffix(aws.ToString(in.ContactFlowId), ":$SAVED")
+	c, ok := f.flows[id]
 	if !ok {
 		return nil, notFound(aws.ToString(in.ContactFlowId))
+	}
+	if f.neverPublished[id] && !saved {
+		return nil, &types.ContactFlowNotPublishedException{Message: aws.String(fmt.Sprintf("flow %s has not been published", id))}
 	}
 	copied := *c
 	return &connect.DescribeContactFlowOutput{ContactFlow: &copied}, nil
