@@ -1,0 +1,3723 @@
+{
+ "generatedFrom": "e414239312cb586c1ca82e2ec4697eb9e94b5b11",
+ "ajv": "8.20.0",
+ "cases": [
+  {
+   "id": "FlowDoc schema: validates the demo flow",
+   "version": "0.2",
+   "sha256": "580c83a96acb61017d68e016b148b9333ee29bb42e397171980ceb096c5d8f05",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "FlowDoc schema rejections: rejects a literal ARN in a queue reference",
+   "version": "0.2",
+   "sha256": "76135dd7f6f3b1a310294e932c8168f58ada0faa3e5929d7df5b6efe0fe07197",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/3/Parameters/QueueId",
+     "schemaPath": "#/$defs/token/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\{cdref:(queue|hours|lambda|lex|prompt|flow|module|view):[a-z0-9]+(-[a-z0-9]+)*(@[a-z0-9]+(-[a-z0-9]+)*)?\\}$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/3/Parameters/QueueId",
+     "schemaPath": "#/$defs/jsonPath/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\.[A-Za-z0-9_$.\\[\\]'-]+$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/3/Parameters/QueueId",
+     "schemaPath": "#/oneOf",
+     "keyword": "oneOf",
+     "message": "must match exactly one schema in oneOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/3",
+     "schemaPath": "#/allOf/0/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: rejects a literal ARN in a lambda reference",
+   "version": "0.2",
+   "sha256": "5fd73b79df930da7d8765cd209fd437bd99f3f8f31b5601f8682de496f88f379",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/4/Parameters/LambdaFunctionARN",
+     "schemaPath": "#/$defs/token/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\{cdref:(queue|hours|lambda|lex|prompt|flow|module|view):[a-z0-9]+(-[a-z0-9]+)*(@[a-z0-9]+(-[a-z0-9]+)*)?\\}$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/4/Parameters/LambdaFunctionARN",
+     "schemaPath": "#/$defs/jsonPath/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\.[A-Za-z0-9_$.\\[\\]'-]+$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/4/Parameters/LambdaFunctionARN",
+     "schemaPath": "#/oneOf",
+     "keyword": "oneOf",
+     "message": "must match exactly one schema in oneOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/4",
+     "schemaPath": "#/allOf/2/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: rejects a token interpolated into a longer string",
+   "version": "0.2",
+   "sha256": "3135750f27b097053c321b93a9527011c72fa0cb5576a5a83af83543781a70f0",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/3/Parameters/QueueId",
+     "schemaPath": "#/$defs/token/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\{cdref:(queue|hours|lambda|lex|prompt|flow|module|view):[a-z0-9]+(-[a-z0-9]+)*(@[a-z0-9]+(-[a-z0-9]+)*)?\\}$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/3/Parameters/QueueId",
+     "schemaPath": "#/$defs/jsonPath/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\.[A-Za-z0-9_$.\\[\\]'-]+$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/3/Parameters/QueueId",
+     "schemaPath": "#/oneOf",
+     "keyword": "oneOf",
+     "message": "must match exactly one schema in oneOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/3",
+     "schemaPath": "#/allOf/0/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: rejects QueueId and AgentId set together",
+   "version": "0.2",
+   "sha256": "b8fa275a8f5ab73715e3be13ee3ae64fbd77d99a144819c30712c731d89c22cc",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/3/Parameters",
+     "schemaPath": "#/allOf/6/then/properties/Parameters/not",
+     "keyword": "not",
+     "message": "must NOT be valid",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/3",
+     "schemaPath": "#/allOf/6/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: rejects MessageParticipant with both Text and SSML",
+   "version": "0.2",
+   "sha256": "cc6991b4f66c4f1fdcbf70028b3e5fdc7e0b7b4625017629f0522c4487cfb701",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/1/Parameters",
+     "schemaPath": "#/allOf/26/then/properties/Parameters/oneOf/0/not",
+     "keyword": "not",
+     "message": "must NOT be valid",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/1/Parameters",
+     "schemaPath": "#/allOf/26/then/properties/Parameters/oneOf/0/required",
+     "keyword": "required",
+     "message": "must have required property 'PromptId'",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/1/Parameters",
+     "schemaPath": "#/allOf/26/then/properties/Parameters/oneOf/1/not",
+     "keyword": "not",
+     "message": "must NOT be valid",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/1/Parameters",
+     "schemaPath": "#/allOf/26/then/properties/Parameters/oneOf/2/not",
+     "keyword": "not",
+     "message": "must NOT be valid",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/1/Parameters",
+     "schemaPath": "#/allOf/26/then/properties/Parameters/oneOf",
+     "keyword": "oneOf",
+     "message": "must match exactly one schema in oneOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/1",
+     "schemaPath": "#/allOf/26/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: rejects a Lambda timeout above the documented maximum of 8",
+   "version": "0.2",
+   "sha256": "c1fc85d1fe7eec54e8318c07713dc0d095d6cc4b141b433deb76d2b3217a680b",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/4/Parameters/InvocationTimeLimitSeconds",
+     "schemaPath": "#/allOf/27/then/properties/Parameters/properties/InvocationTimeLimitSeconds/maximum",
+     "keyword": "maximum",
+     "message": "must be <= 8",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/4",
+     "schemaPath": "#/allOf/27/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: rejects an Identifier containing a character Connect reserves",
+   "version": "0.2",
+   "sha256": "a5a8dfd1844cb8cd75d7080bc93ac02478b75b4c7a03aff8d43cfae379210f38",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/1/Identifier",
+     "schemaPath": "#/$defs/identifier/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^[^%:(\\\\/)=$,;\\[\\]{}]+$\"",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: still accepts a single JSONPath identifier in a reference field",
+   "version": "0.2",
+   "sha256": "402a1ecfb40761b05b2291d147a08ee5021f1a64212c5482d7da7fb2e80f375d",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "FlowDoc schema rejections: contact routing: accepts the fixture as committed",
+   "version": "0.2",
+   "sha256": "4de0d7f2e73febbcca9f70cffe27088a2e9a48632de7fa0d00dc214570617336",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "FlowDoc schema rejections: contact routing: rejects a callback delay written as a JSON number, which the console never writes",
+   "version": "0.2",
+   "sha256": "399fceba59f8986b9e795609170d21f3b75ec8540b4f41f0fb505d6f30bfe736",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/6/Parameters/InitialCallDelaySeconds",
+     "schemaPath": "#/allOf/10/then/properties/Parameters/properties/InitialCallDelaySeconds/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/6",
+     "schemaPath": "#/allOf/10/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: contact routing: rejects zero connection attempts",
+   "version": "0.2",
+   "sha256": "924ebdb831613571ccc053d54ae9068fc547a2de84aee2a2a57a0721a166bcb0",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/6/Parameters/MaximumConnectionAttempts",
+     "schemaPath": "#/allOf/10/then/properties/Parameters/properties/MaximumConnectionAttempts/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^[1-9][0-9]*$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/6",
+     "schemaPath": "#/allOf/10/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: contact routing: rejects a retry delay with a leading zero",
+   "version": "0.2",
+   "sha256": "3078987a4b1107c185645a8c33c949646517800d5ae9f1a0b0537da4a33aed62",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/6/Parameters/RetryDelaySeconds",
+     "schemaPath": "#/allOf/10/then/properties/Parameters/properties/RetryDelaySeconds/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^[1-9][0-9]*$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/6",
+     "schemaPath": "#/allOf/10/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: contact routing: rejects a callback with both a queue and an agent queue",
+   "version": "0.2",
+   "sha256": "8f482637b6d966275bd4f6ac4472fecd0da385072ef730a2093a00d601b59b43",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/6/Parameters",
+     "schemaPath": "#/allOf/10/then/properties/Parameters/not",
+     "keyword": "not",
+     "message": "must NOT be valid",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/6",
+     "schemaPath": "#/allOf/10/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: contact routing: rejects a literal ARN as the callback flow",
+   "version": "0.2",
+   "sha256": "c83eef30b1d65260522733bc90967b9e96da8af2df9a3f72b515d666930a3900",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/6/Parameters/ContactFlowId",
+     "schemaPath": "#/$defs/token/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\{cdref:(queue|hours|lambda|lex|prompt|flow|module|view):[a-z0-9]+(-[a-z0-9]+)*(@[a-z0-9]+(-[a-z0-9]+)*)?\\}$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/6/Parameters/ContactFlowId",
+     "schemaPath": "#/$defs/jsonPath/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\.[A-Za-z0-9_$.\\[\\]'-]+$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/6/Parameters/ContactFlowId",
+     "schemaPath": "#/oneOf",
+     "keyword": "oneOf",
+     "message": "must match exactly one schema in oneOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/6",
+     "schemaPath": "#/allOf/10/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: contact routing: rejects a queue priority of zero",
+   "version": "0.2",
+   "sha256": "d8068ae5a60ec56c08cf775867f631f90939daeff272b500a96029d28f1db5c4",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/1/Parameters/QueuePriority",
+     "schemaPath": "#/allOf/9/then/properties/Parameters/properties/QueuePriority/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^[1-9][0-9]*$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/1",
+     "schemaPath": "#/allOf/9/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: contact routing: rejects a queue priority written as a JSON number",
+   "version": "0.2",
+   "sha256": "2a893cd77b1d73d9293b4e924a2913cc931b36f85d522f3bf9f5451c68d6d7f2",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/1/Parameters/QueuePriority",
+     "schemaPath": "#/allOf/9/then/properties/Parameters/properties/QueuePriority/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/1",
+     "schemaPath": "#/allOf/9/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: contact routing: rejects a static callback number",
+   "version": "0.2",
+   "sha256": "699ba49941dd19cd6659959d5ce737d8de160f3c10382b6c28d2b0ec3648117b",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/0/Parameters/CallbackNumber",
+     "schemaPath": "#/$defs/jsonPath/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\.[A-Za-z0-9_$.\\[\\]'-]+$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/0",
+     "schemaPath": "#/allOf/11/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: contact routing: rejects a priority and a time adjustment together",
+   "version": "0.2",
+   "sha256": "83b1779592648881070a21fc74a0e663175814e0985d8ea33e9ae3da6256004c",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/1/Parameters",
+     "schemaPath": "#/allOf/9/then/properties/Parameters/not",
+     "keyword": "not",
+     "message": "must NOT be valid",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/1",
+     "schemaPath": "#/allOf/9/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: contact routing: rejects a queue-to-queue transfer naming both a queue and an agent queue",
+   "version": "0.2",
+   "sha256": "d5d010bde2c7533151f2847e90e54273b31b2c84512deda580adb681add29fde",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/2/Parameters",
+     "schemaPath": "#/allOf/8/then/properties/Parameters/not",
+     "keyword": "not",
+     "message": "must NOT be valid",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2",
+     "schemaPath": "#/allOf/8/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: flow control: accepts the fixture as committed",
+   "version": "0.2",
+   "sha256": "4a04e948aec1974571420ff8be67cf775a725410c6d109ec0e96f58c9c2c1506",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "FlowDoc schema rejections: flow control: rejects a loop count above 100",
+   "version": "0.2",
+   "sha256": "a352c59090b9b71562c040dbc3b20746ab233528bfc582470ee7d9da3d1d766d",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/7/Parameters/LoopCount",
+     "schemaPath": "#/allOf/12/then/properties/Parameters/properties/LoopCount/oneOf/0/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^(0|[1-9][0-9]?|100)$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/7/Parameters/LoopCount",
+     "schemaPath": "#/$defs/jsonPath/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\.[A-Za-z0-9_$.\\[\\]'-]+$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/7/Parameters/LoopCount",
+     "schemaPath": "#/allOf/12/then/properties/Parameters/properties/LoopCount/oneOf",
+     "keyword": "oneOf",
+     "message": "must match exactly one schema in oneOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/7",
+     "schemaPath": "#/allOf/12/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: flow control: rejects a loop count written as a JSON number, which the console never writes",
+   "version": "0.2",
+   "sha256": "d01b13598850e4c74cd1504157516bd56c3594cbf3155f207661512238b92298",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/7/Parameters/LoopCount",
+     "schemaPath": "#/allOf/12/then/properties/Parameters/properties/LoopCount/oneOf/0/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/7/Parameters/LoopCount",
+     "schemaPath": "#/$defs/jsonPath/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/7/Parameters/LoopCount",
+     "schemaPath": "#/allOf/12/then/properties/Parameters/properties/LoopCount/oneOf",
+     "keyword": "oneOf",
+     "message": "must match exactly one schema in oneOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/7",
+     "schemaPath": "#/allOf/12/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: flow control: rejects a loop count with a leading zero",
+   "version": "0.2",
+   "sha256": "339be5caaf0841ad6549ff9eb31783da59cd92be69f56036cedeb0ad7a198b92",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/7/Parameters/LoopCount",
+     "schemaPath": "#/allOf/12/then/properties/Parameters/properties/LoopCount/oneOf/0/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^(0|[1-9][0-9]?|100)$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/7/Parameters/LoopCount",
+     "schemaPath": "#/$defs/jsonPath/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\.[A-Za-z0-9_$.\\[\\]'-]+$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/7/Parameters/LoopCount",
+     "schemaPath": "#/allOf/12/then/properties/Parameters/properties/LoopCount/oneOf",
+     "keyword": "oneOf",
+     "message": "must match exactly one schema in oneOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/7",
+     "schemaPath": "#/allOf/12/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: flow control: rejects a percentage threshold above 100",
+   "version": "0.2",
+   "sha256": "72f0620680ee0e363a84bd1174e17913068b02f6e6f76252c83a7304ef4909dc",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/2/Transitions/Conditions/0/Condition/Operands/0",
+     "schemaPath": "#/allOf/13/then/properties/Transitions/properties/Conditions/items/properties/Condition/properties/Operands/items/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^(100|[1-9][0-9]?)$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2",
+     "schemaPath": "#/allOf/13/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: flow control: rejects a percentage branch with an operator other than NumberLessThan",
+   "version": "0.2",
+   "sha256": "8feb9747156d300fc55e961e90c33ca3930c1c9421ee0e5e8d2e308624e08038",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/2/Transitions/Conditions/0/Condition/Operator",
+     "schemaPath": "#/allOf/13/then/properties/Transitions/properties/Conditions/items/properties/Condition/properties/Operator/const",
+     "keyword": "const",
+     "message": "must be equal to constant",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2",
+     "schemaPath": "#/allOf/13/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: flow control: rejects a percentage threshold written as a JSON number",
+   "version": "0.2",
+   "sha256": "9bcdc521422da7826ca9471a44daf862505691aae80c9a8facdc7729bc5f57a6",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/2/Transitions/Conditions/0/Condition/Operands/0",
+     "schemaPath": "#/allOf/13/then/properties/Transitions/properties/Conditions/items/properties/Condition/properties/Operands/items/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2",
+     "schemaPath": "#/allOf/13/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: flow control: rejects a percentage branch with two operands",
+   "version": "0.2",
+   "sha256": "e932519a25304f5752c3e6c63eb2b800af61a0bd2f66be88875418d96a6f7549",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/2/Transitions/Conditions/0/Condition/Operands",
+     "schemaPath": "#/allOf/13/then/properties/Transitions/properties/Conditions/items/properties/Condition/properties/Operands/maxItems",
+     "keyword": "maxItems",
+     "message": "must NOT have more than 1 items",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2",
+     "schemaPath": "#/allOf/13/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: flow control: rejects a flow attribute as a flat string, which the console never writes",
+   "version": "0.2",
+   "sha256": "0eeab8c9ed142bdd8cbbcfdb789ee55b6e065b2ae6b4c763765652f1c1d1dc29",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/1/Parameters/FlowAttributes/lastPrompt",
+     "schemaPath": "#/allOf/15/then/properties/Parameters/properties/FlowAttributes/additionalProperties/type",
+     "keyword": "type",
+     "message": "must be object",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/1",
+     "schemaPath": "#/allOf/15/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: flow control: rejects a flow attribute wrapper with a key other than Value",
+   "version": "0.2",
+   "sha256": "755818b756e8e187a654fdda73e0fac6ae39104e8944270befb457db00bd055d",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/1/Parameters/FlowAttributes/lastPrompt",
+     "schemaPath": "#/allOf/15/then/properties/Parameters/properties/FlowAttributes/additionalProperties/additionalProperties",
+     "keyword": "additionalProperties",
+     "message": "must NOT have additional properties",
+     "property": "Type"
+    },
+    {
+     "instancePath": "/content/Actions/1",
+     "schemaPath": "#/allOf/15/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: flow control: rejects a wait of zero seconds",
+   "version": "0.2",
+   "sha256": "0cb41c6be989986f7bb326fbec82a3a87f61bcf06c556d1881a4bf5b6af552cd",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/9/Parameters/TimeLimitSeconds",
+     "schemaPath": "#/allOf/14/then/properties/Parameters/properties/TimeLimitSeconds/oneOf/0/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^[1-9][0-9]*$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/9/Parameters/TimeLimitSeconds",
+     "schemaPath": "#/$defs/jsonPath/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\.[A-Za-z0-9_$.\\[\\]'-]+$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/9/Parameters/TimeLimitSeconds",
+     "schemaPath": "#/allOf/14/then/properties/Parameters/properties/TimeLimitSeconds/oneOf",
+     "keyword": "oneOf",
+     "message": "must match exactly one schema in oneOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/9",
+     "schemaPath": "#/allOf/14/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: flow control: rejects a wait written as a JSON number, which the console never writes",
+   "version": "0.2",
+   "sha256": "da449177ec85d5c399ed766aca1df44ad348e8c3a516f747bde5de22904cd5c2",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/9/Parameters/TimeLimitSeconds",
+     "schemaPath": "#/allOf/14/then/properties/Parameters/properties/TimeLimitSeconds/oneOf/0/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/9/Parameters/TimeLimitSeconds",
+     "schemaPath": "#/$defs/jsonPath/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/9/Parameters/TimeLimitSeconds",
+     "schemaPath": "#/allOf/14/then/properties/Parameters/properties/TimeLimitSeconds/oneOf",
+     "keyword": "oneOf",
+     "message": "must match exactly one schema in oneOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/9",
+     "schemaPath": "#/allOf/14/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: flow control: rejects a wait event the page does not list",
+   "version": "0.2",
+   "sha256": "d45135fff899b21ee2eee294c427c7a4cb6178c37c3fc7ebe09d201acf32ca51",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/9/Parameters/Events/1",
+     "schemaPath": "#/allOf/14/then/properties/Parameters/properties/Events/items/enum",
+     "keyword": "enum",
+     "message": "must be equal to one of the allowed values",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/9",
+     "schemaPath": "#/allOf/14/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: flow control: rejects a wait event listed twice",
+   "version": "0.2",
+   "sha256": "79b1c2b46f68871a1fdbd648176c3acd0fa2dc8d9a7b4f6a58aba3e251f44998",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/9/Parameters/Events",
+     "schemaPath": "#/allOf/14/then/properties/Parameters/properties/Events/uniqueItems",
+     "keyword": "uniqueItems",
+     "message": "must NOT have duplicate items (items ## 0 and 1 are identical)",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/9",
+     "schemaPath": "#/allOf/14/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: flow control: rejects a metric the page does not list",
+   "version": "0.2",
+   "sha256": "dd7d4fe8832696e9d08aa4aae5f816c4089f628bdeed6a992209562d35f99520",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/3/Parameters/MetricType",
+     "schemaPath": "#/allOf/16/then/properties/Parameters/properties/MetricType/enum",
+     "keyword": "enum",
+     "message": "must be equal to one of the allowed values",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/3",
+     "schemaPath": "#/allOf/16/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: flow control: rejects a metric check naming both a queue and an agent queue",
+   "version": "0.2",
+   "sha256": "b1e2c0efe4ec8daa570bbbadd0582f8c64c3fdac9708523381e510043535a312",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/5/Parameters",
+     "schemaPath": "#/allOf/16/then/properties/Parameters/not",
+     "keyword": "not",
+     "message": "must NOT be valid",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/5",
+     "schemaPath": "#/allOf/16/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: flow control: rejects a metric load for a channel the page does not list",
+   "version": "0.2",
+   "sha256": "3e619fd10596563bc5fa8b43f517b992f68daad5f019e0332f1316a535c782bf",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/4/Parameters/QueueChannel",
+     "schemaPath": "#/allOf/17/then/properties/Parameters/properties/QueueChannel/oneOf/0/enum",
+     "keyword": "enum",
+     "message": "must be equal to one of the allowed values",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/4/Parameters/QueueChannel",
+     "schemaPath": "#/$defs/jsonPath/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\.[A-Za-z0-9_$.\\[\\]'-]+$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/4/Parameters/QueueChannel",
+     "schemaPath": "#/allOf/17/then/properties/Parameters/properties/QueueChannel/oneOf",
+     "keyword": "oneOf",
+     "message": "must match exactly one schema in oneOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/4",
+     "schemaPath": "#/allOf/17/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: flow control: rejects a metric load naming both a queue and an agent queue",
+   "version": "0.2",
+   "sha256": "7a2a68484808747c45b042a94a6d3991466a9bbc3aad12e17fa3b8fcd1f91e1a",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/4/Parameters",
+     "schemaPath": "#/allOf/17/then/properties/Parameters/not",
+     "keyword": "not",
+     "message": "must NOT be valid",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/4",
+     "schemaPath": "#/allOf/17/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: flow control: still accepts a JSONPath loop count and wait timeout",
+   "version": "0.2",
+   "sha256": "2182db73e726086db0398bc988eacfe4ab28640809106958d6f2e9403c0df62e",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "FlowDoc schema rejections: contact data: accepts the fixture as committed",
+   "version": "0.2",
+   "sha256": "a45409bfd6fa257fc4dfca5b852b293b3ff92a26769440bcfc5d36b975648cf4",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "FlowDoc schema rejections: contact data: rejects seven tags",
+   "version": "0.2",
+   "sha256": "934c9cda17c92361afe8ce9f64907ff98714b8655b7f034732506d4c3951810c",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/0/Parameters/Tags",
+     "schemaPath": "#/allOf/18/then/properties/Parameters/properties/Tags/maxProperties",
+     "keyword": "maxProperties",
+     "message": "must NOT have more than 6 properties",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/0",
+     "schemaPath": "#/allOf/18/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: contact data: rejects a system tag key",
+   "version": "0.2",
+   "sha256": "74bb6311a14e8257f18881c563226577fcd7626219b9b832955e3777a4847c37",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/0/Parameters/Tags",
+     "schemaPath": "#/allOf/18/then/properties/Parameters/properties/Tags/propertyNames/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^(?!aws:)\"",
+     "property": "aws:connect:instanceId"
+    },
+    {
+     "instancePath": "/content/Actions/0/Parameters/Tags",
+     "schemaPath": "#/allOf/18/then/properties/Parameters/properties/Tags/propertyNames",
+     "keyword": "propertyNames",
+     "message": "property name must be valid",
+     "property": "aws:connect:instanceId"
+    },
+    {
+     "instancePath": "/content/Actions/0",
+     "schemaPath": "#/allOf/18/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: contact data: rejects a non-string tag value",
+   "version": "0.2",
+   "sha256": "506b5c159b24dc0cbddbc9b8755249167c4ce5f0a09d84f5268fb3d5cae781ff",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/0/Parameters/Tags/count",
+     "schemaPath": "#/allOf/18/then/properties/Parameters/properties/Tags/additionalProperties/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/0",
+     "schemaPath": "#/allOf/18/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: contact data: rejects removing a system tag",
+   "version": "0.2",
+   "sha256": "aa385a55914963a1b7d05e6844007fe33ba25f3efa9cf37d772d93bcb3d4da09",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/1/Parameters/TagKeys/0",
+     "schemaPath": "#/allOf/19/then/properties/Parameters/properties/TagKeys/items/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^(?!aws:).+\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/1",
+     "schemaPath": "#/allOf/19/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: contact data: rejects an empty key list, which the service refuses",
+   "version": "0.2",
+   "sha256": "3d070134e1008fa07ff2142cb5a539301052c8fb2c116759211b955742bd0852",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/1/Parameters/TagKeys",
+     "schemaPath": "#/allOf/19/then/properties/Parameters/properties/TagKeys/minItems",
+     "keyword": "minItems",
+     "message": "must NOT have fewer than 1 items",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/1",
+     "schemaPath": "#/allOf/19/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: contact data: rejects a text-to-speech engine the pages do not list",
+   "version": "0.2",
+   "sha256": "13432a2652961f6b3d26942e18fee6e52cf8176c63eb50500bc60fea9d1d4b6f",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/2/Parameters/TextToSpeechEngine",
+     "schemaPath": "#/allOf/20/then/properties/Parameters/properties/TextToSpeechEngine/oneOf/0/enum",
+     "keyword": "enum",
+     "message": "must be equal to one of the allowed values",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/TextToSpeechEngine",
+     "schemaPath": "#/$defs/jsonPath/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\.[A-Za-z0-9_$.\\[\\]'-]+$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/TextToSpeechEngine",
+     "schemaPath": "#/allOf/20/then/properties/Parameters/properties/TextToSpeechEngine/oneOf",
+     "keyword": "oneOf",
+     "message": "must match exactly one schema in oneOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2",
+     "schemaPath": "#/allOf/20/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: contact data: rejects a text-to-speech engine in the admin guide's lower case, which the console never writes",
+   "version": "0.2",
+   "sha256": "c611ac5eb90f5e47c0b91fbb371c2253d72802558612c93a1670fef327c7f617",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/2/Parameters/TextToSpeechEngine",
+     "schemaPath": "#/allOf/20/then/properties/Parameters/properties/TextToSpeechEngine/oneOf/0/enum",
+     "keyword": "enum",
+     "message": "must be equal to one of the allowed values",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/TextToSpeechEngine",
+     "schemaPath": "#/$defs/jsonPath/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\.[A-Za-z0-9_$.\\[\\]'-]+$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/TextToSpeechEngine",
+     "schemaPath": "#/allOf/20/then/properties/Parameters/properties/TextToSpeechEngine/oneOf",
+     "keyword": "oneOf",
+     "message": "must match exactly one schema in oneOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2",
+     "schemaPath": "#/allOf/20/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: contact data: rejects an empty voice name",
+   "version": "0.2",
+   "sha256": "c0a933bad488a608fcf05685fafbf150596017abb1fc15c02a15d48a9e3a1cb9",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/2/Parameters/TextToSpeechVoice",
+     "schemaPath": "#/allOf/20/then/properties/Parameters/properties/TextToSpeechVoice/minLength",
+     "keyword": "minLength",
+     "message": "must NOT have fewer than 1 characters",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2",
+     "schemaPath": "#/allOf/20/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: contact data: rejects a voice authentication threshold above 100",
+   "version": "0.2",
+   "sha256": "1eea067902248b7e76929309e0c9ea8f31813ee710a48aa5bbf29e2225d8b34d",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/4/Parameters/VoiceAuthenticationThreshold",
+     "schemaPath": "#/allOf/21/then/properties/Parameters/properties/VoiceAuthenticationThreshold/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^(100|[1-9]?[0-9])$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/4",
+     "schemaPath": "#/allOf/21/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: contact data: rejects a response time below 5 seconds",
+   "version": "0.2",
+   "sha256": "b06c4b4e3398b268554e56c666afc077112588d2f69471cbd5d5b8c676ccfabc",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/4/Parameters/VoiceAuthenticationResponseTime",
+     "schemaPath": "#/allOf/21/then/properties/Parameters/properties/VoiceAuthenticationResponseTime/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^([5-9]|10)$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/4",
+     "schemaPath": "#/allOf/21/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: contact data: rejects a lowercase Voice ID flag",
+   "version": "0.2",
+   "sha256": "fc3b5487ada8e9893e7b7a2e4eba4d61968d99d35a86cde4920b292277bd1066",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/4/Parameters/IsVoiceAuthenticationEnabled",
+     "schemaPath": "#/allOf/21/then/properties/Parameters/properties/IsVoiceAuthenticationEnabled/enum",
+     "keyword": "enum",
+     "message": "must be equal to one of the allowed values",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/4",
+     "schemaPath": "#/allOf/21/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: contact data: rejects a target the page does not list",
+   "version": "0.2",
+   "sha256": "1931ca1ef6e9af6533af9a08345f7528ada9ea44bcdda813675546e143c8258f",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/4/Parameters/TargetContact",
+     "schemaPath": "#/allOf/21/then/properties/Parameters/properties/TargetContact/enum",
+     "keyword": "enum",
+     "message": "must be equal to one of the allowed values",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/4",
+     "schemaPath": "#/allOf/21/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: contact data: rejects two event hooks in one action",
+   "version": "0.2",
+   "sha256": "2722a7f26213268455b6e132cc5af0cb2e2b469ba016d0654befa7a0e135d564",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/6/Parameters/EventHooks",
+     "schemaPath": "#/allOf/22/then/properties/Parameters/properties/EventHooks/maxProperties",
+     "keyword": "maxProperties",
+     "message": "must NOT have more than 1 properties",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/6",
+     "schemaPath": "#/allOf/22/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: contact data: rejects an event hook the page does not list",
+   "version": "0.2",
+   "sha256": "c63ec39e73b36329de911d032156fdc50428401b17466b94d95e216be5368c93",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/6/Parameters/EventHooks",
+     "schemaPath": "#/allOf/22/then/properties/Parameters/properties/EventHooks/propertyNames/enum",
+     "keyword": "enum",
+     "message": "must be equal to one of the allowed values",
+     "property": "AgentQueue"
+    },
+    {
+     "instancePath": "/content/Actions/6/Parameters/EventHooks",
+     "schemaPath": "#/allOf/22/then/properties/Parameters/properties/EventHooks/propertyNames",
+     "keyword": "propertyNames",
+     "message": "property name must be valid",
+     "property": "AgentQueue"
+    },
+    {
+     "instancePath": "/content/Actions/6",
+     "schemaPath": "#/allOf/22/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: contact data: rejects a literal ARN as an event hook's flow",
+   "version": "0.2",
+   "sha256": "7a39bd3f318b2e1f4cd1f3737a3d08716f812ba096f6ad8e768c1644be601d73",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/6/Parameters/EventHooks/CustomerQueue",
+     "schemaPath": "#/$defs/token/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\{cdref:(queue|hours|lambda|lex|prompt|flow|module|view):[a-z0-9]+(-[a-z0-9]+)*(@[a-z0-9]+(-[a-z0-9]+)*)?\\}$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/6/Parameters/EventHooks/CustomerQueue",
+     "schemaPath": "#/$defs/jsonPath/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\.[A-Za-z0-9_$.\\[\\]'-]+$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/6/Parameters/EventHooks/CustomerQueue",
+     "schemaPath": "#/oneOf",
+     "keyword": "oneOf",
+     "message": "must match exactly one schema in oneOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/6",
+     "schemaPath": "#/allOf/22/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: participant: accepts the fixture as committed",
+   "version": "0.2",
+   "sha256": "56c083e9a077c3d1a66db2bbc61afebe664f7dced38fc206b17577be6ca1e1b4",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "FlowDoc schema rejections: participant: rejects a loop message with two bodies",
+   "version": "0.2",
+   "sha256": "98c1de9dd944c2a9ad45db2d82f920a0689fa1f47523c48b6c13dd24074292a1",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/0/Parameters/Messages/0",
+     "schemaPath": "#/allOf/23/then/properties/Parameters/properties/Messages/items/maxProperties",
+     "keyword": "maxProperties",
+     "message": "must NOT have more than 1 properties",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/0",
+     "schemaPath": "#/allOf/23/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: participant: rejects a loop with no messages",
+   "version": "0.2",
+   "sha256": "a2fa72df15888200e5948212d6d81d8bf01fff94144a7469e61525928b572f1d",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/0/Parameters/Messages",
+     "schemaPath": "#/allOf/23/then/properties/Parameters/properties/Messages/minItems",
+     "keyword": "minItems",
+     "message": "must NOT have fewer than 1 items",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/0",
+     "schemaPath": "#/allOf/23/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: participant: rejects an interrupt frequency written as a JSON number",
+   "version": "0.2",
+   "sha256": "9deab726fd94ed0ad3edd65a0cfbdd1d6e72dc4041c766b3a4f592a0ddc2dab2",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/0/Parameters/InterruptFrequencySeconds",
+     "schemaPath": "#/allOf/23/then/properties/Parameters/properties/InterruptFrequencySeconds/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/0",
+     "schemaPath": "#/allOf/23/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: participant: rejects a media message from somewhere other than S3",
+   "version": "0.2",
+   "sha256": "86372948fa1000179a4ca12a719f60713b9a2358863f7d18a352f195d1995e24",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/0/Parameters/Messages/0/Media/SourceType",
+     "schemaPath": "#/allOf/23/then/properties/Parameters/properties/Messages/items/properties/Media/properties/SourceType/enum",
+     "keyword": "enum",
+     "message": "must be equal to one of the allowed values",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/0",
+     "schemaPath": "#/allOf/23/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: participant: rejects a Lex bot with both a text and an SSML body",
+   "version": "0.2",
+   "sha256": "d42bbcc193e88b545454d7a5801cd0a519fcc87df8d1860d55836d6df76722b1",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/2/Parameters",
+     "schemaPath": "#/allOf/24/then/properties/Parameters/not",
+     "keyword": "not",
+     "message": "must NOT be valid",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2",
+     "schemaPath": "#/allOf/24/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: participant: rejects a Lex bot alias as a literal ARN",
+   "version": "0.2",
+   "sha256": "5b6183ab617e7136c85caa0690b720421ccdc95d6d4d15ab2297846b08d3b1c0",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/2/Parameters/LexV2Bot/AliasArn",
+     "schemaPath": "#/$defs/token/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\{cdref:(queue|hours|lambda|lex|prompt|flow|module|view):[a-z0-9]+(-[a-z0-9]+)*(@[a-z0-9]+(-[a-z0-9]+)*)?\\}$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/LexV2Bot/AliasArn",
+     "schemaPath": "#/$defs/jsonPath/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\.[A-Za-z0-9_$.\\[\\]'-]+$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/LexV2Bot/AliasArn",
+     "schemaPath": "#/oneOf",
+     "keyword": "oneOf",
+     "message": "must match exactly one schema in oneOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2",
+     "schemaPath": "#/allOf/24/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: participant: rejects a Lex timeout written as a JSON number",
+   "version": "0.2",
+   "sha256": "ce962cda78b9f86818aeabfa275fc1cf692fb3b7d2fafa44b62af722ff8d5102",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/2/Parameters/LexTimeoutSeconds/Text",
+     "schemaPath": "#/allOf/24/then/properties/Parameters/properties/LexTimeoutSeconds/properties/Text/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2",
+     "schemaPath": "#/allOf/24/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: participant: rejects a Lex timeout below the console's one minute",
+   "version": "0.2",
+   "sha256": "c372f4fc96dfff69d808bc29c1dc34eb760a6c8dac5575d77c827989b97b6a24",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/2/Parameters/LexTimeoutSeconds/Text",
+     "schemaPath": "#/allOf/24/then/properties/Parameters/properties/LexTimeoutSeconds/properties/Text/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^([6-9][0-9]|[1-9][0-9]{2,4}|[1-5][0-9]{5}|60[0-3][0-9]{3}|604[0-7][0-9]{2}|604800)$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2",
+     "schemaPath": "#/allOf/24/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: participant: rejects a Lex timeout above the console's seven days",
+   "version": "0.2",
+   "sha256": "9b7b985c4cd7fdc125d3524b9d024a54135c75cda63afce604f2c00154a4ecaa",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/2/Parameters/LexTimeoutSeconds/Text",
+     "schemaPath": "#/allOf/24/then/properties/Parameters/properties/LexTimeoutSeconds/properties/Text/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^([6-9][0-9]|[1-9][0-9]{2,4}|[1-5][0-9]{5}|60[0-3][0-9]{3}|604[0-7][0-9]{2}|604800)$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2",
+     "schemaPath": "#/allOf/24/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: participant: rejects a Lex action with no bot at all",
+   "version": "0.2",
+   "sha256": "b6a4f2ed225e1d8a927f8bc60298532a2fe7644668367091cfba1874fc0381ec",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/2/Parameters",
+     "schemaPath": "#/allOf/24/then/properties/Parameters/oneOf/0/required",
+     "keyword": "required",
+     "message": "must have required property 'LexBot'",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters",
+     "schemaPath": "#/allOf/24/then/properties/Parameters/oneOf/1/required",
+     "keyword": "required",
+     "message": "must have required property 'LexV2Bot'",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters",
+     "schemaPath": "#/allOf/24/then/properties/Parameters/oneOf",
+     "keyword": "oneOf",
+     "message": "must match exactly one schema in oneOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2",
+     "schemaPath": "#/allOf/24/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: participant: rejects a view resource with no id",
+   "version": "0.2",
+   "sha256": "5295daf3e348663e2e2042a9bbfbed8e4bcced37c83d15c72b768866e124f3d3",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/3/Parameters/ViewResource",
+     "schemaPath": "#/allOf/25/then/properties/Parameters/properties/ViewResource/required",
+     "keyword": "required",
+     "message": "must have required property 'Id'",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/3",
+     "schemaPath": "#/allOf/25/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: participant: rejects a view id as a literal ARN",
+   "version": "0.2",
+   "sha256": "309bd8f2f4f42b601ead5cd2f824384cacb9ac578bfc4254d98b239b703e3c0c",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/3/Parameters/ViewResource/Id",
+     "schemaPath": "#/$defs/token/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\{cdref:(queue|hours|lambda|lex|prompt|flow|module|view):[a-z0-9]+(-[a-z0-9]+)*(@[a-z0-9]+(-[a-z0-9]+)*)?\\}$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/3/Parameters/ViewResource/Id",
+     "schemaPath": "#/$defs/jsonPath/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\.[A-Za-z0-9_$.\\[\\]'-]+$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/3/Parameters/ViewResource/Id",
+     "schemaPath": "#/oneOf",
+     "keyword": "oneOf",
+     "message": "must match exactly one schema in oneOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/3",
+     "schemaPath": "#/allOf/25/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: participant: rejects a view time limit written as a JSON number",
+   "version": "0.2",
+   "sha256": "b0148cc4f7b0f6ba89bbfa24cc918fc36d05132d6f2a6b66fbd2d20f0cf66a5d",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/3/Parameters/InvocationTimeLimitSeconds",
+     "schemaPath": "#/allOf/25/then/properties/Parameters/properties/InvocationTimeLimitSeconds/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/3",
+     "schemaPath": "#/allOf/25/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: participant: rejects a view without a time limit, which the service refuses",
+   "version": "0.2",
+   "sha256": "0482afa5671ca79e2ab6d3896cdc129cc3ca0f99bc8d076d81130eafe74b1061",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/3/Parameters",
+     "schemaPath": "#/allOf/25/then/properties/Parameters/required",
+     "keyword": "required",
+     "message": "must have required property 'InvocationTimeLimitSeconds'",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/3",
+     "schemaPath": "#/allOf/25/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: recording and analytics: accepts the fixture as committed, chat form included",
+   "version": "0.2",
+   "sha256": "7c7caa7eed3b1458bfb9ddd7e702eb00a86f249611c58269544576b94e3ae96f",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "FlowDoc schema rejections: recording and analytics: rejects a recorded participant other than Agent or Customer",
+   "version": "0.2",
+   "sha256": "0113417c9fe5da2727d4b0ef06793ee8bef895d18929c8daa0348721dfb8a5f4",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/1/Parameters/VoiceBehavior/VoiceRecordingBehavior/RecordedParticipants/0",
+     "schemaPath": "#/allOf/29/then/properties/Parameters/properties/VoiceBehavior/properties/VoiceRecordingBehavior/properties/RecordedParticipants/items/enum",
+     "keyword": "enum",
+     "message": "must be equal to one of the allowed values",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/1",
+     "schemaPath": "#/allOf/29/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: recording and analytics: rejects a participant recorded twice",
+   "version": "0.2",
+   "sha256": "faf1b88aec068b8eaea8d0d727acc2f7aabf5ba60a2bdd260d7820e44772d9e9",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/1/Parameters/VoiceBehavior/VoiceRecordingBehavior/RecordedParticipants",
+     "schemaPath": "#/allOf/29/then/properties/Parameters/properties/VoiceBehavior/properties/VoiceRecordingBehavior/properties/RecordedParticipants/uniqueItems",
+     "keyword": "uniqueItems",
+     "message": "must NOT have duplicate items (items ## 0 and 1 are identical)",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/1",
+     "schemaPath": "#/allOf/29/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: recording and analytics: rejects an IVR recording value other than Enabled or Disabled",
+   "version": "0.2",
+   "sha256": "f5575328eacfbc39c33ea0e78e76fb314519e0d01ae2a1c00234302ae6c08b1e",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/1/Parameters/VoiceBehavior/VoiceRecordingBehavior/IVRRecordingBehavior",
+     "schemaPath": "#/allOf/29/then/properties/Parameters/properties/VoiceBehavior/properties/VoiceRecordingBehavior/properties/IVRRecordingBehavior/enum",
+     "keyword": "enum",
+     "message": "must be equal to one of the allowed values",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/1",
+     "schemaPath": "#/allOf/29/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: recording and analytics: rejects a screen recorded participant other than Agent",
+   "version": "0.2",
+   "sha256": "9c7dea21cec339650e787af67e90449ce1243b20cc4a8ac084665798ba5d75a4",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/3/Parameters/ScreenRecordingBehavior/ScreenRecordedParticipants/0",
+     "schemaPath": "#/allOf/29/then/properties/Parameters/properties/ScreenRecordingBehavior/properties/ScreenRecordedParticipants/items/const",
+     "keyword": "const",
+     "message": "must be equal to constant",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/3",
+     "schemaPath": "#/allOf/29/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: recording and analytics: rejects a chat and a voice behavior on one block",
+   "version": "0.2",
+   "sha256": "7d9d6ed49000ddd078bcea81d126f7182754e0d5d06221da2f0a552508fd89d8",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/1/Parameters",
+     "schemaPath": "#/allOf/29/then/properties/Parameters/oneOf",
+     "keyword": "oneOf",
+     "message": "must match exactly one schema in oneOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/1",
+     "schemaPath": "#/allOf/29/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: recording and analytics: rejects a voice and a screen behavior on one block, which the service refuses",
+   "version": "0.2",
+   "sha256": "1b8a11b67d993f7d53074679ce4d922294e1bc2b4052ab8738d9f8af8c810521",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/1/Parameters",
+     "schemaPath": "#/allOf/29/then/properties/Parameters/oneOf/0/required",
+     "keyword": "required",
+     "message": "must have required property 'ChatBehavior'",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/1/Parameters",
+     "schemaPath": "#/allOf/29/then/properties/Parameters/oneOf",
+     "keyword": "oneOf",
+     "message": "must match exactly one schema in oneOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/1",
+     "schemaPath": "#/allOf/29/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: recording and analytics: rejects a voice behavior with no recording object",
+   "version": "0.2",
+   "sha256": "910eb6b9e4a20e824a353eafde445eab60ea04c8fa82af13e3ac93a9e3c634e7",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/1/Parameters/VoiceBehavior",
+     "schemaPath": "#/allOf/29/then/properties/Parameters/properties/VoiceBehavior/required",
+     "keyword": "required",
+     "message": "must have required property 'VoiceRecordingBehavior'",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/1",
+     "schemaPath": "#/allOf/29/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: recording and analytics: rejects a screen behavior with no participant list",
+   "version": "0.2",
+   "sha256": "b235891c86fee1b691ec35c5968491e18b4a05be0cc7cf66ef255855e3a6cea0",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/3/Parameters/ScreenRecordingBehavior",
+     "schemaPath": "#/allOf/29/then/properties/Parameters/properties/ScreenRecordingBehavior/required",
+     "keyword": "required",
+     "message": "must have required property 'ScreenRecordedParticipants'",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/3",
+     "schemaPath": "#/allOf/29/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: recording and analytics: rejects no behavior at all, which the service refuses",
+   "version": "0.2",
+   "sha256": "325a0f70868ae941586437e8b594fcae1827f2209e648e090d28c2bbb04115ee",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/3/Parameters",
+     "schemaPath": "#/allOf/29/then/properties/Parameters/oneOf/0/required",
+     "keyword": "required",
+     "message": "must have required property 'ChatBehavior'",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/3/Parameters",
+     "schemaPath": "#/allOf/29/then/properties/Parameters/oneOf/1/required",
+     "keyword": "required",
+     "message": "must have required property 'VoiceBehavior'",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/3/Parameters",
+     "schemaPath": "#/allOf/29/then/properties/Parameters/oneOf/2/required",
+     "keyword": "required",
+     "message": "must have required property 'ScreenRecordingBehavior'",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/3/Parameters",
+     "schemaPath": "#/allOf/29/then/properties/Parameters/oneOf",
+     "keyword": "oneOf",
+     "message": "must match exactly one schema in oneOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/3",
+     "schemaPath": "#/allOf/29/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: GetParticipantInput: rejects StoreInput that is neither True nor False",
+   "version": "0.2",
+   "sha256": "cae728174b0f224e6aafab036e93f20cb7e4f8da5c974023cb1ec995260c53ea",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/0/Parameters/StoreInput",
+     "schemaPath": "#/allOf/28/then/properties/Parameters/properties/StoreInput/enum",
+     "keyword": "enum",
+     "message": "must be equal to one of the allowed values",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/0",
+     "schemaPath": "#/allOf/28/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: GetParticipantInput: rejects a timeout of zero, as a string",
+   "version": "0.2",
+   "sha256": "25cbce3918caa577527496b0182f2293ce4ab3b0a9f62f37ec447a9e01c7b9bf",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/0/Parameters/InputTimeLimitSeconds",
+     "schemaPath": "#/allOf/28/then/properties/Parameters/properties/InputTimeLimitSeconds/oneOf/0/type",
+     "keyword": "type",
+     "message": "must be integer",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/0/Parameters/InputTimeLimitSeconds",
+     "schemaPath": "#/allOf/28/then/properties/Parameters/properties/InputTimeLimitSeconds/oneOf/1/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^[1-9][0-9]*$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/0/Parameters/InputTimeLimitSeconds",
+     "schemaPath": "#/allOf/28/then/properties/Parameters/properties/InputTimeLimitSeconds/oneOf",
+     "keyword": "oneOf",
+     "message": "must match exactly one schema in oneOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/0",
+     "schemaPath": "#/allOf/28/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: GetParticipantInput: rejects a timeout of zero, as an integer",
+   "version": "0.2",
+   "sha256": "67f4031874664f8e2333b5fbdf4827d581e4fbb0d0c13da4e56d467183817bbc",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/0/Parameters/InputTimeLimitSeconds",
+     "schemaPath": "#/allOf/28/then/properties/Parameters/properties/InputTimeLimitSeconds/oneOf/0/minimum",
+     "keyword": "minimum",
+     "message": "must be >= 1",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/0/Parameters/InputTimeLimitSeconds",
+     "schemaPath": "#/allOf/28/then/properties/Parameters/properties/InputTimeLimitSeconds/oneOf/1/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/0/Parameters/InputTimeLimitSeconds",
+     "schemaPath": "#/allOf/28/then/properties/Parameters/properties/InputTimeLimitSeconds/oneOf",
+     "keyword": "oneOf",
+     "message": "must match exactly one schema in oneOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/0",
+     "schemaPath": "#/allOf/28/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: GetParticipantInput: rejects a timeout with a leading zero",
+   "version": "0.2",
+   "sha256": "c0212cdc03981bac13d886db7decd433667bcd24007799200a6e4171c1ac0990",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/0/Parameters/InputTimeLimitSeconds",
+     "schemaPath": "#/allOf/28/then/properties/Parameters/properties/InputTimeLimitSeconds/oneOf/0/type",
+     "keyword": "type",
+     "message": "must be integer",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/0/Parameters/InputTimeLimitSeconds",
+     "schemaPath": "#/allOf/28/then/properties/Parameters/properties/InputTimeLimitSeconds/oneOf/1/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^[1-9][0-9]*$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/0/Parameters/InputTimeLimitSeconds",
+     "schemaPath": "#/allOf/28/then/properties/Parameters/properties/InputTimeLimitSeconds/oneOf",
+     "keyword": "oneOf",
+     "message": "must match exactly one schema in oneOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/0",
+     "schemaPath": "#/allOf/28/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: GetParticipantInput: rejects a fractional timeout",
+   "version": "0.2",
+   "sha256": "024a426ffdd54341ba92f5e5ed221419660e8ad37c13f8d7b57e899743745fa1",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/0/Parameters/InputTimeLimitSeconds",
+     "schemaPath": "#/allOf/28/then/properties/Parameters/properties/InputTimeLimitSeconds/oneOf/0/type",
+     "keyword": "type",
+     "message": "must be integer",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/0/Parameters/InputTimeLimitSeconds",
+     "schemaPath": "#/allOf/28/then/properties/Parameters/properties/InputTimeLimitSeconds/oneOf/1/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/0/Parameters/InputTimeLimitSeconds",
+     "schemaPath": "#/allOf/28/then/properties/Parameters/properties/InputTimeLimitSeconds/oneOf",
+     "keyword": "oneOf",
+     "message": "must match exactly one schema in oneOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/0",
+     "schemaPath": "#/allOf/28/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: GetParticipantInput: rejects Text and SSML together",
+   "version": "0.2",
+   "sha256": "3c047faea1e55093af6306488bc47f5147e7d2df00f5ae177f7a9df8101d6b84",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/0/Parameters",
+     "schemaPath": "#/allOf/28/then/properties/Parameters/not",
+     "keyword": "not",
+     "message": "must NOT be valid",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/0",
+     "schemaPath": "#/allOf/28/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: GetParticipantInput: rejects Text and PromptId together",
+   "version": "0.2",
+   "sha256": "07d1de1910824608b2466d4c431a99013b6f773e50b83477465db3e4f65a23ed",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/0/Parameters",
+     "schemaPath": "#/allOf/28/then/properties/Parameters/not",
+     "keyword": "not",
+     "message": "must NOT be valid",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/0",
+     "schemaPath": "#/allOf/28/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: GetParticipantInput: rejects a literal ARN in PromptId",
+   "version": "0.2",
+   "sha256": "aa2ef8aaa4656a00737954b8466a1aff7ae993ff7819d2433be325cfd838d20d",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/0/Parameters/PromptId",
+     "schemaPath": "#/$defs/token/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\{cdref:(queue|hours|lambda|lex|prompt|flow|module|view):[a-z0-9]+(-[a-z0-9]+)*(@[a-z0-9]+(-[a-z0-9]+)*)?\\}$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/0/Parameters/PromptId",
+     "schemaPath": "#/$defs/jsonPath/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\.[A-Za-z0-9_$.\\[\\]'-]+$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/0/Parameters/PromptId",
+     "schemaPath": "#/oneOf",
+     "keyword": "oneOf",
+     "message": "must match exactly one schema in oneOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/0",
+     "schemaPath": "#/allOf/28/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: GetParticipantInput: still accepts an integer timeout, which Connect's own exports may carry",
+   "version": "0.2",
+   "sha256": "bd2f9899b7c62d30243a0af04037bd2672dbdbf3260680db7e0368cbaa504451",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "FlowDoc schema rejections: GetParticipantInput: still accepts no StoreInput, which the action page makes optional",
+   "version": "0.2",
+   "sha256": "24311cee6acc7be470745d9e737bfabb6890c91cae9a6e8ecf61a2127ee7ac3c",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "FlowDoc schema rejections: GetParticipantInput: still accepts a JSONPath identifier in PromptId",
+   "version": "0.2",
+   "sha256": "403d876b79a751ffec47a57646c339c6f29b30622211085e7105e451ee185438",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "FlowDoc schema rejections: GetParticipantInput: still accepts no prompt at all",
+   "version": "0.2",
+   "sha256": "16d6aedc4e227170a15c6cd7c96a1a22d47766ba18816acc45631251bec398b6",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "kind and connectType agree: accepts a flow with a non-module connectType",
+   "version": "0.2",
+   "sha256": "580c83a96acb61017d68e016b148b9333ee29bb42e397171980ceb096c5d8f05",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "kind and connectType agree: accepts a module with connectType MODULE",
+   "version": "0.2",
+   "sha256": "aa9d10fc52ef3489dc18118f4159bae3de5f7ca80c481a063d2576338191d9c1",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "kind and connectType agree: rejects a module whose connectType is not MODULE",
+   "version": "0.2",
+   "sha256": "9e031258cfc6052439aeb1b5815db1cb1d452a0465b586110004e668b08c7753",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/connectType",
+     "schemaPath": "#/allOf/0/then/properties/connectType/const",
+     "keyword": "const",
+     "message": "must be equal to constant",
+     "property": ""
+    },
+    {
+     "instancePath": "",
+     "schemaPath": "#/allOf/0/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "kind and connectType agree: rejects a flow whose connectType is MODULE",
+   "version": "0.2",
+   "sha256": "ecdecb08f7cbc7dfeab3d97a2078b55baa0b5ab0f4ca5d1ae9e44d90f7529c6c",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/connectType",
+     "schemaPath": "#/allOf/0/else/properties/connectType/not",
+     "keyword": "not",
+     "message": "must NOT be valid",
+     "property": ""
+    },
+    {
+     "instancePath": "",
+     "schemaPath": "#/allOf/0/if",
+     "keyword": "if",
+     "message": "must match \"else\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "Go port: Ajv parity: a tag key that is a lone carriage return, which ECMA-262's . refuses",
+   "version": "0.2",
+   "sha256": "b7090d135f432b96b1a076414cd547cb9efc8aeedd205a5414250986eaefe328",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/1/Parameters/TagKeys/0",
+     "schemaPath": "#/allOf/19/then/properties/Parameters/properties/TagKeys/items/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^(?!aws:).+\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/1",
+     "schemaPath": "#/allOf/19/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "Go port: Ajv parity: a tag key that is U+2028",
+   "version": "0.2",
+   "sha256": "521912ce03c51c2509801c2f3ce90658ad1f23d02c0fd127763cfe1dfafce000",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/1/Parameters/TagKeys/0",
+     "schemaPath": "#/allOf/19/then/properties/Parameters/properties/TagKeys/items/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^(?!aws:).+\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/1",
+     "schemaPath": "#/allOf/19/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "Go port: Ajv parity: two system tag keys and a non-string value",
+   "version": "0.2",
+   "sha256": "7b9b4f4c4da7fc65054a5857dc245485b2c9954f91618c0d5bdbda742ef2a859",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/0/Parameters/Tags",
+     "schemaPath": "#/allOf/18/then/properties/Parameters/properties/Tags/propertyNames/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^(?!aws:)\"",
+     "property": "aws:a"
+    },
+    {
+     "instancePath": "/content/Actions/0/Parameters/Tags",
+     "schemaPath": "#/allOf/18/then/properties/Parameters/properties/Tags/propertyNames",
+     "keyword": "propertyNames",
+     "message": "property name must be valid",
+     "property": "aws:a"
+    },
+    {
+     "instancePath": "/content/Actions/0/Parameters/Tags",
+     "schemaPath": "#/allOf/18/then/properties/Parameters/properties/Tags/propertyNames/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^(?!aws:)\"",
+     "property": "aws:b"
+    },
+    {
+     "instancePath": "/content/Actions/0/Parameters/Tags",
+     "schemaPath": "#/allOf/18/then/properties/Parameters/properties/Tags/propertyNames",
+     "keyword": "propertyNames",
+     "message": "property name must be valid",
+     "property": "aws:b"
+    },
+    {
+     "instancePath": "/content/Actions/0/Parameters/Tags/ok",
+     "schemaPath": "#/allOf/18/then/properties/Parameters/properties/Tags/additionalProperties/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/0",
+     "schemaPath": "#/allOf/18/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "Go port: Ajv parity: a text-to-speech engine that is a number",
+   "version": "0.2",
+   "sha256": "d1c00ff0af38f5179b0bf9dc894500cfc8fc030c7e55c20c41bafeed39ff3ad5",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/2/Parameters/TextToSpeechEngine",
+     "schemaPath": "#/allOf/20/then/properties/Parameters/properties/TextToSpeechEngine/oneOf/0/enum",
+     "keyword": "enum",
+     "message": "must be equal to one of the allowed values",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/TextToSpeechEngine",
+     "schemaPath": "#/$defs/jsonPath/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/TextToSpeechEngine",
+     "schemaPath": "#/allOf/20/then/properties/Parameters/properties/TextToSpeechEngine/oneOf",
+     "keyword": "oneOf",
+     "message": "must match exactly one schema in oneOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2",
+     "schemaPath": "#/allOf/20/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "Go port: Ajv parity: a tag key with a newline inside, which ECMA-262's . allows after the first character",
+   "version": "0.2",
+   "sha256": "464e06e11980375dea89a6f94e354bf46145c3c9bac85d0232ce060795abb5dc",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "Go port: Ajv parity: a tag key that only contains aws: later",
+   "version": "0.2",
+   "sha256": "b4799b11abacda9a91747a3874dc2b07fbb76b97457762959cabe591b203ec65",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "Go port: Ajv parity: a tag key ending in a carriage return",
+   "version": "0.2",
+   "sha256": "5ff422f75339b42c7c644459c677f6153a519c5705698131e9b0663ccaa4f2db",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "Go port: Ajv parity: a wait event list with two repeated pairs",
+   "version": "0.2",
+   "sha256": "cdd306a4a1bf9a59ab53f522b037d4a9750cda2a56eaddec77e4b084549bd2fb",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/9/Parameters/Events",
+     "schemaPath": "#/allOf/14/then/properties/Parameters/properties/Events/uniqueItems",
+     "keyword": "uniqueItems",
+     "message": "must NOT have duplicate items (items ## 1 and 3 are identical)",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/9",
+     "schemaPath": "#/allOf/14/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "Go port: Ajv parity: a percentage branch with no operands",
+   "version": "0.2",
+   "sha256": "b87b23788e67d8b7ebe26853d92c55ff61d9ce08b6b394f17642366fcaf7f32f",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/2/Transitions/Conditions/0/Condition/Operands",
+     "schemaPath": "#/allOf/13/then/properties/Transitions/properties/Conditions/items/properties/Condition/properties/Operands/minItems",
+     "keyword": "minItems",
+     "message": "must NOT have fewer than 1 items",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2",
+     "schemaPath": "#/allOf/13/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Transitions/Conditions/0/Condition/Operands",
+     "schemaPath": "#/$defs/condition/properties/Operands/minItems",
+     "keyword": "minItems",
+     "message": "must NOT have fewer than 1 items",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "Go port: Ajv parity: an Identifier Connect reserves as a prototype name",
+   "version": "0.2",
+   "sha256": "99f242586ace27b45c90670ed8eb10157aeb7bf8ae2643b9f823df87d20a452d",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/1/Identifier",
+     "schemaPath": "#/$defs/identifier/not",
+     "keyword": "not",
+     "message": "must NOT be valid",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "Go port: Ajv parity: an Identifier over 50 characters",
+   "version": "0.2",
+   "sha256": "c51e982183f3b1027ebf1ec334a1dee0cb744f3b9cac2df5c768e83b103934cd",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/1/Identifier",
+     "schemaPath": "#/$defs/identifier/maxLength",
+     "keyword": "maxLength",
+     "message": "must NOT have more than 50 characters",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "Go port: Ajv parity: an Identifier that is a number",
+   "version": "0.2",
+   "sha256": "a313d93d2c0e0ce7e64be6eaf5337488cd0e078321fb329280d7d385fa069c0e",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/1/Identifier",
+     "schemaPath": "#/$defs/identifier/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "Go port: Ajv parity: an empty Identifier",
+   "version": "0.2",
+   "sha256": "7ef8a7d3aad5bbf746bfd3f2fd0aaf6db18eb1cd2cebe2692e6726342ff0e496",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/1/Identifier",
+     "schemaPath": "#/$defs/identifier/minLength",
+     "keyword": "minLength",
+     "message": "must NOT have fewer than 1 characters",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/1/Identifier",
+     "schemaPath": "#/$defs/identifier/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^[^%:(\\\\/)=$,;\\[\\]{}]+$\"",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "Go port: Ajv parity: two unknown top-level keys",
+   "version": "0.2",
+   "sha256": "ed6e7ed1bfa4096e3a90658fe7e1c111013d6776076070d3d14b0071c3c132b8",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "",
+     "schemaPath": "#/additionalProperties",
+     "keyword": "additionalProperties",
+     "message": "must NOT have additional properties",
+     "property": "zeta"
+    },
+    {
+     "instancePath": "",
+     "schemaPath": "#/additionalProperties",
+     "keyword": "additionalProperties",
+     "message": "must NOT have additional properties",
+     "property": "alpha"
+    }
+   ]
+  },
+  {
+   "id": "Go port: Ajv parity: a missing name and content",
+   "version": "0.2",
+   "sha256": "009345ef9299dbf049efa281fc80497a6892de709155be2c20c512cfadba0f3b",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "",
+     "schemaPath": "#/required",
+     "keyword": "required",
+     "message": "must have required property 'name'",
+     "property": ""
+    },
+    {
+     "instancePath": "",
+     "schemaPath": "#/required",
+     "keyword": "required",
+     "message": "must have required property 'content'",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "Go port: Ajv parity: an unknown key in an action and in its transitions",
+   "version": "0.2",
+   "sha256": "b0b8d38271f4890630c3d04ac0abb72302b14c67331f1a4a596a1f0c9a207fef",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/1",
+     "schemaPath": "#/additionalProperties",
+     "keyword": "additionalProperties",
+     "message": "must NOT have additional properties",
+     "property": "Extra"
+    },
+    {
+     "instancePath": "/content/Actions/1/Transitions",
+     "schemaPath": "#/additionalProperties",
+     "keyword": "additionalProperties",
+     "message": "must NOT have additional properties",
+     "property": "Bogus"
+    }
+   ]
+  },
+  {
+   "id": "Go port: Ajv parity: a layout point with a string coordinate and an extra key",
+   "version": "0.2",
+   "sha256": "d9998ae69a2c533943f9739e0e61f8194917e2984dff6940cb8eb9da01a1d822",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/layout/welcome",
+     "schemaPath": "#/$defs/point/additionalProperties",
+     "keyword": "additionalProperties",
+     "message": "must NOT have additional properties",
+     "property": "z"
+    },
+    {
+     "instancePath": "/layout/welcome/x",
+     "schemaPath": "#/$defs/point/properties/x/type",
+     "keyword": "type",
+     "message": "must be number",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "Go port: Ajv parity: a malformed source hash",
+   "version": "0.2",
+   "sha256": "dd10e4aecb6ecedf8cf811683d88fb6cf40569476bda6ce4cb7737df88323c32",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/meta/sourceHash",
+     "schemaPath": "#/properties/meta/properties/sourceHash/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^sha256:[0-9a-f]{64}$\"",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "Go port: Ajv parity: a description over 500 characters",
+   "version": "0.2",
+   "sha256": "cbb58672da241cf66b45942db918785434b94c56660b12df1896ae2ea2d130e7",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/description",
+     "schemaPath": "#/properties/description/maxLength",
+     "keyword": "maxLength",
+     "message": "must NOT have more than 500 characters",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "Go port: Ajv parity: a wrong content version",
+   "version": "0.2",
+   "sha256": "0db03aa2e8dc72b9d29b7b908766d2d67d70eae43b8f1a4478097acbd85bfd45",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Version",
+     "schemaPath": "#/properties/Version/const",
+     "keyword": "const",
+     "message": "must be equal to constant",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "Go port: Ajv parity: no actions",
+   "version": "0.2",
+   "sha256": "0a1a0d79509028b69958dba0c72362fc7c75a697e4c526d358b2bb2ead39283a",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions",
+     "schemaPath": "#/properties/Actions/minItems",
+     "keyword": "minItems",
+     "message": "must NOT have fewer than 1 items",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "Go port: Ajv parity: a description of exactly 500 astral characters",
+   "version": "0.2",
+   "sha256": "73186ffb602e2f020b32c267011d64e6cf2ef06cff6c22b7449eb8e5af28c715",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "FlowDoc migration: 0.2 accepts what 0.1 could not say: a view token, a version pin on it, sourceKind, description",
+   "version": "0.2",
+   "sha256": "db68de8f26a97ff8af4becb01fba77ed363df4efa65e53953003b92317a5a95a",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "FlowDoc migration: 0.1 refuses the same document",
+   "version": "0.1",
+   "sha256": "8ac9ec07eaeedf71b7cb5e175e8acc342e9c0412da0b171b7ef343d377477778",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "",
+     "schemaPath": "#/additionalProperties",
+     "keyword": "additionalProperties",
+     "message": "must NOT have additional properties",
+     "property": "description"
+    },
+    {
+     "instancePath": "/refs/3/token",
+     "schemaPath": "#/$defs/token/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\{cdref:(queue|hours|lambda|lex|prompt|flow|module):[a-z0-9]+(-[a-z0-9]+)*(@[a-z0-9]+(-[a-z0-9]+)*)?\\}$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/refs/3/type",
+     "schemaPath": "#/properties/type/enum",
+     "keyword": "enum",
+     "message": "must be equal to one of the allowed values",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc migration: 0.2 still refuses a sourceKind it does not know",
+   "version": "0.2",
+   "sha256": "6c0ab823473678c76d5073565a10a244b4101e7f20128936d06049aadaf81c54",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/meta/sourceKind",
+     "schemaPath": "#/properties/meta/properties/sourceKind/enum",
+     "keyword": "enum",
+     "message": "must be equal to one of the allowed values",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc migration: minimal-0.1: the input is valid at its own version",
+   "version": "0.1",
+   "sha256": "2ed852327a1c9c643eb4cfe5d12842d55f786dee5247bafd39354bb3f438235d",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "FlowDoc migration: minimal-0.1: the input is not valid at 0.2",
+   "version": "0.2",
+   "sha256": "2ed852327a1c9c643eb4cfe5d12842d55f786dee5247bafd39354bb3f438235d",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/flowdoc",
+     "schemaPath": "#/properties/flowdoc/const",
+     "keyword": "const",
+     "message": "must be equal to constant",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc migration: minimal-0.1: the migrated document is valid at 0.2",
+   "version": "0.2",
+   "sha256": "ff6c7fd7e7153bb4ff1beeb282761a8aa2533bfc4cb52c543fd45af8d83aa08a",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "FlowDoc migration: minimal-0.1: the migrated document is not valid at 0.1",
+   "version": "0.1",
+   "sha256": "ff6c7fd7e7153bb4ff1beeb282761a8aa2533bfc4cb52c543fd45af8d83aa08a",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/flowdoc",
+     "schemaPath": "#/properties/flowdoc/const",
+     "keyword": "const",
+     "message": "must be equal to constant",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc migration: with-meta-0.1: the input is valid at its own version",
+   "version": "0.1",
+   "sha256": "6fd547be8f97e83aec32afff508df164411245b0927c70a2332269739e43a86a",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "FlowDoc migration: with-meta-0.1: the input is not valid at 0.2",
+   "version": "0.2",
+   "sha256": "6fd547be8f97e83aec32afff508df164411245b0927c70a2332269739e43a86a",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/flowdoc",
+     "schemaPath": "#/properties/flowdoc/const",
+     "keyword": "const",
+     "message": "must be equal to constant",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc migration: with-meta-0.1: the migrated document is valid at 0.2",
+   "version": "0.2",
+   "sha256": "201abf180d947c3ca053cbce79a001b0e19a6ee659eff176a527e5cf2659ef4c",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "FlowDoc migration: with-meta-0.1: the migrated document is not valid at 0.1",
+   "version": "0.1",
+   "sha256": "201abf180d947c3ca053cbce79a001b0e19a6ee659eff176a527e5cf2659ef4c",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/flowdoc",
+     "schemaPath": "#/properties/flowdoc/const",
+     "keyword": "const",
+     "message": "must be equal to constant",
+     "property": ""
+    }
+   ]
+  }
+ ],
+ "synthetic": [
+  {
+   "id": "type then enum: Ajv goes on to enum",
+   "sha256": "df558b37296248d6b9d724415d2403f5244fbe0c3219233da90e485f8d07b0f8",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "",
+     "schemaPath": "#/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "",
+     "schemaPath": "#/enum",
+     "keyword": "enum",
+     "message": "must be equal to one of the allowed values",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "type then const and not",
+   "sha256": "229b5b6a2022754d49dd93cfbdea27794c995ae59d89ab84fdc69e18c6a126e4",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "",
+     "schemaPath": "#/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "",
+     "schemaPath": "#/const",
+     "keyword": "const",
+     "message": "must be equal to constant",
+     "property": ""
+    },
+    {
+     "instancePath": "",
+     "schemaPath": "#/not",
+     "keyword": "not",
+     "message": "must NOT be valid",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "uniqueItems over scalar items: the indices scan",
+   "sha256": "10ccdf6879182899f35221f462e37c9186584e5e41b02faa8e5b121316fa0b32",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "",
+     "schemaPath": "#/uniqueItems",
+     "keyword": "uniqueItems",
+     "message": "must NOT have duplicate items (items ## 3 and 1 are identical)",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "uniqueItems over two scalar types",
+   "sha256": "0cb81aea43114102ddd89408eb4426093448c2d5cfd76c40483d76b5e00cfdb7",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "",
+     "schemaPath": "#/uniqueItems",
+     "keyword": "uniqueItems",
+     "message": "must NOT have duplicate items (items ## 3 and 1 are identical)",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "uniqueItems skips items of another type",
+   "sha256": "c90e0cf80e969527ddce0861e9e6754bd9a7265084b6be5af9230d6d8035b584",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/0",
+     "schemaPath": "#/items/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "/1",
+     "schemaPath": "#/items/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "uniqueItems over untyped items: the pairwise scan",
+   "sha256": "0f29e3cfc82a38cffbc2dc31c4b6fec61b8fa3a4a6b857b48454c4fc9d87378d",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "",
+     "schemaPath": "#/uniqueItems",
+     "keyword": "uniqueItems",
+     "message": "must NOT have duplicate items (items ## 1 and 3 are identical)",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "uniqueItems compares objects as key sets",
+   "sha256": "11ce94d24b785e6bc4789ef9047a5f58eaaf454fe42ffc438ce8a50351ff2655",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "",
+     "schemaPath": "#/uniqueItems",
+     "keyword": "uniqueItems",
+     "message": "must NOT have duplicate items (items ## 0 and 1 are identical)",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "a type list",
+   "sha256": "3bb9123c91ec03591bb563a63df930ccff18ac7bab8b69fbbd38ab8805f97a35",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "",
+     "schemaPath": "#/type",
+     "keyword": "type",
+     "message": "must be string,null",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "a false schema",
+   "sha256": "b28805e5621d1950c667bd58187b2f83cb9332b0555a37a0704a96a1eccb2431",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/a",
+     "schemaPath": "#/properties/a/false schema",
+     "keyword": "false schema",
+     "message": "boolean schema is false",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "not",
+   "sha256": "cc980d728aeb6e60535762fdf810ab5627c601226a58607b1ff64163f63afbdc",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "",
+     "schemaPath": "#/not",
+     "keyword": "not",
+     "message": "must NOT be valid",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "anyOf with every branch failing",
+   "sha256": "886e720a6f91fea03970ac8f9cdb407f0399225de3121704007251886266c188",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "",
+     "schemaPath": "#/anyOf/0/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "",
+     "schemaPath": "#/anyOf/1/minimum",
+     "keyword": "minimum",
+     "message": "must be >= 3",
+     "property": ""
+    },
+    {
+     "instancePath": "",
+     "schemaPath": "#/anyOf",
+     "keyword": "anyOf",
+     "message": "must match a schema in anyOf",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "oneOf with no branch passing",
+   "sha256": "b14d796feff2d5dc75c146c2e3e8a958109c99ca44a264339ad4a8fb11fedbea",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "",
+     "schemaPath": "#/oneOf/0/required",
+     "keyword": "required",
+     "message": "must have required property 'A'",
+     "property": ""
+    },
+    {
+     "instancePath": "",
+     "schemaPath": "#/oneOf/1/required",
+     "keyword": "required",
+     "message": "must have required property 'B'",
+     "property": ""
+    },
+    {
+     "instancePath": "",
+     "schemaPath": "#/oneOf",
+     "keyword": "oneOf",
+     "message": "must match exactly one schema in oneOf",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "oneOf passing twice with a failing branch between",
+   "sha256": "d7069a4365f8852de903bd5988129a8d23af142ca924e8c2d408e96e4f7d8d79",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "",
+     "schemaPath": "#/oneOf/1/required",
+     "keyword": "required",
+     "message": "must have required property 'B'",
+     "property": ""
+    },
+    {
+     "instancePath": "",
+     "schemaPath": "#/oneOf",
+     "keyword": "oneOf",
+     "message": "must match exactly one schema in oneOf",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "oneOf passing twice then failing",
+   "sha256": "45b326e242ca7af2aaadb6dc2c013b1012df197077f4eb6e14a185ad6d3e0a24",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "",
+     "schemaPath": "#/oneOf",
+     "keyword": "oneOf",
+     "message": "must match exactly one schema in oneOf",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "number limits",
+   "sha256": "e55d1574f12b6ad2b643b7a08e33b47db903d4f2ed90df0ce32d5da1003e49f2",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "number limits on items",
+   "sha256": "c4a6a2f25934b7fbe5854c11e5cfe7976fd7a2847263c211d0ecd58d4f35861d",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/0",
+     "schemaPath": "#/items/minimum",
+     "keyword": "minimum",
+     "message": "must be >= 1.5",
+     "property": ""
+    },
+    {
+     "instancePath": "/0",
+     "schemaPath": "#/items/multipleOf",
+     "keyword": "multipleOf",
+     "message": "must be multiple of 0.5",
+     "property": ""
+    },
+    {
+     "instancePath": "/1",
+     "schemaPath": "#/items/maximum",
+     "keyword": "maximum",
+     "message": "must be <= 9",
+     "property": ""
+    },
+    {
+     "instancePath": "/1",
+     "schemaPath": "#/items/exclusiveMaximum",
+     "keyword": "exclusiveMaximum",
+     "message": "must be < 10",
+     "property": ""
+    },
+    {
+     "instancePath": "/2",
+     "schemaPath": "#/items/minimum",
+     "keyword": "minimum",
+     "message": "must be >= 1.5",
+     "property": ""
+    },
+    {
+     "instancePath": "/2",
+     "schemaPath": "#/items/exclusiveMinimum",
+     "keyword": "exclusiveMinimum",
+     "message": "must be > 0",
+     "property": ""
+    },
+    {
+     "instancePath": "/3",
+     "schemaPath": "#/items/maximum",
+     "keyword": "maximum",
+     "message": "must be <= 9",
+     "property": ""
+    },
+    {
+     "instancePath": "/3",
+     "schemaPath": "#/items/exclusiveMaximum",
+     "keyword": "exclusiveMaximum",
+     "message": "must be < 10",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "multipleOf at 1e21, which parseInt reads as 2",
+   "sha256": "a056e2efc7eb736f6ae58bb87d628967101d2c00810ff765de0b8c6ed8cb5e7b",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "",
+     "schemaPath": "#/multipleOf",
+     "keyword": "multipleOf",
+     "message": "must be multiple of 0.5",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "multipleOf in binary floating point",
+   "sha256": "0d9f9388c2ed2affb9a1b39ff8ddcf73a3f9fc16c40df0642491062ce26df42a",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "",
+     "schemaPath": "#/multipleOf",
+     "keyword": "multipleOf",
+     "message": "must be multiple of 0.1",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "object counts",
+   "sha256": "f3e1d662cddb3aeecb7cdd6055f28ff7dcb6a86cf9fcd17e8f241cc80772c9c9",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/o",
+     "schemaPath": "#/properties/o/maxProperties",
+     "keyword": "maxProperties",
+     "message": "must NOT have more than 0 properties",
+     "property": ""
+    },
+    {
+     "instancePath": "/o",
+     "schemaPath": "#/properties/o/minProperties",
+     "keyword": "minProperties",
+     "message": "must NOT have fewer than 2 properties",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "array counts",
+   "sha256": "1e2851297642f26b6c3acdc3a10b58b5cd7e6e07284bdb942d09139bdd49d3dc",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "",
+     "schemaPath": "#/maxItems",
+     "keyword": "maxItems",
+     "message": "must NOT have more than 1 items",
+     "property": ""
+    },
+    {
+     "instancePath": "",
+     "schemaPath": "#/minItems",
+     "keyword": "minItems",
+     "message": "must NOT have fewer than 3 items",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "string lengths count code points",
+   "sha256": "0e50510cc3ae0a5f6bb8c03c503a0895f2064996a3f3e1a988ec0d551fed06ff",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/0",
+     "schemaPath": "#/items/maxLength",
+     "keyword": "maxLength",
+     "message": "must NOT have more than 1 characters",
+     "property": ""
+    },
+    {
+     "instancePath": "/0",
+     "schemaPath": "#/items/minLength",
+     "keyword": "minLength",
+     "message": "must NOT have fewer than 3 characters",
+     "property": ""
+    },
+    {
+     "instancePath": "/1",
+     "schemaPath": "#/items/maxLength",
+     "keyword": "maxLength",
+     "message": "must NOT have more than 1 characters",
+     "property": ""
+    },
+    {
+     "instancePath": "/1",
+     "schemaPath": "#/items/minLength",
+     "keyword": "minLength",
+     "message": "must NOT have fewer than 3 characters",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "if with then and else, per item",
+   "sha256": "0ab619d1d6373b22b3d0440c70337d542b3a00f9e26cdbc43d590b969e0c817b",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/0",
+     "schemaPath": "#/items/then/minLength",
+     "keyword": "minLength",
+     "message": "must NOT have fewer than 2 characters",
+     "property": ""
+    },
+    {
+     "instancePath": "/0",
+     "schemaPath": "#/items/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    },
+    {
+     "instancePath": "/1",
+     "schemaPath": "#/items/else/maximum",
+     "keyword": "maximum",
+     "message": "must be <= 3",
+     "property": ""
+    },
+    {
+     "instancePath": "/1",
+     "schemaPath": "#/items/if",
+     "keyword": "if",
+     "message": "must match \"else\" schema",
+     "property": ""
+    },
+    {
+     "instancePath": "/3",
+     "schemaPath": "#/items/else/type",
+     "keyword": "type",
+     "message": "must be number",
+     "property": ""
+    },
+    {
+     "instancePath": "/3",
+     "schemaPath": "#/items/if",
+     "keyword": "if",
+     "message": "must match \"else\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "an if nested in a then",
+   "sha256": "cc080fb190475500b77ce61ef2fd56477e4ffc1c6bc0cbd3b8d36ab110cc726e",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "",
+     "schemaPath": "#/then/then/required",
+     "keyword": "required",
+     "message": "must have required property 'c'",
+     "property": ""
+    },
+    {
+     "instancePath": "",
+     "schemaPath": "#/then/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    },
+    {
+     "instancePath": "",
+     "schemaPath": "#/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "a then two properties deep",
+   "sha256": "de357e74de20478a331c23a776140bfae63ffba30bf9f4b9cca4e3ab4a4710df",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/p/q",
+     "schemaPath": "#/then/properties/p/properties/q/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "",
+     "schemaPath": "#/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "a property called then",
+   "sha256": "3086775b7a37169e1696327fb67fadc226f2eed1c3f913e53832c2c289c02828",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/then",
+     "schemaPath": "#/properties/then/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "additionalProperties in instance order",
+   "sha256": "06718b743597d860c48f4716672519603b976187c534b49f74ff404d52444a91",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "",
+     "schemaPath": "#/additionalProperties",
+     "keyword": "additionalProperties",
+     "message": "must NOT have additional properties",
+     "property": "z"
+    },
+    {
+     "instancePath": "",
+     "schemaPath": "#/additionalProperties",
+     "keyword": "additionalProperties",
+     "message": "must NOT have additional properties",
+     "property": "a"
+    }
+   ]
+  },
+  {
+   "id": "required, several missing",
+   "sha256": "2e6a056aab7525a772bba8ab2021474ec1ab2d9959c70103a267aab60ce16aaf",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "",
+     "schemaPath": "#/required",
+     "keyword": "required",
+     "message": "must have required property 'b'",
+     "property": ""
+    },
+    {
+     "instancePath": "",
+     "schemaPath": "#/required",
+     "keyword": "required",
+     "message": "must have required property 'c'",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "propertyNames with two failing keywords",
+   "sha256": "388b49e7002cf01d12f7c2af9cfae5a64c7bee8611c5279071b0e3cd13751a05",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "",
+     "schemaPath": "#/propertyNames/maxLength",
+     "keyword": "maxLength",
+     "message": "must NOT have more than 2 characters",
+     "property": "abc"
+    },
+    {
+     "instancePath": "",
+     "schemaPath": "#/propertyNames/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^x\"",
+     "property": "abc"
+    },
+    {
+     "instancePath": "",
+     "schemaPath": "#/propertyNames",
+     "keyword": "propertyNames",
+     "message": "property name must be valid",
+     "property": "abc"
+    }
+   ]
+  },
+  {
+   "id": "propertyNames under additionalProperties",
+   "sha256": "dfe55d7c22a2dd917d4d66fe48eaf3e15cb46a1e7773956ec5caf94ebae953fe",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/x",
+     "schemaPath": "#/additionalProperties/propertyNames/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^a\"",
+     "property": "b"
+    },
+    {
+     "instancePath": "/x",
+     "schemaPath": "#/additionalProperties/propertyNames",
+     "keyword": "propertyNames",
+     "message": "property name must be valid",
+     "property": "b"
+    },
+    {
+     "instancePath": "/y",
+     "schemaPath": "#/additionalProperties/propertyNames/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^a\"",
+     "property": "c"
+    },
+    {
+     "instancePath": "/y",
+     "schemaPath": "#/additionalProperties/propertyNames",
+     "keyword": "propertyNames",
+     "message": "property name must be valid",
+     "property": "c"
+    }
+   ]
+  },
+  {
+   "id": "propertyNames under items, the same bad key twice",
+   "sha256": "ee9fcabfb6d165af3fb94068d943ce554b484dbbce1fa8be6bffce25ce17ec0f",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/1",
+     "schemaPath": "#/items/propertyNames/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^a\"",
+     "property": "b"
+    },
+    {
+     "instancePath": "/1",
+     "schemaPath": "#/items/propertyNames",
+     "keyword": "propertyNames",
+     "message": "property name must be valid",
+     "property": "b"
+    },
+    {
+     "instancePath": "/2",
+     "schemaPath": "#/items/propertyNames/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^a\"",
+     "property": "b"
+    },
+    {
+     "instancePath": "/2",
+     "schemaPath": "#/items/propertyNames",
+     "keyword": "propertyNames",
+     "message": "property name must be valid",
+     "property": "b"
+    }
+   ]
+  },
+  {
+   "id": "propertyNames under a then",
+   "sha256": "6816d846e57c8923d6b778b01d9965e2b9086f0ea8de601d391d77c3b43ba46e",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/m",
+     "schemaPath": "#/then/properties/m/propertyNames/enum",
+     "keyword": "enum",
+     "message": "must be equal to one of the allowed values",
+     "property": "no"
+    },
+    {
+     "instancePath": "/m",
+     "schemaPath": "#/then/properties/m/propertyNames",
+     "keyword": "propertyNames",
+     "message": "property name must be valid",
+     "property": "no"
+    },
+    {
+     "instancePath": "",
+     "schemaPath": "#/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "an inlined $ref under a compiled one",
+   "sha256": "89865b006a8c538f6de0a2bbd71a0442c25812624a6951bb14ac68c32df6a53f",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/x",
+     "schemaPath": "#/$defs/b/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "/y",
+     "schemaPath": "#/$defs/a/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "a pure $ref chain ending in a compiled schema",
+   "sha256": "92e5e0e92dfb4e4bd1bd2364fbc890a02e0357a2d79caddfc4292b7bfd34ba48",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/x",
+     "schemaPath": "#/required",
+     "keyword": "required",
+     "message": "must have required property 'w'",
+     "property": ""
+    },
+    {
+     "instancePath": "/x/z",
+     "schemaPath": "#/$defs/c/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "an ECMA-262 dot refuses line terminators",
+   "sha256": "ae3db803771253b6959a715ce1237c651dc1e7d441115aa0f271dca9d274a6de",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/0",
+     "schemaPath": "#/items/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^.$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/1",
+     "schemaPath": "#/items/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^.$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/2",
+     "schemaPath": "#/items/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^.$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/3",
+     "schemaPath": "#/items/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^.$\"",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "an ECMA-262 \\s is Unicode white space",
+   "sha256": "f99cd5e15e3d9045ce4905b725471a6ea6447d645ed464e7b5a32f169a27cb63",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/4",
+     "schemaPath": "#/items/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\s$\"",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "an ECMA-262 \\S",
+   "sha256": "70596f13044dbafc2ee0f6724bd04a172bc2f5c277c95f7d8732c11a2d39747d",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/0",
+     "schemaPath": "#/items/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\S$\"",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "ECMA-262 empty classes",
+   "sha256": "4939a89995865be0fd05b556732cadf70feb1da3f18fedbf0af0461c05d67e40",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/none",
+     "schemaPath": "#/properties/none/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"[]\"",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "a bracket in a class is literal",
+   "sha256": "71b5dfedd58843645148ed186ab3d8a56e749635937ce131bde2281033a1b832",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/1",
+     "schemaPath": "#/items/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^[[:a]+$\"",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "unicode escapes",
+   "sha256": "da2cdad3e543474e9d58d0cfec7b2e314b7875f4ad9e98f07a0b72a75faf0f30",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/1",
+     "schemaPath": "#/items/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\u00e9\\u{1F600}\\uD83D\\uDE00\\x41$\"",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "a leading negative lookahead",
+   "sha256": "5dd4f9dbe137ebf9c00436ada252e11cd3c2fdd7d54839439cb1f4bb6cc4152b",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/0",
+     "schemaPath": "#/items/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^(?!a\\.b)[a-z.]+$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/1",
+     "schemaPath": "#/items/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^(?!a\\.b)[a-z.]+$\"",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "a pattern searches, it does not anchor",
+   "sha256": "2bea151abe392b1265b30064db59a5c1b79083dc2c1cb9b731df9123480cdff4",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "escapes of syntax characters",
+   "sha256": "9813731a9de26012f0dbbe2bd09eed8652aa639f66559651a1f3987a3b3c7052",
+   "valid": true,
+   "errors": []
+  }
+ ]
+}
