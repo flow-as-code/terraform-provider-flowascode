@@ -1,0 +1,29 @@
+---
+page_title: "Provider: flowascode"
+description: |-
+  Amazon Connect contact flows authored natively in HCL.
+---
+
+# flowascode Provider
+
+Amazon Connect contact flows authored natively in HCL: one `action` block per
+action, created, updated and deleted through the Amazon Connect API. Terraform
+1.8 and later; OpenTofu 1.10 and later.
+
+The resource shape is a contract shared with the flow-as-code tooling
+(`conformance/hcl/README.md` in
+[flow-as-code](https://github.com/flow-as-code/flow-as-code)): the studio
+reads and writes these resources as `.flow.tf` files, and the plan shows the
+FlowDoc a configuration reads to in each resource's `flowdoc` attribute.
+
+References are keys (`"queue:appointments"`) in the action blocks, bound once
+in the resource's `refs` map to a Terraform expression. A literal ARN in an
+action is refused at plan time, as is any expression in a reference field.
+Lint runs at plan time: a hard rule fails the plan, every other finding warns,
+and `lint { disable = [...] }` skips any rule but a hard one.
+
+## Example Usage
+
+{{ tffile "examples/provider/provider.tf" }}
+
+{{ .SchemaMarkdown | trimspace }}

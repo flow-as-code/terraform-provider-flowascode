@@ -41,6 +41,11 @@ that `conformance/` directory at a pinned commit and passes the same fixtures.
 The flow-as-code studio reads and writes these resources as `.flow.tf`
 companions.
 
+Registry documentation is generated into `docs/` by tfplugindocs from the
+schema, `templates/` and `examples/` (`go generate ./...`; CI fails when it
+is stale), and every example is planned by the tests. Design decisions are in
+`decisions/`.
+
 Status: under construction. Nothing is published to a registry yet.
 
 License: Apache-2.0.
