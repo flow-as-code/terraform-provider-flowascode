@@ -1,0 +1,26 @@
+version: 2
+
+# Every third-party action in .github/workflows/ is pinned to a full commit SHA
+# with its version in a trailing comment (internal/hygiene holds that).
+# Dependabot rewrites the SHA and the comment together, so an update arrives
+# through review and the gate set rather than silently at run time.
+# https://docs.github.com/en/code-security/dependabot/working-with-dependabot/keeping-your-actions-up-to-date-with-dependabot
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: ci
+    groups:
+      actions:
+        patterns: ["*"]
+  - package-ecosystem: gomod
+    directory: /
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: deps
+    groups:
+      go:
+        patterns: ["*"]

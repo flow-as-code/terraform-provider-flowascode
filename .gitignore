@@ -1,0 +1,7 @@
+/dist/
+/terraform-provider-flowascode
+*.test
+.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl
