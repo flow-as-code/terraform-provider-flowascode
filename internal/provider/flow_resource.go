@@ -22,7 +22,10 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 
 	"github.com/flow-as-code/terraform-provider-flowascode/internal/connectapi"
+	"github.com/flow-as-code/terraform-provider-flowascode/internal/export"
+	"github.com/flow-as-code/terraform-provider-flowascode/internal/flowdoc"
 	"github.com/flow-as-code/terraform-provider-flowascode/internal/flowmodel"
+	"github.com/flow-as-code/terraform-provider-flowascode/internal/jsonv"
 )
 
 // flowResource is flowascode_contact_flow (kind "flow") and
@@ -155,6 +158,7 @@ type flowAttrs struct {
 	Tags        types.Map
 	Content     types.String
 	External    types.Bool
+	Refs        types.Map
 }
 
 func (r *flowResource) getAttrs(ctx context.Context, src interface {
@@ -164,7 +168,7 @@ func (r *flowResource) getAttrs(ctx context.Context, src interface {
 	targets := map[string]any{
 		"id": &a.ID, r.idAttr(): &a.ConnectID, "arn": &a.ARN, "instance_id": &a.InstanceID,
 		"name": &a.Name, "description": &a.Description, "state": &a.State,
-		"tags": &a.Tags, "content": &a.Content,
+		"tags": &a.Tags, "content": &a.Content, "refs": &a.Refs,
 	}
 	if r.module() {
 		targets["external_invocation_enabled"] = &a.External
@@ -362,6 +366,93 @@ func (r *flowResource) Read(ctx context.Context, req resource.ReadRequest, resp 
 	if !sameContent(l.content, a.Content.ValueString()) {
 		set("content", types.StringValue(l.content))
 		set("content_hash", types.StringValue(hashOf(l.content)))
+		// Show the live flow as blocks too, so the plan says what changed
+		// rather than only that content did. After an import this is also
+		// what -generate-config-out writes.
+		r.reconstruct(ctx, a, l, &resp.State, &resp.Diagnostics)
+	}
+}
+
+// reconstruct writes the live flow back into state as the configuration
+// would hold it: action blocks, start, refs, settings and flowdoc. ARNs are
+// mapped back to reference keys through the refs bindings already in state;
+// an ARN nothing binds leaves the blocks as they were, with a warning, since
+// the content change already shows the drift.
+func (r *flowResource) reconstruct(ctx context.Context, a flowAttrs, l live, state interface {
+	SetAttribute(context.Context, path.Path, interface{}) diag.Diagnostics
+}, diags *diag.Diagnostics) {
+	bound := map[string]string{} // token -> ARN
+	for key, arn := range tagsOf(ctx, a.Refs) {
+		bound["${cdref:"+key+"}"] = arn
+	}
+	name := a.Name.ValueString()
+	if a.Name.IsNull() || a.Name.IsUnknown() {
+		name = export.SlugifyResourceName(l.name)
+	}
+	connectType := "MODULE"
+	if !r.module() {
+		connectType = a.Type.ValueString()
+	}
+	doc, err := export.ExportFlow(l.content, export.ReverseMapOfResourceMap(bound), export.ExportFlowOptions{
+		Name: name, ConnectType: connectType, Kind: r.kind, Description: l.description, OmitMeta: true,
+	})
+	if err != nil {
+		diags.AddWarning("The live "+r.kind+" is not shown as blocks",
+			fmt.Sprintf("%s. Bind each ARN in refs to see the live actions in the plan.", err.Error()))
+		return
+	}
+	var sr resource.SchemaResponse
+	r.Schema(ctx, resource.SchemaRequest{}, &sr)
+	actionType, d := sr.Schema.TypeAtPath(ctx, path.Root("action"))
+	diags.Append(d...)
+	if diags.HasError() {
+		return
+	}
+	tv, err := flowmodel.ToTerraform(flowmodel.ActionsFromDoc(doc), actionType.TerraformType(ctx))
+	if err != nil {
+		diags.AddError("Cannot write the live "+r.kind+" as blocks", err.Error())
+		return
+	}
+	actions, err := actionType.ValueFromTerraform(ctx, tv)
+	if err != nil {
+		diags.AddError("Cannot write the live "+r.kind+" as blocks", err.Error())
+		return
+	}
+	diags.Append(state.SetAttribute(ctx, path.Root("action"), actions)...)
+	diags.Append(state.SetAttribute(ctx, path.Root("flowdoc"), types.StringValue(string(flowdoc.Serialize(doc))))...)
+
+	cv, _ := doc.Get("content")
+	content, _ := cv.(jsonv.Object)
+	start, _ := content.Get("StartAction")
+	av, _ := content.Get("Actions")
+	list, _ := av.([]any)
+	first := ""
+	if len(list) > 0 {
+		f, _ := list[0].(jsonv.Object).Get("Identifier")
+		first, _ = f.(string)
+	}
+	if s, _ := start.(string); s != first {
+		diags.Append(state.SetAttribute(ctx, path.Root("start"), types.StringValue(s))...)
+	} else {
+		diags.Append(state.SetAttribute(ctx, path.Root("start"), types.StringNull())...)
+	}
+	if r.module() {
+		if s, ok := content.Get("Settings"); ok {
+			if o, _ := s.(jsonv.Object); len(o) > 0 {
+				diags.Append(state.SetAttribute(ctx, path.Root("settings"), types.StringValue(flowmodel.JSONEncode(o)))...)
+			}
+		}
+	}
+	refs := map[string]string{}
+	for _, e := range flowdoc.CollectRefs(content) {
+		if arn, ok := bound[e.Token]; ok {
+			refs[flowdoc.RefKey(e)] = arn
+		}
+	}
+	if len(refs) > 0 || !a.Refs.IsNull() {
+		m, d := types.MapValueFrom(ctx, types.StringType, refs)
+		diags.Append(d...)
+		diags.Append(state.SetAttribute(ctx, path.Root("refs"), m)...)
 	}
 }
 
