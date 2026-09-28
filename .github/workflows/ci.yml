@@ -1,5 +1,8 @@
-# Build, vet, unit tests, generated-code drift and header checks. No AWS
-# credentials here: the live acceptance lane is acceptance.yml (task B04i).
+# Build, vet, unit and conformance tests, generated-code drift and header
+# checks. No AWS credentials here: the live acceptance lane is acceptance.yml
+# (task B04i). The conformance runners plan every vendored case through a
+# real Terraform or OpenTofu against an in-memory Connect, so the unit lane
+# runs once per CLI at the provider's floors (Terraform 1.8, OpenTofu 1.10).
 name: ci
 
 on:
@@ -13,16 +16,36 @@ permissions:
 jobs:
   unit:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        cli: [terraform, tofu]
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
         with:
           go-version-file: go.mod
+      - if: matrix.cli == 'terraform'
+        uses: hashicorp/setup-terraform@dfe3c3f87815947d99a8997f908cb6525fc44e9e # v4.0.1
+        with:
+          terraform_version: "~1.8.0"
+          terraform_wrapper: false
+      - if: matrix.cli == 'tofu'
+        uses: opentofu/setup-opentofu@a1320f892987e89d278cc92dc5adc984fb93aca4 # v2.0.2
+        with:
+          tofu_version: "~1.10.0"
+          tofu_wrapper: false
       - run: go build ./...
       - run: go vet ./...
       - run: go run ./tools/headers
+      - name: gofmt
+        run: test -z "$(gofmt -l .)"
       - name: generated code is current
         run: |
           go generate ./...
           git diff --exit-code
-      - run: go test ./...
+      - name: test
+        run: |
+          export TF_ACC_TERRAFORM_PATH="$(command -v ${{ matrix.cli }})"
+          if [ "${{ matrix.cli }}" = tofu ]; then export TF_ACC_PROVIDER_HOST=registry.opentofu.org; fi
+          go test ./...

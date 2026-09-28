@@ -32,6 +32,15 @@ func New(version string) func() provider.Provider {
 
 type flowascode struct {
 	version string
+	// client, when set, is used as is and the provider block is ignored: the
+	// tests' way in, with a fake Connect.
+	client *connectapi.Client
+}
+
+// NewWithClient is New with a Connect client supplied rather than configured,
+// for tests.
+func NewWithClient(version string, client *connectapi.Client) func() provider.Provider {
+	return func() provider.Provider { return &flowascode{version: version, client: client} }
 }
 
 var _ provider.Provider = (*flowascode)(nil)
@@ -133,6 +142,11 @@ func (p *flowascode) Schema(_ context.Context, _ provider.SchemaRequest, resp *p
 }
 
 func (p *flowascode) Configure(ctx context.Context, req provider.ConfigureRequest, resp *provider.ConfigureResponse) {
+	if p.client != nil {
+		resp.ResourceData = p.client
+		resp.DataSourceData = p.client
+		return
+	}
 	var c config
 	resp.Diagnostics.Append(req.Config.Get(ctx, &c)...)
 	if resp.Diagnostics.HasError() {
@@ -247,7 +261,7 @@ func fromBase(in basediag.Diagnostics) diag.Diagnostics {
 }
 
 func (p *flowascode) Resources(_ context.Context) []func() resource.Resource {
-	return nil
+	return []func() resource.Resource{NewContactFlow}
 }
 
 func (p *flowascode) DataSources(_ context.Context) []func() datasource.DataSource {
