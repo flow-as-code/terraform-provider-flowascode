@@ -89,7 +89,7 @@ func (r *flowResource) Schema(_ context.Context, _ resource.SchemaRequest, resp 
 			Description: "The FlowDoc the configuration reads to, canonical JSON with reference tokens in place."},
 		"content": schema.StringAttribute{Computed: true,
 			Description: "The Flow language content sent to Connect: the FlowDoc with every reference bound."},
-		"content_hash": schema.StringAttribute{Computed: true, Description: "sha256 of content."},
+		"content_hash": schema.StringAttribute{Computed: true, Description: "sha256 of content in canonical form without Metadata: what the flow does, not how it is laid out."},
 	}
 	if r.module() {
 		attrs["settings"] = schema.StringAttribute{Optional: true, Description: "The module's Settings, as jsonencode({...}). Omitted means {}."}

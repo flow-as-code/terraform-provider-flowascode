@@ -174,11 +174,14 @@ func contentOf(doc jsonv.Object, bindings map[string]string) (string, error) {
 	return string(b), err
 }
 
+// hashOf is content_hash: the sha256 of the content in canonical form without
+// Metadata, so it names what the flow does rather than how Connect or the
+// canvas laid it out, and a module version resource can compare it with the
+// module's live content however Connect stored it.
 func hashOf(content string) string {
-	sum := sha256.Sum256([]byte(content))
+	sum := sha256.Sum256([]byte(normalizedContent(content)))
 	return hex.EncodeToString(sum[:])
 }
-
 func setPlanned(ctx context.Context, p planned, plan interface {
 	SetAttribute(context.Context, path.Path, interface{}) diag.Diagnostics
 }, diags *diag.Diagnostics) {
@@ -221,20 +224,23 @@ func userTags(tags map[string]string) map[string]string {
 // sameContent compares two Flow language documents without Metadata, in
 // canonical form.
 func sameContent(a, b string) bool {
-	norm := func(s string) string {
-		v, err := jsonv.Decode([]byte(s))
-		o, ok := v.(jsonv.Object)
-		if err != nil || !ok {
-			return s
-		}
-		o.Delete("Metadata")
-		c, err := materialize.SerializeContent(o)
-		if err != nil {
-			return s
-		}
-		return string(c)
+	return normalizedContent(a) == normalizedContent(b)
+}
+
+// normalizedContent is a Flow language document in canonical form without
+// Metadata, or the text itself when it does not parse.
+func normalizedContent(s string) string {
+	v, err := jsonv.Decode([]byte(s))
+	o, ok := v.(jsonv.Object)
+	if err != nil || !ok {
+		return s
 	}
-	return norm(a) == norm(b)
+	o.Delete("Metadata")
+	c, err := materialize.SerializeContent(o)
+	if err != nil {
+		return s
+	}
+	return string(c)
 }
 
 // syncTags applies the difference between two tag maps.
