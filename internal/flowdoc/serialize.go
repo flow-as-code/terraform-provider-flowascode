@@ -67,19 +67,19 @@ func canonicalTransitions(t jsonv.Object) jsonv.Object {
 		if list, ok := conds.([]any); ok {
 			next := make([]any, len(list))
 			for i, c := range list {
+				// { NextAction: c.NextAction, Condition: ordered({ ...c.Condition }) }:
+				// an absent NextAction is dropped (undefined), a null one kept,
+				// and Condition is always an object, {} when there is none.
 				co := asObject(c)
-				nextAction, _ := co.Get("NextAction")
-				condition, _ := co.Get("Condition")
 				element := jsonv.Object{}
-				if nextAction != nil {
+				if nextAction, ok := co.Get("NextAction"); ok {
 					element = append(element, jsonv.Member{Key: "NextAction", Value: nextAction})
 				}
-				if condition != nil {
-					element = append(element, jsonv.Member{
-						Key:   "Condition",
-						Value: ordered(asObject(condition), "Operator", "Operands"),
-					})
-				}
+				condition, _ := co.Get("Condition")
+				element = append(element, jsonv.Member{
+					Key:   "Condition",
+					Value: ordered(asObject(condition), "Operator", "Operands"),
+				})
 				next[i] = element
 			}
 			out.Set("Conditions", next)
@@ -91,16 +91,19 @@ func canonicalTransitions(t jsonv.Object) jsonv.Object {
 // CanonicalAction is serialize.ts's canonicalAction: four keys in a fixed
 // order, Parameters with every key sorted, Transitions canonical.
 func CanonicalAction(a jsonv.Object) jsonv.Object {
-	id, _ := a.Get("Identifier")
-	typ, _ := a.Get("Type")
-	params, _ := a.Get("Parameters")
-	trans, _ := a.Get("Transitions")
-	return jsonv.Object{
-		{Key: "Identifier", Value: id},
-		{Key: "Type", Value: typ},
-		{Key: "Parameters", Value: jsonv.SortKeys(params)},
-		{Key: "Transitions", Value: canonicalTransitions(asObject(trans))},
+	// An absent key is undefined in the TypeScript object literal, which
+	// JSON.stringify leaves out.
+	out := jsonv.Object{}
+	for _, k := range []string{"Identifier", "Type"} {
+		if v, ok := a.Get(k); ok {
+			out = append(out, jsonv.Member{Key: k, Value: v})
+		}
 	}
+	if params, ok := a.Get("Parameters"); ok {
+		out = append(out, jsonv.Member{Key: "Parameters", Value: jsonv.SortKeys(params)})
+	}
+	trans, _ := a.Get("Transitions")
+	return append(out, jsonv.Member{Key: "Transitions", Value: canonicalTransitions(asObject(trans))})
 }
 
 // Canonicalize is serialize.ts's canonicalize. Key order below is the byte

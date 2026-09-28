@@ -70,3 +70,17 @@ func TestSerializeMatchesTheTypeScriptBytes(t *testing.T) {
 		t.Errorf("only %d of %d vendored documents re-serialize byte-identically; TypeScript manages 59", canonical, len(docs))
 	}
 }
+
+// Checked against @flow-as-code/core's serialize with node.
+func TestCanonicalActionEdgesMatchTypeScript(t *testing.T) {
+	in := `{"flowdoc":"0.2","kind":"flow","name":"x","connectType":"CONTACT_FLOW","content":{"Version":"2019-10-30","StartAction":"a","Actions":[{"Type":"Compare","Identifier":"a","Parameters":{"b":1,"10":2,"9":3},"Transitions":{"Conditions":[{"NextAction":null},{"Condition":{"Operands":["1"],"Operator":"Equals"}}]}}]}}`
+	v, err := jsonv.Decode([]byte(in))
+	if err != nil {
+		t.Fatal(err)
+	}
+	got := string(jsonv.Encode(Canonicalize(v.(jsonv.Object)), ""))
+	want := `{"flowdoc":"0.2","kind":"flow","name":"x","connectType":"CONTACT_FLOW","content":{"Version":"2019-10-30","StartAction":"a","Actions":[{"Identifier":"a","Type":"Compare","Parameters":{"9":3,"10":2,"b":1},"Transitions":{"Conditions":[{"NextAction":null,"Condition":{}},{"Condition":{"Operator":"Equals","Operands":["1"]}}]}}]}}`
+	if got != want {
+		t.Errorf("got\n%s\nwant\n%s", got, want)
+	}
+}

@@ -44,3 +44,18 @@ func TestSortKeysComparesCodeUnits(t *testing.T) {
 		t.Errorf("order %q", keys)
 	}
 }
+
+// node: JSON.stringify(JSON.parse('{"b":1,"10":2,"9":3,"01":4,"4294967295":5,"4294967294":6}'))
+func TestEncodeUsesJavaScriptOwnKeyOrder(t *testing.T) {
+	v, err := Decode([]byte(`{"b":1,"10":2,"9":3,"01":4,"4294967295":5,"4294967294":6}`))
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := `{"9":3,"10":2,"4294967294":6,"b":1,"01":4,"4294967295":5}`
+	if got := string(Encode(v, "")); got != want {
+		t.Errorf("got %s, want %s", got, want)
+	}
+	if got := string(Encode(SortKeys(v), "")); got != `{"9":3,"10":2,"4294967294":6,"01":4,"4294967295":5,"b":1}` {
+		t.Errorf("sorted: %s", got)
+	}
+}

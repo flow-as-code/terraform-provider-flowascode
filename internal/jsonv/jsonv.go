@@ -191,7 +191,7 @@ func encode(b *bytes.Buffer, v any, indent string, depth int) {
 			return
 		}
 		b.WriteByte('{')
-		for i, m := range t {
+		for i, m := range OwnKeyOrder(t) {
 			if i > 0 {
 				b.WriteByte(',')
 			}
@@ -307,7 +307,9 @@ func SortKeys(v any) any {
 			out[i] = Member{Key: m.Key, Value: SortKeys(m.Value)}
 		}
 		sort.SliceStable(out, func(i, j int) bool { return LessUTF16(out[i].Key, out[j].Key) })
-		return out
+		// Object.fromEntries builds the result, so it has JavaScript's own-key
+		// order: array-index keys first whatever the sort said.
+		return OwnKeyOrder(out)
 	default:
 		return v
 	}
@@ -336,4 +338,44 @@ func utf16Units(s string) []uint16 {
 		}
 	}
 	return out
+}
+
+// OwnKeyOrder is the order JavaScript enumerates an object's own string keys
+// (Object.keys, JSON.stringify): every array-index key (a canonical decimal
+// integer below 2^32 - 1) in ascending numeric order, then the rest in
+// insertion order.
+// https://tc39.es/ecma262/#sec-ordinaryownpropertykeys
+func OwnKeyOrder(o Object) Object {
+	var indices, rest Object
+	for _, m := range o {
+		if isArrayIndex(m.Key) {
+			indices = append(indices, m)
+		} else {
+			rest = append(rest, m)
+		}
+	}
+	if len(indices) == 0 {
+		return o
+	}
+	sort.SliceStable(indices, func(i, j int) bool {
+		a, b := indices[i].Key, indices[j].Key
+		if len(a) != len(b) {
+			return len(a) < len(b)
+		}
+		return a < b
+	})
+	return append(indices, rest...)
+}
+
+func isArrayIndex(k string) bool {
+	if k == "" || len(k) > 10 || (len(k) > 1 && k[0] == '0') {
+		return false
+	}
+	for i := 0; i < len(k); i++ {
+		if k[i] < '0' || k[i] > '9' {
+			return false
+		}
+	}
+	n, err := strconv.ParseUint(k, 10, 64)
+	return err == nil && n < 4294967295
 }
