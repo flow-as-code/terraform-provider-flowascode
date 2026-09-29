@@ -3,7 +3,10 @@
 
 package jsonv
 
-import "testing"
+import (
+	"strings"
+	"testing"
+)
 
 // Each want is what node's String(x) prints.
 func TestFormatNumberIsNumberToString(t *testing.T) {
@@ -57,5 +60,20 @@ func TestEncodeUsesJavaScriptOwnKeyOrder(t *testing.T) {
 	}
 	if got := string(Encode(SortKeys(v), "")); got != `{"9":3,"10":2,"4294967294":6,"01":4,"4294967295":5,"b":1}` {
 		t.Errorf("sorted: %s", got)
+	}
+}
+
+// JSON.parse keeps an unpaired surrogate, which no Go string can hold, so
+// Decode refuses it rather than write U+FFFD in its place.
+func TestDecodeRefusesALoneSurrogate(t *testing.T) {
+	for _, in := range []string{`["\ud800"]`, `["\udc00x"]`, `["\ud83dA"]`, `{"\uDBFF":1}`, `["\ude00\ud83d"]`} {
+		if _, err := Decode([]byte(in)); err == nil || !strings.Contains(err.Error(), "lone surrogate") {
+			t.Errorf("Decode(%s) = %v, want a lone surrogate error", in, err)
+		}
+	}
+	for _, in := range []string{`["😀"]`, `["\\ud800"]`, `["é"]`, `["\\\\"]`, `["😀"]`} {
+		if _, err := Decode([]byte(in)); err != nil {
+			t.Errorf("Decode(%s): %v", in, err)
+		}
 	}
 }

@@ -77,6 +77,13 @@ func (o Object) Keys() []string {
 // Decode parses one JSON value as JSON.parse does: a repeated key keeps its
 // first position and its last value.
 func Decode(b []byte) (any, error) {
+	// JSON.parse keeps an unpaired surrogate escape; encoding/json would turn
+	// it into U+FFFD, and a Go string (like a Terraform value) cannot hold
+	// it. Refusing is the only faithful answer, and it is the contract's
+	// LONE_SURROGATE.
+	if esc, ok := loneSurrogate(b); ok {
+		return nil, fmt.Errorf("jsonv: lone surrogate %s has no UTF-8 encoding", esc)
+	}
 	dec := json.NewDecoder(bytes.NewReader(b))
 	dec.UseNumber()
 	v, err := decodeValue(dec)
@@ -378,4 +385,38 @@ func isArrayIndex(k string) bool {
 	}
 	n, err := strconv.ParseUint(k, 10, 64)
 	return err == nil && n < 4294967295
+}
+
+// loneSurrogate finds a \uXXXX escape of an unpaired UTF-16 surrogate. An
+// escaped backslash is skipped, so \\ud800 is text, not an escape.
+func loneSurrogate(b []byte) (string, bool) {
+	unit := func(i int) (uint64, bool) {
+		if i+6 > len(b) || b[i] != '\\' || b[i+1] != 'u' {
+			return 0, false
+		}
+		u, err := strconv.ParseUint(string(b[i+2:i+6]), 16, 16)
+		return u, err == nil
+	}
+	for i := 0; i < len(b); i++ {
+		if b[i] != '\\' {
+			continue
+		}
+		u, ok := unit(i)
+		if !ok {
+			i++ // the escaped character
+			continue
+		}
+		switch {
+		case u >= 0xDC00 && u <= 0xDFFF:
+			return string(b[i : i+6]), true
+		case u >= 0xD800 && u <= 0xDBFF:
+			if lo, ok := unit(i + 6); !ok || lo < 0xDC00 || lo > 0xDFFF {
+				return string(b[i : i+6]), true
+			}
+			i += 11
+		default:
+			i += 5
+		}
+	}
+	return "", false
 }
