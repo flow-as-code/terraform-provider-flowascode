@@ -29,7 +29,9 @@ if [ -n "$from" ]; then
   git -C "$from" archive --format=tar "$sha" conformance | tar -x -C "$work"
 else
   gh api "repos/flow-as-code/flow-as-code/tarball/$sha" > "$work/src.tgz"
-  tar -xzf "$work/src.tgz" -C "$work" --strip-components=1 --wildcards '*/conformance/*'
+  # The whole tree, then only conformance/ is used: --wildcards is GNU tar's
+  # alone, and the macOS tar refuses it.
+  tar -xzf "$work/src.tgz" -C "$work" --strip-components=1
 fi
 
 rm -rf "$dest"
