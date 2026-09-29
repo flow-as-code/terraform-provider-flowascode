@@ -194,7 +194,13 @@ func ReverseMapOfResourceMap(resourceMap map[string]string) ReverseMap {
 			warnings = append(warnings, "Skipping map key that is not a reference token: "+token)
 			continue
 		}
-		arn := NormalizeArn(resourceMap[token])
+		// An entry that pins an alias or version is keyed by the ARN exactly
+		// as bound, so two aliases of one module stay two entries; LookupArn
+		// still falls back to the bare ARN.
+		arn := resourceMap[token]
+		if entry.Alias == "" {
+			arn = NormalizeArn(arn)
+		}
 		if existing, ok := byArn[arn]; ok {
 			warnings = append(warnings,
 				arn+" is mapped by both "+existing.Token+" and "+token+"; keeping the first.")

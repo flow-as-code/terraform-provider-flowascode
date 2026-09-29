@@ -498,6 +498,13 @@ func (r *flowResource) reconstruct(ctx context.Context, a flowAttrs, l live, sta
 			if arn, ok := bound["${cdref:view:"+e.Name+"}"]; ok {
 				refs[flowdoc.RefKey(e)] = arn
 			}
+		} else if e.Type == "module" && e.Alias != "" {
+			// The inventory binds a module by its bare ARN; the flow invokes
+			// it through a qualifier, so the binding is the ARN the flow
+			// holds.
+			if arn, ok := bound["${cdref:module:"+e.Name+"}"]; ok {
+				refs[flowdoc.RefKey(e)] = arn + ":" + e.Alias
+			}
 		}
 	}
 	if len(refs) > 0 || !a.Refs.IsNull() {

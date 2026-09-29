@@ -120,6 +120,9 @@ func rewriteArns(value any, at string, reverseMap ReverseMap, acc *rewriteAccumu
 				if entry.Type == "view" {
 					return viewToken(entry, t, at, acc)
 				}
+				if entry.Type == "module" {
+					return moduleToken(entry, t)
+				}
 				return entry.Token
 			}
 			acc.unknown.record(t, at)
@@ -166,6 +169,20 @@ func viewToken(entry flowdoc.RefEntry, arn, at string, acc *rewriteAccumulator) 
 	}
 	acc.unknown.record(arn, at)
 	return arn
+}
+
+// moduleToken is export.ts's moduleToken: a module invoked through a
+// qualified ARN keeps a slug qualifier (an alias name or a version) as the
+// token's alias; $LATEST and $SAVED keep the bare token.
+func moduleToken(entry flowdoc.RefEntry, arn string) string {
+	if entry.Alias != "" {
+		return entry.Token
+	}
+	parsed, ok := ParseConnectArn(arn)
+	if !ok || !parsed.HasQualifier || !flowdoc.SlugPattern.MatchString(parsed.Qualifier) {
+		return entry.Token
+	}
+	return "${cdref:module:" + entry.Name + "@" + parsed.Qualifier + "}"
 }
 
 func isRecord(v any) bool {

@@ -320,3 +320,22 @@ resource "flowascode_contact_flow" "acw" {
 		},
 	})
 }
+
+// A flow invoking a module through an alias imports with the alias in its
+// key and the ARN the flow holds as the binding, so the generated
+// configuration still invokes the alias.
+func TestImportKeepsAModuleAlias(t *testing.T) {
+	terraformBinary(t)
+	fake := connectapi.NewFake()
+	resource.UnitTest(t, resource.TestCase{
+		ProtoV6ProviderFactories: factories(fake),
+		Steps: []resource.TestStep{
+			{Config: promotion("How did we do?")},
+			{
+				ResourceName:      "flowascode_contact_flow.line",
+				ImportState:       true,
+				ImportStateVerify: true,
+			},
+		},
+	})
+}
