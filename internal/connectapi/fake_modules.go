@@ -56,11 +56,17 @@ func (f *Fake) CreateContactFlowModule(_ context.Context, in *connect.CreateCont
 	for k, v := range in.Tags {
 		tags[k] = v
 	}
+	// Connect describes every module with an ExternalInvocationConfiguration,
+	// disabled when none was given (sandbox, 2026-09-29).
+	external := in.ExternalInvocationConfiguration
+	if external == nil {
+		external = &types.ExternalInvocationConfiguration{Enabled: false}
+	}
 	f.modules[id] = &fakeModule{
 		module: types.ContactFlowModule{
 			Id: aws.String(id), Arn: aws.String(arn), Name: in.Name, Description: in.Description,
 			Content: in.Content, State: types.ContactFlowModuleStateActive, Status: types.ContactFlowModuleStatusPublished,
-			Tags: tags, ExternalInvocationConfiguration: in.ExternalInvocationConfiguration,
+			Tags: tags, ExternalInvocationConfiguration: external,
 		},
 		versions: map[int64]string{}, aliases: map[string]*types.ContactFlowModuleAliasInfo{},
 	}

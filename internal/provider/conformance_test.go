@@ -97,9 +97,43 @@ func viewedFlowDoc(t *testing.T, docPath string) string {
 			content.Set("Settings", jsonv.Object{})
 		}
 	}
-	doc.Set("content", content)
 	av, _ := content.Get("Actions")
 	actions, _ := av.([]any)
+	// Rule 18's transitions: Errors and Conditions on every action with
+	// anything wired and on every modeled, non-terminal type; {} on an idle
+	// terminal or unmodeled one. An exported flow keeps what Connect returned.
+	for i, raw := range actions {
+		a, ok := raw.(jsonv.Object)
+		if !ok {
+			continue
+		}
+		tv, _ := a.Get("Transitions")
+		tr, _ := tv.(jsonv.Object)
+		errs, _ := tr.Get("Errors")
+		conds, _ := tr.Get("Conditions")
+		el, _ := errs.([]any)
+		cl, _ := conds.([]any)
+		_, hasNext := tr.Get("NextAction")
+		typ, _ := a.Get("Type")
+		ts, _ := typ.(string)
+		entry := flowdoc.ModeledEntry(ts)
+		out := jsonv.Object{}
+		if hasNext || len(el) > 0 || len(cl) > 0 || (entry != nil && !entry.Terminal) {
+			out = append(jsonv.Object{}, tr...)
+			if el == nil {
+				el = []any{}
+			}
+			if cl == nil {
+				cl = []any{}
+			}
+			out.Set("Errors", el)
+			out.Set("Conditions", cl)
+		}
+		a.Set("Transitions", out)
+		actions[i] = a
+	}
+	content.Set("Actions", actions)
+	doc.Set("content", content)
 	start, _ := content.Get("StartAction")
 	s, _ := start.(string)
 	layout := flowdoc.AutoLayout(actions, &s)

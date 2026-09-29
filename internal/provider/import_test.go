@@ -4,6 +4,7 @@
 package provider
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
@@ -28,6 +29,40 @@ func TestImportRecoversBlocksAndBindings(t *testing.T) {
 			{Config: greetingFlow(queue)},
 			{
 				ResourceName:      "flowascode_contact_flow.line",
+				ImportState:       true,
+				ImportStateVerify: true,
+			},
+		},
+	})
+}
+
+// A module's Settings (its parameters and transitions) come back on import,
+// so the configuration -generate-config-out writes does not clear them.
+func TestImportKeepsAModulesSettings(t *testing.T) {
+	terraformBinary(t)
+	fake := connectapi.NewFake()
+	config := fmt.Sprintf(`
+resource "flowascode_contact_flow_module" "lookup" {
+  instance_id = %q
+  name        = "customer-lookup"
+  settings = jsonencode({
+    InputParameters  = [{ Name = "customerId", Required = true, Type = "String" }]
+    OutputParameters = []
+    Transitions      = [{ Description = "", DisplayName = "Success", ReferenceName = "Success" }]
+  })
+
+  action {
+    id = "end"
+    end_flow_module_execution {}
+  }
+}
+`, instance)
+	resource.UnitTest(t, resource.TestCase{
+		ProtoV6ProviderFactories: factories(fake),
+		Steps: []resource.TestStep{
+			{Config: config},
+			{
+				ResourceName:      "flowascode_contact_flow_module.lookup",
 				ImportState:       true,
 				ImportStateVerify: true,
 			},

@@ -324,8 +324,11 @@ func TestExportInstanceDemo(t *testing.T) {
 	if !strings.Contains(warnings, "CAMPAIGN") {
 		t.Error("no CAMPAIGN warning")
 	}
-	if !strings.Contains(warnings, "ExternalInvocationConfiguration") {
-		t.Error("no module settings warning")
+	// Connect returns the separate Settings field and
+	// ExternalInvocationConfiguration on every module; neither is worth a
+	// warning until it holds a value.
+	if strings.Contains(warnings, "external invocation") {
+		t.Error("a module whose extra fields say nothing was warned about")
 	}
 
 	_, err = ExportInstance(context.Background(), newFixtureClient(t, "demo-instance"), ExportInstanceOptions{NoSavedFallback: true})

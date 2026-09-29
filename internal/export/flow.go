@@ -381,6 +381,13 @@ func ExportFlow(content any, reverseMap ReverseMap, options ExportFlowOptions) (
 	}
 	metadataValue, _ := raw.Get("Metadata")
 	metadata := rewriteArns(metadataValue, "Metadata", reverseMap, acc)
+	// A module's Settings live in its content, where materialize puts them;
+	// they are content, so they are exported, with any ARN tokenized.
+	settingsValue, hasSettings := raw.Get("Settings")
+	var settings any
+	if hasSettings {
+		settings = rewriteArns(settingsValue, "Settings", reverseMap, acc)
+	}
 
 	if len(acc.unknown.keys) > 0 || len(acc.interpolated.keys) > 0 {
 		locations := map[string][]string{}
@@ -407,6 +414,9 @@ func ExportFlow(content any, reverseMap ReverseMap, options ExportFlowOptions) (
 		{Key: "Version", Value: flowdoc.FlowLanguageVersion},
 		{Key: "StartAction", Value: start},
 		{Key: "Actions", Value: actions},
+	}
+	if hasSettings {
+		flowContent = append(flowContent, jsonv.Member{Key: "Settings", Value: settings})
 	}
 	if lift.hasRest {
 		flowContent = append(flowContent, jsonv.Member{Key: "Metadata", Value: lift.rest})

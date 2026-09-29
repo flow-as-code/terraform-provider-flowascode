@@ -1,5 +1,5 @@
 {
-  "generatedFrom": "5480276b2bc354fdb7628a55cf2ed71fc33c0a7c",
+  "generatedFrom": "e3e131a6ca4471fd2f4e9f52396bdb42bd20e040",
   "parseConnectArn": [
     {
       "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/q1",
@@ -1039,7 +1039,7 @@
         "connectType": "CONTACT_FLOW"
       },
       "result": {
-        "doc": "{\n  \"flowdoc\": \"0.2\",\n  \"kind\": \"flow\",\n  \"name\": \"meta\",\n  \"connectType\": \"CONTACT_FLOW\",\n  \"content\": {\n    \"Version\": \"2019-10-30\",\n    \"StartAction\": \"a\",\n    \"Metadata\": {\n      \"ActionMetadata\": {\n        \"b\": {\n          \"keep\": 1\n        },\n        \"c\": {\n          \"position\": {\n            \"x\": \"1\",\n            \"y\": 2\n          }\n        },\n        \"d\": 7,\n        \"e\": null,\n        \"f\": [\n          1\n        ],\n        \"ghost\": {\n          \"position\": {\n            \"x\": 9,\n            \"y\": 9\n          }\n        }\n      },\n      \"name\": \"n\"\n    },\n    \"Actions\": [\n      {\n        \"Identifier\": \"a\",\n        \"Type\": \"T\",\n        \"Parameters\": {},\n        \"Transitions\": {\n          \"NextAction\": \"b\"\n        }\n      },\n      {\n        \"Identifier\": \"b\",\n        \"Type\": \"T\",\n        \"Parameters\": {},\n        \"Transitions\": {\n          \"NextAction\": \"c\"\n        }\n      },\n      {\n        \"Identifier\": \"c\",\n        \"Type\": \"T\",\n        \"Parameters\": {},\n        \"Transitions\": {}\n      },\n      {\n        \"Identifier\": \"7\",\n        \"Type\": \"T\",\n        \"Parameters\": {},\n        \"Transitions\": {}\n      }\n    ]\n  },\n  \"layout\": {\n    \"7\": {\n      \"x\": 7,\n      \"y\": 7\n    },\n    \"a\": {\n      \"x\": 1.5,\n      \"y\": -2\n    },\n    \"b\": {\n      \"x\": 5,\n      \"y\": 6\n    },\n    \"c\": {\n      \"x\": 540,\n      \"y\": 20\n    }\n  },\n  \"refs\": [],\n  \"meta\": {\n    \"generator\": \"core@0.2\"\n  }\n}\n",
+        "doc": "{\n  \"flowdoc\": \"0.2\",\n  \"kind\": \"flow\",\n  \"name\": \"meta\",\n  \"connectType\": \"CONTACT_FLOW\",\n  \"content\": {\n    \"Version\": \"2019-10-30\",\n    \"StartAction\": \"a\",\n    \"Settings\": {\n      \"k\": 1\n    },\n    \"Metadata\": {\n      \"ActionMetadata\": {\n        \"b\": {\n          \"keep\": 1\n        },\n        \"c\": {\n          \"position\": {\n            \"x\": \"1\",\n            \"y\": 2\n          }\n        },\n        \"d\": 7,\n        \"e\": null,\n        \"f\": [\n          1\n        ],\n        \"ghost\": {\n          \"position\": {\n            \"x\": 9,\n            \"y\": 9\n          }\n        }\n      },\n      \"name\": \"n\"\n    },\n    \"Actions\": [\n      {\n        \"Identifier\": \"a\",\n        \"Type\": \"T\",\n        \"Parameters\": {},\n        \"Transitions\": {\n          \"NextAction\": \"b\"\n        }\n      },\n      {\n        \"Identifier\": \"b\",\n        \"Type\": \"T\",\n        \"Parameters\": {},\n        \"Transitions\": {\n          \"NextAction\": \"c\"\n        }\n      },\n      {\n        \"Identifier\": \"c\",\n        \"Type\": \"T\",\n        \"Parameters\": {},\n        \"Transitions\": {}\n      },\n      {\n        \"Identifier\": \"7\",\n        \"Type\": \"T\",\n        \"Parameters\": {},\n        \"Transitions\": {}\n      }\n    ]\n  },\n  \"layout\": {\n    \"7\": {\n      \"x\": 7,\n      \"y\": 7\n    },\n    \"a\": {\n      \"x\": 1.5,\n      \"y\": -2\n    },\n    \"b\": {\n      \"x\": 5,\n      \"y\": 6\n    },\n    \"c\": {\n      \"x\": 540,\n      \"y\": 20\n    }\n  },\n  \"refs\": [],\n  \"meta\": {\n    \"generator\": \"core@0.2\"\n  }\n}\n",
         "refs": "[]"
       }
     },
@@ -1252,9 +1252,7 @@
         ],
         "warnings": [
           "Skipping flow arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f3: name \"!!!\" has no slug form.",
-          "Skipping arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f4: ContactFlowType CAMPAIGN has no FlowDoc connectType.",
-          "Module arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/m1 carries Settings or ExternalInvocationConfiguration, which FlowDoc does not model; they are not exported.",
-          "Module arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/m2 carries Settings or ExternalInvocationConfiguration, which FlowDoc does not model; they are not exported."
+          "Skipping arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f4: ContactFlowType CAMPAIGN has no FlowDoc connectType."
         ],
         "failures": [
           {
@@ -1329,8 +1327,7 @@
         ],
         "warnings": [
           "Skipping flow arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f3: name \"!!!\" has no slug form.",
-          "Skipping arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f4: ContactFlowType CAMPAIGN has no FlowDoc connectType.",
-          "Module arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/flow-module/m1 carries Settings or ExternalInvocationConfiguration, which FlowDoc does not model; they are not exported."
+          "Skipping arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f4: ContactFlowType CAMPAIGN has no FlowDoc connectType."
         ],
         "failures": [
           {

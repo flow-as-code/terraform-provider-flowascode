@@ -7,6 +7,7 @@ import (
 	"context"
 	"errors"
 	"sort"
+	"strings"
 
 	"github.com/flow-as-code/terraform-provider-flowascode/internal/jsonv"
 )
@@ -218,11 +219,18 @@ func ExportInstance(ctx context.Context, client ConnectInventoryClient, options 
 		}
 		module, saved, err := describe(ctx, id, !options.NoSavedFallback, client.DescribeContactFlowModule)
 		if err == nil {
-			if module.Settings != nil || module.ExternalInvocationEnabled != nil {
-				// Neither field has a FlowDoc home yet. Warn rather than drop
-				// silently.
+			// The module's Settings travel in its content and are exported
+			// with it. The separate Settings field ("" on every module the
+			// sandbox returned) and ExternalInvocationConfiguration (always
+			// present) have no FlowDoc home, so warn only when one says
+			// something.
+			separate := ""
+			if module.Settings != nil {
+				separate = strings.TrimSpace(*module.Settings)
+			}
+			if (separate != "" && separate != "{}") || (module.ExternalInvocationEnabled != nil && *module.ExternalInvocationEnabled) {
 				warnings = append(warnings, "Module "+summary.Arn+
-					" carries Settings or ExternalInvocationConfiguration, which FlowDoc does not model; they are not exported.")
+					" has a Settings field outside its content or external invocation enabled, which FlowDoc does not model; they are not exported.")
 			}
 			err = emit(summary.ResourceSummary, module.DescribedContactFlow, "MODULE", saved)
 		}
