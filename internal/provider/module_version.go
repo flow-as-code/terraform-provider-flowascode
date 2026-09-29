@@ -5,12 +5,14 @@ package provider
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"strconv"
 	"strings"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/connect"
+	ctypes "github.com/aws/aws-sdk-go-v2/service/connect/types"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -24,9 +26,12 @@ import (
 
 // moduleVersion is flowascode_contact_flow_module_version: an immutable
 // snapshot of a module's content (conformance/hcl/README.md, rule 27). It is
-// keyed to the module's content_hash, so a change to the module replaces it;
-// pair it with create_before_destroy so an alias can move to the new version
-// before the old one goes.
+// keyed to the module's content_hash, so a change to the module replaces it.
+// Connect refuses to delete a version an alias points at
+// (InvalidRequestException, "Cannot delete version '1' tied to one alias",
+// observed on the sandbox 2026-09-28), so an aliased version needs
+// create_before_destroy: the alias moves to the new version before the old
+// one goes.
 type moduleVersion struct{ client *connectapi.Client }
 
 // NewContactFlowModuleVersion is the resource factory.
@@ -57,7 +62,7 @@ func replace() []planmodifier.String {
 
 func (r *moduleVersion) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		Description: "A published snapshot of a flow module, keyed to its content_hash.",
+		Description: "A published snapshot of a flow module, keyed to its content_hash. Connect does not delete a version an alias points at, so a version an alias uses needs lifecycle { create_before_destroy = true }: the replacement is created and the alias moved to it before the old version is destroyed.",
 		Attributes: map[string]schema.Attribute{
 			"id":                     schema.StringAttribute{Computed: true, PlanModifiers: keep(), Description: "instance_id:contact_flow_module_id:version."},
 			"instance_id":            schema.StringAttribute{Required: true, PlanModifiers: replace()},
@@ -129,7 +134,12 @@ func (r *moduleVersion) Delete(ctx context.Context, req resource.DeleteRequest, 
 		InstanceId: aws.String(m.InstanceID.ValueString()), ContactFlowModuleId: aws.String(m.ModuleID.ValueString()),
 		ContactFlowModuleVersion: aws.Int64(m.Version.ValueInt64())})
 	if err != nil && !connectapi.IsNotFound(err) {
-		resp.Diagnostics.AddError("DeleteContactFlowModuleVersion failed", err.Error())
+		detail := err.Error()
+		var ir *ctypes.InvalidRequestException
+		if errors.As(err, &ir) && strings.Contains(aws.ToString(ir.Message), "alias") {
+			detail += "\n\nConnect does not delete a version an alias points at. Set lifecycle { create_before_destroy = true } on this resource, so a replacement version is created and the alias moved to it before this one is destroyed."
+		}
+		resp.Diagnostics.AddError("DeleteContactFlowModuleVersion failed", detail)
 	}
 }
 

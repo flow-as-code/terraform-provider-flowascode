@@ -185,8 +185,8 @@ func (r *flowResource) getAttrs(ctx context.Context, src interface {
 // live is a flow or module as Describe returns it.
 type live struct {
 	arn, name, description, state, content, typ string
-	tags                                   map[string]string
-	external                               *bool
+	tags                                        map[string]string
+	external                                    *bool
 }
 
 func (r *flowResource) describe(ctx context.Context, instance, id string) (live, error) {

@@ -6,6 +6,7 @@ package provider
 import (
 	"fmt"
 	"regexp"
+	"strings"
 	"testing"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
@@ -118,6 +119,29 @@ func TestModulePromotionRepointsTheAlias(t *testing.T) {
 					statecheck.ExpectKnownValue("flowascode_contact_flow_module_version.survey", tfjsonpath.New("version"), knownvalue.Int64Exact(2)),
 					statecheck.ExpectKnownValue("flowascode_contact_flow_module_alias.survey_prod", tfjsonpath.New("contact_flow_module_version"), knownvalue.Int64Exact(2)),
 				},
+			},
+		},
+	})
+}
+
+// Connect refuses to delete a version an alias points at, so a version
+// replaced without create_before_destroy fails, and the error says what to set.
+func TestModuleVersionWithoutCreateBeforeDestroyExplainsTheRefusal(t *testing.T) {
+	terraformBinary(t)
+	fake := connectapi.NewFake()
+	withoutCBD := func(greeting string) string {
+		return strings.Replace(promotion(greeting), "\n  lifecycle {\n    create_before_destroy = true\n  }\n", "", 1)
+	}
+	if withoutCBD("x") == promotion("x") {
+		t.Fatal("the lifecycle block was not removed")
+	}
+	resource.UnitTest(t, resource.TestCase{
+		ProtoV6ProviderFactories: factories(fake),
+		Steps: []resource.TestStep{
+			{Config: withoutCBD("How did we do?")},
+			{
+				Config:      withoutCBD("How did we do today?"),
+				ExpectError: regexp.MustCompile(`(?s)tied to one alias.*create_before_destroy = true`),
 			},
 		},
 	})

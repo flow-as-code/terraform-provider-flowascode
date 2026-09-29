@@ -146,7 +146,15 @@ func (f *Fake) DeleteContactFlowModuleVersion(_ context.Context, in *connect.Del
 	if err != nil {
 		return nil, err
 	}
-	delete(m.versions, aws.ToInt64(in.ContactFlowModuleVersion))
+	// Connect refuses to delete a version an alias points at; the message is
+	// the one the sandbox returned on 2026-09-28.
+	v := aws.ToInt64(in.ContactFlowModuleVersion)
+	for _, a := range m.aliases {
+		if aws.ToInt64(a.Version) == v {
+			return nil, &types.InvalidRequestException{Message: aws.String(fmt.Sprintf("Cannot delete version '%d' tied to one alias", v))}
+		}
+	}
+	delete(m.versions, v)
 	return &connect.DeleteContactFlowModuleVersionOutput{}, nil
 }
 
