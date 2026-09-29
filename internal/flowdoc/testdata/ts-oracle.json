@@ -1,5 +1,5 @@
 {
-  "generatedFrom": "flow-as-code cc9a6534db9dd9a92c8c454214d3b39be295d530, packages/core/dist",
+  "generatedFrom": "flow-as-code 12e484834f41b0c70b6b0499a8b542f0d4b401a6, packages/core/dist",
   "perType": {
     "CompleteOutboundCall": {
       "modeled": false,
@@ -753,12 +753,8 @@
     },
     "MessageParticipant": {
       "modeled": true,
-      "requiredErrors": [
-        "NoMatchingError"
-      ],
-      "requiredErrorsForChat": [
-        "NoMatchingError"
-      ],
+      "requiredErrors": [],
+      "requiredErrorsForChat": [],
       "builderErrors": [
         "NoMatchingError"
       ],

@@ -17,7 +17,9 @@ it reads.
   needs `store_input`, and `NoMatchingCondition` whenever it is not "True";
   and `update_contact_recording_behavior` takes no error block at all (the
   service refuses `NoMatchingError`). An error block the action's type does
-  not have is now reported too.
+  not have is now reported too. The converse check found one rule too strict:
+  `message_participant` no longer needs a `NoMatchingError` block, which the
+  service does not require and Connect's own sample flows omit.
 - An apply that Connect refuses shows its problem list. The service's
   `InvalidContactFlowException` often has an empty message; the list says
   which action is wrong and why ("Action is missing required error. Error:
