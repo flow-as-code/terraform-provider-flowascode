@@ -233,6 +233,12 @@ resource "flowascode_contact_flow" "appointment_line" {
     - `json`: `jsonencode({...})`.
     - An empty object, map or list is written inline: `{}`, `[]`,
       `jsonencode({})`.
+    - Read backwards: where the provider's attribute is a string, a map of
+      strings or a list of strings, a number or a bool reads as the string
+      Terraform converts it to (`5` as `"5"`, `true` as `"true"`), and an
+      object or tuple is refused (`parse/coerced-scalars`). A TypeScript
+      reader refuses a number whose JavaScript string differs from
+      Terraform's (past 2^53, or in exponent form) instead of guessing.
 12. Inside `jsonencode` keys keep their Flow language spelling, in byte order;
     a key that is a valid HCL identifier is unquoted and any other is quoted,
     as are `for`, `if`, `in`, `null`, `true` and `false` wherever an object
@@ -371,6 +377,10 @@ resource "flowascode_contact_flow_module_version" "survey" {
   contact_flow_module_id = flowascode_contact_flow_module.survey.contact_flow_module_id
   content_hash           = flowascode_contact_flow_module.survey.content_hash
   description            = "Survey as reviewed"
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "flowascode_contact_flow_module_alias" "survey_prod" {
@@ -383,7 +393,11 @@ resource "flowascode_contact_flow_module_alias" "survey_prod" {
 ```
 
     The version resource is keyed to the module's `content_hash` and replaced
-    when it changes; the alias repoints in place. `version`, `alias_id` and
+    when it changes; the alias repoints in place. The version carries
+    `lifecycle { create_before_destroy = true }`: Connect refuses to delete a
+    version an alias points at ("Cannot delete version '1' tied to one
+    alias", observed 2026-09-28), so the replacement is created and the alias
+    moved before the old version is destroyed. `version`, `alias_id` and
     `arn` are computed. A view binds to `data.flowascode_view.<label>.arn`.
 
 ## Emitting a set
@@ -397,8 +411,8 @@ resource "flowascode_contact_flow_module_alias" "survey_prod" {
     `arn`, a module invoked by alias to the alias resource's `arn`, anything
     else to the address map's expression, and the rest to `null` under the
     TODO comment. After each module invoked by alias come one version
-    resource and one alias resource per alias, by rule 27, without
-    descriptions. A literal ARN, a multi-line value or a comment marker in the
+    resource, with its `lifecycle` block, and one alias resource per alias,
+    by rule 27, without descriptions. A literal ARN, a multi-line value or a comment marker in the
     address map, a name that is not a slug, and two documents emitting one
     address are refused, every problem listed.
 
