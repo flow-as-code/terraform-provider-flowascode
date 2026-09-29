@@ -1,0 +1,90 @@
+# Live acceptance tests against an Amazon Connect sandbox. They gate every
+# pull request by the owner's decision (flow-as-code plan, settled decision
+# 11): when the sandbox account is unreachable, nothing merges. A pull
+# request from a fork cannot reach the account (no id-token for it), so a
+# maintainer re-runs the change from a branch in this repository.
+#
+# The account is reached through OIDC with no stored credentials. The role and
+# instance ARNs are repository secrets, as in flow-as-code's integration.yml,
+# because a step's env and inputs are printed in its log and this
+# repository's logs are public; the region is a variable. None of them is
+# written to a file. Each
+# run names what it creates tfacc-<run id>-<attempt>-<lane> and tags it
+# flowascode-acc, and the sweeper removes leftovers before and after. Beyond
+# the flow and module operations, the role needs connect:CreateQueue,
+# DeleteQueue, CreateHoursOfOperation, DeleteHoursOfOperation, their Describe
+# and List calls, TagResource and UntagResource: a pinned hashicorp/aws
+# creates the queue and hours a test flow refers to, and the moved test
+# starts from an aws_connect_contact_flow.
+#
+# Pull requests run the two floors (Terraform 1.8, OpenTofu 1.10); a push to
+# main adds the current release of each.
+name: acceptance
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: sandbox-acceptance
+  cancel-in-progress: false
+
+jobs:
+  acceptance:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        include: ${{ fromJSON(github.event_name == 'push' && '[{"cli":"terraform","version":"~1.8.0"},{"cli":"tofu","version":"~1.10.0"},{"cli":"terraform","version":"latest"},{"cli":"tofu","version":"latest"}]' || '[{"cli":"terraform","version":"~1.8.0"},{"cli":"tofu","version":"~1.10.0"}]') }}
+    env:
+      TF_ACC: "1"
+      AWS_REGION: ${{ vars.AWS_SANDBOX_REGION }}
+      FLOWASCODE_ACC_INSTANCE_ARN: ${{ secrets.CONNECT_SANDBOX_INSTANCE_ARN }}
+      FLOWASCODE_ACC_PREFIX: tfacc-${{ github.run_id }}-${{ github.run_attempt }}-${{ strategy.job-index }}
+      # hashicorp/aws is downloaded once per job, not once per test. Tests
+      # run one at a time, so the cache is never written concurrently.
+      TF_PLUGIN_CACHE_DIR: ${{ github.workspace }}/.plugin-cache
+      TF_PLUGIN_CACHE_MAY_BREAK_DEPENDENCY_LOCK_FILE: "1"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: go.mod
+      - if: matrix.cli == 'terraform'
+        uses: hashicorp/setup-terraform@dfe3c3f87815947d99a8997f908cb6525fc44e9e # v4.0.1
+        with:
+          terraform_version: ${{ matrix.version }}
+          terraform_wrapper: false
+      - if: matrix.cli == 'tofu'
+        uses: opentofu/setup-opentofu@a1320f892987e89d278cc92dc5adc984fb93aca4 # v2.0.2
+        with:
+          tofu_version: ${{ matrix.version }}
+          tofu_wrapper: false
+      - uses: aws-actions/configure-aws-credentials@e1253824e5c10ff9df46874f81ed3ec929e19cfd # v6.3.0
+        with:
+          role-to-assume: ${{ secrets.AWS_SANDBOX_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_SANDBOX_REGION }}
+          mask-aws-account-id: true
+      - name: reachability preflight
+        run: |
+          echo "::add-mask::${FLOWASCODE_ACC_INSTANCE_ARN##*/}"
+          mkdir -p "$TF_PLUGIN_CACHE_DIR"
+          aws sts get-caller-identity --output text --query Arn > /dev/null
+          aws connect describe-instance --instance-id "${FLOWASCODE_ACC_INSTANCE_ARN##*/}" --query Instance.InstanceStatus --output text
+      - name: sweep before
+        run: go test ./internal/provider/ -run TestAccSweep -count=1 -v
+      - name: acceptance
+        run: |
+          export TF_ACC_TERRAFORM_PATH="$(command -v ${{ matrix.cli }})"
+          if [ "${{ matrix.cli }}" = tofu ]; then export TF_ACC_PROVIDER_HOST=registry.opentofu.org; fi
+          go test ./internal/provider/ -run 'TestAcc' -count=1 -timeout 60m -v
+      - name: sweep after
+        if: always()
+        run: go test ./internal/provider/ -run TestAccSweep -count=1 -v
