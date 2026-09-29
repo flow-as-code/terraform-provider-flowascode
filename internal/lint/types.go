@@ -1,7 +1,7 @@
 // Copyright 2026 The flow-as-code Authors
 // SPDX-License-Identifier: Apache-2.0
 
-// Package lint is @flow-as-code/core's lint engine and its eleven rules,
+// Package lint is @flow-as-code/core's lint engine and its twelve rules,
 // ported one to one from packages/core/src/lint. Rule ids, severities and
 // messages are the TypeScript's byte for byte, and findings come back in the
 // same order, so the provider and the CLI report a document identically.

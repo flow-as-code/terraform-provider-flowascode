@@ -15,7 +15,7 @@ it reads.
   (built from the vendored catalog) or `generic {}` for the rest; references
   as keys bound through `refs`. The plan shows the canonical FlowDoc
   (`flowdoc`), the content Connect will hold (`content`) and its hash.
-- Lint at plan time: the eleven flow-as-code rules, hard rules as errors and
+- Lint at plan time: the twelve flow-as-code rules, hard rules as errors and
   the rest as warnings, with `lint { disable = [...] }` for the soft ones.
 - Drift in Connect shows as changed action blocks; `terraform import` reads
   a live flow back as blocks, recovering `refs` bindings from the instance's

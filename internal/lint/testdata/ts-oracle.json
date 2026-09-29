@@ -1,5 +1,5 @@
 {
- "source": "packages/core/dist built from flow-as-code e414239 (lint unchanged at 5480276), Node v26.8.1, ICU 78.3, locale en-US",
+ "source": "packages/core/dist built from flow-as-code e414239 (lint unchanged at 5480276), Node v26.10.0, ICU 78.3, locale en-US",
  "fixtures": [
   {
    "file": "lint/action-allowed-in-flow-type/fail-callback-in-whisper-flow.json",
@@ -69,6 +69,42 @@
   },
   {
    "file": "lint/action-count/pass-at-limit.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 0,\n    \"errors\": 0,\n    \"warnings\": 0\n  },\n  \"findings\": []\n}\n",
+   "text": "No findings.\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/conditional-shape/fail-absent-store-input-with-validation.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 2,\n    \"errors\": 2,\n    \"warnings\": 0\n  },\n  \"findings\": [\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"ask\",\n      \"message\": \"GetParticipantInput without StoreInput \\\"True\\\" must not carry InputValidation.\",\n      \"rule\": \"conditional-shape\",\n      \"doc\": \"case\"\n    },\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"ask\",\n      \"message\": \"GetParticipantInput without StoreInput \\\"True\\\" must not wire the \\\"InvalidPhoneNumber\\\" branch.\",\n      \"rule\": \"conditional-shape\",\n      \"doc\": \"case\"\n    }\n  ]\n}\n",
+   "text": "case\n  error (ask): GetParticipantInput without StoreInput \"True\" must not carry InputValidation. [conditional-shape]\n  error (ask): GetParticipantInput without StoreInput \"True\" must not wire the \"InvalidPhoneNumber\" branch. [conditional-shape]\n\n2 finding(s): 2 error(s), 0 warning(s).\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/conditional-shape/fail-gathered-without-timeout-branch.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 1,\n    \"warnings\": 0\n  },\n  \"findings\": [\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"ask\",\n      \"message\": \"GetParticipantInput without StoreInput \\\"True\\\" needs its \\\"InputTimeLimitExceeded\\\" branch.\",\n      \"rule\": \"conditional-shape\",\n      \"doc\": \"case\"\n    }\n  ]\n}\n",
+   "text": "case\n  error (ask): GetParticipantInput without StoreInput \"True\" needs its \"InputTimeLimitExceeded\" branch. [conditional-shape]\n\n1 finding(s): 1 error(s), 0 warning(s).\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/conditional-shape/fail-stored-with-timeout-branch-and-conditions.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 2,\n    \"errors\": 2,\n    \"warnings\": 0\n  },\n  \"findings\": [\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"ask\",\n      \"message\": \"GetParticipantInput with StoreInput \\\"True\\\" must not wire the \\\"InputTimeLimitExceeded\\\" branch.\",\n      \"rule\": \"conditional-shape\",\n      \"doc\": \"case\"\n    },\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"ask\",\n      \"message\": \"GetParticipantInput with StoreInput \\\"True\\\" takes no conditions.\",\n      \"rule\": \"conditional-shape\",\n      \"doc\": \"case\"\n    }\n  ]\n}\n",
+   "text": "case\n  error (ask): GetParticipantInput with StoreInput \"True\" must not wire the \"InputTimeLimitExceeded\" branch. [conditional-shape]\n  error (ask): GetParticipantInput with StoreInput \"True\" takes no conditions. [conditional-shape]\n\n2 finding(s): 2 error(s), 0 warning(s).\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/conditional-shape/fail-stored-without-validation.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 2,\n    \"errors\": 2,\n    \"warnings\": 0\n  },\n  \"findings\": [\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"ask\",\n      \"message\": \"GetParticipantInput with StoreInput \\\"True\\\" must not wire the \\\"NoMatchingCondition\\\" branch.\",\n      \"rule\": \"conditional-shape\",\n      \"doc\": \"case\"\n    },\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"ask\",\n      \"message\": \"GetParticipantInput with StoreInput \\\"True\\\" needs InputValidation.\",\n      \"rule\": \"conditional-shape\",\n      \"doc\": \"case\"\n    }\n  ]\n}\n",
+   "text": "case\n  error (ask): GetParticipantInput with StoreInput \"True\" must not wire the \"NoMatchingCondition\" branch. [conditional-shape]\n  error (ask): GetParticipantInput with StoreInput \"True\" needs InputValidation. [conditional-shape]\n\n2 finding(s): 2 error(s), 0 warning(s).\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/conditional-shape/pass-gathered-with-timeout-branch.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 0,\n    \"errors\": 0,\n    \"warnings\": 0\n  },\n  \"findings\": []\n}\n",
+   "text": "No findings.\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/conditional-shape/pass-stored-with-validation.json",
    "json": "{\n  \"summary\": {\n    \"total\": 0,\n    \"errors\": 0,\n    \"warnings\": 0\n  },\n  \"findings\": []\n}\n",
    "text": "No findings.\n",
    "blocking": false

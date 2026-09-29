@@ -143,6 +143,28 @@ func (f *FlowTypes) UnmarshalJSON(b []byte) error {
 type ActionCategory string
 
 // ModeledAction is catalog.ts's ModeledAction.
+// CatalogShape is catalog.ts's CatalogShape: a shape an action must take
+// when one of its parameters has, or lacks, a static value. The
+// conditional-shape lint rule reads it. An absent parameter counts as not
+// equal to any value.
+type CatalogShape struct {
+	When struct {
+		Key       string  `json:"key"`
+		Equals    *string `json:"equals,omitempty"`
+		NotEquals *string `json:"notEquals,omitempty"`
+	} `json:"when"`
+	Requires *struct {
+		Parameters []string `json:"parameters,omitempty"`
+		Errors     []string `json:"errors,omitempty"`
+	} `json:"requires,omitempty"`
+	Forbids *struct {
+		Parameters []string `json:"parameters,omitempty"`
+		Errors     []string `json:"errors,omitempty"`
+		Conditions bool     `json:"conditions,omitempty"`
+	} `json:"forbids,omitempty"`
+	Source string `json:"source"`
+}
+
 type ModeledAction struct {
 	Category ActionCategory `json:"category"`
 	Doc      string         `json:"doc"`
@@ -153,7 +175,9 @@ type ModeledAction struct {
 	FlowTypes   FlowTypes           `json:"flowTypes"`
 	Parameters  []CatalogParameter  `json:"parameters"`
 	Constraints []CatalogConstraint `json:"constraints,omitempty"`
-	Refs        []CatalogRef        `json:"refs"`
+	// Parameter-dependent shapes; see CatalogShape.
+	Shapes []CatalogShape `json:"shapes,omitempty"`
+	Refs   []CatalogRef   `json:"refs"`
 	// Paths whose string is billed prompt text (Text and SSML forms).
 	TextBodies []string `json:"textBodies,omitempty"`
 	// Paths whose non-blank string means the participant hears something.
