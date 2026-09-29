@@ -20,6 +20,31 @@
 go test ./...
 ```
 
+The conformance and plan tests drive a real CLI with the provider served in
+process: they use `tofu` from `PATH` (or `terraform` when there is no
+`tofu`), or the binary `TF_ACC_TERRAFORM_PATH` names.
+
 The acceptance lane (`TF_ACC=1`) runs against a live Amazon Connect sandbox and
 gates every pull request; a fork's pull request cannot reach it, so a
 maintainer re-runs it from a branch in this repository.
+
+## Using a local build
+
+Build and install the binary, then point Terraform or OpenTofu at it with a
+development override in `~/.terraformrc` or `~/.tofurc`:
+
+```
+go install .
+```
+
+```hcl
+provider_installation {
+  dev_overrides {
+    "flow-as-code/flowascode" = "/Users/you/go/bin"
+  }
+  direct {}
+}
+```
+
+With an override in place, skip `init` for this provider and run `plan` and
+`apply` directly; the CLI prints a warning naming the override.
