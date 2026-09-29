@@ -15,6 +15,21 @@ import (
 
 var _ resource.ResourceWithMoveState = (*flowResource)(nil)
 
+// fromAWSProvider reports whether a move's source provider is hashicorp/aws.
+// OpenTofu before 1.11.12 and 1.12.4 sends the provider's bare type ("aws")
+// instead of its address (https://github.com/opentofu/opentofu/issues/4352,
+// fixed by https://github.com/opentofu/opentofu/pull/4355), including every
+// 1.10 release, the provider's floor. An unqualified name comes only from
+// that bug, so it is taken; the source type, schema version and state still
+// have to match. A qualified address must be hashicorp/aws on either
+// registry.
+func fromAWSProvider(address string) bool {
+	if !strings.Contains(address, "/") {
+		return address == "aws"
+	}
+	return strings.HasSuffix(address, "/hashicorp/aws")
+}
+
 // MoveState takes over an aws_connect_contact_flow (for a flow) or an
 // aws_connect_contact_flow_module (for a module) from hashicorp/aws in a
 // `moved` block, which needs Terraform 1.8 or OpenTofu 1.10.
@@ -31,7 +46,7 @@ func (r *flowResource) MoveState(context.Context) []resource.StateMover {
 	}
 	return []resource.StateMover{{
 		StateMover: func(ctx context.Context, req resource.MoveStateRequest, resp *resource.MoveStateResponse) {
-			if req.SourceTypeName != source || !strings.HasSuffix(req.SourceProviderAddress, "hashicorp/aws") ||
+			if req.SourceTypeName != source || !fromAWSProvider(req.SourceProviderAddress) ||
 				req.SourceSchemaVersion != 0 || req.SourceRawState == nil {
 				return
 			}

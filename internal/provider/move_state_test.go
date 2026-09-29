@@ -78,9 +78,13 @@ func TestMoveStateFromHashicorpAws(t *testing.T) {
 	if len(hash.ValueString()) != 64 {
 		t.Errorf("content_hash = %q", hash.ValueString())
 	}
-	// OpenTofu's registry address is accepted too.
-	if resp, _ := moveInto(t, &flowResource{kind: "flow"}, "aws_connect_contact_flow", "registry.opentofu.org/hashicorp/aws", 0); resp.TargetState.Raw.IsNull() {
-		t.Error("a move from registry.opentofu.org/hashicorp/aws was not taken")
+	// OpenTofu's registry address is accepted too, and so is the bare type
+	// OpenTofu 1.10 sends (opentofu/opentofu#4352), which the live moved
+	// test showed on 1.10.10 on 2026-09-28.
+	for _, addr := range []string{"registry.opentofu.org/hashicorp/aws", "aws"} {
+		if resp, _ := moveInto(t, &flowResource{kind: "flow"}, "aws_connect_contact_flow", addr, 0); resp.TargetState.Raw.IsNull() {
+			t.Errorf("a move from %q was not taken", addr)
+		}
 	}
 }
 
@@ -91,6 +95,8 @@ func TestMoveStateTakesOnlyWhatItKnows(t *testing.T) {
 	}{
 		{"flow", "aws_connect_queue", "registry.terraform.io/hashicorp/aws", 0},
 		{"flow", "aws_connect_contact_flow", "registry.terraform.io/example/aws", 0},
+		{"flow", "aws_connect_contact_flow", "registry.terraform.io/nothashicorp/aws", 0},
+		{"flow", "aws_connect_contact_flow", "awscc", 0},
 		{"flow", "aws_connect_contact_flow", "registry.terraform.io/hashicorp/aws", 1},
 		{"module", "aws_connect_contact_flow", "registry.terraform.io/hashicorp/aws", 0},
 	} {
