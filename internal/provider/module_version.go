@@ -62,7 +62,7 @@ func replace() []planmodifier.String {
 
 func (r *moduleVersion) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		Description: "A published snapshot of a flow module, keyed to its content_hash. Connect does not delete a version an alias points at, so a version an alias uses needs lifecycle { create_before_destroy = true }: the replacement is created and the alias moved to it before the old version is destroyed.",
+		Description: "A published snapshot of a flow module, keyed to its content_hash. Connect does not delete a version an alias points at, so a version an alias uses needs lifecycle { create_before_destroy = true }: the replacement is created and the alias moved to it before the old version is destroyed. Import takes `instance_id:contact_flow_module_id:version` and records the module's current content_hash, since Connect returns no single version's content: the next plan is empty when the module still holds what that version snapshotted.",
 		Attributes: map[string]schema.Attribute{
 			"id":                     schema.StringAttribute{Computed: true, PlanModifiers: keep(), Description: "instance_id:contact_flow_module_id:version."},
 			"instance_id":            schema.StringAttribute{Required: true, PlanModifiers: replace()},
@@ -120,9 +120,44 @@ func (r *moduleVersion) Create(ctx context.Context, req resource.CreateRequest, 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &m)...)
 }
 
-// Read keeps the state: a version is immutable, and Connect has no call that
-// describes one version.
-func (r *moduleVersion) Read(context.Context, resource.ReadRequest, *resource.ReadResponse) {}
+// Read finds the version among the module's versions: a version is
+// immutable, so all that can change is that it, or its module, is gone, and
+// then it leaves state so the next plan creates it again.
+// https://docs.aws.amazon.com/connect/latest/APIReference/API_ListContactFlowModuleVersions.html
+func (r *moduleVersion) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
+	var m moduleVersionModel
+	resp.Diagnostics.Append(req.State.Get(ctx, &m)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	pages := connect.NewListContactFlowModuleVersionsPaginator(r.client.Connect, &connect.ListContactFlowModuleVersionsInput{
+		InstanceId: aws.String(m.InstanceID.ValueString()), ContactFlowModuleId: aws.String(m.ModuleID.ValueString())})
+	for pages.HasMorePages() {
+		page, err := pages.NextPage(ctx)
+		if connectapi.IsNotFound(err) {
+			resp.State.RemoveResource(ctx)
+			return
+		}
+		if err != nil {
+			resp.Diagnostics.AddError("ListContactFlowModuleVersions failed", err.Error())
+			return
+		}
+		for _, v := range page.ContactFlowModuleVersionSummaryList {
+			if aws.ToInt64(v.Version) != m.Version.ValueInt64() {
+				continue
+			}
+			if v.Arn != nil {
+				m.ARN = types.StringValue(*v.Arn)
+			}
+			if d := aws.ToString(v.VersionDescription); d != "" {
+				m.Description = types.StringValue(d)
+			}
+			resp.Diagnostics.Append(resp.State.Set(ctx, &m)...)
+			return
+		}
+	}
+	resp.State.RemoveResource(ctx)
+}
 
 // Update is never called: every argument replaces.
 func (r *moduleVersion) Update(context.Context, resource.UpdateRequest, *resource.UpdateResponse) {}
@@ -154,4 +189,15 @@ func (r *moduleVersion) ImportState(ctx context.Context, req resource.ImportStat
 	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("instance_id"), parts[0])...)
 	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("contact_flow_module_id"), parts[1])...)
 	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("version"), v)...)
+	// Connect has no call that returns one version's content, so an imported
+	// version takes the module's current content_hash: it plans no change
+	// when the module still holds what the version snapshotted, and a
+	// replacement when it has moved on, which is what a new version is for.
+	mod, err := r.client.Connect.DescribeContactFlowModule(ctx, &connect.DescribeContactFlowModuleInput{
+		InstanceId: aws.String(parts[0]), ContactFlowModuleId: aws.String(parts[1])})
+	if err != nil {
+		resp.Diagnostics.AddError("Reading the module failed", err.Error())
+		return
+	}
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("content_hash"), hashOf(aws.ToString(mod.ContactFlowModule.Content)))...)
 }

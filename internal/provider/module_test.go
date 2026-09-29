@@ -4,6 +4,7 @@
 package provider
 
 import (
+	"context"
 	"fmt"
 	"regexp"
 	"strings"
@@ -335,6 +336,91 @@ func TestImportKeepsAModuleAlias(t *testing.T) {
 				ResourceName:      "flowascode_contact_flow.line",
 				ImportState:       true,
 				ImportStateVerify: true,
+			},
+		},
+	})
+}
+
+func surveyModule(withVersion bool) string {
+	version := ""
+	if withVersion {
+		version = fmt.Sprintf(`
+resource "flowascode_contact_flow_module_version" "survey" {
+  instance_id            = %q
+  contact_flow_module_id = flowascode_contact_flow_module.survey.contact_flow_module_id
+  content_hash           = flowascode_contact_flow_module.survey.content_hash
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+`, instance)
+	}
+	return fmt.Sprintf(`
+resource "flowascode_contact_flow_module" "survey" {
+  instance_id = %q
+  name        = "survey"
+
+  action {
+    id = "end"
+    end_flow_module_execution {}
+  }
+}
+`, instance) + version
+}
+
+// An imported version whose module still holds what it snapshotted plans no
+// change, instead of being replaced for want of a content_hash.
+func TestImportedModuleVersionPlansNoChange(t *testing.T) {
+	terraformBinary(t)
+	fake := connectapi.NewFake()
+	resource.UnitTest(t, resource.TestCase{
+		ProtoV6ProviderFactories: factories(fake),
+		Steps: []resource.TestStep{
+			{Config: surveyModule(false)},
+			{
+				PreConfig: func() {
+					if _, err := fake.CreateContactFlowModuleVersion(context.Background(), &connect.CreateContactFlowModuleVersionInput{
+						InstanceId: aws.String(instance), ContactFlowModuleId: aws.String("module-1")}); err != nil {
+						t.Fatal(err)
+					}
+				},
+				Config:             surveyModule(true),
+				ResourceName:       "flowascode_contact_flow_module_version.survey",
+				ImportState:        true,
+				ImportStateId:      instance + ":module-1:1",
+				ImportStatePersist: true,
+			},
+			{
+				Config: surveyModule(true),
+				ConfigPlanChecks: resource.ConfigPlanChecks{PreApply: []plancheck.PlanCheck{
+					plancheck.ExpectResourceAction("flowascode_contact_flow_module_version.survey", plancheck.ResourceActionNoop),
+				}},
+			},
+		},
+	})
+}
+
+// A version deleted outside Terraform leaves state, so the next plan creates
+// it again rather than handing an alias a version that is gone.
+func TestModuleVersionDeletedOutsideTerraformIsCreatedAgain(t *testing.T) {
+	terraformBinary(t)
+	fake := connectapi.NewFake()
+	resource.UnitTest(t, resource.TestCase{
+		ProtoV6ProviderFactories: factories(fake),
+		Steps: []resource.TestStep{
+			{Config: surveyModule(true)},
+			{
+				PreConfig: func() {
+					if _, err := fake.DeleteContactFlowModuleVersion(context.Background(), &connect.DeleteContactFlowModuleVersionInput{
+						InstanceId: aws.String(instance), ContactFlowModuleId: aws.String("module-1"), ContactFlowModuleVersion: aws.Int64(1)}); err != nil {
+						t.Fatal(err)
+					}
+				},
+				Config: surveyModule(true),
+				ConfigPlanChecks: resource.ConfigPlanChecks{PreApply: []plancheck.PlanCheck{
+					plancheck.ExpectResourceAction("flowascode_contact_flow_module_version.survey", plancheck.ResourceActionCreate),
+				}},
 			},
 		},
 	})

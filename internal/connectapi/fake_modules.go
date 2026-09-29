@@ -6,6 +6,7 @@ package connectapi
 import (
 	"context"
 	"fmt"
+	"sort"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/connect"
@@ -14,10 +15,11 @@ import (
 
 // fakeModule is a module with its versions and aliases.
 type fakeModule struct {
-	module   types.ContactFlowModule
-	versions map[int64]string // version -> content snapshot
-	aliases  map[string]*types.ContactFlowModuleAliasInfo
-	next     int64
+	module       types.ContactFlowModule
+	versions     map[int64]string // version -> content snapshot
+	descriptions map[int64]string // version -> description, when one was given
+	aliases      map[string]*types.ContactFlowModuleAliasInfo
+	next         int64
 }
 
 func (f *Fake) mod(id string) (*fakeModule, error) {
@@ -139,6 +141,12 @@ func (f *Fake) CreateContactFlowModuleVersion(_ context.Context, in *connect.Cre
 	}
 	m.next++
 	m.versions[m.next] = aws.ToString(m.module.Content)
+	if in.Description != nil {
+		if m.descriptions == nil {
+			m.descriptions = map[int64]string{}
+		}
+		m.descriptions[m.next] = *in.Description
+	}
 	return &connect.CreateContactFlowModuleVersionOutput{
 		Version: aws.Int64(m.next), ContactFlowModuleArn: aws.String(fmt.Sprintf("%s:%d", aws.ToString(m.module.Arn), m.next)),
 	}, nil
@@ -257,4 +265,29 @@ func (f *Fake) ListViews(_ context.Context, in *connect.ListViewsInput, _ ...fun
 		return nil, err
 	}
 	return &connect.ListViewsOutput{ViewsSummaryList: page, NextToken: next}, nil
+}
+
+func (f *Fake) ListContactFlowModuleVersions(_ context.Context, in *connect.ListContactFlowModuleVersionsInput, _ ...func(*connect.Options)) (*connect.ListContactFlowModuleVersionsOutput, error) {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	f.record("ListContactFlowModuleVersions")
+	m, err := f.mod(aws.ToString(in.ContactFlowModuleId))
+	if err != nil {
+		return nil, err
+	}
+	versions := make([]int64, 0, len(m.versions))
+	for v := range m.versions {
+		versions = append(versions, v)
+	}
+	sort.Slice(versions, func(i, j int) bool { return versions[i] < versions[j] })
+	out := &connect.ListContactFlowModuleVersionsOutput{}
+	for _, v := range versions {
+		summary := types.ContactFlowModuleVersionSummary{
+			Arn: aws.String(fmt.Sprintf("%s:%d", aws.ToString(m.module.Arn), v)), Version: aws.Int64(v)}
+		if d, ok := m.descriptions[v]; ok {
+			summary.VersionDescription = aws.String(d)
+		}
+		out.ContactFlowModuleVersionSummaryList = append(out.ContactFlowModuleVersionSummaryList, summary)
+	}
+	return out, nil
 }

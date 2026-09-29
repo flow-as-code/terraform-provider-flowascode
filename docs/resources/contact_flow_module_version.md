@@ -3,12 +3,12 @@
 page_title: "flowascode_contact_flow_module_version Resource - flowascode"
 subcategory: ""
 description: |-
-  A published snapshot of a flow module, keyed to its content_hash. Connect does not delete a version an alias points at, so a version an alias uses needs lifecycle { create_before_destroy = true }: the replacement is created and the alias moved to it before the old version is destroyed.
+  A published snapshot of a flow module, keyed to its content_hash. Connect does not delete a version an alias points at, so a version an alias uses needs lifecycle { create_before_destroy = true }: the replacement is created and the alias moved to it before the old version is destroyed. Import takes instance_id:contact_flow_module_id:version and records the module's current content_hash, since Connect returns no single version's content: the next plan is empty when the module still holds what that version snapshotted.
 ---
 
 # flowascode_contact_flow_module_version (Resource)
 
-A published snapshot of a flow module, keyed to its content_hash. Connect does not delete a version an alias points at, so a version an alias uses needs lifecycle { create_before_destroy = true }: the replacement is created and the alias moved to it before the old version is destroyed.
+A published snapshot of a flow module, keyed to its content_hash. Connect does not delete a version an alias points at, so a version an alias uses needs lifecycle { create_before_destroy = true }: the replacement is created and the alias moved to it before the old version is destroyed. Import takes `instance_id:contact_flow_module_id:version` and records the module's current content_hash, since Connect returns no single version's content: the next plan is empty when the module still holds what that version snapshotted.
 
 ## Example Usage
 
