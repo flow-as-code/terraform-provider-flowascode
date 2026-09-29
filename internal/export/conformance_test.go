@@ -170,6 +170,16 @@ func (c *fixtureClient) ListViews(context.Context) ([]ViewSummary, error) {
 	return c.inventory.Views, nil
 }
 
+func (c *fixtureClient) ListContactFlowModuleAliases(_ context.Context, id string) ([]ModuleAlias, error) {
+	var out []ModuleAlias
+	for _, a := range c.inventory.ModuleAliases {
+		if strings.HasSuffix(a.ModuleArn, "/"+id) {
+			out = append(out, ModuleAlias{AliasID: a.AliasID, Name: a.Name})
+		}
+	}
+	return out, nil
+}
+
 func exportCases(t *testing.T) []string {
 	t.Helper()
 	entries, err := fs.ReadDir(conformance.FS(), "export")

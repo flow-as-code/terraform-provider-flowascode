@@ -174,7 +174,23 @@ func BuildReverseMap(inventory InstanceInventory) ReverseMap {
 		add(*bot.AliasArn, &raw, "lex")
 	}
 
-	return ReverseMap{ByArn: assignNames(candidates, &warnings), Warnings: warnings}
+	byArn := assignNames(candidates, &warnings)
+	// An invocation through an alias names it by id; key it so the document
+	// reads module:<name>@<alias name>. An alias name that is not a slug
+	// keeps the id.
+	for _, a := range inventory.ModuleAliases {
+		module, ok := byArn[NormalizeArn(a.ModuleArn)]
+		if !ok {
+			continue
+		}
+		if !flowdoc.SlugPattern.MatchString(a.Name) {
+			warnings = append(warnings, `Module alias "`+a.Name+`" of `+a.ModuleArn+" is not a slug; a flow invoking it exports with its alias id.")
+			continue
+		}
+		byArn[NormalizeArn(a.ModuleArn)+":"+a.AliasID] = flowdoc.RefEntry{
+			Token: "${cdref:module:" + module.Name + "@" + a.Name + "}", Type: "module", Name: module.Name, Alias: a.Name}
+	}
+	return ReverseMap{ByArn: byArn, Warnings: warnings}
 }
 
 // ReverseMapOfResourceMap is export.ts's reverseMapOfResourceMap: the reverse

@@ -102,6 +102,21 @@ func (f *Fake) PutContactFlowModule(module types.ContactFlowModule) {
 	}
 }
 
+// PutContactFlowModuleAlias stores an alias of a module PutContactFlowModule
+// stored, under the id given, as a recorded inventory lists it.
+func (f *Fake) PutContactFlowModuleAlias(moduleID, aliasID, name string) {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	m, ok := f.modules[moduleID]
+	if !ok {
+		panic("PutContactFlowModuleAlias: no module " + moduleID)
+	}
+	m.aliases[aliasID] = &types.ContactFlowModuleAliasInfo{
+		AliasId: aws.String(aliasID), Name: aws.String(name), ContactFlowModuleId: aws.String(moduleID),
+		ContactFlowModuleArn: m.module.Arn, Version: aws.Int64(1),
+	}
+}
+
 // SetQueues sets what ListQueues returns, agent queues included; ListQueues
 // applies its QueueTypes filter.
 func (f *Fake) SetQueues(queues []types.QueueSummary) {

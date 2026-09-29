@@ -229,7 +229,7 @@ resource "flowascode_contact_flow" "acc" {
   type        = "CONTACT_FLOW"
 
   refs = {
-    "module:acc@prod" = flowascode_contact_flow_module_alias.acc.arn
+    "module:%[2]s@prod" = flowascode_contact_flow_module_alias.acc.arn
   }
 
   tags = {
@@ -240,7 +240,7 @@ resource "flowascode_contact_flow" "acc" {
     id   = "invoke"
     next = "bye"
     invoke_flow_module {
-      flow_module_id = "module:acc@prod"
+      flow_module_id = "module:%[2]s@prod"
     }
     error {
       type = "NoMatchingError"
@@ -276,6 +276,14 @@ resource "flowascode_contact_flow" "acc" {
 					return nil
 				},
 			)},
+			// Import reads the flow's invocation, <module ARN>:<alias id>, back
+			// as module:<name>@prod through the instance's alias listing.
+			{
+				Config:            cfg("Second."),
+				ResourceName:      "flowascode_contact_flow.acc",
+				ImportState:       true,
+				ImportStateVerify: true,
+			},
 		},
 	})
 }

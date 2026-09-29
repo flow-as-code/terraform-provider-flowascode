@@ -434,7 +434,6 @@ func (r *flowResource) reconstruct(ctx context.Context, a flowAttrs, l live, sta
 		}
 		{
 			reverse = export.BuildReverseMap(inv)
-			r.addModuleAliases(ctx, a.InstanceID.ValueString(), reverse)
 			for arn, entry := range export.ReverseMapOfResourceMap(bound).ByArn {
 				reverse.ByArn[arn] = entry
 			}
@@ -584,32 +583,5 @@ func (r *flowResource) ImportState(ctx context.Context, req resource.ImportState
 	}
 	for name, v := range map[string]string{"id": req.ID, "instance_id": instance, r.idAttr(): id} {
 		resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root(name), types.StringValue(v))...)
-	}
-}
-
-// addModuleAliases lets import read a module invoked through an alias back
-// as module:<name>@<alias name>. A flow invokes an alias through the alias
-// id (aliasARN), which the inventory knows nothing about, so each module's
-// aliases are listed and their qualified ARNs added to the reverse map. A
-// listing that fails leaves the qualifier as the alias, which still reads.
-func (r *flowResource) addModuleAliases(ctx context.Context, instanceID string, reverse export.ReverseMap) {
-	for arn, entry := range reverse.ByArn {
-		if entry.Type != "module" || entry.Alias != "" {
-			continue
-		}
-		moduleID := arn[strings.LastIndex(arn, "/")+1:]
-		out, err := r.client.Connect.ListContactFlowModuleAliases(ctx, &connect.ListContactFlowModuleAliasesInput{
-			InstanceId: aws.String(instanceID), ContactFlowModuleId: aws.String(moduleID)})
-		if err != nil {
-			continue
-		}
-		for _, alias := range out.ContactFlowModuleAliasSummaryList {
-			name := aws.ToString(alias.AliasName)
-			if !flowdoc.SlugPattern.MatchString(name) || alias.AliasId == nil {
-				continue
-			}
-			reverse.ByArn[aliasARN(arn, *alias.AliasId)] = flowdoc.RefEntry{
-				Token: "${cdref:module:" + entry.Name + "@" + name + "}", Type: "module", Name: entry.Name, Alias: name}
-		}
 	}
 }

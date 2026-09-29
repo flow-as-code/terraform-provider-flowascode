@@ -11,6 +11,7 @@ import (
 	"io/fs"
 	"reflect"
 	"sort"
+	"strings"
 	"testing"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
@@ -76,6 +77,9 @@ func seedFromCase(t *testing.T, name string) (*Fake, export.InstanceInventory) {
 			Arn: aws.String(s.Arn), Id: s.ID, Name: aws.String(s.Name),
 			State: types.ContactFlowModuleState(aws.ToString(s.State)), Content: aws.String(body),
 		})
+	}
+	for _, a := range inv.ModuleAliases {
+		f.PutContactFlowModuleAlias(a.ModuleArn[strings.LastIndex(a.ModuleArn, "/")+1:], a.AliasID, a.Name)
 	}
 	var queues []types.QueueSummary
 	for _, s := range inv.Queues {

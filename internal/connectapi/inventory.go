@@ -44,6 +44,10 @@ const (
 	lambdaAndBotMaxResults int32 = 25
 	// viewsMaxResults is ListViews' maximum, smaller than the other lists'.
 	viewsMaxResults int32 = 100
+	// aliasesMaxResults is ListContactFlowModuleAliases' maximum, also 100:
+	// the sandbox refused 1000 on 2026-09-29 ("MaxResults must have a length
+	// less than or equal to 100").
+	aliasesMaxResults int32 = 100
 	// defaultRequestsPerSecond is Amazon Connect's default RateLimit for every
 	// operation outside the exceptions table, per account per Region and
 	// shared across users and instances. None of the operations here is in
@@ -467,6 +471,29 @@ func (c *inventory) ListViews(ctx context.Context) ([]export.ViewSummary, error)
 				Type:   typ,
 				Status: enum(v.Status),
 			})
+		}
+		return items, out.NextToken, nil
+	})
+}
+
+// ListContactFlowModuleAliases lists one module's aliases; it makes the
+// inventory an export.ModuleAliasLister.
+// https://docs.aws.amazon.com/connect/latest/APIReference/API_ListContactFlowModuleAliases.html
+func (c *inventory) ListContactFlowModuleAliases(ctx context.Context, moduleID string) ([]export.ModuleAlias, error) {
+	return paginate(ctx, c.limiter, func(ctx context.Context, nextToken *string) ([]export.ModuleAlias, *string, error) {
+		out, err := c.api.ListContactFlowModuleAliases(ctx, &connect.ListContactFlowModuleAliasesInput{
+			InstanceId: aws.String(c.instanceID), ContactFlowModuleId: aws.String(moduleID),
+			MaxResults: aws.Int32(min(c.maxResults, aliasesMaxResults)), NextToken: nextToken,
+		})
+		if err != nil {
+			return nil, nil, err
+		}
+		items := make([]export.ModuleAlias, 0, len(out.ContactFlowModuleAliasSummaryList))
+		for _, a := range out.ContactFlowModuleAliasSummaryList {
+			if a.AliasId == nil || a.AliasName == nil {
+				continue
+			}
+			items = append(items, export.ModuleAlias{AliasID: *a.AliasId, Name: *a.AliasName})
 		}
 		return items, out.NextToken, nil
 	})

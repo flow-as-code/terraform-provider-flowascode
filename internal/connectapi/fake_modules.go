@@ -308,11 +308,16 @@ func (f *Fake) ListContactFlowModuleAliases(_ context.Context, in *connect.ListC
 		ids = append(ids, id)
 	}
 	sort.Strings(ids)
-	out := &connect.ListContactFlowModuleAliasesOutput{}
+	all := make([]types.ContactFlowModuleAliasSummary, 0, len(ids))
 	for _, id := range ids {
 		a := m.aliases[id]
-		out.ContactFlowModuleAliasSummaryList = append(out.ContactFlowModuleAliasSummaryList, types.ContactFlowModuleAliasSummary{
+		all = append(all, types.ContactFlowModuleAliasSummary{
 			AliasId: a.AliasId, AliasName: a.Name, Version: a.Version, Arn: a.ContactFlowModuleArn})
 	}
-	return out, nil
+	// Its MaxResults tops out at 100, as the sandbox showed.
+	page, next, err := fakePage("ListContactFlowModuleAliases", all, in.MaxResults, 100, in.NextToken)
+	if err != nil {
+		return nil, err
+	}
+	return &connect.ListContactFlowModuleAliasesOutput{ContactFlowModuleAliasSummaryList: page, NextToken: next}, nil
 }

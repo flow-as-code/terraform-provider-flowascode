@@ -3,7 +3,10 @@
 
 package export
 
-import "context"
+import (
+	"context"
+	"strings"
+)
 
 // ResourceSummary is export.ts's ResourceSummary: one named Connect resource,
 // as the List* operations return it. The JSON tags are the TypeScript's field
@@ -65,6 +68,31 @@ type InstanceInventory struct {
 	LambdaFunctions []string        `json:"lambdaFunctions"`
 	LexBots         []LexBotSummary `json:"lexBots"`
 	Views           []ViewSummary   `json:"views"`
+	// ModuleAliases are each module's aliases, when the client lists them:
+	// a flow invokes an alias as <module ARN>:<alias id>, and the reverse map
+	// needs the id to read that back as module:<name>@<alias name>.
+	ModuleAliases []ModuleAliasSummary `json:"moduleAliases,omitempty"`
+}
+
+// ModuleAliasSummary is export.ts's ModuleAliasSummary.
+type ModuleAliasSummary struct {
+	ModuleArn string `json:"moduleArn"`
+	AliasID   string `json:"aliasId"`
+	Name      string `json:"name"`
+}
+
+// ModuleAlias is one alias ListContactFlowModuleAliases returns.
+type ModuleAlias struct {
+	AliasID string
+	Name    string
+}
+
+// ModuleAliasLister is export.ts's optional
+// ConnectInventoryClient.listContactFlowModuleAliases: a client that lists a
+// module's aliases implements it, and one that does not still collects.
+// https://docs.aws.amazon.com/connect/latest/APIReference/API_ListContactFlowModuleAliases.html
+type ModuleAliasLister interface {
+	ListContactFlowModuleAliases(ctx context.Context, contactFlowModuleID string) ([]ModuleAlias, error)
 }
 
 // DescribedContactFlow is export.ts's DescribedContactFlow: the operation that
@@ -162,6 +190,21 @@ func CollectInventory(ctx context.Context, client ConnectInventoryClient, option
 	}
 	if inv.Views, err = client.ListViews(ctx); err != nil {
 		return InstanceInventory{}, err
+	}
+	if lister, ok := client.(ModuleAliasLister); ok {
+		for _, m := range inv.ContactFlowModules {
+			id := m.Arn[strings.LastIndex(m.Arn, "/")+1:]
+			if m.ID != nil {
+				id = *m.ID
+			}
+			aliases, err := lister.ListContactFlowModuleAliases(ctx, id)
+			if err != nil {
+				return InstanceInventory{}, err
+			}
+			for _, a := range aliases {
+				inv.ModuleAliases = append(inv.ModuleAliases, ModuleAliasSummary{ModuleArn: m.Arn, AliasID: a.AliasID, Name: a.Name})
+			}
+		}
 	}
 	return inv, nil
 }
