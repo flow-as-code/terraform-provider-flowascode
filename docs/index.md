@@ -22,6 +22,21 @@ action is refused at plan time, as is any expression in a reference field.
 Lint runs at plan time: a hard rule fails the plan, every other finding warns,
 and `lint { disable = [...] }` skips any rule but a hard one.
 
+## Learn it
+
+- [Your first flow with the Terraform provider](https://flow-as-code.dev/docs/tutorial-first-flow/):
+  plan, apply, plan-time lint, and a console edit shown as a diff.
+- [Promote a flow from dev to prod](https://flow-as-code.dev/docs/tutorial-promote/):
+  one flows module, a root module per environment, and a pipeline that proves
+  prod runs the document dev ran.
+- [Bring existing flows under Terraform](https://flow-as-code.dev/docs/tutorial-adopt/):
+  import blocks, `flow-cli export --author tf`, and `moved` from hashicorp/aws.
+- [The flow cookbook](https://flow-as-code.dev/docs/example-terraform-provider-cookbook/):
+  menus, callbacks, Lambda routing, shared modules and more, each applied to a
+  live instance.
+- [Agent skills](https://flow-as-code.dev/docs/agent-skills/) that teach an AI
+  coding agent these resources and the branches Connect requires.
+
 ## Example Usage
 
 ```terraform

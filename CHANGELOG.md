@@ -20,6 +20,8 @@ it reads.
   not have is now reported too. The converse check found one rule too strict:
   `message_participant` no longer needs a `NoMatchingError` block, which the
   service does not require and Connect's own sample flows omit.
+- The registry docs gain a guide, "Promoting flows across environments", and
+  link the flow-as-code tutorials, cookbook and agent skills.
 - An apply that Connect refuses shows its problem list. The service's
   `InvalidContactFlowException` often has an empty message; the list says
   which action is wrong and why ("Action is missing required error. Error:
