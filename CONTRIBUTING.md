@@ -61,9 +61,8 @@ goreleaser in the `release` environment, which holds `GPG_PRIVATE_KEY` and
    vendored `conformance/` commit (`internal/conformance/COMMIT`) and the
    FlowDoc version it reads. Merge that to `main` with CI and acceptance green.
 2. `git tag -a vX.Y.Z -m vX.Y.Z` on that commit and push the tag.
-3. Approve the `release` environment's deployment when it asks. (The
-   required reviewer is added when the repository goes public; GitHub offers
-   environment protection on a private repository only on a paid plan.)
+3. Approve the `release` environment's deployment when it asks; it deploys
+   only from a `v*` tag.
 4. Both registries pick up the GitHub release on their own; check that
    `terraform init` and `tofu init` resolve the new version.
 

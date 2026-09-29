@@ -8,6 +8,11 @@ it reads.
 
 ## Unreleased
 
+## 0.1.0 (2026-09-29)
+
+The first release. Vendors flow-as-code `conformance/` at
+`c48da38c6aa3b718f524e22f087fd01eb4097b8d` and reads FlowDoc 0.2.
+
 - Provider block on aws-sdk-go-base with hashicorp/aws's authentication
   vocabulary.
 - `flowascode_contact_flow` and `flowascode_contact_flow_module`: flows
@@ -30,5 +35,4 @@ it reads.
   differs, and `flowascode_contact_flow_module_alias`, repointed in place.
 - `flowascode_view` data source.
 - Compatibility: FlowDoc 0.2 (`flowdoc-0.2.schema.json`), Terraform 1.8 and
-  later, OpenTofu 1.10 and later. The vendored `conformance/` commit is
-  recorded in `internal/conformance/COMMIT` and named here at release.
+  later, OpenTofu 1.10 and later.
