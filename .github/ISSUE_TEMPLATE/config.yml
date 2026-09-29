@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: A question about FlowDoc, the studio or the TypeScript tooling
+    url: https://github.com/flow-as-code/flow-as-code/issues
+    about: The format and the other two views live in flow-as-code.

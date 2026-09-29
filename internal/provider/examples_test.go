@@ -7,6 +7,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"testing"
 )
@@ -44,6 +45,33 @@ func TestExamplesPlan(t *testing.T) {
 				text = append(text, read(f))
 			}
 			_, failed := planFiles(t, standIn(strings.Join(text, "\n")), address)
+			if failed != "" {
+				t.Fatalf("plan failed:\n%s", failed)
+			}
+		})
+	}
+}
+
+// Every hcl block in README.md plans the same way, so the example on the
+// repository's front page cannot rot either.
+func TestReadmeExamplesPlan(t *testing.T) {
+	terraformBinary(t)
+	b, err := os.ReadFile(filepath.Join("..", "..", "README.md"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	blocks := regexp.MustCompile("(?s)```hcl\n(.*?)```").FindAllStringSubmatch(string(b), -1)
+	if len(blocks) == 0 {
+		t.Fatal("README.md has no hcl block")
+	}
+	resourceLabel := regexp.MustCompile(`resource "(flowascode_[a-z_]+)" "([a-z0-9_]+)"`)
+	for i, m := range blocks {
+		r := resourceLabel.FindStringSubmatch(m[1])
+		if r == nil {
+			t.Fatalf("hcl block %d declares no flowascode resource", i)
+		}
+		t.Run(r[1]+"."+r[2], func(t *testing.T) {
+			_, failed := planFiles(t, standIn(m[1]), r[1]+"."+r[2])
 			if failed != "" {
 				t.Fatalf("plan failed:\n%s", failed)
 			}

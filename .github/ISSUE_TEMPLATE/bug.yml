@@ -1,0 +1,43 @@
+name: Bug report
+description: The provider planned, applied or read something it should not have.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: >
+        Security issues go through the Security tab (a private advisory), not
+        here. Remove account ids, instance ids and ARNs from anything you paste.
+  - type: input
+    id: provider-version
+    attributes:
+      label: Provider version
+      placeholder: 0.1.0
+    validations:
+      required: true
+  - type: input
+    id: cli-version
+    attributes:
+      label: Terraform or OpenTofu version
+      placeholder: OpenTofu 1.10.10
+    validations:
+      required: true
+  - type: textarea
+    id: config
+    attributes:
+      label: The smallest configuration that shows it
+      render: hcl
+    validations:
+      required: true
+  - type: textarea
+    id: observed
+    attributes:
+      label: What happened
+      description: The plan, the error, or the state that was wrong. The `flowdoc` and `content` attributes in the plan are usually the fastest way to show it.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+    validations:
+      required: true
