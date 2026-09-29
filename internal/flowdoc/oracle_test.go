@@ -100,6 +100,7 @@ func TestOraclePerTypeTables(t *testing.T) {
 		check("requiredErrors", anyStrs(RequiredErrors(typ)))
 		check("requiredErrorsForChat", anyStrs(RequiredErrorsFor(typ, chat)))
 		check("builderErrors", anyStrs(BuilderErrors(typ)))
+		check("minConditions", float64(MinConditionsFor(typ)))
 		k, ok := ConditionsKindOf(typ)
 		check("conditionsKind", orNull(string(k), ok))
 		check("nextRule", orNull(NextRule(typ)))

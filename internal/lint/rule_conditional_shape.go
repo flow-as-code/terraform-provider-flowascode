@@ -43,7 +43,15 @@ var ConditionalShape = Rule{
 				}
 				if r := shape.Requires; r != nil {
 					for _, key := range r.Parameters {
-						if !has(key) {
+						if has(key) {
+							continue
+						}
+						// The deciding parameter itself missing: the shape's
+						// phrase would read "without StoreInput "True" needs
+						// StoreInput".
+						if key == shape.When.Key {
+							ctx.Report(Report{Severity: SeverityError, BlockID: blockID(a.id), Message: a.typ + " needs " + key + "."})
+						} else {
 							say("needs " + key)
 						}
 					}

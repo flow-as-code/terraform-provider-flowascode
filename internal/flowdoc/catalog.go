@@ -101,6 +101,9 @@ type CatalogTransitions struct {
 	// mirrors:condition:<operand>.
 	Next       string         `json:"next"`
 	Conditions ConditionsKind `json:"conditions"`
+	// The fewest conditions the service accepts, when it refuses an action
+	// without any (CheckMetricData, observed 2026-09-29); absent reads 0.
+	MinConditions int `json:"minConditions,omitempty"`
 	// For kind fixed, the operands in builder order; for kind enum, the
 	// operands the page names, when it names them.
 	ConditionOperands []string `json:"conditionOperands,omitempty"`
@@ -433,6 +436,17 @@ func RequiredErrors(actionType string) []string {
 // RequiredErrorsFor is catalog.ts's requiredErrorsFor: the always required
 // branches and those required by a parameter the action carries
 // (requiredWhenKey), in catalog order. A key is carried when it is present,
+
+// MinConditionsFor is catalog.ts's minConditionsFor: the fewest conditions an
+// action of this type must carry, 0 when the catalog sets none or the type is
+// not modeled.
+func MinConditionsFor(typ string) int {
+	if e := ModeledEntry(typ); e != nil {
+		return e.Transitions.MinConditions
+	}
+	return 0
+}
+
 // whatever its value, as TypeScript's `!== undefined` reads a parsed null.
 func RequiredErrorsFor(actionType string, parameters jsonv.Object) []string {
 	out := []string{}

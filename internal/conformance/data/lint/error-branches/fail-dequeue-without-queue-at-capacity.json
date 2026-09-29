@@ -2,37 +2,39 @@
   "expect": [
     {
       "rule": "error-branches",
-      "blockId": "set",
-      "messageIncludes": "NoMatchingError"
+      "blockId": "move",
+      "messageIncludes": "\"QueueAtCapacity\""
     }
   ],
   "doc": {
     "flowdoc": "0.2",
     "kind": "flow",
     "name": "case",
-    "connectType": "CONTACT_FLOW",
+    "connectType": "CUSTOMER_QUEUE",
     "content": {
       "Version": "2019-10-30",
-      "StartAction": "set",
+      "StartAction": "move",
       "Actions": [
         {
-          "Identifier": "set",
-          "Type": "UpdateContactAttributes",
+          "Identifier": "move",
+          "Type": "DequeueContactAndTransferToQueue",
           "Parameters": {
-            "Attributes": {
-              "caller": "known"
-            },
-            "TargetContact": "Current"
+            "QueueId": "$.Attributes.queueArn"
           },
           "Transitions": {
             "NextAction": "bye",
-            "Errors": [],
+            "Errors": [
+              {
+                "ErrorType": "NoMatchingError",
+                "NextAction": "bye"
+              }
+            ],
             "Conditions": []
           }
         },
         {
           "Identifier": "bye",
-          "Type": "DisconnectParticipant",
+          "Type": "EndFlowExecution",
           "Parameters": {},
           "Transitions": {}
         }
@@ -40,12 +42,12 @@
     },
     "layout": {
       "bye": {
-        "x": 200,
-        "y": 0
+        "x": 280,
+        "y": 20
       },
-      "set": {
-        "x": 0,
-        "y": 0
+      "move": {
+        "x": 20,
+        "y": 20
       }
     },
     "refs": []

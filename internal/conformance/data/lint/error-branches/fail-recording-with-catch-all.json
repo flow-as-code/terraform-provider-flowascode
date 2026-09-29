@@ -2,8 +2,8 @@
   "expect": [
     {
       "rule": "error-branches",
-      "blockId": "set",
-      "messageIncludes": "NoMatchingError"
+      "blockId": "record",
+      "messageIncludes": "has no \"NoMatchingError\" branch"
     }
   ],
   "doc": {
@@ -13,20 +13,27 @@
     "connectType": "CONTACT_FLOW",
     "content": {
       "Version": "2019-10-30",
-      "StartAction": "set",
+      "StartAction": "record",
       "Actions": [
         {
-          "Identifier": "set",
-          "Type": "UpdateContactAttributes",
+          "Identifier": "record",
+          "Type": "UpdateContactRecordingBehavior",
           "Parameters": {
-            "Attributes": {
-              "caller": "known"
-            },
-            "TargetContact": "Current"
+            "RecordingBehavior": {
+              "RecordedParticipants": [
+                "Agent",
+                "Customer"
+              ]
+            }
           },
           "Transitions": {
             "NextAction": "bye",
-            "Errors": [],
+            "Errors": [
+              {
+                "ErrorType": "NoMatchingError",
+                "NextAction": "bye"
+              }
+            ],
             "Conditions": []
           }
         },
@@ -40,12 +47,12 @@
     },
     "layout": {
       "bye": {
-        "x": 200,
-        "y": 0
+        "x": 280,
+        "y": 20
       },
-      "set": {
-        "x": 0,
-        "y": 0
+      "record": {
+        "x": 20,
+        "y": 20
       }
     },
     "refs": []

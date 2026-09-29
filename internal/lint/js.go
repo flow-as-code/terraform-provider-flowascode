@@ -141,3 +141,21 @@ func numericLess(a, b string) bool {
 	}
 	return a < b
 }
+
+// lengthAt is `(o[key] ?? []).length` compared with a number: an array's
+// length, a string's length in UTF-16 code units, and for anything else
+// undefined, which no comparison holds for (ok false).
+func lengthAt(o jsonv.Object, key string) (int, bool) {
+	v, has := o.Get(key)
+	if !has || v == nil {
+		return 0, true
+	}
+	switch t := v.(type) {
+	case []any:
+		return len(t), true
+	case string:
+		return jsLength(t), true
+	default:
+		return 0, false
+	}
+}

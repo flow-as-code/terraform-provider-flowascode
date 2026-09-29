@@ -5,6 +5,7 @@ package connectapi
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"strings"
 	"sync"
@@ -73,6 +74,9 @@ func (f *Fake) CreateContactFlow(_ context.Context, in *connect.CreateContactFlo
 	f.mu.Lock()
 	defer f.mu.Unlock()
 	f.record("CreateContactFlow")
+	if problems := refusedContent(aws.ToString(in.Content)); len(problems) > 0 {
+		return nil, &types.InvalidContactFlowException{Problems: problems}
+	}
 	f.next++
 	id := fmt.Sprintf("flow-%d", f.next)
 	arn := fmt.Sprintf("arn:aws:connect:us-east-1:111122223333:instance/%s/contact-flow/%s", aws.ToString(in.InstanceId), id)
@@ -110,6 +114,9 @@ func (f *Fake) UpdateContactFlowContent(_ context.Context, in *connect.UpdateCon
 	f.mu.Lock()
 	defer f.mu.Unlock()
 	f.record("UpdateContactFlowContent")
+	if problems := refusedContent(aws.ToString(in.Content)); len(problems) > 0 {
+		return nil, &types.InvalidContactFlowException{Problems: problems}
+	}
 	c, ok := f.flows[aws.ToString(in.ContactFlowId)]
 	if !ok {
 		return nil, notFound(aws.ToString(in.ContactFlowId))
@@ -185,4 +192,37 @@ func (f *Fake) UntagResource(_ context.Context, in *connect.UntagResourceInput, 
 		delete(c.Tags, k)
 	}
 	return &connect.UntagResourceOutput{}, nil
+}
+
+// refusedContent is the part of Connect's content validation the tests
+// exercise: a queue transfer without its QueueAtCapacity branch, which the
+// service refuses with an empty message and one problem per action
+// ("Action is missing required error. Error: QueueAtCapacity, Path:
+// Actions[1]", sandbox, 2026-09-29). Anything else is accepted, as before.
+func refusedContent(content string) []types.ProblemDetail {
+	var doc struct {
+		Actions []struct {
+			Type        string
+			Transitions struct {
+				Errors []struct{ ErrorType string }
+			}
+		}
+	}
+	if json.Unmarshal([]byte(content), &doc) != nil {
+		return nil
+	}
+	var out []types.ProblemDetail
+	for i, a := range doc.Actions {
+		if a.Type != "TransferContactToQueue" && a.Type != "DequeueContactAndTransferToQueue" {
+			continue
+		}
+		wired := false
+		for _, e := range a.Transitions.Errors {
+			wired = wired || e.ErrorType == "QueueAtCapacity"
+		}
+		if !wired {
+			out = append(out, types.ProblemDetail{Message: aws.String(fmt.Sprintf("Action is missing required error. Error: QueueAtCapacity, Path: Actions[%d]", i))})
+		}
+	}
+	return out
 }
