@@ -328,6 +328,9 @@ type ExportFlowOptions struct {
 	// Kind is "flow" or "module"; "" defaults to "module" when ConnectType is
 	// MODULE and "flow" otherwise.
 	Kind string
+	// DisplayName is the name Connect holds, carried into
+	// FlowDoc.displayName when it is not Name; "" is none.
+	DisplayName string
 	// Description is the flow's description; "" is none, as in the
 	// TypeScript.
 	Description string
@@ -500,6 +503,9 @@ func ExportFlow(content any, reverseMap ReverseMap, options ExportFlowOptions) (
 		{Key: "flowdoc", Value: flowdoc.Version},
 		{Key: "kind", Value: kind},
 		{Key: "name", Value: options.Name},
+	}
+	if options.DisplayName != "" && options.DisplayName != options.Name {
+		doc = append(doc, jsonv.Member{Key: "displayName", Value: options.DisplayName})
 	}
 	if options.Description != "" {
 		doc = append(doc, jsonv.Member{Key: "description", Value: options.Description})

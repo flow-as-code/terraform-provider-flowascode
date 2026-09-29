@@ -488,6 +488,73 @@ moved {
 	})
 }
 
+// A flow created in the console under a name that is not a slug imports
+// with the slug as name and the Connect name as display_name, and an apply
+// leaves the Connect name as it was.
+func TestAccImportKeepsAConsoleName(t *testing.T) {
+	e := accPreCheck(t)
+	console := e.prefix + " Main Line"
+	slug := e.prefix + "-main-line"
+	var flowID string
+	cfg := e.providerBlock() + fmt.Sprintf(`
+resource "flowascode_contact_flow" "acc" {
+  instance_id  = %q
+  name         = %q
+  display_name = %q
+  type         = "CONTACT_FLOW"
+
+  action {
+    id = "bye"
+    disconnect_participant {}
+  }
+}
+`, e.instanceID, slug, console)
+	resource.Test(t, resource.TestCase{
+		ProtoV6ProviderFactories: accFactories(),
+		Steps: []resource.TestStep{
+			{
+				PreConfig: func() {
+					out, err := e.api.CreateContactFlow(context.Background(), &connect.CreateContactFlowInput{
+						InstanceId: aws.String(e.instanceID), Name: aws.String(console), Type: "CONTACT_FLOW",
+						Tags:    map[string]string{"flowascode-acc": "true"},
+						Content: aws.String(`{"Version":"2019-10-30","StartAction":"bye","Actions":[{"Identifier":"bye","Type":"DisconnectParticipant","Parameters":{},"Transitions":{}}]}`),
+					})
+					if err != nil {
+						t.Fatal(err)
+					}
+					flowID = aws.ToString(out.ContactFlowId)
+				},
+				Config:             cfg,
+				ResourceName:       "flowascode_contact_flow.acc",
+				ImportState:        true,
+				ImportStateIdFunc:  func(*terraform.State) (string, error) { return e.instanceID + ":" + flowID, nil },
+				ImportStatePersist: true,
+				ImportStateCheck: func(states []*terraform.InstanceState) error {
+					a := states[0].Attributes
+					if a["name"] != slug || a["display_name"] != console {
+						return fmt.Errorf("imported name %q display_name %q", a["name"], a["display_name"])
+					}
+					return nil
+				},
+			},
+			{
+				Config: cfg,
+				Check: func(*terraform.State) error {
+					out, err := e.api.DescribeContactFlow(context.Background(), &connect.DescribeContactFlowInput{
+						InstanceId: aws.String(e.instanceID), ContactFlowId: aws.String(flowID)})
+					if err != nil {
+						return err
+					}
+					if got := aws.ToString(out.ContactFlow.Name); got != console {
+						return fmt.Errorf("the apply renamed the flow to %q", got)
+					}
+					return nil
+				},
+			},
+		},
+	})
+}
+
 // TestAccSweep deletes every flow, module, queue and hours of operation this
 // lane created: names starting tfacc-. It runs before and after the lane
 // (acceptance.yml). Flows go first, since a flow may refer to a queue.

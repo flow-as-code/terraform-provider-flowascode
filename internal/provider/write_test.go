@@ -71,6 +71,9 @@ func TestActionsFromDocReadsBackToTheDocument(t *testing.T) {
 					cfg["settings"] = flowmodel.JSONEncode(s)
 				}
 			}
+			if d, ok := doc.Get("displayName"); ok {
+				cfg["display_name"] = d
+			}
 			if d, ok := doc.Get("description"); ok {
 				cfg["description"] = d
 			}

@@ -48,6 +48,7 @@ resource "flowascode_contact_flow_module" "survey" {
 
 - `action` (Block List) One action of the flow, in order. (see [below for nested schema](#nestedblock--action))
 - `description` (String)
+- `display_name` (String) The name Connect shows, when it is not name (an adopted "Main Line"): the document's displayName. Omitted means Connect's name is name. 1 to 127 characters with one that is not a space.
 - `external_invocation_enabled` (Boolean) Whether the module can be invoked outside a flow. Connect sets it only when the module is created, so a change replaces the module.
 - `lint` (Block, Optional) Lint rules to skip. Hard rules cannot be skipped. (see [below for nested schema](#nestedblock--lint))
 - `refs` (Map of String) Reference key to the ARN it binds, as a Terraform expression.

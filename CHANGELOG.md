@@ -15,6 +15,10 @@ it reads.
   (built from the vendored catalog) or `generic {}` for the rest; references
   as keys bound through `refs`. The plan shows the canonical FlowDoc
   (`flowdoc`), the content Connect will hold (`content`) and its hash.
+- `display_name` on both flow resources: the name Connect shows when it is
+  not the slug in `name` (FlowDoc `displayName`). Import and `moved` keep a
+  console name such as "Main Line" there and take its slug as `name`, so the
+  first apply renames nothing.
 - Lint at plan time: the twelve flow-as-code rules, hard rules as errors and
   the rest as warnings, with `lint { disable = [...] }` for the soft ones.
 - Drift in Connect shows as changed action blocks; `terraform import` reads

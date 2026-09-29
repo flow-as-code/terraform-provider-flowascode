@@ -7,6 +7,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"regexp"
 	"strings"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
@@ -83,7 +84,11 @@ func (r *flowResource) Schema(_ context.Context, _ resource.SchemaRequest, resp 
 		"arn":      schema.StringAttribute{Computed: true, PlanModifiers: keep()},
 		"instance_id": schema.StringAttribute{Required: true, Description: "The Amazon Connect instance id.",
 			PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()}},
-		"name":        schema.StringAttribute{Required: true, Description: "The " + what + "'s name, a slug."},
+		"name": schema.StringAttribute{Required: true, Description: "The " + what + "'s name, a slug."},
+		"display_name": schema.StringAttribute{Optional: true,
+			Description: "The name Connect shows, when it is not name (an adopted \"Main Line\"): the document's displayName. Omitted means Connect's name is name. 1 to 127 characters with one that is not a space.",
+			Validators: []validator.String{stringvalidator.LengthBetween(1, 127),
+				stringvalidator.RegexMatches(regexp.MustCompile(`\S`), "must have a character that is not a space")}},
 		"description": schema.StringAttribute{Optional: true},
 		"state": schema.StringAttribute{Optional: true, Computed: true, PlanModifiers: keep(),
 			Validators: []validator.String{stringvalidator.OneOf("ACTIVE", "ARCHIVED")}},
@@ -162,6 +167,7 @@ type flowAttrs struct {
 	ARN         types.String
 	InstanceID  types.String
 	Name        types.String
+	DisplayName types.String
 	Type        types.String
 	Description types.String
 	State       types.String
@@ -177,7 +183,7 @@ func (r *flowResource) getAttrs(ctx context.Context, src interface {
 	var a flowAttrs
 	targets := map[string]any{
 		"id": &a.ID, r.idAttr(): &a.ConnectID, "arn": &a.ARN, "instance_id": &a.InstanceID,
-		"name": &a.Name, "description": &a.Description, "state": &a.State,
+		"name": &a.Name, "display_name": &a.DisplayName, "description": &a.Description, "state": &a.State,
 		"tags": &a.Tags, "content": &a.Content, "refs": &a.Refs,
 	}
 	if r.module() {
@@ -233,7 +239,7 @@ func (r *flowResource) create(ctx context.Context, a flowAttrs, content string, 
 	}
 	if r.module() {
 		in := &connect.CreateContactFlowModuleInput{
-			InstanceId: aws.String(a.InstanceID.ValueString()), Name: aws.String(a.Name.ValueString()),
+			InstanceId: aws.String(a.InstanceID.ValueString()), Name: aws.String(a.connectName()),
 			Content: aws.String(content), Description: description, Tags: tags,
 		}
 		if !a.External.IsNull() && !a.External.IsUnknown() {
@@ -246,7 +252,7 @@ func (r *flowResource) create(ctx context.Context, a flowAttrs, content string, 
 		return aws.ToString(out.Id), aws.ToString(out.Arn), nil
 	}
 	out, err := r.client.Connect.CreateContactFlow(ctx, &connect.CreateContactFlowInput{
-		InstanceId: aws.String(a.InstanceID.ValueString()), Name: aws.String(a.Name.ValueString()),
+		InstanceId: aws.String(a.InstanceID.ValueString()), Name: aws.String(a.connectName()),
 		Type: ctypes.ContactFlowType(a.Type.ValueString()), Content: aws.String(content),
 		Status: ctypes.ContactFlowStatusPublished, Description: description, Tags: tags,
 	})
@@ -323,7 +329,7 @@ func (r *flowResource) Create(ctx context.Context, req resource.CreateRequest, r
 	resp.State.Raw = req.Plan.Raw
 	state := "ACTIVE"
 	if a.State.ValueString() == "ARCHIVED" {
-		if err := r.updateMetadata(ctx, a.InstanceID.ValueString(), id, a.Name.ValueString(), a.Description.ValueString(), "ARCHIVED"); err != nil {
+		if err := r.updateMetadata(ctx, a.InstanceID.ValueString(), id, a.connectName(), a.Description.ValueString(), "ARCHIVED"); err != nil {
 			resp.Diagnostics.AddError("Archiving the "+r.kind+" failed", err.Error())
 		}
 		state = "ARCHIVED"
@@ -363,7 +369,19 @@ func (r *flowResource) Read(ctx context.Context, req resource.ReadRequest, resp 
 		resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root(name), v)...)
 	}
 	set("arn", types.StringValue(l.arn))
-	set("name", types.StringValue(l.name))
+	// name is the slug the configuration holds; Connect's name is
+	// display_name when it differs. An import has no name yet, so it takes
+	// the slug of Connect's, as export does.
+	name := a.Name.ValueString()
+	if a.Name.IsNull() || a.Name.IsUnknown() {
+		name = export.SlugifyResourceName(l.name)
+	}
+	set("name", types.StringValue(name))
+	if l.name != name {
+		set("display_name", types.StringValue(l.name))
+	} else if !a.DisplayName.IsNull() {
+		set("display_name", types.StringNull())
+	}
 	if l.description != "" {
 		set("description", types.StringValue(l.description))
 	} else if !a.Description.IsNull() {
@@ -417,7 +435,7 @@ func (r *flowResource) reconstruct(ctx context.Context, a flowAttrs, l live, sta
 		connectType = a.Type.ValueString()
 	}
 	options := export.ExportFlowOptions{
-		Name: name, ConnectType: connectType, Kind: r.kind, Description: l.description, OmitMeta: true,
+		Name: name, DisplayName: l.name, ConnectType: connectType, Kind: r.kind, Description: l.description, OmitMeta: true,
 	}
 	reverse := export.ReverseMapOfResourceMap(bound)
 	doc, err := export.ExportFlow(l.content, reverse, options)
@@ -546,8 +564,8 @@ func (r *flowResource) Update(ctx context.Context, req resource.UpdateRequest, r
 	if state == "" {
 		state = "ACTIVE"
 	}
-	if a.Name != old.Name || !a.Description.Equal(old.Description) || state != old.State.ValueString() {
-		if err := r.updateMetadata(ctx, instance, id, a.Name.ValueString(), a.Description.ValueString(), state); err != nil {
+	if a.connectName() != old.connectName() || !a.Description.Equal(old.Description) || state != old.State.ValueString() {
+		if err := r.updateMetadata(ctx, instance, id, a.connectName(), a.Description.ValueString(), state); err != nil {
 			resp.Diagnostics.AddError("Updating the "+r.kind+" failed", err.Error())
 			return
 		}
@@ -584,4 +602,13 @@ func (r *flowResource) ImportState(ctx context.Context, req resource.ImportState
 	for name, v := range map[string]string{"id": req.ID, "instance_id": instance, r.idAttr(): id} {
 		resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root(name), types.StringValue(v))...)
 	}
+}
+
+// connectName is the name Connect holds for the resource: display_name when
+// set, name otherwise (the document's connectName).
+func (a flowAttrs) connectName() string {
+	if !a.DisplayName.IsNull() && !a.DisplayName.IsUnknown() {
+		return a.DisplayName.ValueString()
+	}
+	return a.Name.ValueString()
 }

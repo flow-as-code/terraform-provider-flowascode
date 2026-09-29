@@ -161,6 +161,7 @@ func ExportInstance(ctx context.Context, client ConnectInventoryClient, options 
 		}
 		doc, err := ExportFlow(described.Content, reverseMap, ExportFlowOptions{
 			Name:        entry.Name,
+			DisplayName: described.Name,
 			ConnectType: connectType,
 			Description: description,
 			Generator:   options.Generator,

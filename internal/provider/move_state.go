@@ -11,6 +11,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+
+	"github.com/flow-as-code/terraform-provider-flowascode/internal/export"
 )
 
 var _ resource.ResourceWithMoveState = (*flowResource)(nil)
@@ -68,7 +70,18 @@ func (r *flowResource) MoveState(context.Context) []resource.StateMover {
 			set(r.idAttr(), str(r.idAttr()))
 			set("arn", str("arn"))
 			set("instance_id", str("instance_id"))
-			set("name", str("name"))
+			// hashicorp/aws takes any name; name here is a slug, and the
+			// Connect name, when it is not one, moves to display_name, so
+			// the move renames nothing.
+			if n, ok := old["name"].(string); ok && n != "" {
+				slug := export.SlugifyResourceName(n)
+				set("name", types.StringValue(slug))
+				if slug != n {
+					set("display_name", types.StringValue(n))
+				}
+			} else {
+				set("name", str("name"))
+			}
 			set("description", str("description"))
 			if !r.module() {
 				set("type", str("type"))

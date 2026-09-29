@@ -115,6 +115,9 @@ func Canonicalize(doc jsonv.Object) jsonv.Object {
 		{Key: "kind", Value: get("kind")},
 		{Key: "name", Value: get("name")},
 	}
+	if d, ok := doc.Get("displayName"); ok {
+		out = append(out, jsonv.Member{Key: "displayName", Value: d})
+	}
 	if d, ok := doc.Get("description"); ok {
 		out = append(out, jsonv.Member{Key: "description", Value: d})
 	}

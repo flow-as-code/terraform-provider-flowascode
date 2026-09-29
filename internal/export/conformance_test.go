@@ -304,7 +304,7 @@ func runErrorCase(t *testing.T, name string, expectedJSON []byte) {
 
 // The demo instance's appointment-line export is the demo FlowDoc apart from
 // meta (export.test.ts, "matches the demo FlowDoc apart from meta").
-func TestExportMatchesDemoApartFromMeta(t *testing.T) {
+func TestExportMatchesDemoApartFromMetaAndConnectName(t *testing.T) {
 	result, err := ExportInstance(context.Background(), newFixtureClient(t, "demo-instance"), ExportInstanceOptions{})
 	if err != nil {
 		t.Fatal(err)
@@ -323,7 +323,14 @@ func TestExportMatchesDemoApartFromMeta(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if got, want := flowdoc.Serialize(doc), flowdoc.Serialize(demoValue.(jsonv.Object)); !bytes.Equal(got, want) {
+	// The instance calls the flow "Appointment Line"; the export keeps that
+	// as displayName, and everything else is the demo.
+	if d, _ := doc.Get("displayName"); d != "Appointment Line" {
+		t.Fatalf("displayName %v, want the instance's name", d)
+	}
+	demo := append(jsonv.Object{}, demoValue.(jsonv.Object)...)
+	demo.Set("displayName", "Appointment Line")
+	if got, want := flowdoc.Serialize(doc), flowdoc.Serialize(demo); !bytes.Equal(got, want) {
 		t.Fatalf("export differs from the demo:\n%s\n---\n%s", got, want)
 	}
 }

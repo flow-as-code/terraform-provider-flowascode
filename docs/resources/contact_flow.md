@@ -105,6 +105,7 @@ resource "flowascode_contact_flow" "appointment_line" {
 
 - `action` (Block List) One action of the flow, in order. (see [below for nested schema](#nestedblock--action))
 - `description` (String)
+- `display_name` (String) The name Connect shows, when it is not name (an adopted "Main Line"): the document's displayName. Omitted means Connect's name is name. 1 to 127 characters with one that is not a space.
 - `lint` (Block, Optional) Lint rules to skip. Hard rules cannot be skipped. (see [below for nested schema](#nestedblock--lint))
 - `refs` (Map of String) Reference key to the ARN it binds, as a Terraform expression.
 - `settings` (String) Not settable on a flow; present so the provider can say so (FLOW_WITH_SETTINGS).

@@ -226,6 +226,12 @@ func FromConfig(cfg map[string]any, kind string, phase Phase) Result {
 		{Key: "kind", Value: kind},
 		{Key: "name", Value: name},
 	}
+	if d, ok := cfg["display_name"].(string); ok {
+		doc = append(doc, jsonv.Member{Key: "displayName", Value: d})
+	} else if _, unknown := cfg["display_name"].(Unknown); unknown {
+		res.Incomplete = true
+		return res
+	}
 	if d, ok := cfg["description"].(string); ok {
 		doc = append(doc, jsonv.Member{Key: "description", Value: d})
 	} else if _, unknown := cfg["description"].(Unknown); unknown {
