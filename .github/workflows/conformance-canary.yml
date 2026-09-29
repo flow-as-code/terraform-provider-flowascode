@@ -21,6 +21,13 @@ jobs:
       - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
         with:
           go-version-file: go.mod
+      # The HCL contract's runners plan every case through a real CLI and
+      # skip without one, which would leave this canary green however the
+      # contract changed.
+      - uses: opentofu/setup-opentofu@a1320f892987e89d278cc92dc5adc984fb93aca4 # v2.0.2
+        with:
+          tofu_version: "~1.10.0"
+          tofu_wrapper: false
       - name: re-vendor main
         env:
           GH_TOKEN: ${{ github.token }}
@@ -29,4 +36,7 @@ jobs:
           echo "upstream main is $sha; vendored is $(cat internal/conformance/COMMIT)"
           scripts/sync-conformance.sh "$sha"
           git diff --stat -- internal/conformance
-      - run: go test ./...
+      - name: unit and conformance
+        run: |
+          export TF_ACC_TERRAFORM_PATH="$(command -v tofu)" TF_ACC_PROVIDER_HOST=registry.opentofu.org
+          go test ./...

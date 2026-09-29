@@ -114,3 +114,28 @@ func TestWorkflowActionsArePinned(t *testing.T) {
 		t.Fatal("no workflow actions found; is the walk rooted right?")
 	}
 }
+
+// A workflow that runs the whole suite installs a CLI and points the harness
+// at it: the HCL contract's runners skip without one, so a workflow that
+// forgot would pass them all without running any.
+func TestWholeSuiteWorkflowsInstallACLI(t *testing.T) {
+	n := 0
+	walk(t, func(p, body string) {
+		if !strings.Contains(p, filepath.Join(".github", "workflows")) || !strings.HasSuffix(p, ".yml") {
+			return
+		}
+		if !strings.Contains(body, "go test ./...") {
+			return
+		}
+		n++
+		if !strings.Contains(body, "opentofu/setup-opentofu@") && !strings.Contains(body, "hashicorp/setup-terraform@") {
+			t.Errorf("%s runs go test ./... without installing Terraform or OpenTofu", p)
+		}
+		if !strings.Contains(body, "TF_ACC_TERRAFORM_PATH") {
+			t.Errorf("%s runs go test ./... without setting TF_ACC_TERRAFORM_PATH", p)
+		}
+	})
+	if n == 0 {
+		t.Fatal("no workflow runs go test ./...; is the walk rooted right?")
+	}
+}

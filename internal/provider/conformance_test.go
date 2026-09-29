@@ -45,6 +45,11 @@ func terraformBinary(t *testing.T) {
 			return
 		}
 	}
+	// Skipping is for a contributor's machine; in CI a missing CLI would
+	// turn every HCL contract test into a silent pass.
+	if os.Getenv("CI") != "" {
+		t.Fatal("no tofu or terraform binary on PATH, and CI is set")
+	}
 	t.Skip("no tofu or terraform binary on PATH")
 }
 
