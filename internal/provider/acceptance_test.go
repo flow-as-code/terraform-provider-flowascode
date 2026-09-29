@@ -222,13 +222,60 @@ resource "flowascode_contact_flow_module_alias" "acc" {
   name                        = "prod"
   contact_flow_module_version = flowascode_contact_flow_module_version.acc.version
 }
-`, e.instanceID, e.prefix+"-module", text)
+
+resource "flowascode_contact_flow" "acc" {
+  instance_id = %[1]q
+  name        = %[4]q
+  type        = "CONTACT_FLOW"
+
+  refs = {
+    "module:acc@prod" = flowascode_contact_flow_module_alias.acc.arn
+  }
+
+  tags = {
+    flowascode-acc = "true"
+  }
+
+  action {
+    id   = "invoke"
+    next = "bye"
+    invoke_flow_module {
+      flow_module_id = "module:acc@prod"
+    }
+    error {
+      type = "NoMatchingError"
+      next = "bye"
+    }
+  }
+
+  action {
+    id = "bye"
+    disconnect_participant {}
+  }
+}
+`, e.instanceID, e.prefix+"-module", text, e.prefix+"-invokes-alias")
 	}
 	resource.Test(t, resource.TestCase{
 		ProtoV6ProviderFactories: accFactories(),
 		Steps: []resource.TestStep{
 			{Config: cfg("First.")},
-			{Config: cfg("Second."), Check: resource.TestCheckResourceAttr("flowascode_contact_flow_module_alias.acc", "contact_flow_module_version", "2")},
+			{Config: cfg("Second."), Check: resource.ComposeTestCheckFunc(
+				resource.TestCheckResourceAttr("flowascode_contact_flow_module_alias.acc", "contact_flow_module_version", "2"),
+				// The flow invokes the alias through <module ARN>:<alias id>,
+				// the only qualifier Connect runs as the alias.
+				func(s *terraform.State) error {
+					res := s.RootModule().Resources
+					alias := res["flowascode_contact_flow_module_alias.acc"].Primary.Attributes
+					module := res["flowascode_contact_flow_module.acc"].Primary.Attributes["arn"]
+					if want := module + ":" + alias["alias_id"]; alias["arn"] != want {
+						return fmt.Errorf("alias arn is not the module ARN qualified by the alias id")
+					}
+					if !strings.Contains(res["flowascode_contact_flow.acc"].Primary.Attributes["content"], fmt.Sprintf("%q", alias["arn"])) {
+						return fmt.Errorf("the flow does not invoke the alias ARN")
+					}
+					return nil
+				},
+			)},
 		},
 	})
 }

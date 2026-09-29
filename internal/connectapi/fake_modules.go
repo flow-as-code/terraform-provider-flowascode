@@ -180,8 +180,11 @@ func (f *Fake) CreateContactFlowModuleAlias(_ context.Context, in *connect.Creat
 	if err != nil {
 		return nil, err
 	}
-	id := fmt.Sprintf("alias-%s", aws.ToString(in.AliasName))
-	arn := fmt.Sprintf("%s:%s", aws.ToString(m.module.Arn), aws.ToString(in.AliasName))
+	// Connect's alias id is an opaque id, and the ARN it returns is the bare
+	// module's (sandbox, 2026-09-28).
+	f.next++
+	id := fmt.Sprintf("a11a5000-0000-4000-8000-%012d", f.next)
+	arn := aws.ToString(m.module.Arn)
 	m.aliases[id] = &types.ContactFlowModuleAliasInfo{
 		AliasId: aws.String(id), ContactFlowModuleArn: aws.String(arn), ContactFlowModuleId: in.ContactFlowModuleId,
 		Name: in.AliasName, Version: in.ContactFlowModuleVersion, Description: in.Description,
@@ -288,6 +291,28 @@ func (f *Fake) ListContactFlowModuleVersions(_ context.Context, in *connect.List
 			summary.VersionDescription = aws.String(d)
 		}
 		out.ContactFlowModuleVersionSummaryList = append(out.ContactFlowModuleVersionSummaryList, summary)
+	}
+	return out, nil
+}
+
+func (f *Fake) ListContactFlowModuleAliases(_ context.Context, in *connect.ListContactFlowModuleAliasesInput, _ ...func(*connect.Options)) (*connect.ListContactFlowModuleAliasesOutput, error) {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	f.record("ListContactFlowModuleAliases")
+	m, err := f.mod(aws.ToString(in.ContactFlowModuleId))
+	if err != nil {
+		return nil, err
+	}
+	ids := make([]string, 0, len(m.aliases))
+	for id := range m.aliases {
+		ids = append(ids, id)
+	}
+	sort.Strings(ids)
+	out := &connect.ListContactFlowModuleAliasesOutput{}
+	for _, id := range ids {
+		a := m.aliases[id]
+		out.ContactFlowModuleAliasSummaryList = append(out.ContactFlowModuleAliasSummaryList, types.ContactFlowModuleAliasSummary{
+			AliasId: a.AliasId, AliasName: a.Name, Version: a.Version, Arn: a.ContactFlowModuleArn})
 	}
 	return out, nil
 }

@@ -40,5 +40,5 @@ resource "flowascode_contact_flow_module_alias" "survey_prod" {
 ### Read-Only
 
 - `alias_id` (String)
-- `arn` (String)
+- `arn` (String) What a flow invokes this alias through: the module's ARN qualified by the alias id. Bind a `module:<name>@<alias>` key to it. Connect gives an alias no ARN of its own and runs the alias only through its id; a qualifier of the alias name runs nothing.
 - `id` (String) instance_id:contact_flow_module_id:alias_id.

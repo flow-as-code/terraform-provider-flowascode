@@ -48,6 +48,8 @@ type API interface {
 	DeleteContactFlowModule(ctx context.Context, in *connect.DeleteContactFlowModuleInput, opts ...func(*connect.Options)) (*connect.DeleteContactFlowModuleOutput, error)
 	// https://docs.aws.amazon.com/connect/latest/APIReference/API_CreateContactFlowModuleVersion.html
 	CreateContactFlowModuleVersion(ctx context.Context, in *connect.CreateContactFlowModuleVersionInput, opts ...func(*connect.Options)) (*connect.CreateContactFlowModuleVersionOutput, error)
+	// https://docs.aws.amazon.com/connect/latest/APIReference/API_ListContactFlowModuleAliases.html
+	ListContactFlowModuleAliases(ctx context.Context, in *connect.ListContactFlowModuleAliasesInput, opts ...func(*connect.Options)) (*connect.ListContactFlowModuleAliasesOutput, error)
 	// https://docs.aws.amazon.com/connect/latest/APIReference/API_ListContactFlowModuleVersions.html
 	ListContactFlowModuleVersions(ctx context.Context, in *connect.ListContactFlowModuleVersionsInput, opts ...func(*connect.Options)) (*connect.ListContactFlowModuleVersionsOutput, error)
 	// https://docs.aws.amazon.com/connect/latest/APIReference/API_DeleteContactFlowModuleVersion.html

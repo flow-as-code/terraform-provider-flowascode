@@ -109,8 +109,12 @@ func TestModulePromotionRepointsTheAlias(t *testing.T) {
 				ConfigStateChecks: []statecheck.StateCheck{
 					statecheck.ExpectKnownValue("flowascode_contact_flow_module_version.survey", tfjsonpath.New("version"), knownvalue.Int64Exact(1)),
 					statecheck.ExpectKnownValue("flowascode_contact_flow_module_alias.survey_prod", tfjsonpath.New("contact_flow_module_version"), knownvalue.Int64Exact(1)),
+					// The flow invokes the alias through its id, the only
+					// qualifier Connect honors for an alias.
+					statecheck.ExpectKnownValue("flowascode_contact_flow_module_alias.survey_prod", tfjsonpath.New("arn"),
+						knownvalue.StringRegexp(regexp.MustCompile(`/flow-module/module-1:a11a5000-0000-4000-8000-\d{12}$`))),
 					statecheck.ExpectKnownValue("flowascode_contact_flow.line", tfjsonpath.New("content"),
-						knownvalue.StringRegexp(regexp.MustCompile(`"FlowModuleId":\s*"arn:aws:connect:[^"]+:prod"`))),
+						knownvalue.StringRegexp(regexp.MustCompile(`"FlowModuleId":\s*"arn:aws:connect:[^"]+/flow-module/module-1:a11a5000-0000-4000-8000-\d{12}"`))),
 				},
 			},
 			{

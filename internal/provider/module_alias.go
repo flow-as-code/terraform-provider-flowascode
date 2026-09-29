@@ -57,7 +57,8 @@ func (r *moduleAlias) Schema(_ context.Context, _ resource.SchemaRequest, resp *
 			"contact_flow_module_version": schema.Int64Attribute{Required: true, Description: "The version the alias points at."},
 			"description":                 schema.StringAttribute{Optional: true},
 			"alias_id":                    schema.StringAttribute{Computed: true, PlanModifiers: keep()},
-			"arn":                         schema.StringAttribute{Computed: true, PlanModifiers: keep()},
+			"arn": schema.StringAttribute{Computed: true, PlanModifiers: keep(),
+				Description: "What a flow invokes this alias through: the module's ARN qualified by the alias id. Bind a `module:<name>@<alias>` key to it. Connect gives an alias no ARN of its own and runs the alias only through its id; a qualifier of the alias name runs nothing."},
 		},
 	}
 }
@@ -86,7 +87,7 @@ func (r *moduleAlias) Create(ctx context.Context, req resource.CreateRequest, re
 		return
 	}
 	m.AliasID = types.StringValue(aws.ToString(out.Id))
-	m.ARN = types.StringValue(aws.ToString(out.ContactFlowModuleArn))
+	m.ARN = types.StringValue(aliasARN(aws.ToString(out.ContactFlowModuleArn), aws.ToString(out.Id)))
 	m.ID = types.StringValue(fmt.Sprintf("%s:%s:%s", m.InstanceID.ValueString(), m.ModuleID.ValueString(), m.AliasID.ValueString()))
 	resp.Diagnostics.Append(resp.State.Set(ctx, &m)...)
 }
@@ -117,7 +118,7 @@ func (r *moduleAlias) Read(ctx context.Context, req resource.ReadRequest, resp *
 		m.Description = types.StringNull()
 	}
 	if a.ContactFlowModuleArn != nil {
-		m.ARN = types.StringValue(*a.ContactFlowModuleArn)
+		m.ARN = types.StringValue(aliasARN(*a.ContactFlowModuleArn, m.AliasID.ValueString()))
 	}
 	resp.Diagnostics.Append(resp.State.Set(ctx, &m)...)
 }
@@ -161,4 +162,19 @@ func (r *moduleAlias) ImportState(ctx context.Context, req resource.ImportStateR
 	for name, v := range map[string]string{"id": req.ID, "instance_id": parts[0], "contact_flow_module_id": parts[1], "alias_id": parts[2]} {
 		resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root(name), v)...)
 	}
+}
+
+// aliasARN is what a flow invokes an alias through: the module's ARN
+// qualified by the alias id. Connect gives an alias no ARN of its own
+// (CreateContactFlowModuleAlias and DescribeContactFlowModuleAlias return the
+// bare module ARN), and InvokeFlowModule stores any qualifier without
+// checking it. Run through the TestCase API on the sandbox on 2026-09-29, a
+// flow invoking <module>:<alias id> ran the aliased version, <module>:<version>
+// ran that version, the bare ARN ran the module's current content, and
+// <module>:<alias name> ran neither.
+func aliasARN(moduleARN, aliasID string) string {
+	if moduleARN == "" || aliasID == "" {
+		return moduleARN
+	}
+	return moduleARN + ":" + aliasID
 }
