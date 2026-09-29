@@ -35,5 +35,5 @@ data "flowascode_view" "after_contact_work" {
 
 ### Read-Only
 
-- `arn` (String)
+- `arn` (String) The view's ARN as ListViews returns it, without a version. Bind it to a `view:<name>@<version>` key: the flow receives this ARN with `:<version>` added, the form the console writes.
 - `id` (String) The ID of this resource.

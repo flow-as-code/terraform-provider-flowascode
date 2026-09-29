@@ -244,3 +244,79 @@ func TestModuleExternalInvocationReplacesTheModule(t *testing.T) {
 		},
 	})
 }
+
+// A view key pins a version, and data.flowascode_view.arn has none (ListViews
+// returns it unversioned), so binding the key to the data source sends the
+// versioned ARN the console writes. Import reads the version back into the
+// key and binds it to the unversioned ARN again, so the next plan is empty.
+func TestAViewKeysVersionReachesConnect(t *testing.T) {
+	terraformBinary(t)
+	fake := connectapi.NewFake()
+	fake.SetViews([]ctypes.ViewSummary{
+		{Id: aws.String("v-1"), Name: aws.String("after-contact-work"), Type: ctypes.ViewTypeAwsManaged,
+			Arn: aws.String("arn:aws:connect:us-east-1:aws:view/after-contact-work")},
+	})
+	config := fmt.Sprintf(`
+data "flowascode_view" "acw" {
+  instance_id = %[1]q
+  name        = "after-contact-work"
+}
+
+resource "flowascode_contact_flow" "acw" {
+  instance_id = %[1]q
+  name        = "acw"
+  type        = "CONTACT_FLOW"
+
+  refs = {
+    "view:after-contact-work@1" = data.flowascode_view.acw.arn
+  }
+
+  action {
+    id   = "show"
+    next = "bye"
+    show_view {
+      invocation_time_limit_seconds = 300
+      view_resource = {
+        id = "view:after-contact-work@1"
+      }
+    }
+    error {
+      type = "NoMatchingCondition"
+      next = "bye"
+    }
+    error {
+      type = "NoMatchingError"
+      next = "bye"
+    }
+    error {
+      type = "TimeLimitExceeded"
+      next = "bye"
+    }
+  }
+
+  action {
+    id = "bye"
+    disconnect_participant {}
+  }
+}
+`, instance)
+	resource.UnitTest(t, resource.TestCase{
+		ProtoV6ProviderFactories: factories(fake),
+		Steps: []resource.TestStep{
+			{
+				Config: config,
+				Check: resource.TestCheckResourceAttrWith("flowascode_contact_flow.acw", "content", func(content string) error {
+					if !strings.Contains(content, `"arn:aws:connect:us-east-1:aws:view/after-contact-work:1"`) {
+						return fmt.Errorf("content does not pin version 1 of the view:\n%s", content)
+					}
+					return nil
+				}),
+			},
+			{
+				ResourceName:      "flowascode_contact_flow.acw",
+				ImportState:       true,
+				ImportStateVerify: true,
+			},
+		},
+	})
+}

@@ -491,6 +491,13 @@ func (r *flowResource) reconstruct(ctx context.Context, a flowAttrs, l live, sta
 	for _, e := range flowdoc.CollectRefs(content) {
 		if arn, ok := bound[e.Token]; ok {
 			refs[flowdoc.RefKey(e)] = arn
+		} else if e.Type == "view" && e.Alias != "" {
+			// The inventory binds a view by its unversioned ARN; the
+			// document keys it with the version the flow holds, which
+			// qualifyView adds back at plan time.
+			if arn, ok := bound["${cdref:view:"+e.Name+"}"]; ok {
+				refs[flowdoc.RefKey(e)] = arn
+			}
 		}
 	}
 	if len(refs) > 0 || !a.Refs.IsNull() {

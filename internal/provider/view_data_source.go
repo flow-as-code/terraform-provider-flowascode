@@ -49,8 +49,9 @@ func (d *view) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datas
 			"name":        schema.StringAttribute{Required: true},
 			"type": schema.StringAttribute{Optional: true, Description: "AWS_MANAGED or CUSTOMER_MANAGED; both are searched when omitted.",
 				Validators: []validator.String{stringvalidator.OneOf("AWS_MANAGED", "CUSTOMER_MANAGED")}},
-			"id":  schema.StringAttribute{Computed: true},
-			"arn": schema.StringAttribute{Computed: true},
+			"id": schema.StringAttribute{Computed: true},
+			"arn": schema.StringAttribute{Computed: true,
+				Description: "The view's ARN as ListViews returns it, without a version. Bind it to a `view:<name>@<version>` key: the flow receives this ARN with `:<version>` added, the form the console writes."},
 		},
 	}
 }

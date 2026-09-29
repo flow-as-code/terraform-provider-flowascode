@@ -24,6 +24,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-go/tftypes"
 
 	"github.com/flow-as-code/terraform-provider-flowascode/internal/connectapi"
+	"github.com/flow-as-code/terraform-provider-flowascode/internal/export"
 	"github.com/flow-as-code/terraform-provider-flowascode/internal/flowdoc"
 	"github.com/flow-as-code/terraform-provider-flowascode/internal/flowmodel"
 	"github.com/flow-as-code/terraform-provider-flowascode/internal/jsonv"
@@ -129,7 +130,7 @@ func plan(raw tftypes.Value, kind string, diags *diag.Diagnostics) planned {
 		used[key] = true
 		switch v := res.Refs[key].(type) {
 		case string:
-			bindings[key] = v
+			bindings[key] = qualifyView(e, v)
 		case flowmodel.Unknown:
 			known = false
 		default:
@@ -269,4 +270,21 @@ func syncTags(ctx context.Context, api connectapi.API, arn string, before, after
 		}
 	}
 	return nil
+}
+
+// qualifyView adds a view key's version to a view ARN that has none.
+// data.flowascode_view.arn is the ARN ListViews returns, without a version,
+// and the contract binds `view:<name>@<version>` to it (rule 27); the version
+// the key pins is what Connect must receive, the form the console writes
+// (arn:aws:connect:<region>:aws:view/<name>:<version>, recorded in
+// conformance/export/managed-view). An ARN that already carries a version is
+// taken as bound.
+func qualifyView(e flowdoc.RefEntry, arn string) string {
+	if e.Type != "view" || e.Alias == "" {
+		return arn
+	}
+	if p, ok := export.ParseConnectArn(arn); ok && !p.HasQualifier {
+		return arn + ":" + e.Alias
+	}
+	return arn
 }
