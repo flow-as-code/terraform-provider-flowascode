@@ -117,7 +117,7 @@ func actionValue(a jsonv.Object, layout jsonv.Object, auto map[string]flowdoc.Po
 			yv, _ := po.Get("y")
 			x, _ := xv.(float64)
 			y, _ := yv.(float64)
-			x, y = math.Round(x), math.Round(y)
+			x, y = JSRound(x), JSRound(y)
 			if p, ok := auto[id]; !ok || p.X != x || p.Y != y {
 				out["position"] = map[string]any{"x": big.NewFloat(x), "y": big.NewFloat(y)}
 			}
@@ -298,4 +298,16 @@ func plain(v any) any {
 	default:
 		return v
 	}
+}
+
+// JSRound is JavaScript's Math.round, which the TypeScript writer uses: half
+// rounds toward +Infinity (-40.5 to -40), where math.Round rounds away from
+// zero (-41). The fraction v-floor(v) is exact, so no addition can round
+// 0.49999999999999994 up the way floor(v+0.5) does.
+func JSRound(v float64) float64 {
+	r := math.Floor(v)
+	if v-r >= 0.5 {
+		r++
+	}
+	return r
 }

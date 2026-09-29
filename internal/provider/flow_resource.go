@@ -374,7 +374,7 @@ func (r *flowResource) Read(ctx context.Context, req resource.ReadRequest, resp 
 		set("type", types.StringValue(l.typ))
 		a.Type = types.StringValue(l.typ)
 	}
-	if len(l.tags) > 0 || !a.Tags.IsNull() {
+	if len(userTags(l.tags)) > 0 || !a.Tags.IsNull() {
 		tags, d := types.MapValueFrom(ctx, types.StringType, userTags(l.tags))
 		resp.Diagnostics.Append(d...)
 		set("tags", tags)
@@ -427,7 +427,12 @@ func (r *flowResource) reconstruct(ctx context.Context, a flowAttrs, l live, sta
 		// the instance once and map through its inventory, the bindings in
 		// state taking precedence so a key the user chose stays theirs.
 		inv, ierr := export.CollectInventory(ctx, connectapi.NewInventory(r.client.Connect, a.InstanceID.ValueString()), export.CollectInventoryOptions{})
-		if ierr == nil {
+		if ierr != nil {
+			diags.AddWarning("The live "+r.kind+" is not shown as blocks",
+				fmt.Sprintf("%s, and listing the instance to name them failed: %s. Allow the provider's Connect List operations, or bind each ARN in refs.", err.Error(), ierr.Error()))
+			return
+		}
+		{
 			reverse = export.BuildReverseMap(inv)
 			for arn, entry := range export.ReverseMapOfResourceMap(bound).ByArn {
 				reverse.ByArn[arn] = entry

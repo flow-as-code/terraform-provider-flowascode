@@ -255,7 +255,9 @@ func syncTags(ctx context.Context, api connectapi.API, arn string, before, after
 	sort.Strings(remove)
 	add := map[string]string{}
 	for k, v := range after {
-		if before[k] != v {
+		// A new key with an empty value is still new: Connect allows an
+		// empty tag value.
+		if old, ok := before[k]; !ok || old != v {
 			add[k] = v
 		}
 	}

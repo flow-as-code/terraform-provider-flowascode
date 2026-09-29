@@ -6,7 +6,6 @@ package provider
 import (
 	"encoding/json"
 	"io/fs"
-	"math"
 	"os"
 	"os/exec"
 	"path"
@@ -25,6 +24,7 @@ import (
 	"github.com/flow-as-code/terraform-provider-flowascode/internal/conformance"
 	"github.com/flow-as-code/terraform-provider-flowascode/internal/connectapi"
 	"github.com/flow-as-code/terraform-provider-flowascode/internal/flowdoc"
+	"github.com/flow-as-code/terraform-provider-flowascode/internal/flowmodel"
 	"github.com/flow-as-code/terraform-provider-flowascode/internal/jsonv"
 )
 
@@ -142,7 +142,7 @@ func viewedFlowDoc(t *testing.T, docPath string) string {
 			p := m.Value.(jsonv.Object)
 			x, _ := p.Get("x")
 			y, _ := p.Get("y")
-			layout[m.Key] = flowdoc.Point{X: math.Round(x.(float64)), Y: math.Round(y.(float64))}
+			layout[m.Key] = flowdoc.Point{X: flowmodel.JSRound(x.(float64)), Y: flowmodel.JSRound(y.(float64))}
 		}
 	}
 	doc.Set("layout", flowdoc.LayoutJSON(actions, layout))
