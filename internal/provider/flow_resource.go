@@ -17,6 +17,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/boolplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -97,7 +98,15 @@ func (r *flowResource) Schema(_ context.Context, _ resource.SchemaRequest, resp 
 	}
 	if r.module() {
 		attrs["settings"] = schema.StringAttribute{Optional: true, Description: "The module's Settings, as jsonencode({...}). Omitted means {}."}
-		attrs["external_invocation_enabled"] = schema.BoolAttribute{Optional: true, Description: "Whether the module can be invoked outside a flow."}
+		// Connect takes ExternalInvocationConfiguration only on
+		// CreateContactFlowModule; no update operation carries it
+		// (https://docs.aws.amazon.com/connect/latest/APIReference/API_CreateContactFlowModule.html),
+		// so a change replaces the module. Computed, and read from Connect,
+		// so an imported module records its live value instead of planning a
+		// change it could never apply.
+		attrs["external_invocation_enabled"] = schema.BoolAttribute{Optional: true, Computed: true,
+			Description:   "Whether the module can be invoked outside a flow. Connect sets it only when the module is created, so a change replaces the module.",
+			PlanModifiers: []planmodifier.Bool{boolplanmodifier.UseStateForUnknown(), boolplanmodifier.RequiresReplace()}}
 		attrs["type"] = schema.StringAttribute{Optional: true, Description: "Not settable on a module; present so the provider can say so (MODULE_WITH_TYPE)."}
 	} else {
 		attrs["type"] = schema.StringAttribute{Required: true, Description: "The flow's ConnectType.",
@@ -319,6 +328,15 @@ func (r *flowResource) Create(ctx context.Context, req resource.CreateRequest, r
 		}
 		state = "ARCHIVED"
 	}
+	if r.module() && a.External.IsUnknown() {
+		// Not configured: record what Connect holds, which is disabled
+		// unless Describe says otherwise.
+		external := false
+		if l, err := r.describe(ctx, a.InstanceID.ValueString(), id); err == nil && l.external != nil {
+			external = *l.external
+		}
+		resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("external_invocation_enabled"), types.BoolValue(external))...)
+	}
 	for name, v := range map[string]string{
 		"id": a.InstanceID.ValueString() + ":" + id, r.idAttr(): id, "arn": arn,
 		"state": state, "flowdoc": p.flowdoc, "content": p.content, "content_hash": hashOf(p.content),
@@ -361,7 +379,7 @@ func (r *flowResource) Read(ctx context.Context, req resource.ReadRequest, resp 
 		resp.Diagnostics.Append(d...)
 		set("tags", tags)
 	}
-	if r.module() && l.external != nil && !a.External.IsNull() {
+	if r.module() && l.external != nil {
 		set("external_invocation_enabled", types.BoolValue(*l.external))
 	}
 	// Drift in the flow itself shows as a change to content: the plan
@@ -493,7 +511,10 @@ func (r *flowResource) Update(ctx context.Context, req resource.UpdateRequest, r
 		return
 	}
 	instance, id := old.InstanceID.ValueString(), old.ConnectID.ValueString()
-	if !sameContent(p.content, old.Content.ValueString()) {
+	// The exact bytes, not sameContent: a position-only change differs only
+	// in Metadata, and the plan says it will be sent. Both sides are the
+	// provider's own serialization, so an unchanged flow sends nothing.
+	if p.content != old.Content.ValueString() {
 		if err := r.updateContent(ctx, instance, id, p.content); err != nil {
 			resp.Diagnostics.AddError("Updating the "+r.kind+" failed", err.Error())
 			return

@@ -48,7 +48,7 @@ resource "flowascode_contact_flow_module" "survey" {
 
 - `action` (Block List) One action of the flow, in order. (see [below for nested schema](#nestedblock--action))
 - `description` (String)
-- `external_invocation_enabled` (Boolean) Whether the module can be invoked outside a flow.
+- `external_invocation_enabled` (Boolean) Whether the module can be invoked outside a flow. Connect sets it only when the module is created, so a change replaces the module.
 - `lint` (Block, Optional) Lint rules to skip. Hard rules cannot be skipped. (see [below for nested schema](#nestedblock--lint))
 - `refs` (Map of String) Reference key to the ARN it binds, as a Terraform expression.
 - `settings` (String) The module's Settings, as jsonencode({...}). Omitted means {}.

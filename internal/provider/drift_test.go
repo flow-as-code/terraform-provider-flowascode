@@ -140,3 +140,53 @@ func TestLayoutIsNotDrift(t *testing.T) {
 		},
 	})
 }
+
+func positionedFlow(x int) string {
+	return fmt.Sprintf(`
+resource "flowascode_contact_flow" "line" {
+  instance_id = %q
+  name        = "line"
+  type        = "CONTACT_FLOW"
+
+  action {
+    id = "bye"
+    disconnect_participant {}
+    position {
+      x = %d
+      y = 777
+    }
+  }
+}
+`, instance, x)
+}
+
+// A change to a position block alone is a change to the content Connect
+// holds (its Metadata), and the plan says so, so apply sends it.
+func TestPositionOnlyChangeReachesConnect(t *testing.T) {
+	terraformBinary(t)
+	fake := connectapi.NewFake()
+	livePosition := func(s *terraform.State) error {
+		f, _ := fake.Flow("flow-1")
+		var content struct {
+			Metadata struct {
+				ActionMetadata map[string]struct {
+					Position struct{ X, Y float64 } `json:"position"`
+				}
+			}
+		}
+		if err := json.Unmarshal([]byte(*f.Content), &content); err != nil {
+			return err
+		}
+		if got := content.Metadata.ActionMetadata["bye"].Position.X; got != 999 {
+			return fmt.Errorf("Connect holds x = %v for bye, not 999", got)
+		}
+		return nil
+	}
+	resource.UnitTest(t, resource.TestCase{
+		ProtoV6ProviderFactories: factories(fake),
+		Steps: []resource.TestStep{
+			{Config: positionedFlow(111)},
+			{Config: positionedFlow(999), Check: livePosition},
+		},
+	})
+}

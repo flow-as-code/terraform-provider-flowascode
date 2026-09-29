@@ -14,6 +14,7 @@ import (
 	ctypes "github.com/aws/aws-sdk-go-v2/service/connect/types"
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 	"github.com/hashicorp/terraform-plugin-testing/knownvalue"
+	"github.com/hashicorp/terraform-plugin-testing/plancheck"
 	"github.com/hashicorp/terraform-plugin-testing/statecheck"
 	"github.com/hashicorp/terraform-plugin-testing/tfjsonpath"
 
@@ -199,4 +200,47 @@ func moduleInput() *connect.CreateContactFlowModuleInput {
 		InstanceId: aws.String(instance), Name: aws.String("survey"),
 		Content: aws.String(`{"Version":"2019-10-30","StartAction":"end","Settings":{},"Actions":[{"Identifier":"end","Type":"EndFlowModuleExecution","Parameters":{},"Transitions":{}}]}`),
 	}
+}
+
+func externalModule(enabled string) string {
+	return fmt.Sprintf(`
+resource "flowascode_contact_flow_module" "m" {
+  instance_id = %q
+  name        = "m"
+  %s
+
+  action {
+    id = "end"
+    end_flow_module_execution {}
+  }
+}
+`, instance, enabled)
+}
+
+// Connect sets external invocation only when a module is created, so a
+// change replaces the module, and an unset value records what Connect holds
+// rather than planning a change no update can make.
+func TestModuleExternalInvocationReplacesTheModule(t *testing.T) {
+	terraformBinary(t)
+	fake := connectapi.NewFake()
+	resource.UnitTest(t, resource.TestCase{
+		ProtoV6ProviderFactories: factories(fake),
+		Steps: []resource.TestStep{
+			{
+				Config: externalModule(""),
+				ConfigStateChecks: []statecheck.StateCheck{
+					statecheck.ExpectKnownValue("flowascode_contact_flow_module.m", tfjsonpath.New("external_invocation_enabled"), knownvalue.Bool(false)),
+				},
+			},
+			{
+				Config: externalModule("external_invocation_enabled = true"),
+				ConfigPlanChecks: resource.ConfigPlanChecks{PreApply: []plancheck.PlanCheck{
+					plancheck.ExpectResourceAction("flowascode_contact_flow_module.m", plancheck.ResourceActionReplace),
+				}},
+				ConfigStateChecks: []statecheck.StateCheck{
+					statecheck.ExpectKnownValue("flowascode_contact_flow_module.m", tfjsonpath.New("external_invocation_enabled"), knownvalue.Bool(true)),
+				},
+			},
+		},
+	})
 }
