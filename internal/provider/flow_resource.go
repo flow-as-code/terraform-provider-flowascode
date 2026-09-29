@@ -323,7 +323,7 @@ func (r *flowResource) Create(ctx context.Context, req resource.CreateRequest, r
 	}
 	id, arn, err := r.create(ctx, a, p.content, tagsOf(ctx, a.Tags))
 	if err != nil {
-		resp.Diagnostics.AddError("Creating the "+r.kind+" failed", err.Error())
+		resp.Diagnostics.AddError("Creating the "+r.kind+" failed", connectapi.Detail(err))
 		return
 	}
 	resp.State.Raw = req.Plan.Raw
@@ -553,7 +553,7 @@ func (r *flowResource) Update(ctx context.Context, req resource.UpdateRequest, r
 	// provider's own serialization, so an unchanged flow sends nothing.
 	if p.content != old.Content.ValueString() {
 		if err := r.updateContent(ctx, instance, id, p.content); err != nil {
-			resp.Diagnostics.AddError("Updating the "+r.kind+" failed", err.Error())
+			resp.Diagnostics.AddError("Updating the "+r.kind+" failed", connectapi.Detail(err))
 			return
 		}
 	}
@@ -566,7 +566,7 @@ func (r *flowResource) Update(ctx context.Context, req resource.UpdateRequest, r
 	}
 	if a.connectName() != old.connectName() || !a.Description.Equal(old.Description) || state != old.State.ValueString() {
 		if err := r.updateMetadata(ctx, instance, id, a.connectName(), a.Description.ValueString(), state); err != nil {
-			resp.Diagnostics.AddError("Updating the "+r.kind+" failed", err.Error())
+			resp.Diagnostics.AddError("Updating the "+r.kind+" failed", connectapi.Detail(err))
 			return
 		}
 	}

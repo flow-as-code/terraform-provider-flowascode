@@ -68,8 +68,8 @@ func loadOracle(t *testing.T) oracle {
 
 func TestOracleFixtures(t *testing.T) {
 	o := loadOracle(t)
-	if len(o.Fixtures) != 73 {
-		t.Fatalf("oracle holds %d fixtures, want the 72 lint fixtures and the demo", len(o.Fixtures))
+	if len(o.Fixtures) != 84 {
+		t.Fatalf("oracle holds %d fixtures, want the 83 lint fixtures and the demo", len(o.Fixtures))
 	}
 	for _, fx := range o.Fixtures {
 		parsed := readJSON(t, fx.File)

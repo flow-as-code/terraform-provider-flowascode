@@ -9,7 +9,9 @@ package connectapi
 import (
 	"context"
 	"errors"
+	"strings"
 
+	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/connect"
 	"github.com/aws/aws-sdk-go-v2/service/connect/types"
 )
@@ -89,6 +91,35 @@ type API interface {
 func IsNotFound(err error) bool {
 	var nf *types.ResourceNotFoundException
 	return errors.As(err, &nf)
+}
+
+// Detail is err's text with the problem list Connect attaches to
+// InvalidContactFlowException and InvalidContactFlowModuleException. The
+// exception's own message is often empty (observed 2026-09-29: "InvalidContact
+// FlowException: " and nothing else), and the problems are what say which
+// action is wrong and why.
+// https://docs.aws.amazon.com/connect/latest/APIReference/API_CreateContactFlow.html
+func Detail(err error) string {
+	var flow *types.InvalidContactFlowException
+	var module *types.InvalidContactFlowModuleException
+	var problems []types.ProblemDetail
+	switch {
+	case errors.As(err, &flow):
+		problems = flow.Problems
+	case errors.As(err, &module):
+		problems = module.Problems
+	}
+	if len(problems) == 0 {
+		return err.Error()
+	}
+	var b strings.Builder
+	b.WriteString(err.Error())
+	b.WriteString("\n\nAmazon Connect refused the content:")
+	for _, p := range problems {
+		b.WriteString("\n  - ")
+		b.WriteString(aws.ToString(p.Message))
+	}
+	return b.String()
 }
 
 var _ API = (*connect.Client)(nil)

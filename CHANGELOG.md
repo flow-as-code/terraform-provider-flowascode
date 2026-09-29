@@ -8,6 +8,21 @@ it reads.
 
 ## Unreleased
 
+- Plan-time lint matches what Amazon Connect enforces when it creates a flow,
+  found by creating every modeled action type in a sandbox instance on
+  2026-09-29. Each case used to plan cleanly and fail at apply:
+  `transfer_contact_to_queue` and `dequeue_contact_and_transfer_to_queue`
+  need a `QueueAtCapacity` error block; `check_metric_data` needs
+  `NoMatchingCondition` and at least one condition; `get_participant_input`
+  needs `store_input`, and `NoMatchingCondition` whenever it is not "True";
+  and `update_contact_recording_behavior` takes no error block at all (the
+  service refuses `NoMatchingError`). An error block the action's type does
+  not have is now reported too.
+- An apply that Connect refuses shows its problem list. The service's
+  `InvalidContactFlowException` often has an empty message; the list says
+  which action is wrong and why ("Action is missing required error. Error:
+  QueueAtCapacity, Path: Actions[1]").
+
 ## 0.1.0 (2026-09-29)
 
 The first release. Vendors flow-as-code `conformance/` at

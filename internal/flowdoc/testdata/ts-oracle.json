@@ -1,2227 +1,2285 @@
 {
- "generatedFrom": "flow-as-code e414239312cb586c1ca82e2ec4697eb9e94b5b11, packages/core/dist",
- "perType": {
-  "CompleteOutboundCall": {
-   "modeled": false,
-   "requiredErrors": [],
-   "requiredErrorsForChat": [],
-   "builderErrors": [],
-   "conditionsKind": null,
-   "nextRule": null,
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [],
-   "restrictions": null,
-   "unrestricted": false,
-   "terminal": false,
-   "actionType": false
+  "generatedFrom": "flow-as-code cc9a6534db9dd9a92c8c454214d3b39be295d530, packages/core/dist",
+  "perType": {
+    "CompleteOutboundCall": {
+      "modeled": false,
+      "requiredErrors": [],
+      "requiredErrorsForChat": [],
+      "builderErrors": [],
+      "conditionsKind": null,
+      "nextRule": null,
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "restrictions": null,
+      "unrestricted": false,
+      "terminal": false,
+      "actionType": false,
+      "minConditions": 0
+    },
+    "CreateCase": {
+      "modeled": false,
+      "requiredErrors": [],
+      "requiredErrorsForChat": [],
+      "builderErrors": [],
+      "conditionsKind": null,
+      "nextRule": null,
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "restrictions": null,
+      "unrestricted": false,
+      "terminal": false,
+      "actionType": false,
+      "minConditions": 0
+    },
+    "CreateTask": {
+      "modeled": false,
+      "requiredErrors": [],
+      "requiredErrorsForChat": [],
+      "builderErrors": [],
+      "conditionsKind": null,
+      "nextRule": null,
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "restrictions": null,
+      "unrestricted": false,
+      "terminal": false,
+      "actionType": false,
+      "minConditions": 0
+    },
+    "CreateWisdomSession": {
+      "modeled": false,
+      "requiredErrors": [],
+      "requiredErrorsForChat": [],
+      "builderErrors": [],
+      "conditionsKind": null,
+      "nextRule": null,
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "restrictions": null,
+      "unrestricted": false,
+      "terminal": false,
+      "actionType": false,
+      "minConditions": 0
+    },
+    "DequeueContactAndTransferToQueue": {
+      "modeled": true,
+      "requiredErrors": [
+        "QueueAtCapacity",
+        "NoMatchingError"
+      ],
+      "requiredErrorsForChat": [
+        "QueueAtCapacity",
+        "NoMatchingError"
+      ],
+      "builderErrors": [
+        "QueueAtCapacity",
+        "NoMatchingError"
+      ],
+      "conditionsKind": "none",
+      "nextRule": "required",
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [
+        {
+          "path": "QueueId",
+          "ref": "queue"
+        },
+        {
+          "path": "AgentId",
+          "ref": "queue"
+        }
+      ],
+      "restrictions": [
+        "CUSTOMER_QUEUE",
+        "MODULE"
+      ],
+      "unrestricted": false,
+      "terminal": false,
+      "actionType": true,
+      "minConditions": 0
+    },
+    "EndFlowModuleExecution": {
+      "modeled": true,
+      "requiredErrors": [],
+      "requiredErrorsForChat": [],
+      "builderErrors": [],
+      "conditionsKind": "none",
+      "nextRule": "none",
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "restrictions": [
+        "MODULE"
+      ],
+      "unrestricted": false,
+      "terminal": true,
+      "actionType": true,
+      "minConditions": 0
+    },
+    "GetCase": {
+      "modeled": false,
+      "requiredErrors": [],
+      "requiredErrorsForChat": [],
+      "builderErrors": [],
+      "conditionsKind": null,
+      "nextRule": null,
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "restrictions": null,
+      "unrestricted": false,
+      "terminal": false,
+      "actionType": false,
+      "minConditions": 0
+    },
+    "InvokeFlowModule": {
+      "modeled": true,
+      "requiredErrors": [
+        "NoMatchingError"
+      ],
+      "requiredErrorsForChat": [
+        "NoMatchingError"
+      ],
+      "builderErrors": [
+        "NoMatchingError"
+      ],
+      "conditionsKind": "none",
+      "nextRule": "required",
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [
+        {
+          "path": "FlowModuleId",
+          "ref": "module"
+        }
+      ],
+      "restrictions": [
+        "CONTACT_FLOW",
+        "MODULE"
+      ],
+      "unrestricted": false,
+      "terminal": false,
+      "actionType": true,
+      "minConditions": 0
+    },
+    "StartOutboundChatContact": {
+      "modeled": false,
+      "requiredErrors": [],
+      "requiredErrorsForChat": [],
+      "builderErrors": [],
+      "conditionsKind": null,
+      "nextRule": null,
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "restrictions": null,
+      "unrestricted": false,
+      "terminal": false,
+      "actionType": false,
+      "minConditions": 0
+    },
+    "TagContact": {
+      "modeled": true,
+      "requiredErrors": [
+        "NoMatchingError"
+      ],
+      "requiredErrorsForChat": [
+        "NoMatchingError"
+      ],
+      "builderErrors": [
+        "NoMatchingError"
+      ],
+      "conditionsKind": "none",
+      "nextRule": "required",
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "restrictions": null,
+      "unrestricted": true,
+      "terminal": false,
+      "actionType": true,
+      "minConditions": 0
+    },
+    "TransferContactToAgent": {
+      "modeled": true,
+      "requiredErrors": [],
+      "requiredErrorsForChat": [],
+      "builderErrors": [],
+      "conditionsKind": "none",
+      "nextRule": "none",
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "restrictions": [
+        "AGENT_TRANSFER",
+        "QUEUE_TRANSFER",
+        "MODULE"
+      ],
+      "unrestricted": false,
+      "terminal": true,
+      "actionType": true,
+      "minConditions": 0
+    },
+    "TransferContactToQueue": {
+      "modeled": true,
+      "requiredErrors": [
+        "QueueAtCapacity",
+        "NoMatchingError"
+      ],
+      "requiredErrorsForChat": [
+        "QueueAtCapacity",
+        "NoMatchingError"
+      ],
+      "builderErrors": [
+        "QueueAtCapacity",
+        "NoMatchingError"
+      ],
+      "conditionsKind": "none",
+      "nextRule": "required",
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "restrictions": [
+        "CONTACT_FLOW",
+        "AGENT_TRANSFER",
+        "QUEUE_TRANSFER",
+        "MODULE"
+      ],
+      "unrestricted": false,
+      "terminal": false,
+      "actionType": true,
+      "minConditions": 0
+    },
+    "UntagContact": {
+      "modeled": true,
+      "requiredErrors": [
+        "NoMatchingError"
+      ],
+      "requiredErrorsForChat": [
+        "NoMatchingError"
+      ],
+      "builderErrors": [
+        "NoMatchingError"
+      ],
+      "conditionsKind": "none",
+      "nextRule": "required",
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "restrictions": null,
+      "unrestricted": true,
+      "terminal": false,
+      "actionType": true,
+      "minConditions": 0
+    },
+    "UpdateCase": {
+      "modeled": false,
+      "requiredErrors": [],
+      "requiredErrorsForChat": [],
+      "builderErrors": [],
+      "conditionsKind": null,
+      "nextRule": null,
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "restrictions": null,
+      "unrestricted": false,
+      "terminal": false,
+      "actionType": false,
+      "minConditions": 0
+    },
+    "UpdateContactAttributes": {
+      "modeled": true,
+      "requiredErrors": [
+        "NoMatchingError"
+      ],
+      "requiredErrorsForChat": [
+        "NoMatchingError"
+      ],
+      "builderErrors": [
+        "NoMatchingError"
+      ],
+      "conditionsKind": "none",
+      "nextRule": "required",
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "restrictions": null,
+      "unrestricted": true,
+      "terminal": false,
+      "actionType": true,
+      "minConditions": 0
+    },
+    "UpdateContactCallbackNumber": {
+      "modeled": true,
+      "requiredErrors": [
+        "InvalidCallbackNumber",
+        "CallbackNumberNotDialable"
+      ],
+      "requiredErrorsForChat": [
+        "InvalidCallbackNumber",
+        "CallbackNumberNotDialable"
+      ],
+      "builderErrors": [
+        "InvalidCallbackNumber",
+        "CallbackNumberNotDialable"
+      ],
+      "conditionsKind": "none",
+      "nextRule": "required",
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "restrictions": [
+        "CONTACT_FLOW",
+        "AGENT_TRANSFER",
+        "QUEUE_TRANSFER",
+        "CUSTOMER_QUEUE",
+        "MODULE"
+      ],
+      "unrestricted": false,
+      "terminal": false,
+      "actionType": true,
+      "minConditions": 0
+    },
+    "UpdateContactData": {
+      "modeled": true,
+      "requiredErrors": [
+        "NoMatchingError"
+      ],
+      "requiredErrorsForChat": [
+        "NoMatchingError"
+      ],
+      "builderErrors": [
+        "NoMatchingError"
+      ],
+      "conditionsKind": "none",
+      "nextRule": "required",
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "restrictions": null,
+      "unrestricted": true,
+      "terminal": false,
+      "actionType": true,
+      "minConditions": 0
+    },
+    "UpdateContactEventHooks": {
+      "modeled": true,
+      "requiredErrors": [
+        "NoMatchingError"
+      ],
+      "requiredErrorsForChat": [
+        "NoMatchingError"
+      ],
+      "builderErrors": [
+        "NoMatchingError"
+      ],
+      "conditionsKind": "none",
+      "nextRule": "required",
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [
+        {
+          "path": "EventHooks.*",
+          "ref": "flow"
+        }
+      ],
+      "restrictions": null,
+      "unrestricted": true,
+      "terminal": false,
+      "actionType": true,
+      "minConditions": 0
+    },
+    "UpdateContactMediaProcessing": {
+      "modeled": false,
+      "requiredErrors": [],
+      "requiredErrorsForChat": [],
+      "builderErrors": [],
+      "conditionsKind": null,
+      "nextRule": null,
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "restrictions": null,
+      "unrestricted": false,
+      "terminal": false,
+      "actionType": false,
+      "minConditions": 0
+    },
+    "UpdateContactMediaStreamingBehavior": {
+      "modeled": false,
+      "requiredErrors": [],
+      "requiredErrorsForChat": [],
+      "builderErrors": [],
+      "conditionsKind": null,
+      "nextRule": null,
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "restrictions": null,
+      "unrestricted": false,
+      "terminal": false,
+      "actionType": false,
+      "minConditions": 0
+    },
+    "UpdateContactRecordingAndAnalyticsBehavior": {
+      "modeled": true,
+      "requiredErrors": [
+        "NoMatchingError",
+        "ChannelMismatch"
+      ],
+      "requiredErrorsForChat": [
+        "NoMatchingError",
+        "ChannelMismatch",
+        "InFlightRedactionConfigurationFailed"
+      ],
+      "builderErrors": [
+        "NoMatchingError",
+        "ChannelMismatch"
+      ],
+      "conditionsKind": "none",
+      "nextRule": "required",
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": "VoiceBehavior.VoiceRecordingBehavior.RecordedParticipants",
+      "refPaths": [],
+      "restrictions": null,
+      "unrestricted": true,
+      "terminal": false,
+      "actionType": true,
+      "minConditions": 0
+    },
+    "UpdateContactRecordingBehavior": {
+      "modeled": true,
+      "requiredErrors": [],
+      "requiredErrorsForChat": [],
+      "builderErrors": [],
+      "conditionsKind": "none",
+      "nextRule": "required",
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": "RecordingBehavior.RecordedParticipants",
+      "refPaths": [],
+      "restrictions": [
+        "CONTACT_FLOW",
+        "AGENT_TRANSFER",
+        "QUEUE_TRANSFER",
+        "OUTBOUND_WHISPER",
+        "CUSTOMER_QUEUE",
+        "MODULE"
+      ],
+      "unrestricted": false,
+      "terminal": false,
+      "actionType": true,
+      "minConditions": 0
+    },
+    "ResumeContact": {
+      "modeled": false,
+      "requiredErrors": [],
+      "requiredErrorsForChat": [],
+      "builderErrors": [],
+      "conditionsKind": null,
+      "nextRule": null,
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "restrictions": null,
+      "unrestricted": false,
+      "terminal": false,
+      "actionType": false,
+      "minConditions": 0
+    },
+    "UpdateContactRoutingBehavior": {
+      "modeled": true,
+      "requiredErrors": [],
+      "requiredErrorsForChat": [],
+      "builderErrors": [],
+      "conditionsKind": "none",
+      "nextRule": "required",
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "restrictions": [
+        "CONTACT_FLOW",
+        "MODULE"
+      ],
+      "unrestricted": false,
+      "terminal": false,
+      "actionType": true,
+      "minConditions": 0
+    },
+    "UpdateContactTargetQueue": {
+      "modeled": true,
+      "requiredErrors": [
+        "NoMatchingError"
+      ],
+      "requiredErrorsForChat": [
+        "NoMatchingError"
+      ],
+      "builderErrors": [
+        "NoMatchingError"
+      ],
+      "conditionsKind": "none",
+      "nextRule": "required",
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [
+        {
+          "path": "QueueId",
+          "ref": "queue"
+        },
+        {
+          "path": "AgentId",
+          "ref": "queue"
+        }
+      ],
+      "restrictions": [
+        "CONTACT_FLOW",
+        "AGENT_TRANSFER",
+        "QUEUE_TRANSFER",
+        "MODULE"
+      ],
+      "unrestricted": false,
+      "terminal": false,
+      "actionType": true,
+      "minConditions": 0
+    },
+    "UpdateContactTextToSpeechVoice": {
+      "modeled": true,
+      "requiredErrors": [],
+      "requiredErrorsForChat": [],
+      "builderErrors": [
+        "NoMatchingError"
+      ],
+      "conditionsKind": "none",
+      "nextRule": "required",
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "restrictions": null,
+      "unrestricted": true,
+      "terminal": false,
+      "actionType": true,
+      "minConditions": 0
+    },
+    "UpdatePreviousContactParticipantState": {
+      "modeled": false,
+      "requiredErrors": [],
+      "requiredErrorsForChat": [],
+      "builderErrors": [],
+      "conditionsKind": null,
+      "nextRule": null,
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "restrictions": null,
+      "unrestricted": false,
+      "terminal": false,
+      "actionType": false,
+      "minConditions": 0
+    },
+    "ConnectParticipantWithLexBot": {
+      "modeled": true,
+      "requiredErrors": [
+        "NoMatchingError"
+      ],
+      "requiredErrorsForChat": [
+        "NoMatchingError"
+      ],
+      "builderErrors": [
+        "InputTimeLimitExceeded",
+        "NoMatchingError",
+        "NoMatchingCondition"
+      ],
+      "conditionsKind": "enum",
+      "nextRule": "mirrors:error:NoMatchingCondition",
+      "holdsParticipant": false,
+      "textBodyPaths": [
+        "Text",
+        "SSML"
+      ],
+      "announcePaths": [
+        "PromptId",
+        "Text",
+        "SSML"
+      ],
+      "recordingEnablerPath": null,
+      "refPaths": [
+        {
+          "path": "PromptId",
+          "ref": "prompt"
+        },
+        {
+          "path": "LexV2Bot.AliasArn",
+          "ref": "lex"
+        }
+      ],
+      "restrictions": [
+        "CONTACT_FLOW",
+        "AGENT_TRANSFER",
+        "QUEUE_TRANSFER",
+        "CUSTOMER_QUEUE",
+        "MODULE"
+      ],
+      "unrestricted": false,
+      "terminal": false,
+      "actionType": true,
+      "minConditions": 0
+    },
+    "DisconnectParticipant": {
+      "modeled": true,
+      "requiredErrors": [],
+      "requiredErrorsForChat": [],
+      "builderErrors": [],
+      "conditionsKind": "none",
+      "nextRule": "none",
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "restrictions": [
+        "CONTACT_FLOW",
+        "AGENT_TRANSFER",
+        "QUEUE_TRANSFER",
+        "CUSTOMER_QUEUE",
+        "MODULE"
+      ],
+      "unrestricted": false,
+      "terminal": true,
+      "actionType": true,
+      "minConditions": 0
+    },
+    "GetParticipantInput": {
+      "modeled": true,
+      "requiredErrors": [
+        "NoMatchingError"
+      ],
+      "requiredErrorsForChat": [
+        "NoMatchingError"
+      ],
+      "builderErrors": [
+        "InputTimeLimitExceeded",
+        "NoMatchingCondition",
+        "NoMatchingError"
+      ],
+      "conditionsKind": "dtmf",
+      "nextRule": "mirrors:error:NoMatchingCondition",
+      "holdsParticipant": false,
+      "textBodyPaths": [
+        "Text",
+        "SSML"
+      ],
+      "announcePaths": [
+        "PromptId",
+        "Text",
+        "SSML",
+        "Media.Uri"
+      ],
+      "recordingEnablerPath": null,
+      "refPaths": [
+        {
+          "path": "PromptId",
+          "ref": "prompt"
+        }
+      ],
+      "restrictions": [
+        "CONTACT_FLOW",
+        "AGENT_TRANSFER",
+        "QUEUE_TRANSFER",
+        "CUSTOMER_QUEUE",
+        "MODULE"
+      ],
+      "unrestricted": false,
+      "terminal": false,
+      "actionType": true,
+      "minConditions": 0
+    },
+    "MessageParticipant": {
+      "modeled": true,
+      "requiredErrors": [
+        "NoMatchingError"
+      ],
+      "requiredErrorsForChat": [
+        "NoMatchingError"
+      ],
+      "builderErrors": [
+        "NoMatchingError"
+      ],
+      "conditionsKind": "none",
+      "nextRule": "required",
+      "holdsParticipant": false,
+      "textBodyPaths": [
+        "Text",
+        "SSML"
+      ],
+      "announcePaths": [
+        "PromptId",
+        "Text",
+        "SSML",
+        "Media.Uri"
+      ],
+      "recordingEnablerPath": null,
+      "refPaths": [
+        {
+          "path": "PromptId",
+          "ref": "prompt"
+        }
+      ],
+      "restrictions": [
+        "CONTACT_FLOW",
+        "AGENT_TRANSFER",
+        "QUEUE_TRANSFER",
+        "CUSTOMER_WHISPER",
+        "AGENT_WHISPER",
+        "OUTBOUND_WHISPER",
+        "CUSTOMER_QUEUE",
+        "MODULE"
+      ],
+      "unrestricted": false,
+      "terminal": false,
+      "actionType": true,
+      "minConditions": 0
+    },
+    "MessageParticipantIteratively": {
+      "modeled": true,
+      "requiredErrors": [],
+      "requiredErrorsForChat": [],
+      "builderErrors": [
+        "NoMatchingError"
+      ],
+      "conditionsKind": "enum",
+      "nextRule": "none",
+      "holdsParticipant": true,
+      "textBodyPaths": [
+        "Messages[].Text",
+        "Messages[].SSML"
+      ],
+      "announcePaths": [
+        "Messages[].Text",
+        "Messages[].PromptId",
+        "Messages[].SSML",
+        "Messages[].Media.Uri"
+      ],
+      "recordingEnablerPath": null,
+      "refPaths": [
+        {
+          "path": "Messages[].PromptId",
+          "ref": "prompt"
+        }
+      ],
+      "restrictions": [
+        "CUSTOMER_QUEUE",
+        "CUSTOMER_HOLD",
+        "AGENT_HOLD",
+        "MODULE"
+      ],
+      "unrestricted": false,
+      "terminal": false,
+      "actionType": true,
+      "minConditions": 0
+    },
+    "ShowView": {
+      "modeled": true,
+      "requiredErrors": [
+        "NoMatchingCondition",
+        "NoMatchingError",
+        "TimeLimitExceeded"
+      ],
+      "requiredErrorsForChat": [
+        "NoMatchingCondition",
+        "NoMatchingError",
+        "TimeLimitExceeded"
+      ],
+      "builderErrors": [
+        "NoMatchingCondition",
+        "NoMatchingError",
+        "TimeLimitExceeded"
+      ],
+      "conditionsKind": "enum",
+      "nextRule": "mirrors:error:NoMatchingError",
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [
+        {
+          "path": "ViewResource.Id",
+          "ref": "view"
+        }
+      ],
+      "restrictions": [
+        "CONTACT_FLOW",
+        "CUSTOMER_QUEUE",
+        "MODULE"
+      ],
+      "unrestricted": false,
+      "terminal": false,
+      "actionType": true,
+      "minConditions": 0
+    },
+    "CheckHoursOfOperation": {
+      "modeled": true,
+      "requiredErrors": [
+        "NoMatchingError"
+      ],
+      "requiredErrorsForChat": [
+        "NoMatchingError"
+      ],
+      "builderErrors": [
+        "NoMatchingError"
+      ],
+      "conditionsKind": "fixed",
+      "nextRule": "mirrors:condition:False",
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [
+        {
+          "path": "HoursOfOperationId",
+          "ref": "hours"
+        }
+      ],
+      "restrictions": [
+        "CONTACT_FLOW",
+        "AGENT_TRANSFER",
+        "QUEUE_TRANSFER",
+        "CUSTOMER_QUEUE",
+        "MODULE"
+      ],
+      "unrestricted": false,
+      "terminal": false,
+      "actionType": true,
+      "minConditions": 0
+    },
+    "CheckMetricData": {
+      "modeled": true,
+      "requiredErrors": [
+        "NoMatchingError",
+        "NoMatchingCondition"
+      ],
+      "requiredErrorsForChat": [
+        "NoMatchingError",
+        "NoMatchingCondition"
+      ],
+      "builderErrors": [
+        "NoMatchingError",
+        "NoMatchingCondition"
+      ],
+      "conditionsKind": "numeric",
+      "nextRule": "mirrors:error:NoMatchingError",
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [
+        {
+          "path": "QueueId",
+          "ref": "queue"
+        },
+        {
+          "path": "AgentId",
+          "ref": "queue"
+        }
+      ],
+      "restrictions": [
+        "CONTACT_FLOW",
+        "AGENT_TRANSFER",
+        "QUEUE_TRANSFER",
+        "CUSTOMER_QUEUE",
+        "MODULE"
+      ],
+      "unrestricted": false,
+      "terminal": false,
+      "actionType": true,
+      "minConditions": 1
+    },
+    "CheckOutboundCallStatus": {
+      "modeled": false,
+      "requiredErrors": [],
+      "requiredErrorsForChat": [],
+      "builderErrors": [],
+      "conditionsKind": null,
+      "nextRule": null,
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "restrictions": null,
+      "unrestricted": false,
+      "terminal": false,
+      "actionType": false,
+      "minConditions": 0
+    },
+    "CheckVoiceId": {
+      "modeled": false,
+      "requiredErrors": [],
+      "requiredErrorsForChat": [],
+      "builderErrors": [],
+      "conditionsKind": null,
+      "nextRule": null,
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "restrictions": null,
+      "unrestricted": false,
+      "terminal": false,
+      "actionType": false,
+      "minConditions": 0
+    },
+    "Compare": {
+      "modeled": true,
+      "requiredErrors": [
+        "NoMatchingCondition"
+      ],
+      "requiredErrorsForChat": [
+        "NoMatchingCondition"
+      ],
+      "builderErrors": [
+        "NoMatchingCondition"
+      ],
+      "conditionsKind": "custom",
+      "nextRule": "none",
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "restrictions": null,
+      "unrestricted": true,
+      "terminal": false,
+      "actionType": true,
+      "minConditions": 0
+    },
+    "DistributeByPercentage": {
+      "modeled": true,
+      "requiredErrors": [
+        "NoMatchingCondition"
+      ],
+      "requiredErrorsForChat": [
+        "NoMatchingCondition"
+      ],
+      "builderErrors": [
+        "NoMatchingCondition"
+      ],
+      "conditionsKind": "numeric",
+      "nextRule": "mirrors:error:NoMatchingCondition",
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "restrictions": [
+        "CONTACT_FLOW",
+        "AGENT_TRANSFER",
+        "QUEUE_TRANSFER",
+        "CUSTOMER_QUEUE",
+        "MODULE"
+      ],
+      "unrestricted": false,
+      "terminal": false,
+      "actionType": true,
+      "minConditions": 0
+    },
+    "EndFlowExecution": {
+      "modeled": true,
+      "requiredErrors": [],
+      "requiredErrorsForChat": [],
+      "builderErrors": [],
+      "conditionsKind": "none",
+      "nextRule": "none",
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "restrictions": [
+        "CUSTOMER_WHISPER",
+        "AGENT_WHISPER",
+        "OUTBOUND_WHISPER",
+        "CUSTOMER_QUEUE",
+        "MODULE"
+      ],
+      "unrestricted": false,
+      "terminal": true,
+      "actionType": true,
+      "minConditions": 0
+    },
+    "GetMetricData": {
+      "modeled": true,
+      "requiredErrors": [
+        "NoMatchingError"
+      ],
+      "requiredErrorsForChat": [
+        "NoMatchingError"
+      ],
+      "builderErrors": [
+        "NoMatchingError"
+      ],
+      "conditionsKind": "none",
+      "nextRule": "required",
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [
+        {
+          "path": "QueueId",
+          "ref": "queue"
+        },
+        {
+          "path": "AgentId",
+          "ref": "queue"
+        }
+      ],
+      "restrictions": null,
+      "unrestricted": true,
+      "terminal": false,
+      "actionType": true,
+      "minConditions": 0
+    },
+    "Loop": {
+      "modeled": true,
+      "requiredErrors": [],
+      "requiredErrorsForChat": [],
+      "builderErrors": [
+        "NoMatchingError"
+      ],
+      "conditionsKind": "fixed",
+      "nextRule": "mirrors:condition:DoneLooping",
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "restrictions": null,
+      "unrestricted": true,
+      "terminal": false,
+      "actionType": true,
+      "minConditions": 0
+    },
+    "StartVoiceIdStream": {
+      "modeled": false,
+      "requiredErrors": [],
+      "requiredErrorsForChat": [],
+      "builderErrors": [],
+      "conditionsKind": null,
+      "nextRule": null,
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "restrictions": null,
+      "unrestricted": false,
+      "terminal": false,
+      "actionType": false,
+      "minConditions": 0
+    },
+    "TransferToFlow": {
+      "modeled": true,
+      "requiredErrors": [
+        "NoMatchingError"
+      ],
+      "requiredErrorsForChat": [
+        "NoMatchingError"
+      ],
+      "builderErrors": [
+        "NoMatchingError"
+      ],
+      "conditionsKind": "none",
+      "nextRule": "required",
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [
+        {
+          "path": "ContactFlowId",
+          "ref": "flow"
+        }
+      ],
+      "restrictions": [
+        "CONTACT_FLOW",
+        "AGENT_TRANSFER",
+        "QUEUE_TRANSFER",
+        "MODULE"
+      ],
+      "unrestricted": false,
+      "terminal": false,
+      "actionType": true,
+      "minConditions": 0
+    },
+    "UpdateFlowAttributes": {
+      "modeled": true,
+      "requiredErrors": [
+        "NoMatchingError"
+      ],
+      "requiredErrorsForChat": [
+        "NoMatchingError"
+      ],
+      "builderErrors": [
+        "NoMatchingError"
+      ],
+      "conditionsKind": "none",
+      "nextRule": "required",
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "restrictions": null,
+      "unrestricted": true,
+      "terminal": false,
+      "actionType": true,
+      "minConditions": 0
+    },
+    "UpdateFlowLoggingBehavior": {
+      "modeled": true,
+      "requiredErrors": [],
+      "requiredErrorsForChat": [],
+      "builderErrors": [],
+      "conditionsKind": "none",
+      "nextRule": "required",
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "restrictions": null,
+      "unrestricted": true,
+      "terminal": false,
+      "actionType": true,
+      "minConditions": 0
+    },
+    "UpdateRoutingCriteria": {
+      "modeled": false,
+      "requiredErrors": [],
+      "requiredErrorsForChat": [],
+      "builderErrors": [],
+      "conditionsKind": null,
+      "nextRule": null,
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "restrictions": null,
+      "unrestricted": false,
+      "terminal": false,
+      "actionType": false,
+      "minConditions": 0
+    },
+    "Wait": {
+      "modeled": true,
+      "requiredErrors": [
+        "NoMatchingError"
+      ],
+      "requiredErrorsForChat": [
+        "NoMatchingError"
+      ],
+      "builderErrors": [
+        "NoMatchingError",
+        "ParticipantNotFound"
+      ],
+      "conditionsKind": "enum",
+      "nextRule": "mirrors:error:NoMatchingError",
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "restrictions": null,
+      "unrestricted": true,
+      "terminal": false,
+      "actionType": true,
+      "minConditions": 0
+    },
+    "AssociateContactToCustomerProfile": {
+      "modeled": false,
+      "requiredErrors": [],
+      "requiredErrorsForChat": [],
+      "builderErrors": [],
+      "conditionsKind": null,
+      "nextRule": null,
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "restrictions": null,
+      "unrestricted": false,
+      "terminal": false,
+      "actionType": false,
+      "minConditions": 0
+    },
+    "CreateCallbackContact": {
+      "modeled": true,
+      "requiredErrors": [
+        "NoMatchingError"
+      ],
+      "requiredErrorsForChat": [
+        "NoMatchingError"
+      ],
+      "builderErrors": [
+        "NoMatchingError"
+      ],
+      "conditionsKind": "none",
+      "nextRule": "required",
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [
+        {
+          "path": "QueueId",
+          "ref": "queue"
+        },
+        {
+          "path": "AgentId",
+          "ref": "queue"
+        },
+        {
+          "path": "ContactFlowId",
+          "ref": "flow"
+        }
+      ],
+      "restrictions": [
+        "CONTACT_FLOW",
+        "AGENT_TRANSFER",
+        "QUEUE_TRANSFER",
+        "CUSTOMER_QUEUE",
+        "MODULE"
+      ],
+      "unrestricted": false,
+      "terminal": false,
+      "actionType": true,
+      "minConditions": 0
+    },
+    "CreateCustomerProfile": {
+      "modeled": false,
+      "requiredErrors": [],
+      "requiredErrorsForChat": [],
+      "builderErrors": [],
+      "conditionsKind": null,
+      "nextRule": null,
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "restrictions": null,
+      "unrestricted": false,
+      "terminal": false,
+      "actionType": false,
+      "minConditions": 0
+    },
+    "InvokeLambdaFunction": {
+      "modeled": true,
+      "requiredErrors": [
+        "NoMatchingError"
+      ],
+      "requiredErrorsForChat": [
+        "NoMatchingError"
+      ],
+      "builderErrors": [
+        "NoMatchingError"
+      ],
+      "conditionsKind": "none",
+      "nextRule": "required",
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [
+        {
+          "path": "LambdaFunctionARN",
+          "ref": "lambda"
+        }
+      ],
+      "restrictions": null,
+      "unrestricted": true,
+      "terminal": false,
+      "actionType": true,
+      "minConditions": 0
+    },
+    "GetCustomerProfile": {
+      "modeled": false,
+      "requiredErrors": [],
+      "requiredErrorsForChat": [],
+      "builderErrors": [],
+      "conditionsKind": null,
+      "nextRule": null,
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "restrictions": null,
+      "unrestricted": false,
+      "terminal": false,
+      "actionType": false,
+      "minConditions": 0
+    },
+    "GetCustomerProfileObject": {
+      "modeled": false,
+      "requiredErrors": [],
+      "requiredErrorsForChat": [],
+      "builderErrors": [],
+      "conditionsKind": null,
+      "nextRule": null,
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "restrictions": null,
+      "unrestricted": false,
+      "terminal": false,
+      "actionType": false,
+      "minConditions": 0
+    },
+    "GetCalculatedAttributesForCustomerProfile": {
+      "modeled": false,
+      "requiredErrors": [],
+      "requiredErrorsForChat": [],
+      "builderErrors": [],
+      "conditionsKind": null,
+      "nextRule": null,
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "restrictions": null,
+      "unrestricted": false,
+      "terminal": false,
+      "actionType": false,
+      "minConditions": 0
+    },
+    "UpdateCustomerProfile": {
+      "modeled": false,
+      "requiredErrors": [],
+      "requiredErrorsForChat": [],
+      "builderErrors": [],
+      "conditionsKind": null,
+      "nextRule": null,
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "restrictions": null,
+      "unrestricted": false,
+      "terminal": false,
+      "actionType": false,
+      "minConditions": 0
+    },
+    "NotAType": {
+      "modeled": false,
+      "requiredErrors": [],
+      "requiredErrorsForChat": [],
+      "builderErrors": [],
+      "conditionsKind": null,
+      "nextRule": null,
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "restrictions": null,
+      "unrestricted": false,
+      "terminal": false,
+      "actionType": false,
+      "minConditions": 0
+    },
+    "constructor": {
+      "modeled": false,
+      "requiredErrors": [],
+      "requiredErrorsForChat": [],
+      "builderErrors": [],
+      "conditionsKind": null,
+      "nextRule": null,
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "unrestricted": false,
+      "terminal": false,
+      "actionType": false,
+      "minConditions": 0
+    }
   },
-  "CreateCase": {
-   "modeled": false,
-   "requiredErrors": [],
-   "requiredErrorsForChat": [],
-   "builderErrors": [],
-   "conditionsKind": null,
-   "nextRule": null,
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [],
-   "restrictions": null,
-   "unrestricted": false,
-   "terminal": false,
-   "actionType": false
-  },
-  "CreateTask": {
-   "modeled": false,
-   "requiredErrors": [],
-   "requiredErrorsForChat": [],
-   "builderErrors": [],
-   "conditionsKind": null,
-   "nextRule": null,
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [],
-   "restrictions": null,
-   "unrestricted": false,
-   "terminal": false,
-   "actionType": false
-  },
-  "CreateWisdomSession": {
-   "modeled": false,
-   "requiredErrors": [],
-   "requiredErrorsForChat": [],
-   "builderErrors": [],
-   "conditionsKind": null,
-   "nextRule": null,
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [],
-   "restrictions": null,
-   "unrestricted": false,
-   "terminal": false,
-   "actionType": false
-  },
-  "DequeueContactAndTransferToQueue": {
-   "modeled": true,
-   "requiredErrors": [
-    "NoMatchingError"
-   ],
-   "requiredErrorsForChat": [
-    "NoMatchingError"
-   ],
-   "builderErrors": [
-    "QueueAtCapacity",
-    "NoMatchingError"
-   ],
-   "conditionsKind": "none",
-   "nextRule": "required",
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [
+  "catalogOrder": [
+    "DequeueContactAndTransferToQueue",
+    "EndFlowModuleExecution",
+    "InvokeFlowModule",
+    "TagContact",
+    "TransferContactToAgent",
+    "TransferContactToQueue",
+    "UntagContact",
+    "UpdateContactAttributes",
+    "UpdateContactCallbackNumber",
+    "UpdateContactData",
+    "UpdateContactEventHooks",
+    "UpdateContactRecordingAndAnalyticsBehavior",
+    "UpdateContactRecordingBehavior",
+    "UpdateContactRoutingBehavior",
+    "UpdateContactTargetQueue",
+    "UpdateContactTextToSpeechVoice",
+    "ConnectParticipantWithLexBot",
+    "DisconnectParticipant",
+    "GetParticipantInput",
+    "MessageParticipant",
+    "MessageParticipantIteratively",
+    "ShowView",
+    "CheckHoursOfOperation",
+    "CheckMetricData",
+    "Compare",
+    "DistributeByPercentage",
+    "EndFlowExecution",
+    "GetMetricData",
+    "Loop",
+    "TransferToFlow",
+    "UpdateFlowAttributes",
+    "UpdateFlowLoggingBehavior",
+    "Wait",
+    "CreateCallbackContact",
+    "InvokeLambdaFunction"
+  ],
+  "collect": [
     {
-     "path": "QueueId",
-     "ref": "queue"
+      "in": "{\"a\":\"${cdref:queue:x\",\"b\":\"${cdref:queue:y}\"}",
+      "out": []
     },
     {
-     "path": "AgentId",
-     "ref": "queue"
-    }
-   ],
-   "restrictions": [
-    "CUSTOMER_QUEUE",
-    "MODULE"
-   ],
-   "unrestricted": false,
-   "terminal": false,
-   "actionType": true
-  },
-  "EndFlowModuleExecution": {
-   "modeled": true,
-   "requiredErrors": [],
-   "requiredErrorsForChat": [],
-   "builderErrors": [],
-   "conditionsKind": "none",
-   "nextRule": "none",
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [],
-   "restrictions": [
-    "MODULE"
-   ],
-   "unrestricted": false,
-   "terminal": true,
-   "actionType": true
-  },
-  "GetCase": {
-   "modeled": false,
-   "requiredErrors": [],
-   "requiredErrorsForChat": [],
-   "builderErrors": [],
-   "conditionsKind": null,
-   "nextRule": null,
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [],
-   "restrictions": null,
-   "unrestricted": false,
-   "terminal": false,
-   "actionType": false
-  },
-  "InvokeFlowModule": {
-   "modeled": true,
-   "requiredErrors": [
-    "NoMatchingError"
-   ],
-   "requiredErrorsForChat": [
-    "NoMatchingError"
-   ],
-   "builderErrors": [
-    "NoMatchingError"
-   ],
-   "conditionsKind": "none",
-   "nextRule": "required",
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [
-    {
-     "path": "FlowModuleId",
-     "ref": "module"
-    }
-   ],
-   "restrictions": [
-    "CONTACT_FLOW",
-    "MODULE"
-   ],
-   "unrestricted": false,
-   "terminal": false,
-   "actionType": true
-  },
-  "StartOutboundChatContact": {
-   "modeled": false,
-   "requiredErrors": [],
-   "requiredErrorsForChat": [],
-   "builderErrors": [],
-   "conditionsKind": null,
-   "nextRule": null,
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [],
-   "restrictions": null,
-   "unrestricted": false,
-   "terminal": false,
-   "actionType": false
-  },
-  "TagContact": {
-   "modeled": true,
-   "requiredErrors": [
-    "NoMatchingError"
-   ],
-   "requiredErrorsForChat": [
-    "NoMatchingError"
-   ],
-   "builderErrors": [
-    "NoMatchingError"
-   ],
-   "conditionsKind": "none",
-   "nextRule": "required",
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [],
-   "restrictions": null,
-   "unrestricted": true,
-   "terminal": false,
-   "actionType": true
-  },
-  "TransferContactToAgent": {
-   "modeled": true,
-   "requiredErrors": [],
-   "requiredErrorsForChat": [],
-   "builderErrors": [],
-   "conditionsKind": "none",
-   "nextRule": "none",
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [],
-   "restrictions": [
-    "AGENT_TRANSFER",
-    "QUEUE_TRANSFER",
-    "MODULE"
-   ],
-   "unrestricted": false,
-   "terminal": true,
-   "actionType": true
-  },
-  "TransferContactToQueue": {
-   "modeled": true,
-   "requiredErrors": [
-    "NoMatchingError"
-   ],
-   "requiredErrorsForChat": [
-    "NoMatchingError"
-   ],
-   "builderErrors": [
-    "QueueAtCapacity",
-    "NoMatchingError"
-   ],
-   "conditionsKind": "none",
-   "nextRule": "required",
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [],
-   "restrictions": [
-    "CONTACT_FLOW",
-    "AGENT_TRANSFER",
-    "QUEUE_TRANSFER",
-    "MODULE"
-   ],
-   "unrestricted": false,
-   "terminal": false,
-   "actionType": true
-  },
-  "UntagContact": {
-   "modeled": true,
-   "requiredErrors": [
-    "NoMatchingError"
-   ],
-   "requiredErrorsForChat": [
-    "NoMatchingError"
-   ],
-   "builderErrors": [
-    "NoMatchingError"
-   ],
-   "conditionsKind": "none",
-   "nextRule": "required",
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [],
-   "restrictions": null,
-   "unrestricted": true,
-   "terminal": false,
-   "actionType": true
-  },
-  "UpdateCase": {
-   "modeled": false,
-   "requiredErrors": [],
-   "requiredErrorsForChat": [],
-   "builderErrors": [],
-   "conditionsKind": null,
-   "nextRule": null,
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [],
-   "restrictions": null,
-   "unrestricted": false,
-   "terminal": false,
-   "actionType": false
-  },
-  "UpdateContactAttributes": {
-   "modeled": true,
-   "requiredErrors": [
-    "NoMatchingError"
-   ],
-   "requiredErrorsForChat": [
-    "NoMatchingError"
-   ],
-   "builderErrors": [
-    "NoMatchingError"
-   ],
-   "conditionsKind": "none",
-   "nextRule": "required",
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [],
-   "restrictions": null,
-   "unrestricted": true,
-   "terminal": false,
-   "actionType": true
-  },
-  "UpdateContactCallbackNumber": {
-   "modeled": true,
-   "requiredErrors": [
-    "InvalidCallbackNumber",
-    "CallbackNumberNotDialable"
-   ],
-   "requiredErrorsForChat": [
-    "InvalidCallbackNumber",
-    "CallbackNumberNotDialable"
-   ],
-   "builderErrors": [
-    "InvalidCallbackNumber",
-    "CallbackNumberNotDialable"
-   ],
-   "conditionsKind": "none",
-   "nextRule": "required",
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [],
-   "restrictions": [
-    "CONTACT_FLOW",
-    "AGENT_TRANSFER",
-    "QUEUE_TRANSFER",
-    "CUSTOMER_QUEUE",
-    "MODULE"
-   ],
-   "unrestricted": false,
-   "terminal": false,
-   "actionType": true
-  },
-  "UpdateContactData": {
-   "modeled": true,
-   "requiredErrors": [
-    "NoMatchingError"
-   ],
-   "requiredErrorsForChat": [
-    "NoMatchingError"
-   ],
-   "builderErrors": [
-    "NoMatchingError"
-   ],
-   "conditionsKind": "none",
-   "nextRule": "required",
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [],
-   "restrictions": null,
-   "unrestricted": true,
-   "terminal": false,
-   "actionType": true
-  },
-  "UpdateContactEventHooks": {
-   "modeled": true,
-   "requiredErrors": [
-    "NoMatchingError"
-   ],
-   "requiredErrorsForChat": [
-    "NoMatchingError"
-   ],
-   "builderErrors": [
-    "NoMatchingError"
-   ],
-   "conditionsKind": "none",
-   "nextRule": "required",
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [
-    {
-     "path": "EventHooks.*",
-     "ref": "flow"
-    }
-   ],
-   "restrictions": null,
-   "unrestricted": true,
-   "terminal": false,
-   "actionType": true
-  },
-  "UpdateContactMediaProcessing": {
-   "modeled": false,
-   "requiredErrors": [],
-   "requiredErrorsForChat": [],
-   "builderErrors": [],
-   "conditionsKind": null,
-   "nextRule": null,
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [],
-   "restrictions": null,
-   "unrestricted": false,
-   "terminal": false,
-   "actionType": false
-  },
-  "UpdateContactMediaStreamingBehavior": {
-   "modeled": false,
-   "requiredErrors": [],
-   "requiredErrorsForChat": [],
-   "builderErrors": [],
-   "conditionsKind": null,
-   "nextRule": null,
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [],
-   "restrictions": null,
-   "unrestricted": false,
-   "terminal": false,
-   "actionType": false
-  },
-  "UpdateContactRecordingAndAnalyticsBehavior": {
-   "modeled": true,
-   "requiredErrors": [
-    "NoMatchingError",
-    "ChannelMismatch"
-   ],
-   "requiredErrorsForChat": [
-    "NoMatchingError",
-    "ChannelMismatch",
-    "InFlightRedactionConfigurationFailed"
-   ],
-   "builderErrors": [
-    "NoMatchingError",
-    "ChannelMismatch"
-   ],
-   "conditionsKind": "none",
-   "nextRule": "required",
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": "VoiceBehavior.VoiceRecordingBehavior.RecordedParticipants",
-   "refPaths": [],
-   "restrictions": null,
-   "unrestricted": true,
-   "terminal": false,
-   "actionType": true
-  },
-  "UpdateContactRecordingBehavior": {
-   "modeled": true,
-   "requiredErrors": [
-    "NoMatchingError"
-   ],
-   "requiredErrorsForChat": [
-    "NoMatchingError"
-   ],
-   "builderErrors": [
-    "NoMatchingError"
-   ],
-   "conditionsKind": "none",
-   "nextRule": "required",
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": "RecordingBehavior.RecordedParticipants",
-   "refPaths": [],
-   "restrictions": [
-    "CONTACT_FLOW",
-    "AGENT_TRANSFER",
-    "QUEUE_TRANSFER",
-    "OUTBOUND_WHISPER",
-    "CUSTOMER_QUEUE",
-    "MODULE"
-   ],
-   "unrestricted": false,
-   "terminal": false,
-   "actionType": true
-  },
-  "ResumeContact": {
-   "modeled": false,
-   "requiredErrors": [],
-   "requiredErrorsForChat": [],
-   "builderErrors": [],
-   "conditionsKind": null,
-   "nextRule": null,
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [],
-   "restrictions": null,
-   "unrestricted": false,
-   "terminal": false,
-   "actionType": false
-  },
-  "UpdateContactRoutingBehavior": {
-   "modeled": true,
-   "requiredErrors": [],
-   "requiredErrorsForChat": [],
-   "builderErrors": [],
-   "conditionsKind": "none",
-   "nextRule": "required",
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [],
-   "restrictions": [
-    "CONTACT_FLOW",
-    "MODULE"
-   ],
-   "unrestricted": false,
-   "terminal": false,
-   "actionType": true
-  },
-  "UpdateContactTargetQueue": {
-   "modeled": true,
-   "requiredErrors": [
-    "NoMatchingError"
-   ],
-   "requiredErrorsForChat": [
-    "NoMatchingError"
-   ],
-   "builderErrors": [
-    "NoMatchingError"
-   ],
-   "conditionsKind": "none",
-   "nextRule": "required",
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [
-    {
-     "path": "QueueId",
-     "ref": "queue"
-    },
-    {
-     "path": "AgentId",
-     "ref": "queue"
-    }
-   ],
-   "restrictions": [
-    "CONTACT_FLOW",
-    "AGENT_TRANSFER",
-    "QUEUE_TRANSFER",
-    "MODULE"
-   ],
-   "unrestricted": false,
-   "terminal": false,
-   "actionType": true
-  },
-  "UpdateContactTextToSpeechVoice": {
-   "modeled": true,
-   "requiredErrors": [],
-   "requiredErrorsForChat": [],
-   "builderErrors": [
-    "NoMatchingError"
-   ],
-   "conditionsKind": "none",
-   "nextRule": "required",
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [],
-   "restrictions": null,
-   "unrestricted": true,
-   "terminal": false,
-   "actionType": true
-  },
-  "UpdatePreviousContactParticipantState": {
-   "modeled": false,
-   "requiredErrors": [],
-   "requiredErrorsForChat": [],
-   "builderErrors": [],
-   "conditionsKind": null,
-   "nextRule": null,
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [],
-   "restrictions": null,
-   "unrestricted": false,
-   "terminal": false,
-   "actionType": false
-  },
-  "ConnectParticipantWithLexBot": {
-   "modeled": true,
-   "requiredErrors": [
-    "NoMatchingError"
-   ],
-   "requiredErrorsForChat": [
-    "NoMatchingError"
-   ],
-   "builderErrors": [
-    "InputTimeLimitExceeded",
-    "NoMatchingError",
-    "NoMatchingCondition"
-   ],
-   "conditionsKind": "enum",
-   "nextRule": "mirrors:error:NoMatchingCondition",
-   "holdsParticipant": false,
-   "textBodyPaths": [
-    "Text",
-    "SSML"
-   ],
-   "announcePaths": [
-    "PromptId",
-    "Text",
-    "SSML"
-   ],
-   "recordingEnablerPath": null,
-   "refPaths": [
-    {
-     "path": "PromptId",
-     "ref": "prompt"
-    },
-    {
-     "path": "LexV2Bot.AliasArn",
-     "ref": "lex"
-    }
-   ],
-   "restrictions": [
-    "CONTACT_FLOW",
-    "AGENT_TRANSFER",
-    "QUEUE_TRANSFER",
-    "CUSTOMER_QUEUE",
-    "MODULE"
-   ],
-   "unrestricted": false,
-   "terminal": false,
-   "actionType": true
-  },
-  "DisconnectParticipant": {
-   "modeled": true,
-   "requiredErrors": [],
-   "requiredErrorsForChat": [],
-   "builderErrors": [],
-   "conditionsKind": "none",
-   "nextRule": "none",
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [],
-   "restrictions": [
-    "CONTACT_FLOW",
-    "AGENT_TRANSFER",
-    "QUEUE_TRANSFER",
-    "CUSTOMER_QUEUE",
-    "MODULE"
-   ],
-   "unrestricted": false,
-   "terminal": true,
-   "actionType": true
-  },
-  "GetParticipantInput": {
-   "modeled": true,
-   "requiredErrors": [
-    "NoMatchingError"
-   ],
-   "requiredErrorsForChat": [
-    "NoMatchingError"
-   ],
-   "builderErrors": [
-    "InputTimeLimitExceeded",
-    "NoMatchingCondition",
-    "NoMatchingError"
-   ],
-   "conditionsKind": "dtmf",
-   "nextRule": "mirrors:error:NoMatchingCondition",
-   "holdsParticipant": false,
-   "textBodyPaths": [
-    "Text",
-    "SSML"
-   ],
-   "announcePaths": [
-    "PromptId",
-    "Text",
-    "SSML",
-    "Media.Uri"
-   ],
-   "recordingEnablerPath": null,
-   "refPaths": [
-    {
-     "path": "PromptId",
-     "ref": "prompt"
-    }
-   ],
-   "restrictions": [
-    "CONTACT_FLOW",
-    "AGENT_TRANSFER",
-    "QUEUE_TRANSFER",
-    "CUSTOMER_QUEUE",
-    "MODULE"
-   ],
-   "unrestricted": false,
-   "terminal": false,
-   "actionType": true
-  },
-  "MessageParticipant": {
-   "modeled": true,
-   "requiredErrors": [
-    "NoMatchingError"
-   ],
-   "requiredErrorsForChat": [
-    "NoMatchingError"
-   ],
-   "builderErrors": [
-    "NoMatchingError"
-   ],
-   "conditionsKind": "none",
-   "nextRule": "required",
-   "holdsParticipant": false,
-   "textBodyPaths": [
-    "Text",
-    "SSML"
-   ],
-   "announcePaths": [
-    "PromptId",
-    "Text",
-    "SSML",
-    "Media.Uri"
-   ],
-   "recordingEnablerPath": null,
-   "refPaths": [
-    {
-     "path": "PromptId",
-     "ref": "prompt"
-    }
-   ],
-   "restrictions": [
-    "CONTACT_FLOW",
-    "AGENT_TRANSFER",
-    "QUEUE_TRANSFER",
-    "CUSTOMER_WHISPER",
-    "AGENT_WHISPER",
-    "OUTBOUND_WHISPER",
-    "CUSTOMER_QUEUE",
-    "MODULE"
-   ],
-   "unrestricted": false,
-   "terminal": false,
-   "actionType": true
-  },
-  "MessageParticipantIteratively": {
-   "modeled": true,
-   "requiredErrors": [],
-   "requiredErrorsForChat": [],
-   "builderErrors": [
-    "NoMatchingError"
-   ],
-   "conditionsKind": "enum",
-   "nextRule": "none",
-   "holdsParticipant": true,
-   "textBodyPaths": [
-    "Messages[].Text",
-    "Messages[].SSML"
-   ],
-   "announcePaths": [
-    "Messages[].Text",
-    "Messages[].PromptId",
-    "Messages[].SSML",
-    "Messages[].Media.Uri"
-   ],
-   "recordingEnablerPath": null,
-   "refPaths": [
-    {
-     "path": "Messages[].PromptId",
-     "ref": "prompt"
-    }
-   ],
-   "restrictions": [
-    "CUSTOMER_QUEUE",
-    "CUSTOMER_HOLD",
-    "AGENT_HOLD",
-    "MODULE"
-   ],
-   "unrestricted": false,
-   "terminal": false,
-   "actionType": true
-  },
-  "ShowView": {
-   "modeled": true,
-   "requiredErrors": [
-    "NoMatchingCondition",
-    "NoMatchingError",
-    "TimeLimitExceeded"
-   ],
-   "requiredErrorsForChat": [
-    "NoMatchingCondition",
-    "NoMatchingError",
-    "TimeLimitExceeded"
-   ],
-   "builderErrors": [
-    "NoMatchingCondition",
-    "NoMatchingError",
-    "TimeLimitExceeded"
-   ],
-   "conditionsKind": "enum",
-   "nextRule": "mirrors:error:NoMatchingError",
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [
-    {
-     "path": "ViewResource.Id",
-     "ref": "view"
-    }
-   ],
-   "restrictions": [
-    "CONTACT_FLOW",
-    "CUSTOMER_QUEUE",
-    "MODULE"
-   ],
-   "unrestricted": false,
-   "terminal": false,
-   "actionType": true
-  },
-  "CheckHoursOfOperation": {
-   "modeled": true,
-   "requiredErrors": [
-    "NoMatchingError"
-   ],
-   "requiredErrorsForChat": [
-    "NoMatchingError"
-   ],
-   "builderErrors": [
-    "NoMatchingError"
-   ],
-   "conditionsKind": "fixed",
-   "nextRule": "mirrors:condition:False",
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [
-    {
-     "path": "HoursOfOperationId",
-     "ref": "hours"
-    }
-   ],
-   "restrictions": [
-    "CONTACT_FLOW",
-    "AGENT_TRANSFER",
-    "QUEUE_TRANSFER",
-    "CUSTOMER_QUEUE",
-    "MODULE"
-   ],
-   "unrestricted": false,
-   "terminal": false,
-   "actionType": true
-  },
-  "CheckMetricData": {
-   "modeled": true,
-   "requiredErrors": [
-    "NoMatchingError"
-   ],
-   "requiredErrorsForChat": [
-    "NoMatchingError"
-   ],
-   "builderErrors": [
-    "NoMatchingError",
-    "NoMatchingCondition"
-   ],
-   "conditionsKind": "numeric",
-   "nextRule": "mirrors:error:NoMatchingError",
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [
-    {
-     "path": "QueueId",
-     "ref": "queue"
-    },
-    {
-     "path": "AgentId",
-     "ref": "queue"
-    }
-   ],
-   "restrictions": [
-    "CONTACT_FLOW",
-    "AGENT_TRANSFER",
-    "QUEUE_TRANSFER",
-    "CUSTOMER_QUEUE",
-    "MODULE"
-   ],
-   "unrestricted": false,
-   "terminal": false,
-   "actionType": true
-  },
-  "CheckOutboundCallStatus": {
-   "modeled": false,
-   "requiredErrors": [],
-   "requiredErrorsForChat": [],
-   "builderErrors": [],
-   "conditionsKind": null,
-   "nextRule": null,
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [],
-   "restrictions": null,
-   "unrestricted": false,
-   "terminal": false,
-   "actionType": false
-  },
-  "CheckVoiceId": {
-   "modeled": false,
-   "requiredErrors": [],
-   "requiredErrorsForChat": [],
-   "builderErrors": [],
-   "conditionsKind": null,
-   "nextRule": null,
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [],
-   "restrictions": null,
-   "unrestricted": false,
-   "terminal": false,
-   "actionType": false
-  },
-  "Compare": {
-   "modeled": true,
-   "requiredErrors": [
-    "NoMatchingCondition"
-   ],
-   "requiredErrorsForChat": [
-    "NoMatchingCondition"
-   ],
-   "builderErrors": [
-    "NoMatchingCondition"
-   ],
-   "conditionsKind": "custom",
-   "nextRule": "none",
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [],
-   "restrictions": null,
-   "unrestricted": true,
-   "terminal": false,
-   "actionType": true
-  },
-  "DistributeByPercentage": {
-   "modeled": true,
-   "requiredErrors": [
-    "NoMatchingCondition"
-   ],
-   "requiredErrorsForChat": [
-    "NoMatchingCondition"
-   ],
-   "builderErrors": [
-    "NoMatchingCondition"
-   ],
-   "conditionsKind": "numeric",
-   "nextRule": "mirrors:error:NoMatchingCondition",
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [],
-   "restrictions": [
-    "CONTACT_FLOW",
-    "AGENT_TRANSFER",
-    "QUEUE_TRANSFER",
-    "CUSTOMER_QUEUE",
-    "MODULE"
-   ],
-   "unrestricted": false,
-   "terminal": false,
-   "actionType": true
-  },
-  "EndFlowExecution": {
-   "modeled": true,
-   "requiredErrors": [],
-   "requiredErrorsForChat": [],
-   "builderErrors": [],
-   "conditionsKind": "none",
-   "nextRule": "none",
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [],
-   "restrictions": [
-    "CUSTOMER_WHISPER",
-    "AGENT_WHISPER",
-    "OUTBOUND_WHISPER",
-    "CUSTOMER_QUEUE",
-    "MODULE"
-   ],
-   "unrestricted": false,
-   "terminal": true,
-   "actionType": true
-  },
-  "GetMetricData": {
-   "modeled": true,
-   "requiredErrors": [
-    "NoMatchingError"
-   ],
-   "requiredErrorsForChat": [
-    "NoMatchingError"
-   ],
-   "builderErrors": [
-    "NoMatchingError"
-   ],
-   "conditionsKind": "none",
-   "nextRule": "required",
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [
-    {
-     "path": "QueueId",
-     "ref": "queue"
-    },
-    {
-     "path": "AgentId",
-     "ref": "queue"
-    }
-   ],
-   "restrictions": null,
-   "unrestricted": true,
-   "terminal": false,
-   "actionType": true
-  },
-  "Loop": {
-   "modeled": true,
-   "requiredErrors": [],
-   "requiredErrorsForChat": [],
-   "builderErrors": [
-    "NoMatchingError"
-   ],
-   "conditionsKind": "fixed",
-   "nextRule": "mirrors:condition:DoneLooping",
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [],
-   "restrictions": null,
-   "unrestricted": true,
-   "terminal": false,
-   "actionType": true
-  },
-  "StartVoiceIdStream": {
-   "modeled": false,
-   "requiredErrors": [],
-   "requiredErrorsForChat": [],
-   "builderErrors": [],
-   "conditionsKind": null,
-   "nextRule": null,
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [],
-   "restrictions": null,
-   "unrestricted": false,
-   "terminal": false,
-   "actionType": false
-  },
-  "TransferToFlow": {
-   "modeled": true,
-   "requiredErrors": [
-    "NoMatchingError"
-   ],
-   "requiredErrorsForChat": [
-    "NoMatchingError"
-   ],
-   "builderErrors": [
-    "NoMatchingError"
-   ],
-   "conditionsKind": "none",
-   "nextRule": "required",
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [
-    {
-     "path": "ContactFlowId",
-     "ref": "flow"
-    }
-   ],
-   "restrictions": [
-    "CONTACT_FLOW",
-    "AGENT_TRANSFER",
-    "QUEUE_TRANSFER",
-    "MODULE"
-   ],
-   "unrestricted": false,
-   "terminal": false,
-   "actionType": true
-  },
-  "UpdateFlowAttributes": {
-   "modeled": true,
-   "requiredErrors": [
-    "NoMatchingError"
-   ],
-   "requiredErrorsForChat": [
-    "NoMatchingError"
-   ],
-   "builderErrors": [
-    "NoMatchingError"
-   ],
-   "conditionsKind": "none",
-   "nextRule": "required",
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [],
-   "restrictions": null,
-   "unrestricted": true,
-   "terminal": false,
-   "actionType": true
-  },
-  "UpdateFlowLoggingBehavior": {
-   "modeled": true,
-   "requiredErrors": [],
-   "requiredErrorsForChat": [],
-   "builderErrors": [],
-   "conditionsKind": "none",
-   "nextRule": "required",
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [],
-   "restrictions": null,
-   "unrestricted": true,
-   "terminal": false,
-   "actionType": true
-  },
-  "UpdateRoutingCriteria": {
-   "modeled": false,
-   "requiredErrors": [],
-   "requiredErrorsForChat": [],
-   "builderErrors": [],
-   "conditionsKind": null,
-   "nextRule": null,
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [],
-   "restrictions": null,
-   "unrestricted": false,
-   "terminal": false,
-   "actionType": false
-  },
-  "Wait": {
-   "modeled": true,
-   "requiredErrors": [
-    "NoMatchingError"
-   ],
-   "requiredErrorsForChat": [
-    "NoMatchingError"
-   ],
-   "builderErrors": [
-    "NoMatchingError",
-    "ParticipantNotFound"
-   ],
-   "conditionsKind": "enum",
-   "nextRule": "mirrors:error:NoMatchingError",
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [],
-   "restrictions": null,
-   "unrestricted": true,
-   "terminal": false,
-   "actionType": true
-  },
-  "AssociateContactToCustomerProfile": {
-   "modeled": false,
-   "requiredErrors": [],
-   "requiredErrorsForChat": [],
-   "builderErrors": [],
-   "conditionsKind": null,
-   "nextRule": null,
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [],
-   "restrictions": null,
-   "unrestricted": false,
-   "terminal": false,
-   "actionType": false
-  },
-  "CreateCallbackContact": {
-   "modeled": true,
-   "requiredErrors": [
-    "NoMatchingError"
-   ],
-   "requiredErrorsForChat": [
-    "NoMatchingError"
-   ],
-   "builderErrors": [
-    "NoMatchingError"
-   ],
-   "conditionsKind": "none",
-   "nextRule": "required",
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [
-    {
-     "path": "QueueId",
-     "ref": "queue"
-    },
-    {
-     "path": "AgentId",
-     "ref": "queue"
-    },
-    {
-     "path": "ContactFlowId",
-     "ref": "flow"
-    }
-   ],
-   "restrictions": [
-    "CONTACT_FLOW",
-    "AGENT_TRANSFER",
-    "QUEUE_TRANSFER",
-    "CUSTOMER_QUEUE",
-    "MODULE"
-   ],
-   "unrestricted": false,
-   "terminal": false,
-   "actionType": true
-  },
-  "CreateCustomerProfile": {
-   "modeled": false,
-   "requiredErrors": [],
-   "requiredErrorsForChat": [],
-   "builderErrors": [],
-   "conditionsKind": null,
-   "nextRule": null,
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [],
-   "restrictions": null,
-   "unrestricted": false,
-   "terminal": false,
-   "actionType": false
-  },
-  "InvokeLambdaFunction": {
-   "modeled": true,
-   "requiredErrors": [
-    "NoMatchingError"
-   ],
-   "requiredErrorsForChat": [
-    "NoMatchingError"
-   ],
-   "builderErrors": [
-    "NoMatchingError"
-   ],
-   "conditionsKind": "none",
-   "nextRule": "required",
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [
-    {
-     "path": "LambdaFunctionARN",
-     "ref": "lambda"
-    }
-   ],
-   "restrictions": null,
-   "unrestricted": true,
-   "terminal": false,
-   "actionType": true
-  },
-  "GetCustomerProfile": {
-   "modeled": false,
-   "requiredErrors": [],
-   "requiredErrorsForChat": [],
-   "builderErrors": [],
-   "conditionsKind": null,
-   "nextRule": null,
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [],
-   "restrictions": null,
-   "unrestricted": false,
-   "terminal": false,
-   "actionType": false
-  },
-  "GetCustomerProfileObject": {
-   "modeled": false,
-   "requiredErrors": [],
-   "requiredErrorsForChat": [],
-   "builderErrors": [],
-   "conditionsKind": null,
-   "nextRule": null,
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [],
-   "restrictions": null,
-   "unrestricted": false,
-   "terminal": false,
-   "actionType": false
-  },
-  "GetCalculatedAttributesForCustomerProfile": {
-   "modeled": false,
-   "requiredErrors": [],
-   "requiredErrorsForChat": [],
-   "builderErrors": [],
-   "conditionsKind": null,
-   "nextRule": null,
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [],
-   "restrictions": null,
-   "unrestricted": false,
-   "terminal": false,
-   "actionType": false
-  },
-  "UpdateCustomerProfile": {
-   "modeled": false,
-   "requiredErrors": [],
-   "requiredErrorsForChat": [],
-   "builderErrors": [],
-   "conditionsKind": null,
-   "nextRule": null,
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [],
-   "restrictions": null,
-   "unrestricted": false,
-   "terminal": false,
-   "actionType": false
-  },
-  "NotAType": {
-   "modeled": false,
-   "requiredErrors": [],
-   "requiredErrorsForChat": [],
-   "builderErrors": [],
-   "conditionsKind": null,
-   "nextRule": null,
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [],
-   "restrictions": null,
-   "unrestricted": false,
-   "terminal": false,
-   "actionType": false
-  },
-  "constructor": {
-   "modeled": false,
-   "requiredErrors": [],
-   "requiredErrorsForChat": [],
-   "builderErrors": [],
-   "conditionsKind": null,
-   "nextRule": null,
-   "holdsParticipant": false,
-   "textBodyPaths": [],
-   "announcePaths": [],
-   "recordingEnablerPath": null,
-   "refPaths": [],
-   "unrestricted": false,
-   "terminal": false,
-   "actionType": false
-  }
- },
- "catalogOrder": [
-  "DequeueContactAndTransferToQueue",
-  "EndFlowModuleExecution",
-  "InvokeFlowModule",
-  "TagContact",
-  "TransferContactToAgent",
-  "TransferContactToQueue",
-  "UntagContact",
-  "UpdateContactAttributes",
-  "UpdateContactCallbackNumber",
-  "UpdateContactData",
-  "UpdateContactEventHooks",
-  "UpdateContactRecordingAndAnalyticsBehavior",
-  "UpdateContactRecordingBehavior",
-  "UpdateContactRoutingBehavior",
-  "UpdateContactTargetQueue",
-  "UpdateContactTextToSpeechVoice",
-  "ConnectParticipantWithLexBot",
-  "DisconnectParticipant",
-  "GetParticipantInput",
-  "MessageParticipant",
-  "MessageParticipantIteratively",
-  "ShowView",
-  "CheckHoursOfOperation",
-  "CheckMetricData",
-  "Compare",
-  "DistributeByPercentage",
-  "EndFlowExecution",
-  "GetMetricData",
-  "Loop",
-  "TransferToFlow",
-  "UpdateFlowAttributes",
-  "UpdateFlowLoggingBehavior",
-  "Wait",
-  "CreateCallbackContact",
-  "InvokeLambdaFunction"
- ],
- "collect": [
-  {
-   "in": "{\"a\":\"${cdref:queue:x\",\"b\":\"${cdref:queue:y}\"}",
-   "out": []
-  },
-  {
-   "in": "{\"${cdref:flow:as-key}\":1,\"z\":\"${cdref:queue:b}\",\"y\":\"${cdref:queue:a}\"}",
-   "out": [
-    {
-     "token": "${cdref:flow:as-key}",
-     "type": "flow",
-     "name": "as-key"
-    },
-    {
-     "token": "${cdref:queue:a}",
-     "type": "queue",
-     "name": "a"
-    },
-    {
-     "token": "${cdref:queue:b}",
-     "type": "queue",
-     "name": "b"
-    }
-   ]
-  },
-  {
-   "in": "{\"2\":\"${cdref:queue:a\",\"1\":\"${cdref:queue:b}\"}",
-   "out": [
-    {
-     "token": "${cdref:queue:b}",
-     "type": "queue",
-     "name": "b"
-    }
-   ]
-  },
-  {
-   "in": "{\"2\":\"${cdref:queue:two}\",\"1\":\"${cdref:queue:one\\\"}\",\"x\":\"}\"}",
-   "out": [
-    {
-     "token": "${cdref:queue:two}",
-     "type": "queue",
-     "name": "two"
-    }
-   ]
-  },
-  {
-   "in": "[\"${cdref:module:m@prod}\",\"${cdref:module:m@prod}\",\"${cdref:view:v@1}\",\"${cdref:bogus:x}\",\"pre ${cdref:lex:l} post\",\"${cdref:queue:Bad}\"]",
-   "out": [
-    {
-     "token": "${cdref:lex:l}",
-     "type": "lex",
-     "name": "l"
-    },
-    {
-     "token": "${cdref:module:m@prod}",
-     "type": "module",
-     "name": "m",
-     "alias": "prod"
-    },
-    {
-     "token": "${cdref:view:v@1}",
-     "type": "view",
-     "name": "v",
-     "alias": "1"
-    }
-   ]
-  },
-  {
-   "in": "{\"s\":\"${cdref:queue:a\\n}\",\"t\":\"${cdref:queue:ok}\"}",
-   "out": [
-    {
-     "token": "${cdref:queue:ok}",
-     "type": "queue",
-     "name": "ok"
-    }
-   ]
-  },
-  {
-   "in": "{\"s\":\"${cdref:queue:\\u0000}\",\"t\":\"${cdref:queue:ok-2}\",\"dup\":\"${cdref:queue:ok-2}\",\"n\":{\"deep\":[\"${cdref:hours:h}\"]}}",
-   "out": [
-    {
-     "token": "${cdref:hours:h}",
-     "type": "hours",
-     "name": "h"
-    },
-    {
-     "token": "${cdref:queue:ok-2}",
-     "type": "queue",
-     "name": "ok-2"
-    }
-   ]
-  },
-  {
-   "in": "null",
-   "out": []
-  }
- ],
- "asserts": [
-  {
-   "in": "__undefined__",
-   "out": {
-    "err": "ctx expects a FlowDoc object, got undefined."
-   }
-  },
-  {
-   "in": null,
-   "out": {
-    "err": "ctx expects a FlowDoc object, got null."
-   }
-  },
-  {
-   "in": [],
-   "out": {
-    "err": "ctx expects a FlowDoc object, got an array."
-   }
-  },
-  {
-   "in": "s",
-   "out": {
-    "err": "ctx expects a FlowDoc object, got a string (\"s\")."
-   }
-  },
-  {
-   "in": 3,
-   "out": {
-    "err": "ctx expects a FlowDoc object, got a number."
-   }
-  },
-  {
-   "in": true,
-   "out": {
-    "err": "ctx expects a FlowDoc object, got a boolean."
-   }
-  },
-  {
-   "in": {},
-   "out": {
-    "err": "ctx expects a FlowDoc with a string \"name\", got undefined."
-   }
-  },
-  {
-   "in": {
-    "name": "n"
-   },
-   "out": {
-    "err": "ctx expects a FlowDoc with a string \"kind\", got undefined."
-   }
-  },
-  {
-   "in": {
-    "name": "n",
-    "kind": "flow",
-    "connectType": "X",
-    "content": []
-   },
-   "out": {
-    "err": "ctx expects a FlowDoc with an object \"content\", got an array."
-   }
-  },
-  {
-   "in": {
-    "name": "n",
-    "kind": "flow",
-    "connectType": "X",
-    "content": {
-     "StartAction": 1
-    }
-   },
-   "out": {
-    "err": "ctx expects a FlowDoc with a string \"content.StartAction\", got a number."
-   }
-  },
-  {
-   "in": {
-    "name": "n",
-    "kind": "flow",
-    "connectType": "X",
-    "content": {
-     "StartAction": "a"
-    }
-   },
-   "out": {
-    "err": "ctx expects a FlowDoc with an array \"content.Actions\", got undefined."
-   }
-  },
-  {
-   "in": {
-    "name": "n",
-    "kind": "flow",
-    "connectType": "X",
-    "content": {
-     "StartAction": "a",
-     "Actions": [
-      5
-     ]
-    }
-   },
-   "out": {
-    "err": "ctx: FlowDoc content.Actions[0] must be an action object, got a number."
-   }
-  },
-  {
-   "in": {
-    "name": "n",
-    "kind": "flow",
-    "connectType": "X",
-    "content": {
-     "StartAction": "a",
-     "Actions": [
-      {
-       "Identifier": "a"
-      }
-     ]
-    }
-   },
-   "out": {
-    "err": "ctx: FlowDoc content.Actions[0] must have a string \"Type\", got undefined."
-   }
-  },
-  {
-   "in": {
-    "name": "n",
-    "kind": "flow",
-    "connectType": "X",
-    "content": {
-     "StartAction": "a",
-     "Actions": [
-      {
-       "Identifier": "a",
-       "Type": "T",
-       "Parameters": {}
-      }
-     ]
-    }
-   },
-   "out": {
-    "err": "ctx: FlowDoc content.Actions[0] (\"a\") must have an object \"Transitions\", got undefined."
-   }
-  },
-  {
-   "in": {
-    "name": "n",
-    "kind": "flow",
-    "connectType": "X",
-    "content": {
-     "StartAction": "a",
-     "Actions": [
-      {
-       "Identifier": "a",
-       "Type": "T",
-       "Parameters": {},
-       "Transitions": null
-      }
-     ]
-    }
-   },
-   "out": {
-    "err": "ctx: FlowDoc content.Actions[0] (\"a\") must have an object \"Transitions\", got null."
-   }
-  },
-  {
-   "in": {
-    "name": "n\"q",
-    "kind": 1,
-    "connectType": "X"
-   },
-   "out": {
-    "err": "ctx expects a FlowDoc with a string \"kind\", got a number."
-   }
-  },
-  {
-   "in": {
-    "name": {},
-    "kind": "flow",
-    "connectType": "X"
-   },
-   "out": {
-    "err": "ctx expects a FlowDoc with a string \"name\", got a object."
-   }
-  },
-  {
-   "in": {
-    "name": "n",
-    "kind": "flow",
-    "connectType": "X",
-    "content": {
-     "StartAction": "a",
-     "Actions": [
-      {
-       "Identifier": "a",
-       "Type": "T",
-       "Parameters": [],
-       "Transitions": {}
-      }
-     ]
-    }
-   },
-   "out": {
-    "err": "ctx: FlowDoc content.Actions[0] (\"a\") must have an object \"Parameters\", got an array."
-   }
-  },
-  {
-   "in": {
-    "name": "n",
-    "kind": "flow",
-    "connectType": "X",
-    "content": {
-     "StartAction": "a",
-     "Actions": [
-      {
-       "Identifier": "a",
-       "Type": "T",
-       "Parameters": {},
-       "Transitions": {}
-      }
-     ]
-    }
-   },
-   "out": {
-    "ok": "ok"
-   }
-  }
- ],
- "migrates": [
-  {
-   "in": {
-    "kind": "flow",
-    "name": "n",
-    "connectType": "CONTACT_FLOW",
-    "content": {
-     "Version": "2019-10-30",
-     "StartAction": "a",
-     "Actions": []
-    }
-   },
-   "out": {
-    "err": "migrateFlowDoc: FlowDoc version undefined is not supported; this build reads \"0.1\" and \"0.2\"."
-   }
-  },
-  {
-   "in": {
-    "kind": "flow",
-    "name": "n",
-    "connectType": "CONTACT_FLOW",
-    "content": {
-     "Version": "2019-10-30",
-     "StartAction": "a",
-     "Actions": []
-    }
-   },
-   "out": {
-    "err": "migrateFlowDoc: FlowDoc version undefined is not supported; this build reads \"0.1\" and \"0.2\"."
-   }
-  },
-  {
-   "in": {
-    "flowdoc": 0.1,
-    "kind": "flow",
-    "name": "n",
-    "connectType": "CONTACT_FLOW",
-    "content": {
-     "Version": "2019-10-30",
-     "StartAction": "a",
-     "Actions": []
-    }
-   },
-   "out": {
-    "err": "migrateFlowDoc: FlowDoc version 0.1 is not supported; this build reads \"0.1\" and \"0.2\"."
-   }
-  },
-  {
-   "in": {
-    "flowdoc": null,
-    "kind": "flow",
-    "name": "n",
-    "connectType": "CONTACT_FLOW",
-    "content": {
-     "Version": "2019-10-30",
-     "StartAction": "a",
-     "Actions": []
-    }
-   },
-   "out": {
-    "err": "migrateFlowDoc: FlowDoc version null is not supported; this build reads \"0.1\" and \"0.2\"."
-   }
-  },
-  {
-   "in": {
-    "flowdoc": {
-     "2": [
-      true
-     ],
-     "b": 1
-    },
-    "kind": "flow",
-    "name": "n",
-    "connectType": "CONTACT_FLOW",
-    "content": {
-     "Version": "2019-10-30",
-     "StartAction": "a",
-     "Actions": []
-    }
-   },
-   "out": {
-    "err": "migrateFlowDoc: FlowDoc version {\"2\":[true],\"b\":1} is not supported; this build reads \"0.1\" and \"0.2\"."
-   }
-  },
-  {
-   "in": {
-    "flowdoc": "0.3",
-    "kind": "flow",
-    "name": "n",
-    "connectType": "CONTACT_FLOW",
-    "content": {
-     "Version": "2019-10-30",
-     "StartAction": "a",
-     "Actions": []
-    }
-   },
-   "out": {
-    "err": "migrateFlowDoc: FlowDoc version \"0.3\" is not supported; this build reads \"0.1\" and \"0.2\"."
-   }
-  },
-  {
-   "in": {
-    "flowdoc": "0.1",
-    "kind": "flow",
-    "name": "n",
-    "connectType": "CONTACT_FLOW",
-    "content": {
-     "Version": "2019-10-30",
-     "StartAction": "a",
-     "Actions": []
-    }
-   },
-   "out": {
-    "ok": {
-     "flowdoc": "0.2",
-     "kind": "flow",
-     "name": "n",
-     "connectType": "CONTACT_FLOW",
-     "content": {
-      "Version": "2019-10-30",
-      "StartAction": "a",
-      "Actions": []
-     }
-    }
-   }
-  }
- ],
- "paths": [
-  {
-   "in": "{\"M\":{\"b\":1,\"10\":2,\"2\":3,\"02\":4,\"a\":5,\"4294967295\":6,\"4294967294\":7}}",
-   "path": "M.*",
-   "out": {
-    "ok": [
-     {
-      "path": "M.2",
-      "value": 3
-     },
-     {
-      "path": "M.10",
-      "value": 2
-     },
-     {
-      "path": "M.4294967294",
-      "value": 7
-     },
-     {
-      "path": "M.b",
-      "value": 1
-     },
-     {
-      "path": "M.02",
-      "value": 4
-     },
-     {
-      "path": "M.a",
-      "value": 5
-     },
-     {
-      "path": "M.4294967295",
-      "value": 6
-     }
-    ]
-   }
-  },
-  {
-   "in": "{\"L\":[{\"K\":[1,2]},{\"K\":\"x\"},7,{\"K\":[3]}]}",
-   "path": "L[].K[]",
-   "out": {
-    "ok": [
-     {
-      "path": "L[0].K[0]",
-      "value": 1
-     },
-     {
-      "path": "L[0].K[1]",
-      "value": 2
-     },
-     {
-      "path": "L[3].K[0]",
-      "value": 3
-     }
-    ]
-   }
-  },
-  {
-   "in": "{\"L\":[{\"K\":[1,2]}]}",
-   "path": "L[].K",
-   "out": {
-    "ok": [
-     {
-      "path": "L[0].K",
-      "value": [
-       1,
-       2
+      "in": "{\"${cdref:flow:as-key}\":1,\"z\":\"${cdref:queue:b}\",\"y\":\"${cdref:queue:a}\"}",
+      "out": [
+        {
+          "token": "${cdref:flow:as-key}",
+          "type": "flow",
+          "name": "as-key"
+        },
+        {
+          "token": "${cdref:queue:a}",
+          "type": "queue",
+          "name": "a"
+        },
+        {
+          "token": "${cdref:queue:b}",
+          "type": "queue",
+          "name": "b"
+        }
       ]
-     }
-    ]
-   }
-  },
-  {
-   "in": "{\"$x-1_\":1}",
-   "path": "$x-1_",
-   "out": {
-    "ok": [
-     {
+    },
+    {
+      "in": "{\"2\":\"${cdref:queue:a\",\"1\":\"${cdref:queue:b}\"}",
+      "out": [
+        {
+          "token": "${cdref:queue:b}",
+          "type": "queue",
+          "name": "b"
+        }
+      ]
+    },
+    {
+      "in": "{\"2\":\"${cdref:queue:two}\",\"1\":\"${cdref:queue:one\\\"}\",\"x\":\"}\"}",
+      "out": [
+        {
+          "token": "${cdref:queue:two}",
+          "type": "queue",
+          "name": "two"
+        }
+      ]
+    },
+    {
+      "in": "[\"${cdref:module:m@prod}\",\"${cdref:module:m@prod}\",\"${cdref:view:v@1}\",\"${cdref:bogus:x}\",\"pre ${cdref:lex:l} post\",\"${cdref:queue:Bad}\"]",
+      "out": [
+        {
+          "token": "${cdref:lex:l}",
+          "type": "lex",
+          "name": "l"
+        },
+        {
+          "token": "${cdref:module:m@prod}",
+          "type": "module",
+          "name": "m",
+          "alias": "prod"
+        },
+        {
+          "token": "${cdref:view:v@1}",
+          "type": "view",
+          "name": "v",
+          "alias": "1"
+        }
+      ]
+    },
+    {
+      "in": "{\"s\":\"${cdref:queue:a\\n}\",\"t\":\"${cdref:queue:ok}\"}",
+      "out": [
+        {
+          "token": "${cdref:queue:ok}",
+          "type": "queue",
+          "name": "ok"
+        }
+      ]
+    },
+    {
+      "in": "{\"s\":\"${cdref:queue:\\u0000}\",\"t\":\"${cdref:queue:ok-2}\",\"dup\":\"${cdref:queue:ok-2}\",\"n\":{\"deep\":[\"${cdref:hours:h}\"]}}",
+      "out": [
+        {
+          "token": "${cdref:hours:h}",
+          "type": "hours",
+          "name": "h"
+        },
+        {
+          "token": "${cdref:queue:ok-2}",
+          "type": "queue",
+          "name": "ok-2"
+        }
+      ]
+    },
+    {
+      "in": "null",
+      "out": []
+    }
+  ],
+  "asserts": [
+    {
+      "in": "__undefined__",
+      "out": {
+        "err": "ctx expects a FlowDoc object, got undefined."
+      }
+    },
+    {
+      "in": null,
+      "out": {
+        "err": "ctx expects a FlowDoc object, got null."
+      }
+    },
+    {
+      "in": [],
+      "out": {
+        "err": "ctx expects a FlowDoc object, got an array."
+      }
+    },
+    {
+      "in": "s",
+      "out": {
+        "err": "ctx expects a FlowDoc object, got a string (\"s\")."
+      }
+    },
+    {
+      "in": 3,
+      "out": {
+        "err": "ctx expects a FlowDoc object, got a number."
+      }
+    },
+    {
+      "in": true,
+      "out": {
+        "err": "ctx expects a FlowDoc object, got a boolean."
+      }
+    },
+    {
+      "in": {},
+      "out": {
+        "err": "ctx expects a FlowDoc with a string \"name\", got undefined."
+      }
+    },
+    {
+      "in": {
+        "name": "n"
+      },
+      "out": {
+        "err": "ctx expects a FlowDoc with a string \"kind\", got undefined."
+      }
+    },
+    {
+      "in": {
+        "name": "n",
+        "kind": "flow",
+        "connectType": "X",
+        "content": []
+      },
+      "out": {
+        "err": "ctx expects a FlowDoc with an object \"content\", got an array."
+      }
+    },
+    {
+      "in": {
+        "name": "n",
+        "kind": "flow",
+        "connectType": "X",
+        "content": {
+          "StartAction": 1
+        }
+      },
+      "out": {
+        "err": "ctx expects a FlowDoc with a string \"content.StartAction\", got a number."
+      }
+    },
+    {
+      "in": {
+        "name": "n",
+        "kind": "flow",
+        "connectType": "X",
+        "content": {
+          "StartAction": "a"
+        }
+      },
+      "out": {
+        "err": "ctx expects a FlowDoc with an array \"content.Actions\", got undefined."
+      }
+    },
+    {
+      "in": {
+        "name": "n",
+        "kind": "flow",
+        "connectType": "X",
+        "content": {
+          "StartAction": "a",
+          "Actions": [
+            5
+          ]
+        }
+      },
+      "out": {
+        "err": "ctx: FlowDoc content.Actions[0] must be an action object, got a number."
+      }
+    },
+    {
+      "in": {
+        "name": "n",
+        "kind": "flow",
+        "connectType": "X",
+        "content": {
+          "StartAction": "a",
+          "Actions": [
+            {
+              "Identifier": "a"
+            }
+          ]
+        }
+      },
+      "out": {
+        "err": "ctx: FlowDoc content.Actions[0] must have a string \"Type\", got undefined."
+      }
+    },
+    {
+      "in": {
+        "name": "n",
+        "kind": "flow",
+        "connectType": "X",
+        "content": {
+          "StartAction": "a",
+          "Actions": [
+            {
+              "Identifier": "a",
+              "Type": "T",
+              "Parameters": {}
+            }
+          ]
+        }
+      },
+      "out": {
+        "err": "ctx: FlowDoc content.Actions[0] (\"a\") must have an object \"Transitions\", got undefined."
+      }
+    },
+    {
+      "in": {
+        "name": "n",
+        "kind": "flow",
+        "connectType": "X",
+        "content": {
+          "StartAction": "a",
+          "Actions": [
+            {
+              "Identifier": "a",
+              "Type": "T",
+              "Parameters": {},
+              "Transitions": null
+            }
+          ]
+        }
+      },
+      "out": {
+        "err": "ctx: FlowDoc content.Actions[0] (\"a\") must have an object \"Transitions\", got null."
+      }
+    },
+    {
+      "in": {
+        "name": "n\"q",
+        "kind": 1,
+        "connectType": "X"
+      },
+      "out": {
+        "err": "ctx expects a FlowDoc with a string \"kind\", got a number."
+      }
+    },
+    {
+      "in": {
+        "name": {},
+        "kind": "flow",
+        "connectType": "X"
+      },
+      "out": {
+        "err": "ctx expects a FlowDoc with a string \"name\", got a object."
+      }
+    },
+    {
+      "in": {
+        "name": "n",
+        "kind": "flow",
+        "connectType": "X",
+        "content": {
+          "StartAction": "a",
+          "Actions": [
+            {
+              "Identifier": "a",
+              "Type": "T",
+              "Parameters": [],
+              "Transitions": {}
+            }
+          ]
+        }
+      },
+      "out": {
+        "err": "ctx: FlowDoc content.Actions[0] (\"a\") must have an object \"Parameters\", got an array."
+      }
+    },
+    {
+      "in": {
+        "name": "n",
+        "kind": "flow",
+        "connectType": "X",
+        "content": {
+          "StartAction": "a",
+          "Actions": [
+            {
+              "Identifier": "a",
+              "Type": "T",
+              "Parameters": {},
+              "Transitions": {}
+            }
+          ]
+        }
+      },
+      "out": {
+        "ok": "ok"
+      }
+    }
+  ],
+  "migrates": [
+    {
+      "in": {
+        "kind": "flow",
+        "name": "n",
+        "connectType": "CONTACT_FLOW",
+        "content": {
+          "Version": "2019-10-30",
+          "StartAction": "a",
+          "Actions": []
+        }
+      },
+      "out": {
+        "err": "migrateFlowDoc: FlowDoc version undefined is not supported; this build reads \"0.1\" and \"0.2\"."
+      }
+    },
+    {
+      "in": {
+        "kind": "flow",
+        "name": "n",
+        "connectType": "CONTACT_FLOW",
+        "content": {
+          "Version": "2019-10-30",
+          "StartAction": "a",
+          "Actions": []
+        }
+      },
+      "out": {
+        "err": "migrateFlowDoc: FlowDoc version undefined is not supported; this build reads \"0.1\" and \"0.2\"."
+      }
+    },
+    {
+      "in": {
+        "flowdoc": 0.1,
+        "kind": "flow",
+        "name": "n",
+        "connectType": "CONTACT_FLOW",
+        "content": {
+          "Version": "2019-10-30",
+          "StartAction": "a",
+          "Actions": []
+        }
+      },
+      "out": {
+        "err": "migrateFlowDoc: FlowDoc version 0.1 is not supported; this build reads \"0.1\" and \"0.2\"."
+      }
+    },
+    {
+      "in": {
+        "flowdoc": null,
+        "kind": "flow",
+        "name": "n",
+        "connectType": "CONTACT_FLOW",
+        "content": {
+          "Version": "2019-10-30",
+          "StartAction": "a",
+          "Actions": []
+        }
+      },
+      "out": {
+        "err": "migrateFlowDoc: FlowDoc version null is not supported; this build reads \"0.1\" and \"0.2\"."
+      }
+    },
+    {
+      "in": {
+        "flowdoc": {
+          "2": [
+            true
+          ],
+          "b": 1
+        },
+        "kind": "flow",
+        "name": "n",
+        "connectType": "CONTACT_FLOW",
+        "content": {
+          "Version": "2019-10-30",
+          "StartAction": "a",
+          "Actions": []
+        }
+      },
+      "out": {
+        "err": "migrateFlowDoc: FlowDoc version {\"2\":[true],\"b\":1} is not supported; this build reads \"0.1\" and \"0.2\"."
+      }
+    },
+    {
+      "in": {
+        "flowdoc": "0.3",
+        "kind": "flow",
+        "name": "n",
+        "connectType": "CONTACT_FLOW",
+        "content": {
+          "Version": "2019-10-30",
+          "StartAction": "a",
+          "Actions": []
+        }
+      },
+      "out": {
+        "err": "migrateFlowDoc: FlowDoc version \"0.3\" is not supported; this build reads \"0.1\" and \"0.2\"."
+      }
+    },
+    {
+      "in": {
+        "flowdoc": "0.1",
+        "kind": "flow",
+        "name": "n",
+        "connectType": "CONTACT_FLOW",
+        "content": {
+          "Version": "2019-10-30",
+          "StartAction": "a",
+          "Actions": []
+        }
+      },
+      "out": {
+        "ok": {
+          "flowdoc": "0.2",
+          "kind": "flow",
+          "name": "n",
+          "connectType": "CONTACT_FLOW",
+          "content": {
+            "Version": "2019-10-30",
+            "StartAction": "a",
+            "Actions": []
+          }
+        }
+      }
+    }
+  ],
+  "paths": [
+    {
+      "in": "{\"M\":{\"b\":1,\"10\":2,\"2\":3,\"02\":4,\"a\":5,\"4294967295\":6,\"4294967294\":7}}",
+      "path": "M.*",
+      "out": {
+        "ok": [
+          {
+            "path": "M.2",
+            "value": 3
+          },
+          {
+            "path": "M.10",
+            "value": 2
+          },
+          {
+            "path": "M.4294967294",
+            "value": 7
+          },
+          {
+            "path": "M.b",
+            "value": 1
+          },
+          {
+            "path": "M.02",
+            "value": 4
+          },
+          {
+            "path": "M.a",
+            "value": 5
+          },
+          {
+            "path": "M.4294967295",
+            "value": 6
+          }
+        ]
+      }
+    },
+    {
+      "in": "{\"L\":[{\"K\":[1,2]},{\"K\":\"x\"},7,{\"K\":[3]}]}",
+      "path": "L[].K[]",
+      "out": {
+        "ok": [
+          {
+            "path": "L[0].K[0]",
+            "value": 1
+          },
+          {
+            "path": "L[0].K[1]",
+            "value": 2
+          },
+          {
+            "path": "L[3].K[0]",
+            "value": 3
+          }
+        ]
+      }
+    },
+    {
+      "in": "{\"L\":[{\"K\":[1,2]}]}",
+      "path": "L[].K",
+      "out": {
+        "ok": [
+          {
+            "path": "L[0].K",
+            "value": [
+              1,
+              2
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "in": "{\"$x-1_\":1}",
       "path": "$x-1_",
-      "value": 1
-     }
-    ]
-   }
-  },
-  {
-   "in": "{\"a\":{\"b\":null}}",
-   "path": "a.b",
-   "out": {
-    "ok": [
-     {
+      "out": {
+        "ok": [
+          {
+            "path": "$x-1_",
+            "value": 1
+          }
+        ]
+      }
+    },
+    {
+      "in": "{\"a\":{\"b\":null}}",
       "path": "a.b",
-      "value": null
-     }
-    ]
-   }
-  },
-  {
-   "in": "{\"a\":{\"b\":null}}",
-   "path": "a.b.c",
-   "out": {
-    "ok": []
-   }
-  },
-  {
-   "in": "{}",
-   "path": "a.[]",
-   "out": {
-    "err": "\"a.[]\" is not a catalog path."
-   }
-  },
-  {
-   "in": "{}",
-   "path": "a[0]",
-   "out": {
-    "err": "\"a[0]\" is not a catalog path."
-   }
-  },
-  {
-   "in": "{}",
-   "path": "*.[]",
-   "out": {
-    "err": "\"*.[]\" is not a catalog path."
-   }
-  }
- ],
- "idents": [
-  {
-   "in": "",
-   "out": false
-  },
-  {
-   "in": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-   "out": true
-  },
-  {
-   "in": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-   "out": false
-  },
-  {
-   "in": "😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀",
-   "out": true
-  },
-  {
-   "in": "😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀",
-   "out": false
-  },
-  {
-   "in": "__proto__",
-   "out": false
-  },
-  {
-   "in": "a:b",
-   "out": false
-  },
-  {
-   "in": "a}",
-   "out": false
-  },
-  {
-   "in": "ok-id_1",
-   "out": true
-  },
-  {
-   "in": "toString",
-   "out": false
-  }
- ],
- "slugs": [
-  {
-   "in": "2fa-line",
-   "out": "_2fa_line"
-  },
-  {
-   "in": "a-b-c",
-   "out": "a_b_c"
-  },
-  {
-   "in": "x",
-   "out": "x"
-  },
-  {
-   "in": "0",
-   "out": "_0"
-  }
- ],
- "tokens": [
-  {
-   "in": [
-    "queue",
-    "Front Desk",
-    ""
-   ],
-   "out": {
-    "err": "Invalid queue name \"Front Desk\". Names must be lowercase words separated by single hyphens."
-   }
-  },
-  {
-   "in": [
-    "module",
-    "s",
-    "PROD"
-   ],
-   "out": {
-    "err": "Invalid module alias \"PROD\". Names must be lowercase words separated by single hyphens."
-   }
-  },
-  {
-   "in": [
-    "module",
-    "s",
-    "p"
-   ],
-   "out": {
-    "ok": "${cdref:module:s@p}"
-   }
-  },
-  {
-   "in": [
-    "view",
-    "v",
-    ""
-   ],
-   "out": {
-    "ok": "${cdref:view:v}"
-   }
-  }
- ],
- "jsonPaths": [
-  {
-   "in": "$.Attributes.q",
-   "out": {
-    "ok": "$.Attributes.q"
-   }
-  },
-  {
-   "in": "$.a b",
-   "out": {
-    "err": "Invalid JSONPath \"$.a b\". Expected a single identifier such as $.Attributes.queueId."
-   }
-  },
-  {
-   "in": "Attributes",
-   "out": {
-    "err": "Invalid JSONPath \"Attributes\". Expected a single identifier such as $.Attributes.queueId."
-   }
-  }
- ],
- "layouts": [
-  {
-   "in": [
-    {
-     "Identifier": "b",
-     "Transitions": {
-      "NextAction": "7"
-     }
+      "out": {
+        "ok": [
+          {
+            "path": "a.b",
+            "value": null
+          }
+        ]
+      }
     },
     {
-     "Identifier": "7",
-     "Transitions": {
-      "Errors": [
-       {
-        "NextAction": "b"
-       },
-       {
-        "NextAction": "c"
-       }
-      ]
-     }
+      "in": "{\"a\":{\"b\":null}}",
+      "path": "a.b.c",
+      "out": {
+        "ok": []
+      }
     },
     {
-     "Identifier": "c",
-     "Transitions": {}
+      "in": "{}",
+      "path": "a.[]",
+      "out": {
+        "err": "\"a.[]\" is not a catalog path."
+      }
     },
     {
-     "Identifier": "orphan",
-     "Transitions": {
-      "NextAction": "c"
-     }
+      "in": "{}",
+      "path": "a[0]",
+      "out": {
+        "err": "\"a[0]\" is not a catalog path."
+      }
     },
     {
-     "Identifier": "b",
-     "Transitions": {}
+      "in": "{}",
+      "path": "*.[]",
+      "out": {
+        "err": "\"*.[]\" is not a catalog path."
+      }
     }
-   ],
-   "start": null,
-   "out": "{\"7\":{\"x\":280,\"y\":20},\"b\":{\"x\":20,\"y\":20},\"c\":{\"x\":540,\"y\":20},\"orphan\":{\"x\":800,\"y\":20}}"
-  },
-  {
-   "in": [
+  ],
+  "idents": [
     {
-     "Identifier": "x",
-     "Transitions": {
-      "NextAction": "y",
-      "Conditions": [
-       {
-        "NextAction": "nowhere"
-       },
-       {
-        "NextAction": "y"
-       }
-      ]
-     }
+      "in": "",
+      "out": false
     },
     {
-     "Identifier": "y",
-     "Transitions": {
-      "NextAction": "x"
-     }
-    }
-   ],
-   "start": "y",
-   "out": "{\"x\":{\"x\":280,\"y\":20},\"y\":{\"x\":20,\"y\":20}}"
-  },
-  {
-   "in": [
+      "in": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "out": true
+    },
     {
-     "Identifier": "x",
-     "Transitions": {}
+      "in": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "out": false
+    },
+    {
+      "in": "😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀",
+      "out": true
+    },
+    {
+      "in": "😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀",
+      "out": false
+    },
+    {
+      "in": "__proto__",
+      "out": false
+    },
+    {
+      "in": "a:b",
+      "out": false
+    },
+    {
+      "in": "a}",
+      "out": false
+    },
+    {
+      "in": "ok-id_1",
+      "out": true
+    },
+    {
+      "in": "toString",
+      "out": false
     }
-   ],
-   "start": "missing",
-   "out": "{\"x\":{\"x\":20,\"y\":20}}"
-  }
- ]
+  ],
+  "slugs": [
+    {
+      "in": "2fa-line",
+      "out": "_2fa_line"
+    },
+    {
+      "in": "a-b-c",
+      "out": "a_b_c"
+    },
+    {
+      "in": "x",
+      "out": "x"
+    },
+    {
+      "in": "0",
+      "out": "_0"
+    }
+  ],
+  "tokens": [
+    {
+      "in": [
+        "queue",
+        "Front Desk",
+        ""
+      ],
+      "out": {
+        "err": "Invalid queue name \"Front Desk\". Names must be lowercase words separated by single hyphens."
+      }
+    },
+    {
+      "in": [
+        "module",
+        "s",
+        "PROD"
+      ],
+      "out": {
+        "err": "Invalid module alias \"PROD\". Names must be lowercase words separated by single hyphens."
+      }
+    },
+    {
+      "in": [
+        "module",
+        "s",
+        "p"
+      ],
+      "out": {
+        "ok": "${cdref:module:s@p}"
+      }
+    },
+    {
+      "in": [
+        "view",
+        "v",
+        ""
+      ],
+      "out": {
+        "ok": "${cdref:view:v}"
+      }
+    }
+  ],
+  "jsonPaths": [
+    {
+      "in": "$.Attributes.q",
+      "out": {
+        "ok": "$.Attributes.q"
+      }
+    },
+    {
+      "in": "$.a b",
+      "out": {
+        "err": "Invalid JSONPath \"$.a b\". Expected a single identifier such as $.Attributes.queueId."
+      }
+    },
+    {
+      "in": "Attributes",
+      "out": {
+        "err": "Invalid JSONPath \"Attributes\". Expected a single identifier such as $.Attributes.queueId."
+      }
+    }
+  ],
+  "layouts": [
+    {
+      "in": [
+        {
+          "Identifier": "b",
+          "Transitions": {
+            "NextAction": "7"
+          }
+        },
+        {
+          "Identifier": "7",
+          "Transitions": {
+            "Errors": [
+              {
+                "NextAction": "b"
+              },
+              {
+                "NextAction": "c"
+              }
+            ]
+          }
+        },
+        {
+          "Identifier": "c",
+          "Transitions": {}
+        },
+        {
+          "Identifier": "orphan",
+          "Transitions": {
+            "NextAction": "c"
+          }
+        },
+        {
+          "Identifier": "b",
+          "Transitions": {}
+        }
+      ],
+      "start": null,
+      "out": "{\"7\":{\"x\":280,\"y\":20},\"b\":{\"x\":20,\"y\":20},\"c\":{\"x\":540,\"y\":20},\"orphan\":{\"x\":800,\"y\":20}}"
+    },
+    {
+      "in": [
+        {
+          "Identifier": "x",
+          "Transitions": {
+            "NextAction": "y",
+            "Conditions": [
+              {
+                "NextAction": "nowhere"
+              },
+              {
+                "NextAction": "y"
+              }
+            ]
+          }
+        },
+        {
+          "Identifier": "y",
+          "Transitions": {
+            "NextAction": "x"
+          }
+        }
+      ],
+      "start": "y",
+      "out": "{\"x\":{\"x\":280,\"y\":20},\"y\":{\"x\":20,\"y\":20}}"
+    },
+    {
+      "in": [
+        {
+          "Identifier": "x",
+          "Transitions": {}
+        }
+      ],
+      "start": "missing",
+      "out": "{\"x\":{\"x\":20,\"y\":20}}"
+    }
+  ]
 }

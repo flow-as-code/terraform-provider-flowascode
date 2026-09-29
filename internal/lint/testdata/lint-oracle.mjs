@@ -5,6 +5,7 @@
 // oracle_test.go replays. Build flow-as-code first (npm run build), then:
 //
 //   node lint-oracle.mjs <flow-as-code checkout> ts-oracle.json
+import { execFileSync } from "node:child_process";
 import { readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { pathToFileURL } from "node:url";
 import { resolve } from "node:path";
@@ -294,7 +295,7 @@ writeFileSync(
   process.argv[3],
   JSON.stringify(
     {
-      source: "packages/core/dist built from flow-as-code e414239 (lint unchanged at 5480276), Node " + process.version + ", ICU " + process.versions.icu + ", locale " + new Intl.Collator().resolvedOptions().locale,
+      source: "packages/core/dist built from flow-as-code " + execFileSync("git", ["-C", repo, "rev-parse", "--short", "HEAD"], { encoding: "utf8" }).trim() + ", Node " + process.version + ", ICU " + process.versions.icu + ", locale " + new Intl.Collator().resolvedOptions().locale,
       fixtures,
       cases,
       collation: { pairs, pool, sorted },
