@@ -133,11 +133,24 @@ func FromConfig(cfg map[string]any, kind string, phase Phase) Result {
 	positions := map[string]flowdoc.Point{}
 	seen := map[string]bool{}
 	var ids []string
+	// While the action list, an action, or an action's id is unknown, the set
+	// of ids is too, so start cannot be checked against it yet.
+	idsUnknown := false
+	if _, unknown := cfg["action"].(Unknown); unknown {
+		r.incomplete, idsUnknown = true, true
+	}
 	if list, ok := cfg["action"].([]any); ok {
 		for i, raw := range list {
+			if _, unknown := raw.(Unknown); unknown {
+				r.incomplete, idsUnknown = true, true
+				continue
+			}
 			a, ok := raw.(map[string]any)
 			if !ok {
 				continue
+			}
+			if _, unknown := a["id"].(Unknown); unknown {
+				idsUnknown = true
 			}
 			action, id, pos := r.action(a, i, seen)
 			if action == nil {
@@ -157,7 +170,7 @@ func FromConfig(cfg map[string]any, kind string, phase Phase) Result {
 	}
 	if s, ok := cfg["start"].(string); ok {
 		start = s
-		if !seen[s] {
+		if !seen[s] && !idsUnknown {
 			r.fail("START_UNKNOWN", "start", path.Root("start"), "start names no action: %q.", s)
 		}
 	} else if _, unknown := cfg["start"].(Unknown); unknown {
@@ -281,9 +294,22 @@ func (r *reader) action(a map[string]any, i int, seen map[string]bool) (jsonv.Ob
 		return nil, "", nil
 	}
 
+	// A block list or block built from a value unknown until apply (a
+	// dynamic block over a resource's output) arrives as one unknown: the
+	// action is incomplete, not empty.
+	for _, block := range []string{"condition", "error", "position"} {
+		if _, unknown := a[block].(Unknown); unknown {
+			r.incomplete = true
+			return nil, "", nil
+		}
+	}
 	var conditions, errs []any
 	if list, ok := a["condition"].([]any); ok {
 		for k, c := range list {
+			if _, unknown := c.(Unknown); unknown {
+				r.incomplete = true
+				return nil, "", nil
+			}
 			m, _ := c.(map[string]any)
 			p := fmt.Sprintf("%s.condition", at)
 			attr := base.AtName("condition").AtListIndex(k)
@@ -298,6 +324,9 @@ func (r *reader) action(a map[string]any, i int, seen map[string]bool) (jsonv.Ob
 					}
 					operands = append(operands, s)
 				}
+			} else if _, unknown := m["operands"].(Unknown); unknown {
+				r.incomplete = true
+				return nil, "", nil
 			} else {
 				r.fail("NON_LITERAL_VALUE", p+".operands", attr.AtName("operands"), "condition needs operands.")
 				return nil, "", nil
@@ -313,6 +342,10 @@ func (r *reader) action(a map[string]any, i int, seen map[string]bool) (jsonv.Ob
 	}
 	if list, ok := a["error"].([]any); ok {
 		for k, e := range list {
+			if _, unknown := e.(Unknown); unknown {
+				r.incomplete = true
+				return nil, "", nil
+			}
 			m, _ := e.(map[string]any)
 			p := fmt.Sprintf("%s.error", at)
 			attr := base.AtName("error").AtListIndex(k)
