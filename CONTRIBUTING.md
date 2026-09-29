@@ -48,3 +48,29 @@ provider_installation {
 
 With an override in place, skip `init` for this provider and run `plan` and
 `apply` directly; the CLI prints a warning naming the override.
+
+## Releasing
+
+A release is a `vX.Y.Z` tag on a commit on `main`. `release.yml` runs a
+preflight with no secrets (the tag is reachable from `main`, `CHANGELOG.md`
+has the version's section, the unit and conformance lane passes), then
+goreleaser in the `release` environment, which holds `GPG_PRIVATE_KEY` and
+`PASSPHRASE` and signs `SHA256SUMS` with the key `SECURITY.md` names.
+
+1. Move `CHANGELOG.md`'s "Unreleased" entries under the version, naming the
+   vendored `conformance/` commit (`internal/conformance/COMMIT`) and the
+   FlowDoc version it reads. Merge that to `main` with CI and acceptance green.
+2. `git tag -a vX.Y.Z -m vX.Y.Z` on that commit and push the tag.
+3. Approve the `release` environment's deployment when it asks. (The
+   required reviewer is added when the repository goes public; GitHub offers
+   environment protection on a private repository only on a paid plan.)
+4. Both registries pick up the GitHub release on their own; check that
+   `terraform init` and `tofu init` resolve the new version.
+
+Rotating the signing key: generate the new RSA key, register it with the
+Terraform Registry (the namespace's signing keys) and through the OpenTofu
+registry's key form, replace both `release` secrets and `signing-key.asc`,
+update the fingerprint in `SECURITY.md`, and say so in the next release's
+`CHANGELOG.md` entry. Keep the old key registered, since the registries check
+older releases against it.
+
