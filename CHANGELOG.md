@@ -8,6 +8,16 @@ it reads.
 
 ## Unreleased
 
+- Vendors flow-as-code `conformance/` at `d709ab7`. Amazon Connect refuses a
+  `compare` action without a `next` ("Action is missing required property.
+  Path: Actions[N].Transitions.NextAction", found on 2026-09-30), in every
+  flow type probed, as the first action or later, and accepts any target;
+  the console and flow-as-code's builder use the `NoMatchingCondition`
+  branch's target. Plan-time lint gains the thirteenth rule,
+  `next-action-required`: an error, not a hard rule, for a non-terminal
+  action whose type needs a `next` and has none, shown as a plan warning.
+  `message_participant_iteratively` is not flagged, since the service
+  accepts it either way.
 - Vendors flow-as-code `conformance/` at `9a2778b`, which adds
   `hcl/parse/null-attributes`: configuration from `-generate-config-out`, with
   `settings = null` on a flow and `next = null` on a terminal action. The

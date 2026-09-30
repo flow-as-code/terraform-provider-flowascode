@@ -1,6 +1,8 @@
 // Copyright 2026 The flow-as-code Authors
 // SPDX-License-Identifier: Apache-2.0
-// Re-records the per-type error facts in ts-oracle.json from
+// Re-records the per-type catalog facts in ts-oracle.json (the error
+// branches, conditions and NextAction rule, and the catalog.ts helpers over
+// prompt text, announcements, recording and holding the participant) from
 // @flow-as-code/core's own catalog functions, keeping every other recorded
 // value, and prints which types changed so the diff can be read before it is
 // committed. Build flow-as-code first (npm run build), then:
@@ -24,6 +26,12 @@ for (const [type, entry] of Object.entries(o.perType)) {
     requiredErrorsForChat: core.requiredErrorsFor(type, { ChatBehavior: null }),
     builderErrors: core.builderErrors(type),
     minConditions: core.minConditionsFor(type),
+    conditionsKind: core.conditionsKind(type) ?? null,
+    nextRule: core.nextRule(type) ?? null,
+    holdsParticipant: core.holdsParticipant(type),
+    textBodyPaths: [...core.textBodyPaths(type)],
+    announcePaths: [...core.announcePaths(type)],
+    recordingEnablerPath: core.recordingEnablerPath(type) ?? null,
   };
   if (JSON.stringify(next) !== JSON.stringify(entry)) changed.push(type);
   o.perType[type] = next;

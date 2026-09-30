@@ -21,6 +21,7 @@ var allRules = []Rule{
 	ActionAllowedInFlowType,
 	ActionCount,
 	ConditionalShape,
+	NextActionRequired,
 }
 
 // AllRules is rules/index.ts's allRules: every built-in rule, in registry
