@@ -209,7 +209,8 @@ func (f *Fake) UntagResource(_ context.Context, in *connect.UntagResourceInput, 
 //     the evidence.
 //
 // The service refused every other non-terminal type probed without a
-// NextAction too (rule 38 lists them; fifteen were not probed), but only
+// NextAction too (rule 38 lists them: 29 of 31 refused, with
+// ConnectParticipantWithLexBot not probed), but only
 // Compare was ever written without one by the tooling, so only Compare is
 // modeled here. Anything else is accepted, as before.
 func refusedContent(content string) []types.ProblemDetail {
