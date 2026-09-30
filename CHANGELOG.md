@@ -8,6 +8,11 @@ it reads.
 
 ## Unreleased
 
+## 0.1.1 (2026-09-29)
+
+Vendors flow-as-code `conformance/` at
+`12e484834f41b0c70b6b0499a8b542f0d4b401a6` and reads FlowDoc 0.2.
+
 - Plan-time lint matches what Amazon Connect enforces when it creates a flow,
   found by creating every modeled action type in a sandbox instance on
   2026-09-29. Each case used to plan cleanly and fail at apply:
