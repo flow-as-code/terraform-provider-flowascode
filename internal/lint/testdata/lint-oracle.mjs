@@ -255,6 +255,25 @@ add("disable-hard-one", orphan, { disable: ["no-literal-arn"] });
 add("rules-subset", orphan, { rules: ["reachable-blocks", "unique-names"] });
 add("rules-subset-hard-absent", orphan, { rules: ["reachable-blocks"], disable: ["no-literal-arn"] });
 add("rules-empty", orphan, { rules: [] });
+// next-action-required's hint: the mirrored branch's target, when there is a
+// string one to name. The first matching branch wins; odd elements are
+// skipped.
+const cmp = (id, transitions) => act(id, "Compare", { ComparisonValue: "$.x" }, transitions);
+const hours = (id, transitions) => act(id, "CheckHoursOfOperation", {}, transitions);
+add("next-action-hint", [
+  doc("nh", [
+    cmp("c-plain", { Errors: [{ ErrorType: "NoMatchingCondition", NextAction: "bye" }], Conditions: [] }),
+    cmp("c-first-wins", { Errors: [5, { ErrorType: "NoMatchingError", NextAction: "x" }, { ErrorType: "NoMatchingCondition", NextAction: "first" }, { ErrorType: "NoMatchingCondition", NextAction: "second" }] }),
+    cmp("c-null-target", { Errors: [{ ErrorType: "NoMatchingCondition", NextAction: null }, { ErrorType: "NoMatchingCondition", NextAction: "later" }] }),
+    cmp("c-no-branch", { Errors: [] }),
+    cmp("c-errors-not-list", { Errors: { ErrorType: "NoMatchingCondition", NextAction: "bye" } }),
+    cmp("c-unicode", { Errors: [{ ErrorType: "NoMatchingCondition", NextAction: "caf\u00e9 \u{1F600} \"q\"" }] }),
+    hours("h-plain", { Conditions: [{ NextAction: "open", Condition: { Operator: "Equals", Operands: ["True"] } }, { NextAction: "closed", Condition: { Operator: "Equals", Operands: ["False"] } }] }),
+    hours("h-odd", { Conditions: [null, { NextAction: "a", Condition: null }, { NextAction: "b", Condition: [] }, { NextAction: "c", Condition: { Operands: [] } }, { NextAction: "d", Condition: { Operands: "False" } }, { NextAction: "e", Condition: { Operands: [false, "False"] } }, { NextAction: 3, Condition: { Operands: ["False"] } }, { NextAction: "f", Condition: { Operands: ["False"] } }] }),
+    act("m", "MessageParticipant", { Text: "hi" }, { Errors: [{ ErrorType: "NoMatchingError", NextAction: "bye" }] }),
+    bye,
+  ]),
+], { rules: ["next-action-required"] });
 add("assert-first", `[{"name":1}]`, { disable: ["no-literal-arn"] });
 add("assert-action", `[{"name":"x","kind":"flow","connectType":"CONTACT_FLOW","content":{"StartAction":"a","Actions":[{"Identifier":"a","Type":"T","Parameters":{}}]}}]`);
 add("empty-set", `[]`);

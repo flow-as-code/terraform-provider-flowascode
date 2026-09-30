@@ -8,16 +8,23 @@ it reads.
 
 ## Unreleased
 
-- Vendors flow-as-code `conformance/` at `d709ab7`. Amazon Connect refuses a
+- Vendors flow-as-code `conformance/` at `650efbd` (provisional: that commit
+  is on flow-as-code's unmerged `fix/compare-next-action` branch, so this is
+  re-vendored from the merged `main` commit, with both TypeScript oracles
+  re-recorded, before this entry is released). Amazon Connect refuses a
   `compare` action without a `next` ("Action is missing required property.
   Path: Actions[N].Transitions.NextAction", found on 2026-09-30), in every
-  flow type probed, as the first action or later, and accepts any target;
-  the console and flow-as-code's builder use the `NoMatchingCondition`
-  branch's target. Plan-time lint gains the thirteenth rule,
-  `next-action-required`: an error, not a hard rule, for a non-terminal
-  action whose type needs a `next` and has none, shown as a plan warning.
+  flow type probed, as the first action or later, and accepted every target
+  tried; the console and flow-as-code's builder use the
+  `NoMatchingCondition` branch's target. Plan-time lint gains the
+  thirteenth rule, `next-action-required`: an error, not a hard rule, for a
+  non-terminal action whose catalog `next` is `required` or `mirrors:*` and
+  has none, shown as a plan warning. The refusal was checked on the types
+  rule 38 lists as probed and is assumed for the fifteen that were not. For
+  a mirrored type the message names the branch target to copy.
   `message_participant_iteratively` is not flagged, since the service
-  accepts it either way.
+  accepts it either way. A `next` on a terminal action, which the service
+  refuses, is not checked.
 - Vendors flow-as-code `conformance/` at `9a2778b`, which adds
   `hcl/parse/null-attributes`: configuration from `-generate-config-out`, with
   `settings = null` on a flow and `next = null` on a terminal action. The
