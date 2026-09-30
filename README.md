@@ -48,8 +48,9 @@ resource "flowascode_contact_flow" "appointment_line" {
 
 Releases are signed and published to the
 [Terraform Registry](https://registry.terraform.io/providers/flow-as-code/flowascode)
-as `flow-as-code/flowascode`, from v0.1.0; the OpenTofu registry listing is
-pending. [SECURITY.md](SECURITY.md) names the signing key.
+and the [OpenTofu registry](https://search.opentofu.org/provider/flow-as-code/flowascode)
+as `flow-as-code/flowascode`, from v0.1.0. [SECURITY.md](SECURITY.md) names the
+signing key.
 
 ## One flow, three views
 
