@@ -178,7 +178,7 @@ func TestAccLintRefusesAHardRule(t *testing.T) {
 // A Compare with a next is created, and Connect stores its NextAction as
 // sent. The service refuses a Compare without one ("Action is missing
 // required property. Path: Actions[0].Transitions.NextAction", dev instance,
-// us-west-2, 2026-09-30) and accepts any target; next here mirrors the
+// us-west-2, 2026-09-30) and accepted every target tried; next here mirrors the
 // NoMatchingCondition branch, the shape the console writes and
 // flow-as-code's builder emits.
 func TestAccCompareWithNext(t *testing.T) {

@@ -203,12 +203,14 @@ func (f *Fake) UntagResource(_ context.Context, in *connect.UntagResourceInput, 
 //   - a Compare without Transitions.NextAction ("Action is missing required
 //     property. Path: Actions[0].Transitions.NextAction", dev instance,
 //     us-west-2, 2026-09-30 19:07 to 19:20 UTC, as start or mid-flow in
-//     CONTACT_FLOW, CUSTOMER_QUEUE and CUSTOMER_WHISPER; accepted with any
-//     target, and read back as sent). flow-as-code's
-//     conformance/flow-language/actions.md, rule 38, holds the evidence.
+//     CONTACT_FLOW, CUSTOMER_QUEUE and CUSTOMER_WHISPER; accepted with every
+//     target tried, and read back as sent on the 19:20 recheck).
+//     flow-as-code's conformance/flow-language/actions.md, rule 38, holds
+//     the evidence.
 //
-// The service refuses every other non-terminal type without a NextAction
-// too, but only Compare was ever written without one, so only Compare is
+// The service refused every other non-terminal type probed without a
+// NextAction too (rule 38 lists them; fifteen were not probed), but only
+// Compare was ever written without one by the tooling, so only Compare is
 // modeled here. Anything else is accepted, as before.
 func refusedContent(content string) []types.ProblemDetail {
 	var doc struct {
