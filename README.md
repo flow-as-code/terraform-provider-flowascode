@@ -52,6 +52,20 @@ and the [OpenTofu registry](https://search.opentofu.org/provider/flow-as-code/fl
 as `flow-as-code/flowascode`, from v0.1.0. [SECURITY.md](SECURITY.md) names the
 signing key.
 
+## Learn it
+
+- [Your first flow with the Terraform provider](https://flow-as-code.dev/docs/tutorial-first-flow/):
+  plan, apply, plan-time lint, and a console edit shown as a diff.
+- [Promote a flow from dev to prod](https://flow-as-code.dev/docs/tutorial-promote/):
+  one flows module, a root module per environment, and a pipeline that proves
+  prod runs the document dev ran.
+- [Bring existing flows under Terraform](https://flow-as-code.dev/docs/tutorial-adopt/):
+  import blocks, `flow-cli export --author tf`, and `moved` from hashicorp/aws.
+- [The flow cookbook](https://flow-as-code.dev/docs/example-terraform-provider-cookbook/):
+  complete flows for common patterns, each applied to a live instance.
+- [Agent skills](https://flow-as-code.dev/docs/agent-skills/) that teach an AI
+  coding agent these resources and the branches Connect requires.
+
 ## One flow, three views
 
 The provider is one of three ways to author the same document. The
