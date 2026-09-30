@@ -208,9 +208,9 @@ func (f *Fake) UntagResource(_ context.Context, in *connect.UntagResourceInput, 
 //     flow-as-code's conformance/flow-language/actions.md, rule 38, holds
 //     the evidence.
 //
-// The service refused every other non-terminal type probed without a
-// NextAction too (rule 38 lists them: 29 of 31 refused, with
-// ConnectParticipantWithLexBot not probed), but only
+// Rule 38 lists the other types probed without a NextAction: of the 31
+// non-terminal types, 30 were probed and 29 refused, MessageParticipantIteratively
+// was accepted, and ConnectParticipantWithLexBot was not probed. Only
 // Compare was ever written without one by the tooling, so only Compare is
 // modeled here. Anything else is accepted, as before.
 func refusedContent(content string) []types.ProblemDetail {

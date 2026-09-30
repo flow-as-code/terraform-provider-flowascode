@@ -8,7 +8,7 @@ it reads.
 
 ## Unreleased
 
-- Vendors flow-as-code `conformance/` at `b534515` (provisional: that commit
+- Vendors flow-as-code `conformance/` at `17af47f` (provisional: that commit
   is on flow-as-code's unmerged `fix/compare-next-action` branch, so this is
   re-vendored from the merged `main` commit, with both TypeScript oracles
   re-recorded, before this entry is released). Amazon Connect refuses a
@@ -19,8 +19,8 @@ it reads.
   `NoMatchingCondition` branch's target. Plan-time lint gains the
   thirteenth rule, `next-action-required`: an error, not a hard rule, for a
   non-terminal action whose catalog `next` is `required` or `mirrors:*` and
-  has none, shown as a plan warning. The refusal was checked on 29 of the
-  31 non-terminal types (rule 38 lists them) and is assumed for
+  has none, shown as a plan warning. The refusal was seen on 29 of the
+  30 non-terminal types probed, of 31 (rule 38 lists them) and is assumed for
   `connect_participant_with_lex_bot`, the one that was not probed. For
   a mirrored type the message names the branch target to copy.
   `message_participant_iteratively` is not flagged, since the service
