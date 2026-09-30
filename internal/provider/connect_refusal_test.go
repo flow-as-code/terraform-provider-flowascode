@@ -63,3 +63,60 @@ resource "flowascode_contact_flow" "line" {
 		}},
 	})
 }
+
+// Connect refuses a Compare without Transitions.NextAction, as start or
+// mid-flow ("Action is missing required property. Path:
+// Actions[1].Transitions.NextAction", dev instance, us-west-2, 2026-09-30).
+// The next-action-required lint rule reports it at plan time as an error,
+// but it is not a hard rule, so the plan goes on and the service refuses the
+// apply, and the error names the path.
+func TestConnectRefusesCompareWithoutNext(t *testing.T) {
+	terraformBinary(t)
+	config := fmt.Sprintf(`
+resource "flowascode_contact_flow" "line" {
+  instance_id = %q
+  name        = "line"
+  type        = "CONTACT_FLOW"
+
+  action {
+    id   = "welcome"
+    next = "check"
+    message_participant {
+      text = "Hello."
+    }
+    error {
+      type = "NoMatchingError"
+      next = "bye"
+    }
+  }
+
+  action {
+    id = "check"
+    compare {
+      comparison_value = "$.Attributes.tier"
+    }
+    condition {
+      operator = "Equals"
+      operands = ["gold"]
+      next     = "bye"
+    }
+    error {
+      type = "NoMatchingCondition"
+      next = "bye"
+    }
+  }
+
+  action {
+    id = "bye"
+    disconnect_participant {}
+  }
+}
+`, instance)
+	tfresource.UnitTest(t, tfresource.TestCase{
+		ProtoV6ProviderFactories: factories(connectapi.NewFake()),
+		Steps: []tfresource.TestStep{{
+			Config:      config,
+			ExpectError: regexp.MustCompile(`(?s)Amazon Connect refused the content:.*Action is missing required property\. Path:\s+Actions\[1\]\.Transitions\.NextAction`),
+		}},
+	})
+}

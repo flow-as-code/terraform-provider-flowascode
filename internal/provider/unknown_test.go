@@ -30,7 +30,8 @@ resource "flowascode_contact_flow" "line" {
   type        = "CONTACT_FLOW"
 
   action {
-    id = "check"
+    id   = "check"
+    next = "bye"
     compare {
       comparison_value = "$.Attributes.tier"
     }

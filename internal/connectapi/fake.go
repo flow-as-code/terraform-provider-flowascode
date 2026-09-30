@@ -195,16 +195,29 @@ func (f *Fake) UntagResource(_ context.Context, in *connect.UntagResourceInput, 
 }
 
 // refusedContent is the part of Connect's content validation the tests
-// exercise: a queue transfer without its QueueAtCapacity branch, which the
-// service refuses with an empty message and one problem per action
-// ("Action is missing required error. Error: QueueAtCapacity, Path:
-// Actions[1]", sandbox, 2026-09-29). Anything else is accepted, as before.
+// exercise, one problem per action in the service's wording:
+//
+//   - a queue transfer without its QueueAtCapacity branch ("Action is
+//     missing required error. Error: QueueAtCapacity, Path: Actions[1]",
+//     sandbox, 2026-09-29);
+//   - a Compare without Transitions.NextAction ("Action is missing required
+//     property. Path: Actions[0].Transitions.NextAction", dev instance,
+//     us-west-2, 2026-09-30 19:07 to 19:20 UTC, as start or mid-flow in
+//     CONTACT_FLOW, CUSTOMER_QUEUE and CUSTOMER_WHISPER; accepted with any
+//     target, and read back as sent). flow-as-code's
+//     conformance/flow-language/actions.md, rule 38, holds the evidence.
+//
+// The service refuses every other non-terminal type without a NextAction
+// too, but only Compare was ever written without one, so only Compare is
+// modeled here. Anything else is accepted, as before.
 func refusedContent(content string) []types.ProblemDetail {
 	var doc struct {
 		Actions []struct {
 			Type        string
 			Transitions struct {
-				Errors []struct{ ErrorType string }
+				// A present key, null included, is not missing.
+				NextAction json.RawMessage
+				Errors     []struct{ ErrorType string }
 			}
 		}
 	}
@@ -213,15 +226,19 @@ func refusedContent(content string) []types.ProblemDetail {
 	}
 	var out []types.ProblemDetail
 	for i, a := range doc.Actions {
-		if a.Type != "TransferContactToQueue" && a.Type != "DequeueContactAndTransferToQueue" {
-			continue
-		}
-		wired := false
-		for _, e := range a.Transitions.Errors {
-			wired = wired || e.ErrorType == "QueueAtCapacity"
-		}
-		if !wired {
-			out = append(out, types.ProblemDetail{Message: aws.String(fmt.Sprintf("Action is missing required error. Error: QueueAtCapacity, Path: Actions[%d]", i))})
+		switch a.Type {
+		case "TransferContactToQueue", "DequeueContactAndTransferToQueue":
+			wired := false
+			for _, e := range a.Transitions.Errors {
+				wired = wired || e.ErrorType == "QueueAtCapacity"
+			}
+			if !wired {
+				out = append(out, types.ProblemDetail{Message: aws.String(fmt.Sprintf("Action is missing required error. Error: QueueAtCapacity, Path: Actions[%d]", i))})
+			}
+		case "Compare":
+			if a.Transitions.NextAction == nil {
+				out = append(out, types.ProblemDetail{Message: aws.String(fmt.Sprintf("Action is missing required property. Path: Actions[%d].Transitions.NextAction", i))})
+			}
 		}
 	}
 	return out
