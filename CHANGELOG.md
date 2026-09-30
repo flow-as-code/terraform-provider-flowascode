@@ -8,6 +8,11 @@ it reads.
 
 ## Unreleased
 
+- Vendors flow-as-code `conformance/` at `9a2778b`, which adds
+  `hcl/parse/null-attributes`: configuration from `-generate-config-out`, with
+  `settings = null` on a flow and `next = null` on a terminal action. The
+  provider already read these as unset; the case holds it to that.
+
 ## 0.1.1 (2026-09-29)
 
 Vendors flow-as-code `conformance/` at
