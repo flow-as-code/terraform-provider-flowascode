@@ -6,12 +6,13 @@ All notable changes to this provider. The format follows
 flow-as-code `conformance/` commit it vendors and the FlowDoc format version
 it reads.
 
-## Unreleased
+## 0.1.2 (2026-09-30)
 
-- Vendors flow-as-code `conformance/` at `17af47f` (provisional: that commit
-  is on flow-as-code's unmerged `fix/compare-next-action` branch, so this is
-  re-vendored from the merged `main` commit, with both TypeScript oracles
-  re-recorded, before this entry is released). Amazon Connect refuses a
+Vendors flow-as-code `conformance/` at
+`14629631b0030b2bb42a11bc2bf23ec4f303bd23` (the flow-as-code 0.2.1 release
+commit) and reads FlowDoc 0.2.
+
+- `compare` needs a `next`. Amazon Connect refuses a
   `compare` action without a `next` ("Action is missing required property.
   Path: Actions[N].Transitions.NextAction", found on 2026-09-30), in every
   flow type probed, as the first action or later, and accepted every target
@@ -26,9 +27,8 @@ it reads.
   `message_participant_iteratively` is not flagged, since the service
   accepts it either way. A `next` on a terminal action, which the service
   refuses, is not checked.
-- Vendors flow-as-code `conformance/` at `9a2778b`, which adds
-  `hcl/parse/null-attributes`: configuration from `-generate-config-out`, with
-  `settings = null` on a flow and `next = null` on a terminal action. The
+- `hcl/parse/null-attributes` (vendored from flow-as-code `9a2778b`):
+  configuration from `-generate-config-out`, with `settings = null` on a flow and `next = null` on a terminal action. The
   provider already read these as unset; the case holds it to that.
 
 ## 0.1.1 (2026-09-29)
