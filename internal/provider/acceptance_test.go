@@ -7,6 +7,7 @@ import (
 	"context"
 	"crypto/rand"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"os"
 	"regexp"
@@ -170,6 +171,106 @@ func TestAccLintRefusesAHardRule(t *testing.T) {
 		Steps: []resource.TestStep{{
 			Config:      e.flow(e.prefix+"-lint", "Call arn:aws:connect:us-east-1:111122223333:instance/x/queue/y", ""),
 			ExpectError: regexp.MustCompile(`no-literal-arn`),
+		}},
+	})
+}
+
+// A Compare with a next is created, and Connect stores its NextAction as
+// sent. The service refuses a Compare without one ("Action is missing
+// required property. Path: Actions[0].Transitions.NextAction", dev instance,
+// us-west-2, 2026-09-30) and accepted every target tried; next here mirrors the
+// NoMatchingCondition branch, the shape the console writes and
+// flow-as-code's builder emits.
+func TestAccCompareWithNext(t *testing.T) {
+	e := accPreCheck(t)
+	config := e.providerBlock() + fmt.Sprintf(`
+resource "flowascode_contact_flow" "acc" {
+  instance_id = %q
+  name        = %q
+  type        = "CONTACT_FLOW"
+  description = "flowascode acceptance test"
+
+  tags = {
+    flowascode-acc = "true"
+  }
+
+  action {
+    id   = "check"
+    next = "standard"
+    compare {
+      comparison_value = "$.Attributes.tier"
+    }
+    condition {
+      operator = "Equals"
+      operands = ["gold"]
+      next     = "gold"
+    }
+    error {
+      type = "NoMatchingCondition"
+      next = "standard"
+    }
+  }
+
+  action {
+    id   = "gold"
+    next = "bye"
+    message_participant {
+      text = "Welcome back."
+    }
+    error {
+      type = "NoMatchingError"
+      next = "bye"
+    }
+  }
+
+  action {
+    id   = "standard"
+    next = "bye"
+    message_participant {
+      text = "Hello."
+    }
+    error {
+      type = "NoMatchingError"
+      next = "bye"
+    }
+  }
+
+  action {
+    id = "bye"
+    disconnect_participant {}
+  }
+}
+`, e.instanceID, e.prefix+"-compare")
+	resource.Test(t, resource.TestCase{
+		ProtoV6ProviderFactories: accFactories(),
+		Steps: []resource.TestStep{{
+			Config: config,
+			Check: func(s *terraform.State) error {
+				flowID := s.RootModule().Resources["flowascode_contact_flow.acc"].Primary.Attributes["contact_flow_id"]
+				out, err := e.api.DescribeContactFlow(context.Background(), &connect.DescribeContactFlowInput{
+					InstanceId: aws.String(e.instanceID), ContactFlowId: aws.String(flowID)})
+				if err != nil {
+					return err
+				}
+				var content struct {
+					Actions []struct {
+						Identifier, Type string
+						Transitions      struct{ NextAction string }
+					}
+				}
+				if err := json.Unmarshal([]byte(aws.ToString(out.ContactFlow.Content)), &content); err != nil {
+					return err
+				}
+				for _, a := range content.Actions {
+					if a.Type == "Compare" {
+						if a.Transitions.NextAction != "standard" {
+							return fmt.Errorf("stored Compare NextAction is %q, want \"standard\"", a.Transitions.NextAction)
+						}
+						return nil
+					}
+				}
+				return fmt.Errorf("stored content has no Compare action")
+			},
 		}},
 	})
 }

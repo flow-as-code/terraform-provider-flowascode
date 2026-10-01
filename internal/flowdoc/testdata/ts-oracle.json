@@ -1,5 +1,5 @@
 {
-  "generatedFrom": "flow-as-code 12e484834f41b0c70b6b0499a8b542f0d4b401a6, packages/core/dist",
+  "generatedFrom": "flow-as-code 17af47f6d23580986ab03d4c2c03a5f9073e286f, packages/core/dist",
   "perType": {
     "CompleteOutboundCall": {
       "modeled": false,
@@ -995,7 +995,7 @@
         "NoMatchingCondition"
       ],
       "conditionsKind": "custom",
-      "nextRule": "none",
+      "nextRule": "mirrors:error:NoMatchingCondition",
       "holdsParticipant": false,
       "textBodyPaths": [],
       "announcePaths": [],

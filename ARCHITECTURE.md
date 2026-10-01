@@ -25,7 +25,7 @@ flowchart TB
     flowdoc["flowdoc"]
     jsonv["jsonv<br/>JSON.stringify byte for byte"]
     materialize["materialize"]
-    lint["lint<br/>12 rules"]
+    lint["lint<br/>13 rules"]
     schema["schema<br/>JSON Schema 2020-12"]
     export["export<br/>ARN to reference key"]
   end
