@@ -1,5 +1,5 @@
 {
- "source": "packages/core/dist built from flow-as-code 1462963, Node v26.10.0, ICU 78.3, locale en-US",
+ "source": "packages/core/dist built from flow-as-code 78b0a87, Node v26.10.0, ICU 78.3, locale en-US",
  "fixtures": [
   {
    "file": "lint/action-allowed-in-flow-type/fail-callback-in-whisper-flow.json",
@@ -69,6 +69,54 @@
   },
   {
    "file": "lint/action-count/pass-at-limit.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 0,\n    \"errors\": 0,\n    \"warnings\": 0\n  },\n  \"findings\": []\n}\n",
+   "text": "No findings.\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/attribute-set-before-read/fail-read-never-set.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 0,\n    \"warnings\": 1\n  },\n  \"findings\": [\n    {\n      \"severity\": \"warning\",\n      \"blockId\": \"whisper\",\n      \"message\": \"Text reads $.Attributes.tier, which no document in the set sets (UpdateContactAttributes); the contact hears an empty value.\",\n      \"rule\": \"attribute-set-before-read\",\n      \"doc\": \"agent-whisper\"\n    }\n  ]\n}\n",
+   "text": "agent-whisper\n  warning (whisper): Text reads $.Attributes.tier, which no document in the set sets (UpdateContactAttributes); the contact hears an empty value. [attribute-set-before-read]\n\n1 finding(s): 0 error(s), 1 warning(s).\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/attribute-set-before-read/fail-set-on-related-contact-only.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 0,\n    \"warnings\": 1\n  },\n  \"findings\": [\n    {\n      \"severity\": \"warning\",\n      \"blockId\": \"whisper\",\n      \"message\": \"Text reads $.Attributes.tier, which no document in the set sets (UpdateContactAttributes); the contact hears an empty value.\",\n      \"rule\": \"attribute-set-before-read\",\n      \"doc\": \"agent-whisper\"\n    }\n  ]\n}\n",
+   "text": "agent-whisper\n  warning (whisper): Text reads $.Attributes.tier, which no document in the set sets (UpdateContactAttributes); the contact hears an empty value. [attribute-set-before-read]\n\n1 finding(s): 0 error(s), 1 warning(s).\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/attribute-set-before-read/pass-set-in-another-flow.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 0,\n    \"errors\": 0,\n    \"warnings\": 0\n  },\n  \"findings\": []\n}\n",
+   "text": "No findings.\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/attribute-set-before-read/pass-single-document.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 0,\n    \"errors\": 0,\n    \"warnings\": 0\n  },\n  \"findings\": []\n}\n",
+   "text": "No findings.\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/channel-restricted-action/fail-show-view-in-contact-flow.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 0,\n    \"warnings\": 1\n  },\n  \"findings\": [\n    {\n      \"severity\": \"warning\",\n      \"blockId\": \"show-form\",\n      \"message\": \"ShowView is supported only on the CHAT channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/participant-actions-showview.html\",\n      \"rule\": \"channel-restricted-action\",\n      \"doc\": \"guide\"\n    }\n  ]\n}\n",
+   "text": "guide\n  warning (show-form): ShowView is supported only on the CHAT channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/participant-actions-showview.html [channel-restricted-action]\n\n1 finding(s): 0 error(s), 1 warning(s).\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/channel-restricted-action/fail-wait-in-customer-queue-flow.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 0,\n    \"warnings\": 1\n  },\n  \"findings\": [\n    {\n      \"severity\": \"warning\",\n      \"blockId\": \"pause\",\n      \"message\": \"Wait is supported only on the CHAT channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/flow-control-actions-wait.html\",\n      \"rule\": \"channel-restricted-action\",\n      \"doc\": \"queue-wait\"\n    }\n  ]\n}\n",
+   "text": "queue-wait\n  warning (pause): Wait is supported only on the CHAT channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/flow-control-actions-wait.html [channel-restricted-action]\n\n1 finding(s): 0 error(s), 1 warning(s).\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/channel-restricted-action/fail-wait-in-module.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 0,\n    \"warnings\": 1\n  },\n  \"findings\": [\n    {\n      \"severity\": \"warning\",\n      \"blockId\": \"pause\",\n      \"message\": \"Wait is supported only on the CHAT channel, and the document does not record which channels this module serves. https://docs.aws.amazon.com/connect/latest/devguide/flow-control-actions-wait.html\",\n      \"rule\": \"channel-restricted-action\",\n      \"doc\": \"pause-module\"\n    }\n  ]\n}\n",
+   "text": "pause-module\n  warning (pause): Wait is supported only on the CHAT channel, and the document does not record which channels this module serves. https://docs.aws.amazon.com/connect/latest/devguide/flow-control-actions-wait.html [channel-restricted-action]\n\n1 finding(s): 0 error(s), 1 warning(s).\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/channel-restricted-action/pass-contact-flow.json",
    "json": "{\n  \"summary\": {\n    \"total\": 0,\n    \"errors\": 0,\n    \"warnings\": 0\n  },\n  \"findings\": []\n}\n",
    "text": "No findings.\n",
    "blocking": false
@@ -171,14 +219,14 @@
   },
   {
    "file": "lint/error-branches/fail-show-view-without-no-match.json",
-   "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 1,\n    \"warnings\": 0\n  },\n  \"findings\": [\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"show\",\n      \"message\": \"ShowView does not wire its \\\"NoMatchingCondition\\\" branch.\",\n      \"rule\": \"error-branches\",\n      \"doc\": \"case\"\n    }\n  ]\n}\n",
-   "text": "case\n  error (show): ShowView does not wire its \"NoMatchingCondition\" branch. [error-branches]\n\n1 finding(s): 1 error(s), 0 warning(s).\n",
+   "json": "{\n  \"summary\": {\n    \"total\": 2,\n    \"errors\": 1,\n    \"warnings\": 1\n  },\n  \"findings\": [\n    {\n      \"severity\": \"warning\",\n      \"blockId\": \"show\",\n      \"message\": \"ShowView is supported only on the CHAT channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/participant-actions-showview.html\",\n      \"rule\": \"channel-restricted-action\",\n      \"doc\": \"case\"\n    },\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"show\",\n      \"message\": \"ShowView does not wire its \\\"NoMatchingCondition\\\" branch.\",\n      \"rule\": \"error-branches\",\n      \"doc\": \"case\"\n    }\n  ]\n}\n",
+   "text": "case\n  warning (show): ShowView is supported only on the CHAT channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/participant-actions-showview.html [channel-restricted-action]\n  error (show): ShowView does not wire its \"NoMatchingCondition\" branch. [error-branches]\n\n2 finding(s): 1 error(s), 1 warning(s).\n",
    "blocking": false
   },
   {
    "file": "lint/error-branches/fail-show-view-without-time-limit-branch.json",
-   "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 1,\n    \"warnings\": 0\n  },\n  \"findings\": [\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"show\",\n      \"message\": \"ShowView does not wire its \\\"TimeLimitExceeded\\\" branch.\",\n      \"rule\": \"error-branches\",\n      \"doc\": \"case\"\n    }\n  ]\n}\n",
-   "text": "case\n  error (show): ShowView does not wire its \"TimeLimitExceeded\" branch. [error-branches]\n\n1 finding(s): 1 error(s), 0 warning(s).\n",
+   "json": "{\n  \"summary\": {\n    \"total\": 2,\n    \"errors\": 1,\n    \"warnings\": 1\n  },\n  \"findings\": [\n    {\n      \"severity\": \"warning\",\n      \"blockId\": \"show\",\n      \"message\": \"ShowView is supported only on the CHAT channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/participant-actions-showview.html\",\n      \"rule\": \"channel-restricted-action\",\n      \"doc\": \"case\"\n    },\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"show\",\n      \"message\": \"ShowView does not wire its \\\"TimeLimitExceeded\\\" branch.\",\n      \"rule\": \"error-branches\",\n      \"doc\": \"case\"\n    }\n  ]\n}\n",
+   "text": "case\n  warning (show): ShowView is supported only on the CHAT channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/participant-actions-showview.html [channel-restricted-action]\n  error (show): ShowView does not wire its \"TimeLimitExceeded\" branch. [error-branches]\n\n2 finding(s): 1 error(s), 1 warning(s).\n",
    "blocking": false
   },
   {
