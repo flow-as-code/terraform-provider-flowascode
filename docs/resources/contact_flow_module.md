@@ -327,7 +327,7 @@ Optional:
 
 Optional:
 
-- `maximum_length` (Number) Flow language field MaximumLength.
+- `maximum_length` (String) Flow language field MaximumLength.
 
 
 <a id="nestedatt--action--get_participant_input--input_validation--phone_number_validation"></a>
