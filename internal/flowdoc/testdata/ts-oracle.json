@@ -1,5 +1,5 @@
 {
-  "generatedFrom": "flow-as-code 14629631b0030b2bb42a11bc2bf23ec4f303bd23, packages/core/dist",
+  "generatedFrom": "flow-as-code 78b0a87d01992d532624d40a89686400c19b512c, packages/core/dist",
   "perType": {
     "CompleteOutboundCall": {
       "modeled": false,
@@ -717,6 +717,7 @@
       "builderErrors": [
         "InputTimeLimitExceeded",
         "NoMatchingCondition",
+        "InvalidPhoneNumber",
         "NoMatchingError"
       ],
       "conditionsKind": "dtmf",
@@ -1431,6 +1432,96 @@
       "actionType": false,
       "minConditions": 0
     },
+    "RouteContactToAgent": {
+      "modeled": false,
+      "requiredErrors": [],
+      "requiredErrorsForChat": [],
+      "builderErrors": [],
+      "conditionsKind": null,
+      "nextRule": null,
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "restrictions": null,
+      "unrestricted": false,
+      "terminal": false,
+      "actionType": false,
+      "minConditions": 0
+    },
+    "LoadContactContent": {
+      "modeled": false,
+      "requiredErrors": [],
+      "requiredErrorsForChat": [],
+      "builderErrors": [],
+      "conditionsKind": null,
+      "nextRule": null,
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "restrictions": null,
+      "unrestricted": false,
+      "terminal": false,
+      "actionType": false,
+      "minConditions": 0
+    },
+    "AuthenticateParticipant": {
+      "modeled": false,
+      "requiredErrors": [],
+      "requiredErrorsForChat": [],
+      "builderErrors": [],
+      "conditionsKind": null,
+      "nextRule": null,
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "restrictions": null,
+      "unrestricted": false,
+      "terminal": false,
+      "actionType": false,
+      "minConditions": 0
+    },
+    "CheckSegmentMembership": {
+      "modeled": false,
+      "requiredErrors": [],
+      "requiredErrorsForChat": [],
+      "builderErrors": [],
+      "conditionsKind": null,
+      "nextRule": null,
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "restrictions": null,
+      "unrestricted": false,
+      "terminal": false,
+      "actionType": false,
+      "minConditions": 0
+    },
+    "TransferParticipantToThirdParty": {
+      "modeled": false,
+      "requiredErrors": [],
+      "requiredErrorsForChat": [],
+      "builderErrors": [],
+      "conditionsKind": null,
+      "nextRule": null,
+      "holdsParticipant": false,
+      "textBodyPaths": [],
+      "announcePaths": [],
+      "recordingEnablerPath": null,
+      "refPaths": [],
+      "restrictions": null,
+      "unrestricted": false,
+      "terminal": false,
+      "actionType": false,
+      "minConditions": 0
+    },
     "NotAType": {
       "modeled": false,
       "requiredErrors": [],
@@ -1507,7 +1598,13 @@
   "collect": [
     {
       "in": "{\"a\":\"${cdref:queue:x\",\"b\":\"${cdref:queue:y}\"}",
-      "out": []
+      "out": [
+        {
+          "token": "${cdref:queue:y}",
+          "type": "queue",
+          "name": "y"
+        }
+      ]
     },
     {
       "in": "{\"${cdref:flow:as-key}\":1,\"z\":\"${cdref:queue:b}\",\"y\":\"${cdref:queue:a}\"}",

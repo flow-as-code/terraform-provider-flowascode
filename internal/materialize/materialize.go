@@ -24,7 +24,6 @@
 package materialize
 
 import (
-	"regexp"
 	"sort"
 	"strconv"
 	"strings"
@@ -341,9 +340,57 @@ func materialize(doc jsonv.Object, resolve resolver) (jsonv.Object, error) {
 	return finish(out).(jsonv.Object), nil
 }
 
-// leakedToken is the pattern materializeWithMap scans the finished content's
-// JSON text with: a token that is still there after substitution.
-var leakedToken = regexp.MustCompile(`\$\{cdref:[^}"]*\}`)
+// embeddedTokens is materialize.ts's embeddedTokens: every `${cdref:...}`
+// left in serialized content, each once, sorted by JavaScript's <: an opening
+// followed by a closing brace before any double quote, so a token never
+// spans a JSON string boundary. One forward pass, as the TypeScript's is
+// since flow-as-code 78b0a87 (it replaced a regex code scanning flagged as
+// polynomial): the closing position is looked up again only once an opening
+// has moved past it, and a search that ends at a quote moves on by one
+// opening, so the next opening after a match is sought past the match, never
+// inside it. Offsets are bytes here and UTF-16 code units there; the
+// delimiters are ASCII, so the slices agree.
+func embeddedTokens(text string) []string {
+	seen := map[string]bool{}
+	var found []string
+	open := strings.Index(text, flowdoc.TokenOpen)
+	closing := -1
+	for open != -1 {
+		body := open + len(flowdoc.TokenOpen)
+		if closing < body {
+			closing = body
+			for closing < len(text) && text[closing] != '}' && text[closing] != '"' {
+				closing++
+			}
+		}
+		if closing == len(text) {
+			break
+		}
+		if text[closing] == '}' {
+			if tok := text[open : closing+1]; !seen[tok] {
+				seen[tok] = true
+				found = append(found, tok)
+			}
+			open = indexFrom(text, flowdoc.TokenOpen, closing+1)
+		} else {
+			open = indexFrom(text, flowdoc.TokenOpen, open+1)
+		}
+	}
+	sort.SliceStable(found, func(i, j int) bool { return jsonv.LessUTF16(found[i], found[j]) })
+	return found
+}
+
+// indexFrom is JavaScript's text.indexOf(sub, from).
+func indexFrom(text, sub string, from int) int {
+	if from > len(text) {
+		return -1
+	}
+	i := strings.Index(text[from:], sub)
+	if i == -1 {
+		return -1
+	}
+	return from + i
+}
 
 const leakReason = "Token(s) survived materialization because they are embedded in a longer string. " +
 	"A reference must be the entire field value (FlowDoc invariant 4)."
@@ -390,17 +437,7 @@ func MaterializeWithMap(doc any, resourceMap map[string]string) (jsonv.Object, e
 		return nil, err
 	}
 
-	// [...new Set(matches)].sort(): distinct, in UTF-16 code unit order.
-	seen := map[string]bool{}
-	var leaked []string
-	for _, m := range leakedToken.FindAllString(string(jsonv.Encode(content, "")), -1) {
-		if !seen[m] {
-			seen[m] = true
-			leaked = append(leaked, m)
-		}
-	}
-	if len(leaked) > 0 {
-		sort.SliceStable(leaked, func(i, j int) bool { return jsonv.LessUTF16(leaked[i], leaked[j]) })
+	if leaked := embeddedTokens(string(jsonv.Encode(content, ""))); len(leaked) > 0 {
 		reason := leakReason
 		return nil, NewMaterializeError(leaked, &reason, nil)
 	}
