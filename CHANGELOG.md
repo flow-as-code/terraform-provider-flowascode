@@ -6,6 +6,48 @@ All notable changes to this provider. The format follows
 flow-as-code `conformance/` commit it vendors and the FlowDoc format version
 it reads.
 
+## Unreleased
+
+Vendors flow-as-code `conformance/` at
+`78b0a87d01992d532624d40a89686400c19b512c` (the merge of flow-as-code #35,
+the last of its Phase C batch) and reads FlowDoc 0.2.
+
+- Two lint rules, fifteen in all. `channel-restricted-action` is a warning
+  on `wait` and `show_view`, whose action pages restrict them to the chat
+  channel; a document does not record which channels its flow serves, so
+  the message names the channels and the page, and a chat-only flow
+  disables the rule in its `lint { disable }` block.
+  `attribute-set-before-read` is a warning on a `$.Attributes.<name>` read
+  in message text when no document in the planned set writes `<name>`
+  through `update_contact_attributes` on the current contact (a
+  `TargetContact` of `Related` does not count); it reads across the set
+  and says nothing for a resource planned alone, as `module-depth-5` does.
+- `maximum_length` in `get_participant_input`'s `input_validation.
+  custom_validation` is a String attribute; it was a Number. The catalog
+  now records the kind the console writes (`integerString`), so the
+  deployed content carries `MaximumLength` as a string. A configuration
+  that writes `maximum_length = 5` keeps working, since Terraform converts
+  the number. Upgrade note: a state written by 0.1.x reads without a state
+  upgrader (the number becomes its digits), and the first plan after
+  upgrading shows one in-place update of `content`, `content_hash` and
+  `flowdoc` for each flow or module with a stored-input block, the string
+  form being sent on apply; it is not a replacement. A flow whose
+  `store_input` is "False" is not affected. `InvalidPhoneNumber` is now a
+  builder error branch of `get_participant_input`, before
+  `NoMatchingError`.
+- The catalog gains `channels` on a modeled entry, `source` on any entry
+  (`adminguide` or `console-export`; absent means the Developer Guide) and
+  the category `other`, five unmodeled types known from Administrator Guide
+  block pages or a console export. Nothing in the resource schema changes
+  for them; a flow carrying one still plans as a `generic` action.
+- Reference scanning follows flow-as-code 78b0a87: a whole-value token that
+  follows an unterminated `${cdref:` in an earlier string of the same
+  document is now collected and, when nothing binds it, refused at plan
+  as unmapped; the regex it replaces skipped over it.
+- The vendored `hcl/emit` cases carry `outputs.tf` (flow-as-code C13); the
+  conformance run plans it beside `flows.tf` and holds each
+  `<name>_document_sha256` output to sha256 of the planned `flowdoc`.
+
 ## 0.1.2 (2026-09-30)
 
 Vendors flow-as-code `conformance/` at
