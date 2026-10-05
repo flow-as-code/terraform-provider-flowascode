@@ -1,6 +1,6 @@
 {
   "name": "appointment-lookup-transfer",
-  "description": "A caller in hours reaches the appointments queue after the lookup Lambda runs. The production queue is substituted so the simulated contact cannot reach a live agent.",
+  "description": "A caller in hours reaches the appointments queue after the lookup Lambda runs. The production queue is substituted so the simulated contact cannot reach a live agent. Nothing is pressed: the demo flow has no keypad block, and the dry run reports a key no block reads.",
   "entryPoint": {
     "Type": "VOICE_CALL",
     "VoiceCallEntryPointParameters": {
@@ -82,23 +82,7 @@
             }
           }
         },
-        "Actions": [
-          {
-            "Identifier": "observation-3-action-1",
-            "Type": "SendInstruction",
-            "Parameters": {
-              "ActionType": "SendInstruction",
-              "Actor": "Customer",
-              "Instruction": {
-                "Type": "DtmfInput",
-                "Properties": {
-                  "Value": "1"
-                }
-              }
-            },
-            "Transitions": {}
-          }
-        ],
+        "Actions": [],
         "Transitions": {
           "NextObservations": [
             "observation-4"
