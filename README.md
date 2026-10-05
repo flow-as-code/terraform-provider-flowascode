@@ -113,7 +113,7 @@ sequenceDiagram
   TF->>P: validate the configuration
   P-->>TF: shape errors, each with a contract code
   TF->>P: plan the resource
-  Note right of P: build the FlowDoc (flowdoc)<br/>validate it against the schema<br/>run the 13 lint rules<br/>bind refs, materialize content
+  Note right of P: build the FlowDoc (flowdoc)<br/>validate it against the schema<br/>run the 15 lint rules<br/>bind refs, materialize content
   P-->>TF: planned flowdoc, content, content_hash
 
   Note over TF,C: terraform apply
