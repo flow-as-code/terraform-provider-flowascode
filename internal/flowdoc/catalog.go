@@ -142,8 +142,23 @@ func (f *FlowTypes) UnmarshalJSON(b []byte) error {
 }
 
 // ActionCategory is catalog.ts's ActionCategory: contact, participant,
-// flowControl or interaction.
+// flowControl or interaction, the four Developer Guide category pages, or
+// other, a type no category page lists, known from an Administrator Guide
+// block page or a console export (see CatalogSource).
 type ActionCategory string
+
+// CatalogSource is catalog.ts's CatalogSource: where a type's Doc comes
+// from. "" reads devguide, the entry's page is on one of the four Developer
+// Guide category pages; adminguide is an Administrator Guide block page that
+// names the Type; console-export is a Type no AWS page documents, known from
+// a console export kept under conformance/, whose Doc is that export's
+// repository path.
+type CatalogSource string
+
+// Channel is catalog.ts's Channel: a contact channel as the service's
+// Channel enum spells it (VOICE, CHAT, TASK or EMAIL).
+// https://docs.aws.amazon.com/connect/latest/APIReference/API_Contact.html
+type Channel string
 
 // ModeledAction is catalog.ts's ModeledAction.
 // CatalogShape is catalog.ts's CatalogShape: a shape an action must take
@@ -172,10 +187,18 @@ type ModeledAction struct {
 	Category ActionCategory `json:"category"`
 	Doc      string         `json:"doc"`
 	Modeled  bool           `json:"modeled"`
+	Source   CatalogSource  `json:"source,omitempty"`
 	// The HCL sub-block name, snakeCaseKey of the Type.
-	Block       string              `json:"block"`
-	Terminal    bool                `json:"terminal"`
-	FlowTypes   FlowTypes           `json:"flowTypes"`
+	Block     string    `json:"block"`
+	Terminal  bool      `json:"terminal"`
+	FlowTypes FlowTypes `json:"flowTypes"`
+	// The channels the action's page says it supports, when it names any
+	// (Wait and ShowView: "only ... the chat channel"). Nil means the page
+	// states no channel restriction; it is never an empty list. A document
+	// does not record which channels its flow serves, so
+	// channel-restricted-action reports a warning, not an error, wherever
+	// such an action appears.
+	Channels    []Channel           `json:"channels,omitempty"`
 	Parameters  []CatalogParameter  `json:"parameters"`
 	Constraints []CatalogConstraint `json:"constraints,omitempty"`
 	// Parameter-dependent shapes; see CatalogShape.
@@ -198,6 +221,7 @@ type CatalogAction struct {
 	Category ActionCategory
 	Doc      string
 	Modeled  bool
+	Source   CatalogSource
 	Model    *ModeledAction
 }
 
@@ -369,17 +393,18 @@ func ParseCatalog(b []byte) (*ActionCatalog, error) {
 			if err := strictUnmarshal(raw, &model); err != nil {
 				return nil, fmt.Errorf("actions.%s: %w", m.Key, err)
 			}
-			entry.Category, entry.Doc, entry.Model = model.Category, model.Doc, &model
+			entry.Category, entry.Doc, entry.Source, entry.Model = model.Category, model.Doc, model.Source, &model
 		} else {
 			var plain struct {
 				Category ActionCategory `json:"category"`
 				Doc      string         `json:"doc"`
 				Modeled  bool           `json:"modeled"`
+				Source   CatalogSource  `json:"source,omitempty"`
 			}
 			if err := strictUnmarshal(raw, &plain); err != nil {
 				return nil, fmt.Errorf("actions.%s: %w", m.Key, err)
 			}
-			entry.Category, entry.Doc = plain.Category, plain.Doc
+			entry.Category, entry.Doc, entry.Source = plain.Category, plain.Doc, plain.Source
 		}
 		c.byType[m.Key] = len(c.Actions)
 		c.Actions = append(c.Actions, entry)
@@ -514,6 +539,16 @@ func AnnouncePaths(actionType string) []string {
 		return e.Announces
 	}
 	return []string{}
+}
+
+// ChannelRestriction is catalog.ts's channelRestriction: the channels an
+// action of this type is restricted to; ok is false when its page names
+// none, or the type is not modeled.
+func ChannelRestriction(actionType string) ([]Channel, bool) {
+	if e := ModeledEntry(actionType); e != nil && e.Channels != nil {
+		return e.Channels, true
+	}
+	return nil, false
 }
 
 // RecordingEnablerPath is catalog.ts's recordingEnablerPath: the list whose

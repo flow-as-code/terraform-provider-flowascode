@@ -31,9 +31,48 @@ type RefEntry struct {
 // TokenPattern is refs.ts's TOKEN_PATTERN.
 var TokenPattern = regexp.MustCompile(`^\$\{cdref:(queue|hours|lambda|lex|prompt|flow|module|view):([a-z0-9]+(?:-[a-z0-9]+)*)(?:@([a-z0-9]+(?:-[a-z0-9]+)*))?\}$`)
 
-// tokenScan is refs.ts's TOKEN_SCAN, which matches tokens anywhere in a
-// string, for building the refs index.
-var tokenScan = regexp.MustCompile(`\$\{cdref:[a-z]+:[^}]+\}`)
+// TokenOpen is refs.ts's TOKEN_OPEN: where a token can begin; ParseToken
+// decides whether what follows is one.
+const TokenOpen = "${cdref:"
+
+// indexFrom is JavaScript's text.indexOf(sub, from).
+func indexFrom(text, sub string, from int) int {
+	if from > len(text) {
+		return -1
+	}
+	i := strings.Index(text[from:], sub)
+	if i == -1 {
+		return -1
+	}
+	return from + i
+}
+
+// tokenCandidates is refs.ts's tokenCandidates: every candidate token in a
+// string, for building the refs index, each `${cdref:` up to the next `}`.
+// A hand-written scan rather than a regex, as the TypeScript's is since
+// flow-as-code 78b0a87: one pass, each opening visited once, and ParseToken
+// is the only judge of what is a token. Both searches only ever move
+// forward: the next opening starts after this one, and the closing brace is
+// looked up again only once the opening has passed it, so a run of openings
+// sharing one close costs one search. Offsets are bytes here and UTF-16
+// code units there; the delimiters are ASCII, so the slices agree.
+func tokenCandidates(text string) []string {
+	var out []string
+	open := strings.Index(text, TokenOpen)
+	closing := -1
+	for open != -1 {
+		body := open + len(TokenOpen)
+		if closing < body {
+			closing = indexFrom(text, "}", body)
+		}
+		if closing == -1 {
+			return out
+		}
+		out = append(out, text[open:closing+1])
+		open = indexFrom(text, TokenOpen, open+1)
+	}
+	return out
+}
 
 var jsonPathPattern = regexp.MustCompile(`^\$\.[A-Za-z0-9_$.[\]'-]+$`)
 
@@ -168,14 +207,16 @@ func DescribeMissingRefKey(e RefEntry) string {
 // token with JavaScript's < (jsonv.LessUTF16). Like the TypeScript, it scans
 // the compact JSON text of the value rather than walking its strings, so it
 // agrees in the two places a walk would not: a token spelled as an object key
-// is collected, and a scan that runs from an unterminated `${cdref:` across a
-// string boundary swallows the text up to the next `}` exactly as the
-// TypeScript's does. The text is written in JavaScript's key order (jsOrdered)
-// because that is what JSON.stringify writes for a parsed object.
+// is collected, and a candidate that runs from an unterminated `${cdref:`
+// across a string boundary is cut at the next `}` and refused by ParseToken,
+// while a token that begins inside that span is still seen, because the next
+// candidate starts one character after the last opening, not after its
+// close. The text is written in JavaScript's key order (jsOrdered) because
+// that is what JSON.stringify writes for a parsed object.
 func CollectRefs(value any) []RefEntry {
 	text := string(jsonv.Encode(jsOrdered(value), ""))
 	found := map[string]RefEntry{}
-	for _, raw := range tokenScan.FindAllString(text, -1) {
+	for _, raw := range tokenCandidates(text) {
 		if e, ok := ParseToken(raw); ok {
 			found[e.Token] = e
 		}

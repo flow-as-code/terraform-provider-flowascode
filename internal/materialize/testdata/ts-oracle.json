@@ -1,5 +1,5 @@
 {
- "generatedFrom": "flow-as-code e414239312cb586c1ca82e2ec4697eb9e94b5b11, packages/core/src/materialize.ts built with tsc",
+ "generatedFrom": "flow-as-code 78b0a87d01992d532624d40a89686400c19b512c, packages/core/src/materialize.ts built with tsc",
  "materialize": [
   {
    "name": "demo-full",
@@ -892,8 +892,20 @@
    "doc": "{\"flowdoc\":\"0.2\",\"kind\":\"flow\",\"name\":\"small\",\"connectType\":\"CONTACT_FLOW\",\"content\":{\"Version\":\"2019-10-30\",\"StartAction\":\"a\",\"Actions\":[{\"Identifier\":\"a\",\"Type\":\"MessageParticipant\",\"Parameters\":{\"A\":\"${cdref:queue:x\",\"B\":\"${cdref:queue:y}\",\"C\":\"keep\"},\"Transitions\":{\"NextAction\":\"b\",\"Errors\":[],\"Conditions\":[]}},{\"Identifier\":\"b\",\"Type\":\"DisconnectParticipant\",\"Parameters\":{},\"Transitions\":{}}]},\"layout\":{\"a\":{\"x\":150,\"y\":40},\"b\":{\"x\":410,\"y\":50}}}",
    "map": "{}",
    "calls": [],
-   "content": "{\"Version\":\"2019-10-30\",\"StartAction\":\"a\",\"Metadata\":{\"EntryPointPosition\":{\"x\":50,\"y\":40},\"ActionMetadata\":{\"a\":{\"Position\":{\"x\":150,\"y\":40}},\"b\":{\"Position\":{\"x\":410,\"y\":50}}}},\"Actions\":[{\"Identifier\":\"a\",\"Type\":\"MessageParticipant\",\"Parameters\":{\"A\":\"${cdref:queue:x\",\"C\":\"keep\"},\"Transitions\":{\"NextAction\":\"b\",\"Errors\":[],\"Conditions\":[]}},{\"Identifier\":\"b\",\"Type\":\"DisconnectParticipant\",\"Parameters\":{},\"Transitions\":{}}]}",
-   "serialized": "{\n  \"Version\": \"2019-10-30\",\n  \"StartAction\": \"a\",\n  \"Metadata\": {\n    \"EntryPointPosition\": {\n      \"x\": 50,\n      \"y\": 40\n    },\n    \"ActionMetadata\": {\n      \"a\": {\n        \"Position\": {\n          \"x\": 150,\n          \"y\": 40\n        }\n      },\n      \"b\": {\n        \"Position\": {\n          \"x\": 410,\n          \"y\": 50\n        }\n      }\n    }\n  },\n  \"Actions\": [\n    {\n      \"Identifier\": \"a\",\n      \"Type\": \"MessageParticipant\",\n      \"Parameters\": {\n        \"A\": \"${cdref:queue:x\",\n        \"C\": \"keep\"\n      },\n      \"Transitions\": {\n        \"NextAction\": \"b\",\n        \"Errors\": [],\n        \"Conditions\": []\n      }\n    },\n    {\n      \"Identifier\": \"b\",\n      \"Type\": \"DisconnectParticipant\",\n      \"Parameters\": {},\n      \"Transitions\": {}\n    }\n  ]\n}\n"
+   "error": {
+    "name": "MaterializeError",
+    "message": "Cannot materialize: 1 unmapped token(s): ${cdref:queue:y} Key each one by its token (\"${cdref:queue:y}\"), by type and name (\"queue:y\"), or by the variable the terraform emitter writes (\"queue_y_arn\").",
+    "missingTokens": [
+     "${cdref:queue:y}"
+    ],
+    "missingRefs": [
+     {
+      "token": "${cdref:queue:y}",
+      "type": "queue",
+      "name": "y"
+     }
+    ]
+   }
   },
   {
    "name": "swallowed-token-in-array",
@@ -901,8 +913,20 @@
    "doc": "{\"flowdoc\":\"0.2\",\"kind\":\"flow\",\"name\":\"small\",\"connectType\":\"CONTACT_FLOW\",\"content\":{\"Version\":\"2019-10-30\",\"StartAction\":\"a\",\"Actions\":[{\"Identifier\":\"a\",\"Type\":\"MessageParticipant\",\"Parameters\":{\"L\":[\"${cdref:queue:x\",\"${cdref:queue:y}\",\"z\"]},\"Transitions\":{\"NextAction\":\"b\",\"Errors\":[],\"Conditions\":[]}},{\"Identifier\":\"b\",\"Type\":\"DisconnectParticipant\",\"Parameters\":{},\"Transitions\":{}}]},\"layout\":{\"a\":{\"x\":150,\"y\":40},\"b\":{\"x\":410,\"y\":50}}}",
    "map": "{}",
    "calls": [],
-   "content": "{\"Version\":\"2019-10-30\",\"StartAction\":\"a\",\"Metadata\":{\"EntryPointPosition\":{\"x\":50,\"y\":40},\"ActionMetadata\":{\"a\":{\"Position\":{\"x\":150,\"y\":40}},\"b\":{\"Position\":{\"x\":410,\"y\":50}}}},\"Actions\":[{\"Identifier\":\"a\",\"Type\":\"MessageParticipant\",\"Parameters\":{\"L\":[\"${cdref:queue:x\",null,\"z\"]},\"Transitions\":{\"NextAction\":\"b\",\"Errors\":[],\"Conditions\":[]}},{\"Identifier\":\"b\",\"Type\":\"DisconnectParticipant\",\"Parameters\":{},\"Transitions\":{}}]}",
-   "serialized": "{\n  \"Version\": \"2019-10-30\",\n  \"StartAction\": \"a\",\n  \"Metadata\": {\n    \"EntryPointPosition\": {\n      \"x\": 50,\n      \"y\": 40\n    },\n    \"ActionMetadata\": {\n      \"a\": {\n        \"Position\": {\n          \"x\": 150,\n          \"y\": 40\n        }\n      },\n      \"b\": {\n        \"Position\": {\n          \"x\": 410,\n          \"y\": 50\n        }\n      }\n    }\n  },\n  \"Actions\": [\n    {\n      \"Identifier\": \"a\",\n      \"Type\": \"MessageParticipant\",\n      \"Parameters\": {\n        \"L\": [\n          \"${cdref:queue:x\",\n          null,\n          \"z\"\n        ]\n      },\n      \"Transitions\": {\n        \"NextAction\": \"b\",\n        \"Errors\": [],\n        \"Conditions\": []\n      }\n    },\n    {\n      \"Identifier\": \"b\",\n      \"Type\": \"DisconnectParticipant\",\n      \"Parameters\": {},\n      \"Transitions\": {}\n    }\n  ]\n}\n"
+   "error": {
+    "name": "MaterializeError",
+    "message": "Cannot materialize: 1 unmapped token(s): ${cdref:queue:y} Key each one by its token (\"${cdref:queue:y}\"), by type and name (\"queue:y\"), or by the variable the terraform emitter writes (\"queue_y_arn\").",
+    "missingTokens": [
+     "${cdref:queue:y}"
+    ],
+    "missingRefs": [
+     {
+      "token": "${cdref:queue:y}",
+      "type": "queue",
+      "name": "y"
+     }
+    ]
+   }
   },
   {
    "name": "swallowed-metadata",
@@ -911,8 +935,18 @@
    "map": "{}",
    "calls": [],
    "error": {
-    "name": "TypeError",
-    "message": "Cannot read properties of undefined (reading 'ActionMetadata')"
+    "name": "MaterializeError",
+    "message": "Cannot materialize: 1 unmapped token(s): ${cdref:queue:x} Key each one by its token (\"${cdref:queue:x}\"), by type and name (\"queue:x\"), or by the variable the terraform emitter writes (\"queue_x_arn\").",
+    "missingTokens": [
+     "${cdref:queue:x}"
+    ],
+    "missingRefs": [
+     {
+      "token": "${cdref:queue:x}",
+      "type": "queue",
+      "name": "x"
+     }
+    ]
    }
   },
   {
@@ -921,8 +955,20 @@
    "doc": "{\"flowdoc\":\"0.2\",\"kind\":\"flow\",\"name\":\"s\",\"connectType\":\"CONTACT_FLOW\",\"content\":{\"Version\":\"2019-10-30\",\"StartAction\":\"${cdref:a:b\",\"Settings\":\"${cdref:queue:x}\",\"Actions\":[]}}",
    "map": "{}",
    "calls": [],
-   "content": "{\"Version\":\"2019-10-30\",\"StartAction\":\"${cdref:a:b\",\"Metadata\":{\"EntryPointPosition\":{\"x\":0,\"y\":0},\"ActionMetadata\":{}},\"Actions\":[]}",
-   "serialized": "{\n  \"Version\": \"2019-10-30\",\n  \"StartAction\": \"${cdref:a:b\",\n  \"Metadata\": {\n    \"EntryPointPosition\": {\n      \"x\": 0,\n      \"y\": 0\n    },\n    \"ActionMetadata\": {}\n  },\n  \"Actions\": []\n}\n"
+   "error": {
+    "name": "MaterializeError",
+    "message": "Cannot materialize: 1 unmapped token(s): ${cdref:queue:x} Key each one by its token (\"${cdref:queue:x}\"), by type and name (\"queue:x\"), or by the variable the terraform emitter writes (\"queue_x_arn\").",
+    "missingTokens": [
+     "${cdref:queue:x}"
+    ],
+    "missingRefs": [
+     {
+      "token": "${cdref:queue:x}",
+      "type": "queue",
+      "name": "x"
+     }
+    ]
+   }
   },
   {
    "name": "swallowed-metadata-key",
@@ -930,8 +976,20 @@
    "doc": "{\"flowdoc\":\"0.2\",\"kind\":\"flow\",\"name\":\"s\",\"connectType\":\"CONTACT_FLOW\",\"content\":{\"Version\":\"2019-10-30\",\"StartAction\":\"${cdref:a:b\",\"Metadata\":{\"EntryPointPosition\":\"${cdref:queue:x}\",\"z\":1},\"Actions\":[]}}",
    "map": "{}",
    "calls": [],
-   "content": "{\"Version\":\"2019-10-30\",\"StartAction\":\"${cdref:a:b\",\"Metadata\":{\"EntryPointPosition\":{\"x\":0,\"y\":0},\"z\":1,\"ActionMetadata\":{}},\"Actions\":[]}",
-   "serialized": "{\n  \"Version\": \"2019-10-30\",\n  \"StartAction\": \"${cdref:a:b\",\n  \"Metadata\": {\n    \"EntryPointPosition\": {\n      \"x\": 0,\n      \"y\": 0\n    },\n    \"ActionMetadata\": {},\n    \"z\": 1\n  },\n  \"Actions\": []\n}\n"
+   "error": {
+    "name": "MaterializeError",
+    "message": "Cannot materialize: 1 unmapped token(s): ${cdref:queue:x} Key each one by its token (\"${cdref:queue:x}\"), by type and name (\"queue:x\"), or by the variable the terraform emitter writes (\"queue_x_arn\").",
+    "missingTokens": [
+     "${cdref:queue:x}"
+    ],
+    "missingRefs": [
+     {
+      "token": "${cdref:queue:x}",
+      "type": "queue",
+      "name": "x"
+     }
+    ]
+   }
   },
   {
    "name": "autolayout-errors-object",

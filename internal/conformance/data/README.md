@@ -14,11 +14,16 @@ layout/<case>/doc.flowdoc.json    a document whose actions the algorithm lays ou
 layout/<case>/expected.layout.json the positions it must produce, byte-exact
 flow-language/actions.md          Connect action types, shapes, and cited doc URLs
 flow-language/catalog.json        the same facts as data; a second implementation generates its schema from it
+flow-language/probes/<rule>/<name>.json  a create probe behind a numbered rule, every id a placeholder (probes/README.md)
+flow-language/probes/<rule>/results.json what the service said to each probe, with the UTC time and Region
 demo/appointment-line.flowdoc.json  the canonical demo flow
 lint/README.md                    fixture format and the rule for adding one
 lint/<rule-id>/pass-*.json        FlowDoc producing no finding for the rule
 lint/<rule-id>/fail-*.json        FlowDoc plus expected findings [{rule, blockId, messageIncludes}]
 roundtrip/<case>/doc.flowdoc.json codegen->synth must reproduce the doc (modulo meta)
+codegen/<case>/case.json          description, the document (relative path), codegen options, an optional previous source
+codegen/<case>/previous.flow.ts   optional; the source on disk whose banner and @keep comments survive the regeneration
+codegen/<case>/expected.flow.ts   the generated source, byte-exact
 emit-tf/<case>/case.json          emitter case description, inputs, and validate expectation
 emit-tf/<case>/<name>.flowdoc.json  optional; input documents a case does not borrow from demo/ or roundtrip/
 emit-tf/<case>/address-map.json   optional; reference key -> terraform address expression
@@ -51,6 +56,10 @@ schema/scenario-0.1.schema.json          machine-readable simulate scenario defi
 simulate/<case>/scenario.json            authored simulate scenario
 simulate/<case>/expected.testcase.json   compiled CreateTestCase input, tokens still in place
 simulate/invalid/scenarios.json          scenarios that must be rejected, with finding paths
+simulate/dry-run/flows/*.flowdoc.json    the flow set the offline dry run checks scenarios against
+simulate/dry-run/resource-map.json       the map it resolves tokens the set lacks through (keys only)
+simulate/dry-run/cases/<case>/scenario.json  a valid scenario held against that set
+simulate/dry-run/cases/<case>/expected.problems.json  the [{path, message}] dryRunScenario must report, [] for a clean case
 simulate/report/run.json                 a simulation run
 simulate/report/expected.junit.xml       JUnit reporter golden, byte-compared
 simulate/report/expected.report.json     JSON reporter golden, byte-compared
@@ -68,13 +77,27 @@ token resolution are separate steps, so the golden never carries an ARN. The
 compiled `Content` shape is the one artifact here that no offline test can
 confirm, because CreateTestCase validates it server-side.
 
+The canonical simulate cases target `demo/appointment-line.flowdoc.json`,
+except `keypad-press`, written for `simulate/dry-run/flows/` (the one flow
+set here with a keypad block), which is the golden for a compiled DtmfInput
+SendInstruction; every canonical case dry-runs clean against the set it is
+written for. A simulate dry-run case is a scenario the schema and
+`validateScenario` both accept, held against `dry-run/flows/` with `dry-run/resource-map.json`: the
+findings must equal `expected.problems.json` exactly, path and message. The
+map's values are never read, only its keys, which is why the fixture shows
+each of the three key forms once.
+
 An emit-tf case is a whole emitter run. `case.json` carries a `description`, a
 `docs` array of FlowDoc paths relative to the case directory (a case may point
 at `../../demo/` or `../../roundtrip/` rather than copy a document), optional
 `options` passed to the emitter, and `validate`, which is `pass`, `fail`, or
 `skip`. `address-map.json`, when present, becomes `options.addressMap`. The
 emitted files must equal `expected/` byte for byte, so the tree also pins the
-file set: an added or dropped output file fails the case.
+file set: an added or dropped output file fails the case. `unbound` and
+`unusedMapKeys` say what the run reports beside its files: the reference keys
+the set resolves nowhere (placeholders here, `null` bindings in the hcl emit
+cases) and the address map keys no reference in the set uses; the TypeScript
+tests hold both, and a provider that emits may too.
 
 `validate/` is not emitter output. It holds the minimum provider configuration
 and stub resources a `terraform validate` or `tofu validate` run needs for the
@@ -109,7 +132,10 @@ the `NoMatchingCondition` copy the class writes, which the service accepts
 and which must stay GenericBlock (`compare-unmirrored-next`), a flow
 of `GetParticipantInput` menus with Text, SSML and PromptId bodies
 (`dtmf-menu`), a `GetParticipantInput` whose key branches twice, which the
-builder refuses and so must stay GenericBlock (`repeated-key`), edge cases
+builder refuses and so must stay GenericBlock (`repeated-key`), a module whose description runs past the print width
+and a value under a key wide enough for Prettier to break after it
+(`long-description`, which pins the two shapes that escaped the fixed-point
+test until 2026-10-05), edge cases
 (SSML, PromptId refs, Compare branches, JSONPath refs, hand-placed
 layout, an explicit start, and a modeled Type that must fall back to
 GenericBlock), a module of the contact-routing actions
@@ -139,7 +165,11 @@ and a view shown with data, a hidden transcript and a time limit, plus a bare
 one); and a flow of the recording block (`recording-analytics`: voice
 recording of both participants with IVR recording, a voice-only form, a
 screen-only form (the service takes one form per block), and the chat
-analytics form the builder leaves generic, with its third error).
+analytics form the builder leaves generic, with its third error); and a flow
+of the stored-input form of `GetParticipantInput` (`stored-input`: digits
+kept by length, a local phone number with its country code and its
+`InvalidPhoneNumber` branch, and an E.164 number, with Text, PromptId and
+SSML bodies; the menu form stays in `dtmf-menu`).
 
 An HCL case is a companion file and the document it stands for.
 `conformance/hcl/README.md` is the contract both the TypeScript writer and
@@ -163,7 +193,9 @@ Both implementations:
 - `schema`: the FlowDoc schemas; the mutation cases in
   `packages/core/src/conformance.test.ts` are the rejections to reproduce.
 - `flow-language`: `catalog.json` is the source a second implementation
-  generates its schema and lint tables from; `actions.md` is its prose.
+  generates its schema and lint tables from; `actions.md` is its prose, and
+  `probes/` holds the inputs behind its numbered rules, which the provider
+  embeds and does not read.
 - `lint`: every rule's pass and fail fixtures, findings matched by rule,
   block and message fragment.
 - `materialize`: deployable content from a document and a reference map.
@@ -178,6 +210,8 @@ Both implementations:
 TypeScript only:
 
 - `emit-tf`: the `@flow-as-code/tf` emitter's goldens.
+- `codegen`: the TypeScript companion's text for options a round trip does
+  not reach (the banner line, what a previous source carries).
 - `simulate`: scenario compilation and reporting.
 - `migrate`: 0.1 documents and the bytes `migrateFlowDoc` turns them into.
 

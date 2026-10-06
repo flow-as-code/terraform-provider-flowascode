@@ -220,7 +220,7 @@ func TestCatalogLoads(t *testing.T) {
 	if c.Catalog != "0.1" || c.FlowLanguage.Version != FlowLanguageVersion {
 		t.Errorf("catalog %q, flow language %q", c.Catalog, c.FlowLanguage.Version)
 	}
-	counts := map[ActionCategory]int{"contact": 27, "participant": 6, "flowControl": 15, "interaction": 8}
+	counts := map[ActionCategory]int{"contact": 27, "participant": 6, "flowControl": 15, "interaction": 8, "other": 5}
 	total := 0
 	for _, cat := range c.Categories {
 		total += len(cat.Types)
@@ -268,6 +268,40 @@ func TestCatalogLoads(t *testing.T) {
 			}
 		}
 	}
+	// The channel restriction (C03) is on Wait and ShowView alone, CHAT only,
+	// and the ChannelRestriction helper reads nil as "none", as
+	// channelRestriction reads undefined.
+	restricted := map[string][]Channel{}
+	for _, a := range c.Actions {
+		if a.Model != nil && a.Model.Channels != nil {
+			restricted[a.Type] = a.Model.Channels
+		}
+	}
+	if want := map[string][]Channel{"Wait": {"CHAT"}, "ShowView": {"CHAT"}}; !reflect.DeepEqual(restricted, want) {
+		t.Errorf("channel restrictions %v, want %v", restricted, want)
+	}
+	if got, ok := ChannelRestriction("Wait"); !ok || !reflect.DeepEqual(got, []Channel{"CHAT"}) {
+		t.Errorf("ChannelRestriction(Wait) = %v, %v", got, ok)
+	}
+	if got, ok := ChannelRestriction("Compare"); ok || got != nil {
+		t.Errorf("ChannelRestriction(Compare) = %v, %v", got, ok)
+	}
+	// Every entry under other carries a source (D00); nothing under the four
+	// Developer Guide categories does.
+	for _, a := range c.Actions {
+		if (a.Category == "other") != (a.Source != "") {
+			t.Errorf("%s: category %s with source %q", a.Type, a.Category, a.Source)
+		}
+		if a.Modeled && a.Source != "" {
+			t.Errorf("%s: a modeled type carries source %q", a.Type, a.Source)
+		}
+	}
+	if e := CatalogEntry("TransferParticipantToThirdParty"); e == nil || e.Source != "console-export" || e.Doc != "conformance/roundtrip/unknown-actions/doc.flowdoc.json" {
+		t.Errorf("TransferParticipantToThirdParty decoded as %+v", e)
+	}
+	if e := CatalogEntry("RouteContactToAgent"); e == nil || e.Source != "adminguide" {
+		t.Errorf("RouteContactToAgent decoded as %+v", e)
+	}
 	lex := ModeledEntry("ConnectParticipantWithLexBot")
 	for _, p := range lex.Parameters {
 		if p.Key == "LexTimeoutSeconds" {
@@ -289,6 +323,10 @@ func TestCatalogDecodingIsStrict(t *testing.T) {
 		"an unknown top-level key": {`"catalog": "0.1",`, `"catalog": "0.1", "extra": 1,`},
 		"a flowTypes word":         {`"flowTypes": "unrestricted"`, `"flowTypes": "sometimes"`},
 		"an unknown error key":     {`"builder": true`, `"builder": true, "why": "x"`},
+		"an unknown unmodeled key": {`"source": "adminguide"`, `"source": "adminguide", "note": "x"`},
+		"a channels word": {`"channels": [
+        "CHAT"
+      ]`, `"channels": "CHAT"`},
 	} {
 		mutated := strings.Replace(string(raw), edit[0], edit[1], 1)
 		if mutated == string(raw) {

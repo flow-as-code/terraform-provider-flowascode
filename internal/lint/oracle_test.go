@@ -13,8 +13,8 @@ import (
 )
 
 // testdata/ts-oracle.json is @flow-as-code/core's own output, recorded by
-// running packages/core/dist (built from flow-as-code e414239; lint is
-// unchanged since) under Node 26.8.1, ICU 78.3, locale en-US:
+// running packages/core/dist (built from flow-as-code 78b0a87, the vendored
+// commit) under Node 26.10.0, ICU 78.3, locale en-US:
 //
 //   - fixtures: toJson, toText and hasBlockingFindings of lint over every
 //     conformance/lint fixture and the demo, every rule, not only the
@@ -68,8 +68,8 @@ func loadOracle(t *testing.T) oracle {
 
 func TestOracleFixtures(t *testing.T) {
 	o := loadOracle(t)
-	if len(o.Fixtures) != 92 {
-		t.Fatalf("oracle holds %d fixtures, want the 91 lint fixtures and the demo", len(o.Fixtures))
+	if len(o.Fixtures) != 100 {
+		t.Fatalf("oracle holds %d fixtures, want the 99 lint fixtures and the demo", len(o.Fixtures))
 	}
 	for _, fx := range o.Fixtures {
 		parsed := readJSON(t, fx.File)

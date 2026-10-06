@@ -76,9 +76,10 @@ func TestRegistry(t *testing.T) {
 	}
 	// Spelled out: deleting a rule and its fixtures together must not pass.
 	want := []string{
-		"action-allowed-in-flow-type", "action-count", "conditional-shape", "error-branches", "module-depth-5",
-		"next-action-required", "no-literal-arn", "no-unresolved-token", "prompt-length-3000", "reachable-blocks",
-		"recording-consent-before-record", "terminal-blocks", "unique-names",
+		"action-allowed-in-flow-type", "action-count", "attribute-set-before-read", "channel-restricted-action",
+		"conditional-shape", "error-branches", "module-depth-5", "next-action-required", "no-literal-arn",
+		"no-unresolved-token", "prompt-length-3000", "reachable-blocks", "recording-consent-before-record",
+		"terminal-blocks", "unique-names",
 	}
 	if !reflect.DeepEqual(sorted, want) {
 		t.Fatalf("registry %v, want %v", sorted, want)
@@ -88,7 +89,7 @@ func TestRegistry(t *testing.T) {
 		"no-literal-arn", "no-unresolved-token", "reachable-blocks", "error-branches",
 		"terminal-blocks", "module-depth-5", "prompt-length-3000", "recording-consent-before-record",
 		"unique-names", "action-allowed-in-flow-type", "action-count", "conditional-shape",
-		"next-action-required",
+		"next-action-required", "channel-restricted-action", "attribute-set-before-read",
 	}
 	if !reflect.DeepEqual(registered, order) {
 		t.Fatalf("registry order %v, want %v", registered, order)
@@ -174,8 +175,8 @@ func TestLintConformance(t *testing.T) {
 			}
 		}
 	}
-	if total != 91 {
-		t.Errorf("ran %d lint fixtures, the vendored tree has 91", total)
+	if total != 99 {
+		t.Errorf("ran %d lint fixtures, the vendored tree has 99", total)
 	}
 }
 

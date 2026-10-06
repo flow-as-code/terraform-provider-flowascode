@@ -4,12 +4,16 @@
 package provider
 
 import (
+	"crypto/sha256"
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"regexp"
 	"sort"
 	"strings"
 	"testing"
+
+	"github.com/flow-as-code/terraform-provider-flowascode/internal/connectapi"
 )
 
 // Stand-ins for what a case refers to but this test does not load. The
@@ -157,8 +161,24 @@ func TestHCLParseCases(t *testing.T) {
 	}
 }
 
+// outputIdent is the name an emit case's outputs.tf gives a document (hcl
+// README rule 29): hyphens as underscores, a leading digit prefixed by an
+// underscore.
+func outputIdent(name string) string {
+	ident := strings.ReplaceAll(name, "-", "_")
+	if ident != "" && ident[0] >= '0' && ident[0] <= '9' {
+		ident = "_" + ident
+	}
+	return ident
+}
+
 // Every flow and module resource in an emit case's flows.tf plans to its
-// document (conformance/hcl/README.md: emit, in the sense of rule 26).
+// document (conformance/hcl/README.md: emit, in the sense of rule 26), with
+// the case's outputs.tf in the same root: every output then resolves to a
+// resource flows.tf declares, and the `<name>_document_sha256` output (rule
+// 29) is known at plan and is sha256 of the planned flowdoc, the promise the
+// promotion gate rests on. The ARN outputs are unknown until apply and are
+// not read.
 func TestHCLEmitCases(t *testing.T) {
 	terraformBinary(t)
 	for _, name := range caseNames(t, "hcl/emit") {
@@ -171,7 +191,7 @@ func TestHCLEmitCases(t *testing.T) {
 				t.Fatal(err)
 			}
 			flows := standalone(string(readVendored(t, dir+"/expected/flows.tf")))
-			files := map[string]string{"main.tf": flows}
+			files := map[string]string{"main.tf": flows, "outputs.tf": string(readVendored(t, dir+"/expected/outputs.tf"))}
 			for _, docPath := range spec.Docs {
 				doc := viewedFlowDoc(t, pathJoin(dir, docPath))
 				var head struct {
@@ -186,12 +206,16 @@ func TestHCLEmitCases(t *testing.T) {
 					typ = "flowascode_contact_flow_module"
 				}
 				address := typ + "." + strings.ReplaceAll(head.Name, "-", "_")
-				after, failed := planFiles(t, files, address)
+				p, failed := planFilesWith(t, connectapi.NewFake(), files, address)
 				if failed != "" {
 					t.Fatalf("plan failed:\n%s", failed)
 				}
-				if after["flowdoc"] != doc {
-					t.Errorf("%s: planned flowdoc differs from %s\ngot:\n%v\nwant:\n%s", address, docPath, after["flowdoc"], doc)
+				if p.After["flowdoc"] != doc {
+					t.Errorf("%s: planned flowdoc differs from %s\ngot:\n%v\nwant:\n%s", address, docPath, p.After["flowdoc"], doc)
+				}
+				sum := sha256.Sum256([]byte(doc))
+				if name := outputIdent(head.Name) + "_document_sha256"; p.Outputs[name] != hex.EncodeToString(sum[:]) {
+					t.Errorf("output %s planned as %v, want sha256 of the document %s", name, p.Outputs[name], hex.EncodeToString(sum[:]))
 				}
 			}
 		})
