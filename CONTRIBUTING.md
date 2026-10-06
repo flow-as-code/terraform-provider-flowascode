@@ -28,6 +28,15 @@ The acceptance lane (`TF_ACC=1`) runs against a live Amazon Connect sandbox and
 gates every pull request; a fork's pull request cannot reach it, so a
 maintainer re-runs it from a branch in this repository.
 
+The sandbox-instance features that flow-as-code's Phase D probe sweeps need
+(a Customer Profiles domain, a Cases domain, an AI agents assistant, a task
+template, a predefined attribute, live media streaming, a message-processor
+Lambda and one kept US DID) are a Terraform root under
+`acceptance/sandbox-features/`. It is operator-only: its README says what each
+feature is for, what it costs, how its outputs feed the probe runner and the
+teardown order. The acceptance lane never runs it, and its state stays on the
+operator's machine.
+
 ## Using a local build
 
 Build and install the binary, then point Terraform or OpenTofu at it with a

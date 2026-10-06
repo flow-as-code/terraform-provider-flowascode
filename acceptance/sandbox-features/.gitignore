@@ -1,0 +1,10 @@
+# Operator-only root: state, variable values and build output stay on the
+# operator's machine. The lock file is tracked here although the repository
+# ignores it elsewhere, so every operator initialises the same provider builds.
+/state/
+/build/
+*.tfvars
+*.tfvars.json
+*.auto.tfvars
+outputs.json
+!.terraform.lock.hcl
