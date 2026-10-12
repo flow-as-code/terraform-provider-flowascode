@@ -38,7 +38,7 @@ function small(ids = ["a", "b"], start = ids[0]) {
   const layout = {};
   ids.forEach((id, i) => (layout[id] = { x: 150 + 260 * i, y: 40 + 10 * i }));
   return {
-    flowdoc: "0.2",
+    flowdoc: "0.3",
     kind: "flow",
     name: "small",
     connectType: "CONTACT_FLOW",
@@ -103,7 +103,7 @@ mapCase(
 
 mapCase(
   "metadata-merge",
-  `{"flowdoc":"0.2","kind":"flow","name":"m","connectType":"CONTACT_FLOW","content":{"Version":"2019-10-30","StartAction":"welcome","Metadata":{"zeta":1,"EntryPointPosition":{"x":1},"note":"${Q}","7":"seven","ActionMetadata":{"welcome":{"Position":{"x":1,"y":1},"isFriendlyName":true,"ref":"${Q}"},"stale-id-not-in-actions":{"Position":{"x":9,"y":9}},"12":{"a":1},"bye":"not an object","__proto__":{"own":true}}},"Actions":[{"Identifier":"welcome","Type":"MessageParticipant","Parameters":{"Text":"hi"},"Transitions":{"NextAction":"bye","Errors":[],"Conditions":[]}},{"Identifier":"bye","Type":"DisconnectParticipant","Parameters":{},"Transitions":{}},{"Identifier":"__proto__","Type":"DisconnectParticipant","Parameters":{},"Transitions":{}}]},"layout":{"welcome":{"x":300,"y":80},"bye":{"x":560,"y":80},"__proto__":{"x":1,"y":2}}}`,
+  `{"flowdoc":"0.3","kind":"flow","name":"m","connectType":"CONTACT_FLOW","content":{"Version":"2019-10-30","StartAction":"welcome","Metadata":{"zeta":1,"EntryPointPosition":{"x":1},"note":"${Q}","7":"seven","ActionMetadata":{"welcome":{"Position":{"x":1,"y":1},"isFriendlyName":true,"ref":"${Q}"},"stale-id-not-in-actions":{"Position":{"x":9,"y":9}},"12":{"a":1},"bye":"not an object","__proto__":{"own":true}}},"Actions":[{"Identifier":"welcome","Type":"MessageParticipant","Parameters":{"Text":"hi"},"Transitions":{"NextAction":"bye","Errors":[],"Conditions":[]}},{"Identifier":"bye","Type":"DisconnectParticipant","Parameters":{},"Transitions":{}},{"Identifier":"__proto__","Type":"DisconnectParticipant","Parameters":{},"Transitions":{}}]},"layout":{"welcome":{"x":300,"y":80},"bye":{"x":560,"y":80},"__proto__":{"x":1,"y":2}}}`,
   demoMap(),
 );
 for (const [name, metadata] of [
@@ -130,7 +130,7 @@ mapCase("flow-settings-null", edit((d) => { d.content.Settings = null; }, small(
 mapCase("module-settings-null", edit((d) => { d.kind = "module"; d.content.Settings = null; }, small()), {});
 mapCase(
   "module-settings-tokens",
-  `{"flowdoc":"0.2","kind":"module","name":"m","connectType":"CONTACT_FLOW","content":{"Version":"2019-10-30","StartAction":"a","Settings":{"b":"${Q}","a":[1,"${H}"],"3":{"z":1,"y":2},"InputParameters":[]},"Actions":[{"Identifier":"a","Type":"DisconnectParticipant","Parameters":{},"Transitions":{}}]},"layout":{"a":{"x":20,"y":20}}}`,
+  `{"flowdoc":"0.3","kind":"module","name":"m","connectType":"CONTACT_FLOW","content":{"Version":"2019-10-30","StartAction":"a","Settings":{"b":"${Q}","a":[1,"${H}"],"3":{"z":1,"y":2},"InputParameters":[]},"Actions":[{"Identifier":"a","Type":"DisconnectParticipant","Parameters":{},"Transitions":{}}]},"layout":{"a":{"x":20,"y":20}}}`,
   demoMap(),
 );
 mapCase("flow-settings-token-string", edit((d) => { d.content.Settings = Q; }, small()), demoMap());
@@ -191,32 +191,32 @@ mapCase("id-tostring-null-layout", edit((d) => { d.layout.toString = null; }, sm
 mapCase("id-tostring-null-and-missing", edit((d) => { d.layout.toString = null; delete d.layout.a; }, small(["a", "toString"])), {});
 mapCase(
   "id-proto-own-layout",
-  `{"flowdoc":"0.2","kind":"flow","name":"p","connectType":"CONTACT_FLOW","content":{"Version":"2019-10-30","StartAction":"a","Actions":[{"Identifier":"a","Type":"MessageParticipant","Parameters":{},"Transitions":{"NextAction":"__proto__"}},{"Identifier":"__proto__","Type":"MessageParticipant","Parameters":{},"Transitions":{"NextAction":"Position"}},{"Identifier":"Position","Type":"DisconnectParticipant","Parameters":{},"Transitions":{}}]},"layout":{"a":{"x":150,"y":1},"__proto__":{"x":410,"y":2},"Position":{"x":670,"y":3}}}`,
+  `{"flowdoc":"0.3","kind":"flow","name":"p","connectType":"CONTACT_FLOW","content":{"Version":"2019-10-30","StartAction":"a","Actions":[{"Identifier":"a","Type":"MessageParticipant","Parameters":{},"Transitions":{"NextAction":"__proto__"}},{"Identifier":"__proto__","Type":"MessageParticipant","Parameters":{},"Transitions":{"NextAction":"Position"}},{"Identifier":"Position","Type":"DisconnectParticipant","Parameters":{},"Transitions":{}}]},"layout":{"a":{"x":150,"y":1},"__proto__":{"x":410,"y":2},"Position":{"x":670,"y":3}}}`,
   {},
 );
 mapCase(
   "id-proto-inherited-layout",
-  `{"flowdoc":"0.2","kind":"flow","name":"p","connectType":"CONTACT_FLOW","content":{"Version":"2019-10-30","StartAction":"__proto__","Actions":[{"Identifier":"__proto__","Type":"MessageParticipant","Parameters":{},"Transitions":{"NextAction":"b"}},{"Identifier":"b","Type":"DisconnectParticipant","Parameters":{},"Transitions":{}}]},"layout":{"b":{"x":670,"y":3}}}`,
+  `{"flowdoc":"0.3","kind":"flow","name":"p","connectType":"CONTACT_FLOW","content":{"Version":"2019-10-30","StartAction":"__proto__","Actions":[{"Identifier":"__proto__","Type":"MessageParticipant","Parameters":{},"Transitions":{"NextAction":"b"}},{"Identifier":"b","Type":"DisconnectParticipant","Parameters":{},"Transitions":{}}]},"layout":{"b":{"x":670,"y":3}}}`,
   {},
 );
 mapCase(
   "id-proto-start-own-layout",
-  `{"flowdoc":"0.2","kind":"flow","name":"p","connectType":"CONTACT_FLOW","content":{"Version":"2019-10-30","StartAction":"__proto__","Actions":[{"Identifier":"__proto__","Type":"MessageParticipant","Parameters":{},"Transitions":{"NextAction":"b"}},{"Identifier":"b","Type":"DisconnectParticipant","Parameters":{},"Transitions":{}}]},"layout":{"b":{"x":670,"y":3},"__proto__":{"x":333,"y":4}}}`,
+  `{"flowdoc":"0.3","kind":"flow","name":"p","connectType":"CONTACT_FLOW","content":{"Version":"2019-10-30","StartAction":"__proto__","Actions":[{"Identifier":"__proto__","Type":"MessageParticipant","Parameters":{},"Transitions":{"NextAction":"b"}},{"Identifier":"b","Type":"DisconnectParticipant","Parameters":{},"Transitions":{}}]},"layout":{"b":{"x":670,"y":3},"__proto__":{"x":333,"y":4}}}`,
   {},
 );
 mapCase(
   "id-proto-primitive-layout",
-  `{"flowdoc":"0.2","kind":"flow","name":"p","connectType":"CONTACT_FLOW","content":{"Version":"2019-10-30","StartAction":"__proto__","Actions":[{"Identifier":"__proto__","Type":"DisconnectParticipant","Parameters":{},"Transitions":{}}]},"layout":{"__proto__":5}}`,
+  `{"flowdoc":"0.3","kind":"flow","name":"p","connectType":"CONTACT_FLOW","content":{"Version":"2019-10-30","StartAction":"__proto__","Actions":[{"Identifier":"__proto__","Type":"DisconnectParticipant","Parameters":{},"Transitions":{}}]},"layout":{"__proto__":5}}`,
   {},
 );
 mapCase(
   "start-inherited-through-proto",
-  `{"flowdoc":"0.2","kind":"flow","name":"p","connectType":"CONTACT_FLOW","content":{"Version":"2019-10-30","StartAction":"x","Actions":[{"Identifier":"__proto__","Type":"DisconnectParticipant","Parameters":{},"Transitions":{}}]},"layout":{"__proto__":{"x":{"x":260,"y":9},"y":2}}}`,
+  `{"flowdoc":"0.3","kind":"flow","name":"p","connectType":"CONTACT_FLOW","content":{"Version":"2019-10-30","StartAction":"x","Actions":[{"Identifier":"__proto__","Type":"DisconnectParticipant","Parameters":{},"Transitions":{}}]},"layout":{"__proto__":{"x":{"x":260,"y":9},"y":2}}}`,
   {},
 );
 mapCase(
   "id-proto-auto-layout",
-  `{"flowdoc":"0.2","kind":"flow","name":"p","connectType":"CONTACT_FLOW","content":{"Version":"2019-10-30","StartAction":"a","Actions":[{"Identifier":"a","Type":"MessageParticipant","Parameters":{},"Transitions":{"NextAction":"__proto__"}},{"Identifier":"__proto__","Type":"DisconnectParticipant","Parameters":{},"Transitions":{}}]},"layout":{"__proto__":null}}`,
+  `{"flowdoc":"0.3","kind":"flow","name":"p","connectType":"CONTACT_FLOW","content":{"Version":"2019-10-30","StartAction":"a","Actions":[{"Identifier":"a","Type":"MessageParticipant","Parameters":{},"Transitions":{"NextAction":"__proto__"}},{"Identifier":"__proto__","Type":"DisconnectParticipant","Parameters":{},"Transitions":{}}]},"layout":{"__proto__":null}}`,
   {},
 );
 mapCase("index-ids", edit((d) => { delete d.layout["2"]; }, small(["10", "a", "9", "2"])), {});
@@ -225,12 +225,12 @@ mapCase("version-missing", edit((d) => { delete d.content.Version; }, small()), 
 mapCase("version-number", edit((d) => { d.content.Version = 3; }, small()), {});
 mapCase(
   "content-extra-keys-dropped",
-  `{"flowdoc":"0.2","kind":"flow","name":"x","connectType":"CONTACT_FLOW","description":"d","content":{"Extra":1,"Actions":[{"Identifier":"a","Type":"DisconnectParticipant","Parameters":{"10":1,"9":2,"b":{"2":3,"1":4}},"Transitions":{},"Extra":true}],"StartAction":"a","Version":"2019-10-30"},"layout":{"a":{"x":150,"y":20}},"refs":[],"meta":{"k":1}}`,
+  `{"flowdoc":"0.3","kind":"flow","name":"x","connectType":"CONTACT_FLOW","description":"d","content":{"Extra":1,"Actions":[{"Identifier":"a","Type":"DisconnectParticipant","Parameters":{"10":1,"9":2,"b":{"2":3,"1":4}},"Transitions":{},"Extra":true}],"StartAction":"a","Version":"2019-10-30"},"layout":{"a":{"x":150,"y":20}},"refs":[],"meta":{"k":1}}`,
   {},
 );
 mapCase(
   "unicode-keys",
-  `{"flowdoc":"0.2","kind":"flow","name":"u","connectType":"CONTACT_FLOW","content":{"Version":"2019-10-30","StartAction":"a","Actions":[{"Identifier":"a","Type":"Generic","Parameters":{"\\uffff":1,"\\ud83d\\ude00":2,"\\u00e9":3,"Z":4,"a":5},"Transitions":{}}]},"layout":{"a":{"x":150,"y":20}}}`,
+  `{"flowdoc":"0.3","kind":"flow","name":"u","connectType":"CONTACT_FLOW","content":{"Version":"2019-10-30","StartAction":"a","Actions":[{"Identifier":"a","Type":"Generic","Parameters":{"\\uffff":1,"\\ud83d\\ude00":2,"\\u00e9":3,"Z":4,"a":5},"Transitions":{}}]},"layout":{"a":{"x":150,"y":20}}}`,
   {},
 );
 
@@ -247,19 +247,34 @@ mapCase(
 );
 mapCase(
   "swallowed-metadata",
-  `{"flowdoc":"0.2","kind":"flow","name":"s","connectType":"CONTACT_FLOW","content":{"Version":"2019-10-30","StartAction":"\${cdref:a:b","Metadata":"\${cdref:queue:x}","Actions":[]}}`,
+  `{"flowdoc":"0.3","kind":"flow","name":"s","connectType":"CONTACT_FLOW","content":{"Version":"2019-10-30","StartAction":"\${cdref:a:b","Metadata":"\${cdref:queue:x}","Actions":[]}}`,
   {},
 );
 mapCase(
   "swallowed-settings",
-  `{"flowdoc":"0.2","kind":"flow","name":"s","connectType":"CONTACT_FLOW","content":{"Version":"2019-10-30","StartAction":"\${cdref:a:b","Settings":"\${cdref:queue:x}","Actions":[]}}`,
+  `{"flowdoc":"0.3","kind":"flow","name":"s","connectType":"CONTACT_FLOW","content":{"Version":"2019-10-30","StartAction":"\${cdref:a:b","Settings":"\${cdref:queue:x}","Actions":[]}}`,
   {},
 );
 mapCase(
   "swallowed-metadata-key",
-  `{"flowdoc":"0.2","kind":"flow","name":"s","connectType":"CONTACT_FLOW","content":{"Version":"2019-10-30","StartAction":"\${cdref:a:b","Metadata":{"EntryPointPosition":"\${cdref:queue:x}","z":1},"Actions":[]}}`,
+  `{"flowdoc":"0.3","kind":"flow","name":"s","connectType":"CONTACT_FLOW","content":{"Version":"2019-10-30","StartAction":"\${cdref:a:b","Metadata":{"EntryPointPosition":"\${cdref:queue:x}","z":1},"Actions":[]}}`,
   {},
 );
+
+// --- A token as a whole map key (FlowDoc 0.3, casefield) --------------------
+const caseText = vendored("materialize/casefield-key-with-map/doc.flowdoc.json");
+const caseMapText = vendored("materialize/casefield-key-with-map/map.json");
+mapCase("casefield-key-fixture", caseText, caseMapText);
+binderCase("casefield-key-binder", caseText, "echo");
+const keyed = (params) => edit((d) => { d.content.Actions[0].Parameters = params; }, small());
+const F = "${cdref:casefield:priority}";
+mapCase("key-embedded", keyed({ M: { [`x-${F}`]: "high" } }), { [F]: "P" });
+binderCase("key-embedded-binder", keyed({ M: { [`x-${F}`]: "high" } }), "echo");
+mapCase("key-collides-with-a-sibling", keyed({ M: { a: 1, [F]: 2, z: 3 } }), { [F]: "a" });
+mapCase("key-resolves-to-an-index", keyed({ M: { b: 1, [F]: 2, "3": 3 } }), { [F]: "10" });
+binderCase("key-binder-order", keyed({ M: { z: "${cdref:queue:z}", [F]: "${cdref:queue:v}", "7": F } }), "echo");
+mapCase("key-in-action-metadata", edit((d) => { d.content.Metadata = { ActionMetadata: { [F]: { k: F } } }; }, small()), { [F]: "a" });
+mapCase("key-malformed-token-kept", keyed({ M: { "${cdref:casefield:Bad}": 1 } }), {});
 
 // --- Auto-layout and serialization over malformed transitions ----------------
 for (const [name, transitions] of [
@@ -297,7 +312,7 @@ binderCase("binder-demo-echo", demo(), "echo");
 binderCase("binder-passthrough-fixture", vendored("materialize/binder-passthrough/doc.flowdoc.json"), "fixture");
 binderCase(
   "binder-order",
-  `{"flowdoc":"0.2","kind":"module","name":"m","connectType":"CONTACT_FLOW","content":{"Version":"2019-10-30","StartAction":"a","Actions":[{"Identifier":"a","Type":"X","Parameters":{"z":"\${cdref:queue:z}","7":"\${cdref:queue:seven}","a":["\${cdref:hours:h@v1}"]},"Transitions":{}}],"Metadata":{"n":"\${cdref:lambda:meta}","ActionMetadata":{"a":{"t":"\${cdref:lambda:am}"}}},"Settings":{"s":"\${cdref:flow:set}"}},"layout":{"a":{"x":150,"y":20}}}`,
+  `{"flowdoc":"0.3","kind":"module","name":"m","connectType":"CONTACT_FLOW","content":{"Version":"2019-10-30","StartAction":"a","Actions":[{"Identifier":"a","Type":"X","Parameters":{"z":"\${cdref:queue:z}","7":"\${cdref:queue:seven}","a":["\${cdref:hours:h@v1}"]},"Transitions":{}}],"Metadata":{"n":"\${cdref:lambda:meta}","ActionMetadata":{"a":{"t":"\${cdref:lambda:am}"}}},"Settings":{"s":"\${cdref:flow:set}"}},"layout":{"a":{"x":150,"y":20}}}`,
   "echo",
 );
 binderCase(

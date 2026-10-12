@@ -71,7 +71,7 @@ func conformanceCases(t *testing.T) []string {
 
 func TestConformanceMaterialize(t *testing.T) {
 	names := conformanceCases(t)
-	want := []string{"binder-passthrough", "demo-with-map", "view-with-version"}
+	want := []string{"binder-passthrough", "casefield-key-with-map", "demo-with-map", "view-with-version"}
 	if strings.Join(names, ",") != strings.Join(want, ",") {
 		t.Fatalf("materialize cases = %v, want %v; a new case needs a look at its format", names, want)
 	}
@@ -134,5 +134,58 @@ func TestConformanceViewWithVersion(t *testing.T) {
 	got, _ := SerializeContent(content)
 	if !bytes.Contains(got, []byte("arn:aws:connect:us-east-1:aws:view/after-contact-work:1")) {
 		t.Error("the versioned ARN is not in the content")
+	}
+}
+
+// casefield-key-with-map: a casefield token stands as a whole map key of
+// CaseRequestFields and as a list item of CaseResponseFields (invariant 4 as
+// docs/adr/0008-case-field-ids.md restates it); both resolve through the one
+// token rule. The conformance run above holds the map path to the golden.
+func TestConformanceCasefieldKeyResolvesOnTheMapPath(t *testing.T) {
+	doc := decode(t, readConformance(t, "materialize/casefield-key-with-map/doc.flowdoc.json"))
+	m := stringMap(t, decode(t, readConformance(t, "materialize/casefield-key-with-map/map.json")))
+	content, err := MaterializeWithMap(doc, m)
+	if err != nil {
+		t.Fatal(err)
+	}
+	got, _ := SerializeContent(content)
+	if !bytes.Contains(got, []byte(`"bbbbbbbb-1111-2222-3333-444444444444": "high"`)) {
+		t.Errorf("the casefield key did not resolve:\n%s", got)
+	}
+}
+
+// materialize.test.ts: "keeps the casefield-key-with-map doc in sync with the
+// HCL golden".
+func TestConformanceCasefieldDocInSyncWithHCLGolden(t *testing.T) {
+	if !bytes.Equal(
+		readConformance(t, "materialize/casefield-key-with-map/doc.flowdoc.json"),
+		readConformance(t, "hcl/roundtrip/casefield-key/casefield-key.flowdoc.json"),
+	) {
+		t.Error("materialize/casefield-key-with-map/doc.flowdoc.json differs from the HCL golden's document")
+	}
+}
+
+// materialize.test.ts: "resolves a casefield map key through the binder as it
+// resolves a value".
+func TestConformanceCasefieldKeyResolvesThroughTheBinder(t *testing.T) {
+	doc := decode(t, readConformance(t, "materialize/casefield-key-with-map/doc.flowdoc.json"))
+	content, err := MaterializeWithBinder(doc, func(r flowdoc.RefEntry) string { return "BOUND(" + r.Type + ":" + r.Name + ")" })
+	if err != nil {
+		t.Fatal(err)
+	}
+	actions, _ := content.Get("Actions")
+	params := func(i int) any {
+		p, _ := actions.([]any)[i].(jsonv.Object).Get("Parameters")
+		return p
+	}
+	want := `{"CaseRequestFields":{"BOUND(casefield:priority)":"high","BOUND(casefield:summary)":"$.Attributes.summary"},"CaseTemplateId":"BOUND(casetemplate:billing-dispute)","LinkContactToCase":"true"}`
+	if got := string(jsonv.Encode(params(0), "")); got != want {
+		t.Errorf("got %s\nwant %s", got, want)
+	}
+	if got, _ := params(1).(jsonv.Object).Get("CaseResponseFields"); string(jsonv.Encode(got, "")) != `["BOUND(casefield:priority)"]` {
+		t.Errorf("CaseResponseFields = %s", jsonv.Encode(got, ""))
+	}
+	if bytes.Contains(jsonv.Encode(content, ""), []byte("cdref")) {
+		t.Error("a token survived")
 	}
 }

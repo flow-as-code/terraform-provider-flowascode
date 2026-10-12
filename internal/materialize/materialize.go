@@ -100,17 +100,39 @@ func MissingKeysError(missingRefs []flowdoc.RefEntry) *MaterializeError {
 // matches.
 type resolver func(flowdoc.RefEntry) any
 
+// resolveString is materialize.ts's resolveString: a whole-string token
+// resolved, anything else returned as it was.
+func resolveString(value string, resolve resolver) any {
+	if entry, ok := flowdoc.ParseToken(value); ok {
+		return resolve(entry)
+	}
+	return value
+}
+
+// keyString is a resolved value used as an object key, as JavaScript's
+// property-key conversion writes it. The map path resolves only references
+// it holds a string for, and a binder returns a string, so only undefined,
+// which neither produces, needs spelling.
+func keyString(v any) string {
+	if s, ok := v.(string); ok {
+		return s
+	}
+	return "undefined"
+}
+
 // resolveDeep is materialize.ts's resolveDeep. A token occupies an entire
-// field value (FlowDoc invariant 4), so only whole string values are
-// swapped; keys are not. Objects are rebuilt through Object.entries, so they
-// are visited, and the resolver called, in JavaScript's own-key order.
+// field value, or an entire map key for a casefield (FlowDoc invariant 4,
+// docs/adr/0008-case-field-ids.md), so only whole strings are swapped, keys
+// and values alike. Objects are rebuilt as Object.fromEntries rebuilds
+// Object.entries: each key is resolved before its value, in JavaScript's
+// own-key order, so a binder sees its calls in that order; two keys that
+// resolve to one keep the first one's place and the last one's value; and
+// the result is in own-key order again, since a resolved key may be an
+// array index.
 func resolveDeep(value any, resolve resolver) any {
 	switch t := value.(type) {
 	case string:
-		if entry, ok := flowdoc.ParseToken(t); ok {
-			return resolve(entry)
-		}
-		return t
+		return resolveString(t, resolve)
 	case []any:
 		out := make([]any, len(t))
 		for i, item := range t {
@@ -118,10 +140,16 @@ func resolveDeep(value any, resolve resolver) any {
 		}
 		return out
 	case jsonv.Object:
-		out := jsonv.Object{}
+		built := jsonv.Object{}
 		for _, k := range jsKeyOrder(t.Keys()) {
 			v, _ := t.Get(k)
-			out = append(out, jsonv.Member{Key: k, Value: resolveDeep(v, resolve)})
+			key := keyString(resolveString(k, resolve))
+			built.Set(key, resolveDeep(v, resolve))
+		}
+		out := jsonv.Object{}
+		for _, k := range jsKeyOrder(built.Keys()) {
+			v, _ := built.Get(k)
+			out = append(out, jsonv.Member{Key: k, Value: v})
 		}
 		return out
 	}
@@ -302,13 +330,18 @@ func projectLayout(doc jsonv.Object, resolve resolver) (jsonv.Object, error) {
 	return out, nil
 }
 
-// materialize is materialize.ts's materialize. A module requires a top-level
+// materialize is materialize.ts's materialize. The document is held to
+// FlowDoc invariant 4 first (refuseInterpolated), on both backends. A module
+// requires a top-level
 // Settings in its deployable content; Connect rejects the create without it.
 // It defaults to {} and is resolved like the rest of the content. Settings,
 // Metadata and Actions are resolved in that order, which is the order a
 // binder sees its calls in.
 func materialize(doc jsonv.Object, resolve resolver) (jsonv.Object, error) {
 	content := member(doc, "content").(jsonv.Object)
+	if err := refuseInterpolated(content); err != nil {
+		return nil, err
+	}
 	settings := any(undefined)
 	settingsValue, hasSettings := content.Get("Settings")
 	if kind, _ := member(doc, "kind").(string); kind == "module" || hasSettings {
@@ -341,18 +374,15 @@ func materialize(doc jsonv.Object, resolve resolver) (jsonv.Object, error) {
 }
 
 // embeddedTokens is materialize.ts's embeddedTokens: every `${cdref:...}`
-// left in serialized content, each once, sorted by JavaScript's <: an opening
-// followed by a closing brace before any double quote, so a token never
-// spans a JSON string boundary. One forward pass, as the TypeScript's is
-// since flow-as-code 78b0a87 (it replaced a regex code scanning flagged as
+// inside one string, added to found: an opening followed by a closing brace
+// before any double quote. One forward pass, as the TypeScript's is since
+// flow-as-code 78b0a87 (it replaced a regex code scanning flagged as
 // polynomial): the closing position is looked up again only once an opening
 // has moved past it, and a search that ends at a quote moves on by one
 // opening, so the next opening after a match is sought past the match, never
 // inside it. Offsets are bytes here and UTF-16 code units there; the
 // delimiters are ASCII, so the slices agree.
-func embeddedTokens(text string) []string {
-	seen := map[string]bool{}
-	var found []string
+func embeddedTokens(text string, found map[string]bool) {
 	open := strings.Index(text, flowdoc.TokenOpen)
 	closing := -1
 	for open != -1 {
@@ -367,17 +397,71 @@ func embeddedTokens(text string) []string {
 			break
 		}
 		if text[closing] == '}' {
-			if tok := text[open : closing+1]; !seen[tok] {
-				seen[tok] = true
-				found = append(found, tok)
-			}
+			found[text[open:closing+1]] = true
 			open = indexFrom(text, flowdoc.TokenOpen, closing+1)
 		} else {
 			open = indexFrom(text, flowdoc.TokenOpen, open+1)
 		}
 	}
-	sort.SliceStable(found, func(i, j int) bool { return jsonv.LessUTF16(found[i], found[j]) })
-	return found
+}
+
+// interpolatedTokens is materialize.ts's interpolatedTokens: every token
+// embedded in a longer key or value anywhere in value, sorted by
+// JavaScript's <. A string that is a whole token is what substitution swaps;
+// any other string holding one would survive substitution as literal text,
+// on either backend, so the check runs over the document before anything is
+// resolved rather than over the output, where a binder that returns the
+// token itself is legitimate.
+func interpolatedTokens(values ...any) []string {
+	found := map[string]bool{}
+	visit := func(s string) {
+		if _, ok := flowdoc.ParseToken(s); !ok {
+			embeddedTokens(s, found)
+		}
+	}
+	var walk func(v any)
+	walk = func(v any) {
+		switch t := v.(type) {
+		case string:
+			visit(t)
+		case []any:
+			for _, x := range t {
+				walk(x)
+			}
+		case jsonv.Object:
+			for _, m := range t {
+				visit(m.Key)
+				walk(m.Value)
+			}
+		}
+	}
+	for _, v := range values {
+		walk(v)
+	}
+	out := make([]string, 0, len(found))
+	for tok := range found {
+		out = append(out, tok)
+	}
+	sort.Slice(out, func(i, j int) bool { return jsonv.LessUTF16(out[i], out[j]) })
+	return out
+}
+
+const interpolatedReason = "Token(s) would survive materialization because they are embedded in a longer string. " +
+	"A reference must be the entire field value, or the entire map key for a casefield " +
+	"(FlowDoc invariant 4)."
+
+// refuseInterpolated is materialize.ts's refuseInterpolated: the refusal
+// both backends raise for a token that is not a whole key or value, over
+// content's Settings, Metadata and Actions.
+func refuseInterpolated(content jsonv.Object) error {
+	settings, _ := content.Get("Settings")
+	metadata, _ := content.Get("Metadata")
+	actions, _ := content.Get("Actions")
+	if leaked := interpolatedTokens(settings, metadata, actions); len(leaked) > 0 {
+		reason := interpolatedReason
+		return NewMaterializeError(leaked, &reason, nil)
+	}
+	return nil
 }
 
 // indexFrom is JavaScript's text.indexOf(sub, from).
@@ -392,9 +476,6 @@ func indexFrom(text, sub string, from int) int {
 	return from + i
 }
 
-const leakReason = "Token(s) survived materialization because they are embedded in a longer string. " +
-	"A reference must be the entire field value (FlowDoc invariant 4)."
-
 // MaterializeWithMap is materialize.ts's materializeWithMap: strict
 // materialization against a reference map. Every reference in the content
 // must have an entry under one of the three key forms (refs.ts's
@@ -404,9 +485,9 @@ const leakReason = "Token(s) survived materialization because they are embedded 
 // map is the TypeScript's null and is refused as it is.
 //
 // Completeness is not enough: collectRefs finds a token anywhere in a string
-// while substitution only replaces a whole value, so the finished content is
-// scanned and a token that survived is refused rather than shipped as text
-// Connect would read aloud.
+// while substitution only replaces a whole string, so materialize refuses an
+// interpolated token first rather than shipping it as text Connect would
+// read aloud.
 func MaterializeWithMap(doc any, resourceMap map[string]string) (jsonv.Object, error) {
 	d, err := flowdoc.AssertFlowDoc(doc, "materializeWithMap")
 	if err != nil {
@@ -427,28 +508,20 @@ func MaterializeWithMap(doc any, resourceMap map[string]string) (jsonv.Object, e
 		return nil, MissingKeysError(missing)
 	}
 
-	content, err := materialize(d, func(entry flowdoc.RefEntry) any {
+	return materialize(d, func(entry flowdoc.RefEntry) any {
 		if v, ok := flowdoc.LookupRefValue(resourceMap, entry); ok {
 			return v
 		}
 		return undefined
 	})
-	if err != nil {
-		return nil, err
-	}
-
-	if leaked := embeddedTokens(string(jsonv.Encode(content, ""))); len(leaked) > 0 {
-		reason := leakReason
-		return nil, NewMaterializeError(leaked, &reason, nil)
-	}
-	return content, nil
 }
 
 // MaterializeWithBinder is materialize.ts's materializeWithBinder, for IaC
 // backends: the binder returns an opaque string per reference, typically a
 // CDK token CloudFormation resolves later, and it passes through exactly as
-// returned, with no validation. A nil binder is refused as the TypeScript
-// refuses a non-function.
+// returned, with no validation. The document is held to invariant 4 before
+// the binder runs, as on the map path. A nil binder is refused as the
+// TypeScript refuses a non-function.
 func MaterializeWithBinder(doc any, binder func(flowdoc.RefEntry) string) (jsonv.Object, error) {
 	d, err := flowdoc.AssertFlowDoc(doc, "materializeWithBinder")
 	if err != nil {

@@ -191,6 +191,37 @@ func TestInterpolatedTokenIsRefused(t *testing.T) {
 	}
 }
 
+// materialize.test.ts: "refuses a token embedded in a map key on either
+// path" and "lets a binder return the token itself for a whole-string token".
+// The refusal runs over the document before anything is resolved, so the
+// binder path refuses it as the map path does.
+func TestTokenEmbeddedInAMapKeyIsRefusedOnBothPaths(t *testing.T) {
+	doc := demo(t)
+	contentValue, _ := doc.Get("content")
+	a := actionByID(t, contentValue.(jsonv.Object), "welcome")
+	p, _ := a.Get("Parameters")
+	params := p.(jsonv.Object)
+	params.Set("Attributes", jsonv.Object{{Key: "x-${cdref:casefield:priority}", Value: "high"}})
+	a.Set("Parameters", params)
+	m := demoMap(t)
+	m["${cdref:casefield:priority}"] = "bbbbbbbb-1111-2222-3333-444444444444"
+	_, err := MaterializeWithMap(doc, m)
+	if err == nil || !strings.Contains(err.Error(), "entire map key") {
+		t.Errorf("map path: %v", err)
+	}
+	called := false
+	_, err = MaterializeWithBinder(doc, func(r flowdoc.RefEntry) string { called = true; return r.Token })
+	if err == nil || !strings.Contains(err.Error(), "entire map key") {
+		t.Errorf("binder path: %v", err)
+	}
+	if called {
+		t.Error("the binder ran before the refusal")
+	}
+	if _, err := MaterializeWithBinder(demo(t), func(r flowdoc.RefEntry) string { return r.Token }); err != nil {
+		t.Errorf("a binder returning the token itself: %v", err)
+	}
+}
+
 func TestErrorConstructors(t *testing.T) {
 	reason := "Because."
 	if got := NewMaterializeError([]string{"a", "b"}, &reason, nil).Error(); got != "Cannot materialize: Because. Offending token(s): a, b" {
