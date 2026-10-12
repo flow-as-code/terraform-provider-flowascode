@@ -9,7 +9,7 @@ it reads.
 ## Unreleased
 
 The Phase D type groups, vendored from flow-as-code
-`e9d3c2119260bc425d8e10e0eca07f9a4e136dc7` (the tip of its D02 to D09
+`6e17eaf8b116182a1e18ba1935533d25d1251323` (the tip of its D02 to D09
 stack on D01's head, unmerged; re-vendored at the merge commits before
 release):
 
