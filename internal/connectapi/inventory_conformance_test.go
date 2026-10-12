@@ -185,7 +185,7 @@ func TestExportInstanceOverAdapterMatchesGoldens(t *testing.T) {
 				return
 			}
 
-			result, err := export.ExportInstance(ctx, client, export.ExportInstanceOptions{Generator: aws.String("core@0.2")})
+			result, err := export.ExportInstance(ctx, client, export.ExportInstanceOptions{Generator: aws.String("core@0.3")})
 			if err != nil {
 				t.Fatal(err)
 			}

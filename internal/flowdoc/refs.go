@@ -28,8 +28,10 @@ type RefEntry struct {
 	Alias string
 }
 
-// TokenPattern is refs.ts's TOKEN_PATTERN.
-var TokenPattern = regexp.MustCompile(`^\$\{cdref:(queue|hours|lambda|lex|prompt|flow|module|view):([a-z0-9]+(?:-[a-z0-9]+)*)(?:@([a-z0-9]+(?:-[a-z0-9]+)*))?\}$`)
+// TokenPattern is refs.ts's TOKEN_PATTERN: the thirteen reference types,
+// the five FlowDoc 0.3 added last. flowmodel.RefKeyPattern spells the same
+// types for a `refs` key and moves with it.
+var TokenPattern = regexp.MustCompile(`^\$\{cdref:(queue|hours|lambda|lex|prompt|flow|module|view|tasktemplate|casetemplate|casefield|assistant|phonenumber):([a-z0-9]+(?:-[a-z0-9]+)*)(?:@([a-z0-9]+(?:-[a-z0-9]+)*))?\}$`)
 
 // TokenOpen is refs.ts's TOKEN_OPEN: where a token can begin; ParseToken
 // decides whether what follows is one.

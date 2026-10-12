@@ -201,7 +201,7 @@ func exportCases(t *testing.T) []string {
 func strp(s string) *string { return &s }
 
 // TestExportConformance runs every conformance/export case. The generator is
-// "core@0.2", the value the goldens record (export.test.ts passes it too);
+// "core@0.3", the value the goldens record (export.test.ts passes it too);
 // the CLI's own meta.generator differs by design.
 func TestExportConformance(t *testing.T) {
 	for _, name := range exportCases(t) {
@@ -221,7 +221,7 @@ func runGoldenCase(t *testing.T, name string) {
 		t.Fatalf("no goldens for %s (%v)", name, err)
 	}
 	client := newFixtureClient(t, name)
-	result, err := ExportInstance(context.Background(), client, ExportInstanceOptions{Generator: strp("core@0.2")})
+	result, err := ExportInstance(context.Background(), client, ExportInstanceOptions{Generator: strp("core@0.3")})
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -1,5 +1,5 @@
 {
-  "generatedFrom": "flow-as-code 78b0a87d01992d532624d40a89686400c19b512c, packages/core/dist",
+  "generatedFrom": "flow-as-code c83df60ea49bc349e6ab6360a3f69d6e07d6dc9b, packages/core/dist",
   "perType": {
     "CompleteOutboundCall": {
       "modeled": false,
@@ -1937,7 +1937,7 @@
         }
       },
       "out": {
-        "err": "migrateFlowDoc: FlowDoc version undefined is not supported; this build reads \"0.1\" and \"0.2\"."
+        "err": "migrateFlowDoc: FlowDoc version undefined is not supported; this build reads \"0.1\", \"0.2\", \"0.3\"."
       }
     },
     {
@@ -1952,7 +1952,7 @@
         }
       },
       "out": {
-        "err": "migrateFlowDoc: FlowDoc version undefined is not supported; this build reads \"0.1\" and \"0.2\"."
+        "err": "migrateFlowDoc: FlowDoc version undefined is not supported; this build reads \"0.1\", \"0.2\", \"0.3\"."
       }
     },
     {
@@ -1968,7 +1968,7 @@
         }
       },
       "out": {
-        "err": "migrateFlowDoc: FlowDoc version 0.1 is not supported; this build reads \"0.1\" and \"0.2\"."
+        "err": "migrateFlowDoc: FlowDoc version 0.1 is not supported; this build reads \"0.1\", \"0.2\", \"0.3\"."
       }
     },
     {
@@ -1984,7 +1984,7 @@
         }
       },
       "out": {
-        "err": "migrateFlowDoc: FlowDoc version null is not supported; this build reads \"0.1\" and \"0.2\"."
+        "err": "migrateFlowDoc: FlowDoc version null is not supported; this build reads \"0.1\", \"0.2\", \"0.3\"."
       }
     },
     {
@@ -2005,7 +2005,7 @@
         }
       },
       "out": {
-        "err": "migrateFlowDoc: FlowDoc version {\"2\":[true],\"b\":1} is not supported; this build reads \"0.1\" and \"0.2\"."
+        "err": "migrateFlowDoc: FlowDoc version {\"2\":[true],\"b\":1} is not supported; this build reads \"0.1\", \"0.2\", \"0.3\"."
       }
     },
     {
@@ -2021,7 +2021,17 @@
         }
       },
       "out": {
-        "err": "migrateFlowDoc: FlowDoc version \"0.3\" is not supported; this build reads \"0.1\" and \"0.2\"."
+        "ok": {
+          "flowdoc": "0.3",
+          "kind": "flow",
+          "name": "n",
+          "connectType": "CONTACT_FLOW",
+          "content": {
+            "Version": "2019-10-30",
+            "StartAction": "a",
+            "Actions": []
+          }
+        }
       }
     },
     {
@@ -2038,7 +2048,7 @@
       },
       "out": {
         "ok": {
-          "flowdoc": "0.2",
+          "flowdoc": "0.3",
           "kind": "flow",
           "name": "n",
           "connectType": "CONTACT_FLOW",
@@ -2048,6 +2058,48 @@
             "Actions": []
           }
         }
+      }
+    },
+    {
+      "in": {
+        "flowdoc": "0.2",
+        "kind": "flow",
+        "name": "n",
+        "connectType": "CONTACT_FLOW",
+        "content": {
+          "Version": "2019-10-30",
+          "StartAction": "a",
+          "Actions": []
+        }
+      },
+      "out": {
+        "ok": {
+          "flowdoc": "0.3",
+          "kind": "flow",
+          "name": "n",
+          "connectType": "CONTACT_FLOW",
+          "content": {
+            "Version": "2019-10-30",
+            "StartAction": "a",
+            "Actions": []
+          }
+        }
+      }
+    },
+    {
+      "in": {
+        "flowdoc": "0.4",
+        "kind": "flow",
+        "name": "n",
+        "connectType": "CONTACT_FLOW",
+        "content": {
+          "Version": "2019-10-30",
+          "StartAction": "a",
+          "Actions": []
+        }
+      },
+      "out": {
+        "err": "migrateFlowDoc: FlowDoc version \"0.4\" is not supported; this build reads \"0.1\", \"0.2\", \"0.3\"."
       }
     }
   ],

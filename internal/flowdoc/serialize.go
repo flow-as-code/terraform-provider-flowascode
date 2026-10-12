@@ -13,7 +13,7 @@ import (
 )
 
 // Version is the FlowDoc format version this provider reads and writes.
-const Version = "0.2"
+const Version = "0.3"
 
 // FlowLanguageVersion is the Amazon Connect Flow language version.
 const FlowLanguageVersion = "2019-10-30"

@@ -215,7 +215,7 @@ views. The registry guide `migrate-from-aws-provider` has the steps.
 | --- | --- |
 | Terraform | 1.8 and later |
 | OpenTofu | 1.10 and later |
-| FlowDoc | 0.2 (`flowdoc-0.2.schema.json`) |
+| FlowDoc | 0.3 (`flowdoc-0.3.schema.json`); 0.1 and 0.2 are read through migration |
 | Credentials | hashicorp/aws's vocabulary: environment, shared config and profiles, `assume_role`, `endpoints { connect }` |
 
 ## Repository map

@@ -2,7 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 // Re-records the per-type tables in ts-oracle.json (perType and
 // catalogOrder) from @flow-as-code/core's own catalog.ts helpers and
-// actions.ts tables, and the collect cases from its collectRefs: every type
+// actions.ts tables, the collect cases from its collectRefs, and the migrate
+// and path cases from migrateFlowDoc and readPath: every type
 // the vendored catalog names, so a type the catalog gains is recorded rather
 // than hand-written, plus the two probes
 // oracle_test.go relies on (NotAType, a type no table has; constructor, an
@@ -56,6 +57,30 @@ for (const type of Object.keys(o.perType)) {
   if (!(type in perType)) changed.push(type);
 }
 o.perType = perType;
+// migrates and paths: each case's input kept, its output recomputed from
+// migrateFlowDoc and readPath, so a format bump or a new path form is
+// re-recorded rather than hand-edited. A paths input is JSON text, parsed
+// here as the Go test parses it.
+o.migrates.forEach((c, i) => {
+  let out;
+  try {
+    out = { ok: core.migrateFlowDoc(c.in) };
+  } catch (e) {
+    out = { err: e.message };
+  }
+  if (JSON.stringify(out) !== JSON.stringify(c.out)) changed.push(`migrates[${i}]`);
+  c.out = out;
+});
+o.paths.forEach((c, i) => {
+  let out;
+  try {
+    out = { ok: core.readPath(JSON.parse(c.in), c.path) };
+  } catch (e) {
+    out = { err: e.message };
+  }
+  if (JSON.stringify(out) !== JSON.stringify(c.out)) changed.push(`paths[${i}]`);
+  c.out = out;
+});
 // collect: each case's input is JSON text, parsed here as the Go test parses
 // it, so both sides scan the same bytes.
 o.collect.forEach((c, i) => {

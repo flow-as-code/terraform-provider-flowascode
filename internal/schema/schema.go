@@ -41,7 +41,7 @@ import (
 
 // Versions is SUPPORTED_FLOWDOC_VERSIONS (packages/core/src/migrate.ts): every
 // format version this build reads, oldest first, each with a schema.
-var Versions = []string{"0.1", "0.2"}
+var Versions = []string{"0.1", "0.2", "0.3"}
 
 // Violation is one Ajv error object (ajv's ErrorObject), the fields the
 // TypeScript reads.

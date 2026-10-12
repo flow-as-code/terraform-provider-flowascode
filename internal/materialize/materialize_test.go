@@ -208,7 +208,7 @@ func TestErrorConstructors(t *testing.T) {
 }
 
 func TestModuleSettingsDefault(t *testing.T) {
-	doc := decode(t, []byte(`{"flowdoc":"0.2","kind":"module","name":"m","connectType":"CONTACT_FLOW","content":{"Version":"2019-10-30","StartAction":"a","Actions":[{"Identifier":"a","Type":"DisconnectParticipant","Parameters":{},"Transitions":{}}]}}`))
+	doc := decode(t, []byte(`{"flowdoc":"0.3","kind":"module","name":"m","connectType":"CONTACT_FLOW","content":{"Version":"2019-10-30","StartAction":"a","Actions":[{"Identifier":"a","Type":"DisconnectParticipant","Parameters":{},"Transitions":{}}]}}`))
 	content, err := MaterializeWithMap(doc, map[string]string{})
 	if err != nil {
 		t.Fatal(err)

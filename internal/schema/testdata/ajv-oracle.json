@@ -1,25 +1,25 @@
 {
- "generatedFrom": "78b0a87d01992d532624d40a89686400c19b512c",
+ "generatedFrom": "c83df60ea49bc349e6ab6360a3f69d6e07d6dc9b",
  "ajv": "8.20.0",
  "cases": [
   {
    "id": "FlowDoc schema: validates the demo flow",
-   "version": "0.2",
-   "sha256": "580c83a96acb61017d68e016b148b9333ee29bb42e397171980ceb096c5d8f05",
+   "version": "0.3",
+   "sha256": "94d97d15fb092c7bdbf1357990ce5a52bfd7881904e065fa423b88faecef641b",
    "valid": true,
    "errors": []
   },
   {
    "id": "FlowDoc schema rejections: rejects a literal ARN in a queue reference",
-   "version": "0.2",
-   "sha256": "76135dd7f6f3b1a310294e932c8168f58ada0faa3e5929d7df5b6efe0fe07197",
+   "version": "0.3",
+   "sha256": "5e66696a7c86504fa33d19f7267aa1234dd8a61b8b913fe6d280a1d5386baf49",
    "valid": false,
    "errors": [
     {
      "instancePath": "/content/Actions/3/Parameters/QueueId",
      "schemaPath": "#/$defs/token/pattern",
      "keyword": "pattern",
-     "message": "must match pattern \"^\\$\\{cdref:(queue|hours|lambda|lex|prompt|flow|module|view):[a-z0-9]+(-[a-z0-9]+)*(@[a-z0-9]+(-[a-z0-9]+)*)?\\}$\"",
+     "message": "must match pattern \"^\\$\\{cdref:(queue|hours|lambda|lex|prompt|flow|module|view|tasktemplate|casetemplate|casefield|assistant|phonenumber):[a-z0-9]+(-[a-z0-9]+)*(@[a-z0-9]+(-[a-z0-9]+)*)?\\}$\"",
      "property": ""
     },
     {
@@ -47,15 +47,15 @@
   },
   {
    "id": "FlowDoc schema rejections: rejects a literal ARN in a lambda reference",
-   "version": "0.2",
-   "sha256": "5fd73b79df930da7d8765cd209fd437bd99f3f8f31b5601f8682de496f88f379",
+   "version": "0.3",
+   "sha256": "68e5c7ce3faec70cc42620d6f990278dd7c13127da5c558d67824a55daa717d0",
    "valid": false,
    "errors": [
     {
      "instancePath": "/content/Actions/4/Parameters/LambdaFunctionARN",
      "schemaPath": "#/$defs/token/pattern",
      "keyword": "pattern",
-     "message": "must match pattern \"^\\$\\{cdref:(queue|hours|lambda|lex|prompt|flow|module|view):[a-z0-9]+(-[a-z0-9]+)*(@[a-z0-9]+(-[a-z0-9]+)*)?\\}$\"",
+     "message": "must match pattern \"^\\$\\{cdref:(queue|hours|lambda|lex|prompt|flow|module|view|tasktemplate|casetemplate|casefield|assistant|phonenumber):[a-z0-9]+(-[a-z0-9]+)*(@[a-z0-9]+(-[a-z0-9]+)*)?\\}$\"",
      "property": ""
     },
     {
@@ -83,15 +83,15 @@
   },
   {
    "id": "FlowDoc schema rejections: rejects a token interpolated into a longer string",
-   "version": "0.2",
-   "sha256": "3135750f27b097053c321b93a9527011c72fa0cb5576a5a83af83543781a70f0",
+   "version": "0.3",
+   "sha256": "dc5f34b72cd7fb055fa5bc1863613133ba894ae4472c07a92d99cad09332ed54",
    "valid": false,
    "errors": [
     {
      "instancePath": "/content/Actions/3/Parameters/QueueId",
      "schemaPath": "#/$defs/token/pattern",
      "keyword": "pattern",
-     "message": "must match pattern \"^\\$\\{cdref:(queue|hours|lambda|lex|prompt|flow|module|view):[a-z0-9]+(-[a-z0-9]+)*(@[a-z0-9]+(-[a-z0-9]+)*)?\\}$\"",
+     "message": "must match pattern \"^\\$\\{cdref:(queue|hours|lambda|lex|prompt|flow|module|view|tasktemplate|casetemplate|casefield|assistant|phonenumber):[a-z0-9]+(-[a-z0-9]+)*(@[a-z0-9]+(-[a-z0-9]+)*)?\\}$\"",
      "property": ""
     },
     {
@@ -119,8 +119,8 @@
   },
   {
    "id": "FlowDoc schema rejections: rejects QueueId and AgentId set together",
-   "version": "0.2",
-   "sha256": "b8fa275a8f5ab73715e3be13ee3ae64fbd77d99a144819c30712c731d89c22cc",
+   "version": "0.3",
+   "sha256": "1539b622be1e39eeb2a96ac734e6a002eedbd8e87bb03e91e51ecde2654db378",
    "valid": false,
    "errors": [
     {
@@ -141,8 +141,8 @@
   },
   {
    "id": "FlowDoc schema rejections: rejects MessageParticipant with both Text and SSML",
-   "version": "0.2",
-   "sha256": "cc6991b4f66c4f1fdcbf70028b3e5fdc7e0b7b4625017629f0522c4487cfb701",
+   "version": "0.3",
+   "sha256": "f8de4ee11baa3b994ae2633027d4ea20cbaa0ce2ae617e78517b320bf5763e5d",
    "valid": false,
    "errors": [
     {
@@ -191,8 +191,8 @@
   },
   {
    "id": "FlowDoc schema rejections: rejects a Lambda timeout above the documented maximum of 8",
-   "version": "0.2",
-   "sha256": "c1fc85d1fe7eec54e8318c07713dc0d095d6cc4b141b433deb76d2b3217a680b",
+   "version": "0.3",
+   "sha256": "35af29a3fc875b0a1da8b44856b523c0a9da6b1c03602a680a78bfc312345a61",
    "valid": false,
    "errors": [
     {
@@ -213,8 +213,8 @@
   },
   {
    "id": "FlowDoc schema rejections: rejects an Identifier containing a character Connect reserves",
-   "version": "0.2",
-   "sha256": "a5a8dfd1844cb8cd75d7080bc93ac02478b75b4c7a03aff8d43cfae379210f38",
+   "version": "0.3",
+   "sha256": "9946be8261299fa3076386d5a122e3ddf41e25983e68075c0e2d39fcb818725c",
    "valid": false,
    "errors": [
     {
@@ -228,22 +228,22 @@
   },
   {
    "id": "FlowDoc schema rejections: still accepts a single JSONPath identifier in a reference field",
-   "version": "0.2",
-   "sha256": "402a1ecfb40761b05b2291d147a08ee5021f1a64212c5482d7da7fb2e80f375d",
+   "version": "0.3",
+   "sha256": "57ed58faa169ec7182730b17ee8c72ef833e27a7ce836b9251a961cab81e7b52",
    "valid": true,
    "errors": []
   },
   {
    "id": "FlowDoc schema rejections: contact routing: accepts the fixture as committed",
-   "version": "0.2",
-   "sha256": "4de0d7f2e73febbcca9f70cffe27088a2e9a48632de7fa0d00dc214570617336",
+   "version": "0.3",
+   "sha256": "5c1e35504dae424d2971a88a7d5aefc7962e48a49a108b8ca06a640814e145ff",
    "valid": true,
    "errors": []
   },
   {
    "id": "FlowDoc schema rejections: contact routing: rejects a callback delay written as a JSON number, which the console never writes",
-   "version": "0.2",
-   "sha256": "399fceba59f8986b9e795609170d21f3b75ec8540b4f41f0fb505d6f30bfe736",
+   "version": "0.3",
+   "sha256": "b138d464d08d7825aa8d18f5ceb5c9c00b5e49d98c38860ae47c4d1cc5d2f99e",
    "valid": false,
    "errors": [
     {
@@ -264,8 +264,8 @@
   },
   {
    "id": "FlowDoc schema rejections: contact routing: rejects zero connection attempts",
-   "version": "0.2",
-   "sha256": "924ebdb831613571ccc053d54ae9068fc547a2de84aee2a2a57a0721a166bcb0",
+   "version": "0.3",
+   "sha256": "8c69917f14b18462a72d717e060f319c1f543d3831c3cffd6c8a4ad3365abda5",
    "valid": false,
    "errors": [
     {
@@ -286,8 +286,8 @@
   },
   {
    "id": "FlowDoc schema rejections: contact routing: rejects a retry delay with a leading zero",
-   "version": "0.2",
-   "sha256": "3078987a4b1107c185645a8c33c949646517800d5ae9f1a0b0537da4a33aed62",
+   "version": "0.3",
+   "sha256": "1e562f8cf6e6a63b2ad57cddb882e8771b298babd470b86d17310f42c2899abd",
    "valid": false,
    "errors": [
     {
@@ -308,8 +308,8 @@
   },
   {
    "id": "FlowDoc schema rejections: contact routing: rejects a callback with both a queue and an agent queue",
-   "version": "0.2",
-   "sha256": "8f482637b6d966275bd4f6ac4472fecd0da385072ef730a2093a00d601b59b43",
+   "version": "0.3",
+   "sha256": "bc9d47ce1056c6a2c0cf91c334c92f85787bf689795f2e74e36b0af8558f8a87",
    "valid": false,
    "errors": [
     {
@@ -330,15 +330,15 @@
   },
   {
    "id": "FlowDoc schema rejections: contact routing: rejects a literal ARN as the callback flow",
-   "version": "0.2",
-   "sha256": "c83eef30b1d65260522733bc90967b9e96da8af2df9a3f72b515d666930a3900",
+   "version": "0.3",
+   "sha256": "3f4a68e1225a28c533a5174e268c203284ef276dee151f9e852a15611bb79a2e",
    "valid": false,
    "errors": [
     {
      "instancePath": "/content/Actions/6/Parameters/ContactFlowId",
      "schemaPath": "#/$defs/token/pattern",
      "keyword": "pattern",
-     "message": "must match pattern \"^\\$\\{cdref:(queue|hours|lambda|lex|prompt|flow|module|view):[a-z0-9]+(-[a-z0-9]+)*(@[a-z0-9]+(-[a-z0-9]+)*)?\\}$\"",
+     "message": "must match pattern \"^\\$\\{cdref:(queue|hours|lambda|lex|prompt|flow|module|view|tasktemplate|casetemplate|casefield|assistant|phonenumber):[a-z0-9]+(-[a-z0-9]+)*(@[a-z0-9]+(-[a-z0-9]+)*)?\\}$\"",
      "property": ""
     },
     {
@@ -366,8 +366,8 @@
   },
   {
    "id": "FlowDoc schema rejections: contact routing: rejects a queue priority of zero",
-   "version": "0.2",
-   "sha256": "d8068ae5a60ec56c08cf775867f631f90939daeff272b500a96029d28f1db5c4",
+   "version": "0.3",
+   "sha256": "051a7407c544774d0c8e57c1d9936e9aca6dced1e20cd9f27eadbee2727db519",
    "valid": false,
    "errors": [
     {
@@ -388,8 +388,8 @@
   },
   {
    "id": "FlowDoc schema rejections: contact routing: rejects a queue priority written as a JSON number",
-   "version": "0.2",
-   "sha256": "2a893cd77b1d73d9293b4e924a2913cc931b36f85d522f3bf9f5451c68d6d7f2",
+   "version": "0.3",
+   "sha256": "9293d16ac447ad692ee84c09fb3bcf89771c903502100a603b36948aca0c95c2",
    "valid": false,
    "errors": [
     {
@@ -410,8 +410,8 @@
   },
   {
    "id": "FlowDoc schema rejections: contact routing: rejects a static callback number",
-   "version": "0.2",
-   "sha256": "699ba49941dd19cd6659959d5ce737d8de160f3c10382b6c28d2b0ec3648117b",
+   "version": "0.3",
+   "sha256": "7f2adb1d9b616fdcb11660c7679aafc2326af0cf6678dda19c7554c104cca036",
    "valid": false,
    "errors": [
     {
@@ -432,8 +432,8 @@
   },
   {
    "id": "FlowDoc schema rejections: contact routing: rejects a priority and a time adjustment together",
-   "version": "0.2",
-   "sha256": "83b1779592648881070a21fc74a0e663175814e0985d8ea33e9ae3da6256004c",
+   "version": "0.3",
+   "sha256": "3b69ce4d0c65800f921db89e8572039d9d6e39aec40f303c546ace044e7402fe",
    "valid": false,
    "errors": [
     {
@@ -454,8 +454,8 @@
   },
   {
    "id": "FlowDoc schema rejections: contact routing: rejects a queue-to-queue transfer naming both a queue and an agent queue",
-   "version": "0.2",
-   "sha256": "d5d010bde2c7533151f2847e90e54273b31b2c84512deda580adb681add29fde",
+   "version": "0.3",
+   "sha256": "6a60f6b4616dcd6b2bf36457aa4e1dbbc41437bcdcd68f5890c4d857fe282d59",
    "valid": false,
    "errors": [
     {
@@ -476,15 +476,15 @@
   },
   {
    "id": "FlowDoc schema rejections: flow control: accepts the fixture as committed",
-   "version": "0.2",
-   "sha256": "4a04e948aec1974571420ff8be67cf775a725410c6d109ec0e96f58c9c2c1506",
+   "version": "0.3",
+   "sha256": "a3ad4d52be56d2113102cfb780f528680b7342a0f12da2f2598f1093f3197635",
    "valid": true,
    "errors": []
   },
   {
    "id": "FlowDoc schema rejections: flow control: rejects a loop count above 100",
-   "version": "0.2",
-   "sha256": "a352c59090b9b71562c040dbc3b20746ab233528bfc582470ee7d9da3d1d766d",
+   "version": "0.3",
+   "sha256": "7b7ad693be48cd851d538764e4b9e9f80e02ee8d6864ae28f6439e2386df02df",
    "valid": false,
    "errors": [
     {
@@ -519,8 +519,8 @@
   },
   {
    "id": "FlowDoc schema rejections: flow control: rejects a loop count written as a JSON number, which the console never writes",
-   "version": "0.2",
-   "sha256": "d01b13598850e4c74cd1504157516bd56c3594cbf3155f207661512238b92298",
+   "version": "0.3",
+   "sha256": "f15b388ebd249008f07423edb1672f9bc870ad1e3e824c373238bc53a9595385",
    "valid": false,
    "errors": [
     {
@@ -555,8 +555,8 @@
   },
   {
    "id": "FlowDoc schema rejections: flow control: rejects a loop count with a leading zero",
-   "version": "0.2",
-   "sha256": "339be5caaf0841ad6549ff9eb31783da59cd92be69f56036cedeb0ad7a198b92",
+   "version": "0.3",
+   "sha256": "81e62980f7acf37f6014933601df403362cf568948b8821d2fba5a8b59d7e757",
    "valid": false,
    "errors": [
     {
@@ -591,8 +591,8 @@
   },
   {
    "id": "FlowDoc schema rejections: flow control: rejects a percentage threshold above 100",
-   "version": "0.2",
-   "sha256": "72f0620680ee0e363a84bd1174e17913068b02f6e6f76252c83a7304ef4909dc",
+   "version": "0.3",
+   "sha256": "1d4957d011dc009fdcbdc972b3f84377ed0e578ee083cb84c891fb420c3be532",
    "valid": false,
    "errors": [
     {
@@ -613,8 +613,8 @@
   },
   {
    "id": "FlowDoc schema rejections: flow control: rejects a percentage branch with an operator other than NumberLessThan",
-   "version": "0.2",
-   "sha256": "8feb9747156d300fc55e961e90c33ca3930c1c9421ee0e5e8d2e308624e08038",
+   "version": "0.3",
+   "sha256": "ea2eac0392cf8e7ca9555116ea52e4d9df97d8b52de8c7d2d1c730468958821e",
    "valid": false,
    "errors": [
     {
@@ -635,8 +635,8 @@
   },
   {
    "id": "FlowDoc schema rejections: flow control: rejects a percentage threshold written as a JSON number",
-   "version": "0.2",
-   "sha256": "9bcdc521422da7826ca9471a44daf862505691aae80c9a8facdc7729bc5f57a6",
+   "version": "0.3",
+   "sha256": "bb7184538dbef053c87d5df9d83a53a4867de17d22c83001a700b4ed53517ee6",
    "valid": false,
    "errors": [
     {
@@ -657,8 +657,8 @@
   },
   {
    "id": "FlowDoc schema rejections: flow control: rejects a percentage branch with two operands",
-   "version": "0.2",
-   "sha256": "e932519a25304f5752c3e6c63eb2b800af61a0bd2f66be88875418d96a6f7549",
+   "version": "0.3",
+   "sha256": "e226c39f219fe1ea338a22acd33135b604b84fbb31c81cb47083cf74c14ae809",
    "valid": false,
    "errors": [
     {
@@ -679,8 +679,8 @@
   },
   {
    "id": "FlowDoc schema rejections: flow control: rejects a flow attribute as a flat string, which the console never writes",
-   "version": "0.2",
-   "sha256": "0eeab8c9ed142bdd8cbbcfdb789ee55b6e065b2ae6b4c763765652f1c1d1dc29",
+   "version": "0.3",
+   "sha256": "e3bbed671a98972d61b24da52e1d4f0dfaac210b459ba5f141942eb22afaa1a1",
    "valid": false,
    "errors": [
     {
@@ -701,8 +701,8 @@
   },
   {
    "id": "FlowDoc schema rejections: flow control: rejects a flow attribute wrapper with a key other than Value",
-   "version": "0.2",
-   "sha256": "755818b756e8e187a654fdda73e0fac6ae39104e8944270befb457db00bd055d",
+   "version": "0.3",
+   "sha256": "66ee788c7ff5028b920cf6a79d119d98157cc744e5697b53d2b73d94857876f1",
    "valid": false,
    "errors": [
     {
@@ -723,8 +723,8 @@
   },
   {
    "id": "FlowDoc schema rejections: flow control: rejects a wait of zero seconds",
-   "version": "0.2",
-   "sha256": "0cb41c6be989986f7bb326fbec82a3a87f61bcf06c556d1881a4bf5b6af552cd",
+   "version": "0.3",
+   "sha256": "96cf7e212014a5bd95186ef287768b8489c7f5b6cc4eaa83e1eea94ea14ee440",
    "valid": false,
    "errors": [
     {
@@ -759,8 +759,8 @@
   },
   {
    "id": "FlowDoc schema rejections: flow control: rejects a wait written as a JSON number, which the console never writes",
-   "version": "0.2",
-   "sha256": "da449177ec85d5c399ed766aca1df44ad348e8c3a516f747bde5de22904cd5c2",
+   "version": "0.3",
+   "sha256": "2e9b2da70b1a853f17fccca7937caec34df9b24699bb7211155ef5e29a03448a",
    "valid": false,
    "errors": [
     {
@@ -795,8 +795,8 @@
   },
   {
    "id": "FlowDoc schema rejections: flow control: rejects a wait event the page does not list",
-   "version": "0.2",
-   "sha256": "d45135fff899b21ee2eee294c427c7a4cb6178c37c3fc7ebe09d201acf32ca51",
+   "version": "0.3",
+   "sha256": "df1275a15bc159a4ffd20f05082805e50bac5002be9317d44d5396eaa02fdc62",
    "valid": false,
    "errors": [
     {
@@ -817,8 +817,8 @@
   },
   {
    "id": "FlowDoc schema rejections: flow control: rejects a wait event listed twice",
-   "version": "0.2",
-   "sha256": "79b1c2b46f68871a1fdbd648176c3acd0fa2dc8d9a7b4f6a58aba3e251f44998",
+   "version": "0.3",
+   "sha256": "d2f60c415dbfcbaed70e99d8c6f7545ba473ca1775290bf0390a22a80b68fa37",
    "valid": false,
    "errors": [
     {
@@ -839,8 +839,8 @@
   },
   {
    "id": "FlowDoc schema rejections: flow control: rejects a metric the page does not list",
-   "version": "0.2",
-   "sha256": "dd7d4fe8832696e9d08aa4aae5f816c4089f628bdeed6a992209562d35f99520",
+   "version": "0.3",
+   "sha256": "2067a7ff2d028f1e415018a88b441acdff119bfddb06fc7fdc692ecacfd19732",
    "valid": false,
    "errors": [
     {
@@ -861,8 +861,8 @@
   },
   {
    "id": "FlowDoc schema rejections: flow control: rejects a metric check naming both a queue and an agent queue",
-   "version": "0.2",
-   "sha256": "b1e2c0efe4ec8daa570bbbadd0582f8c64c3fdac9708523381e510043535a312",
+   "version": "0.3",
+   "sha256": "9b19b4d8276da361acb3242f272f2b5e067a275012db1aec46071a402fb0b302",
    "valid": false,
    "errors": [
     {
@@ -883,8 +883,8 @@
   },
   {
    "id": "FlowDoc schema rejections: flow control: rejects a metric load for a channel the page does not list",
-   "version": "0.2",
-   "sha256": "3e619fd10596563bc5fa8b43f517b992f68daad5f019e0332f1316a535c782bf",
+   "version": "0.3",
+   "sha256": "be6d0d718e159c71bd6387d9a89378364f6b247c95077c87f8999dc183e0264f",
    "valid": false,
    "errors": [
     {
@@ -919,8 +919,8 @@
   },
   {
    "id": "FlowDoc schema rejections: flow control: rejects a metric load naming both a queue and an agent queue",
-   "version": "0.2",
-   "sha256": "7a2a68484808747c45b042a94a6d3991466a9bbc3aad12e17fa3b8fcd1f91e1a",
+   "version": "0.3",
+   "sha256": "02e0c3681ce918b3c2207c5cc5f00b3150444c841fb05f0cb5018130f1d00510",
    "valid": false,
    "errors": [
     {
@@ -941,22 +941,22 @@
   },
   {
    "id": "FlowDoc schema rejections: flow control: still accepts a JSONPath loop count and wait timeout",
-   "version": "0.2",
-   "sha256": "2182db73e726086db0398bc988eacfe4ab28640809106958d6f2e9403c0df62e",
+   "version": "0.3",
+   "sha256": "5bebafd78187688fbc2a7e84d78137f6696ef6d5f572ba881bb15f26075349e9",
    "valid": true,
    "errors": []
   },
   {
    "id": "FlowDoc schema rejections: contact data: accepts the fixture as committed",
-   "version": "0.2",
-   "sha256": "a45409bfd6fa257fc4dfca5b852b293b3ff92a26769440bcfc5d36b975648cf4",
+   "version": "0.3",
+   "sha256": "ac056365efd9fd6faec550ebded7362d9c0979e908527197850817a26ef700f2",
    "valid": true,
    "errors": []
   },
   {
    "id": "FlowDoc schema rejections: contact data: rejects seven tags",
-   "version": "0.2",
-   "sha256": "934c9cda17c92361afe8ce9f64907ff98714b8655b7f034732506d4c3951810c",
+   "version": "0.3",
+   "sha256": "37d459ffd165f2d87d726ac75688283dfdac4fb6aa581143f2752e6572274a7a",
    "valid": false,
    "errors": [
     {
@@ -977,8 +977,8 @@
   },
   {
    "id": "FlowDoc schema rejections: contact data: rejects a system tag key",
-   "version": "0.2",
-   "sha256": "74bb6311a14e8257f18881c563226577fcd7626219b9b832955e3777a4847c37",
+   "version": "0.3",
+   "sha256": "1e1177337dca7825a2ac3a053135b3cc45e7b057dbdf0189cc2984d6812407fe",
    "valid": false,
    "errors": [
     {
@@ -1006,8 +1006,8 @@
   },
   {
    "id": "FlowDoc schema rejections: contact data: rejects a non-string tag value",
-   "version": "0.2",
-   "sha256": "506b5c159b24dc0cbddbc9b8755249167c4ce5f0a09d84f5268fb3d5cae781ff",
+   "version": "0.3",
+   "sha256": "350b2dc6ac161e91cefe8722ac34f04801f99ce6d7ec094be5eec3b0cbacde7f",
    "valid": false,
    "errors": [
     {
@@ -1028,8 +1028,8 @@
   },
   {
    "id": "FlowDoc schema rejections: contact data: rejects removing a system tag",
-   "version": "0.2",
-   "sha256": "aa385a55914963a1b7d05e6844007fe33ba25f3efa9cf37d772d93bcb3d4da09",
+   "version": "0.3",
+   "sha256": "989d6c5b06fa9f76f0d8cfea402fb7708dc40b417631bf7585596773416b9a96",
    "valid": false,
    "errors": [
     {
@@ -1050,8 +1050,8 @@
   },
   {
    "id": "FlowDoc schema rejections: contact data: rejects an empty key list, which the service refuses",
-   "version": "0.2",
-   "sha256": "3d070134e1008fa07ff2142cb5a539301052c8fb2c116759211b955742bd0852",
+   "version": "0.3",
+   "sha256": "68e43c3eeca1d4bd31085bd35a22a9aeb15c49f614ec60c8452c551d6a11b4ae",
    "valid": false,
    "errors": [
     {
@@ -1072,8 +1072,8 @@
   },
   {
    "id": "FlowDoc schema rejections: contact data: rejects a text-to-speech engine the pages do not list",
-   "version": "0.2",
-   "sha256": "13432a2652961f6b3d26942e18fee6e52cf8176c63eb50500bc60fea9d1d4b6f",
+   "version": "0.3",
+   "sha256": "7977a07d1873022c3322cbbd5e07043bca9944cd5dc49d77953bd5811a6bc528",
    "valid": false,
    "errors": [
     {
@@ -1108,8 +1108,8 @@
   },
   {
    "id": "FlowDoc schema rejections: contact data: rejects a text-to-speech engine in the admin guide's lower case, which the console never writes",
-   "version": "0.2",
-   "sha256": "c611ac5eb90f5e47c0b91fbb371c2253d72802558612c93a1670fef327c7f617",
+   "version": "0.3",
+   "sha256": "fb87749f49ad621b068ca3374849f495b3f6fce814061066f5a4177a093cdec9",
    "valid": false,
    "errors": [
     {
@@ -1144,8 +1144,8 @@
   },
   {
    "id": "FlowDoc schema rejections: contact data: rejects an empty voice name",
-   "version": "0.2",
-   "sha256": "c0a933bad488a608fcf05685fafbf150596017abb1fc15c02a15d48a9e3a1cb9",
+   "version": "0.3",
+   "sha256": "c38e4219c368a44fcb1f26b4d472617ed06b709e365d8a4ec2d1e2fe53fe211f",
    "valid": false,
    "errors": [
     {
@@ -1166,8 +1166,8 @@
   },
   {
    "id": "FlowDoc schema rejections: contact data: rejects a voice authentication threshold above 100",
-   "version": "0.2",
-   "sha256": "1eea067902248b7e76929309e0c9ea8f31813ee710a48aa5bbf29e2225d8b34d",
+   "version": "0.3",
+   "sha256": "b147549f73e155c4882bc70a4c88e4b76224fee21d9d8d2015670b69857dd301",
    "valid": false,
    "errors": [
     {
@@ -1188,8 +1188,8 @@
   },
   {
    "id": "FlowDoc schema rejections: contact data: rejects a response time below 5 seconds",
-   "version": "0.2",
-   "sha256": "b06c4b4e3398b268554e56c666afc077112588d2f69471cbd5d5b8c676ccfabc",
+   "version": "0.3",
+   "sha256": "d1489daa5369fca470b93aa35fa4d1062abfeff71c542fd7fa59ae0a46d90bca",
    "valid": false,
    "errors": [
     {
@@ -1210,8 +1210,8 @@
   },
   {
    "id": "FlowDoc schema rejections: contact data: rejects a lowercase Voice ID flag",
-   "version": "0.2",
-   "sha256": "fc3b5487ada8e9893e7b7a2e4eba4d61968d99d35a86cde4920b292277bd1066",
+   "version": "0.3",
+   "sha256": "394be0a6c78e30fe378a5f4e9e7a7d94b5f2ea1173d10a6e7980982a2fd04844",
    "valid": false,
    "errors": [
     {
@@ -1232,8 +1232,8 @@
   },
   {
    "id": "FlowDoc schema rejections: contact data: rejects a target the page does not list",
-   "version": "0.2",
-   "sha256": "1931ca1ef6e9af6533af9a08345f7528ada9ea44bcdda813675546e143c8258f",
+   "version": "0.3",
+   "sha256": "f8a6fb05abbf12ce3aded4e6b29fa078b7c0b26591cb0f7c99c9dc27fc6022d7",
    "valid": false,
    "errors": [
     {
@@ -1254,8 +1254,8 @@
   },
   {
    "id": "FlowDoc schema rejections: contact data: rejects two event hooks in one action",
-   "version": "0.2",
-   "sha256": "2722a7f26213268455b6e132cc5af0cb2e2b469ba016d0654befa7a0e135d564",
+   "version": "0.3",
+   "sha256": "fa439bdba77937d4db4760839290fdeab7fd370cbe23d29336c26a8771e138d8",
    "valid": false,
    "errors": [
     {
@@ -1276,8 +1276,8 @@
   },
   {
    "id": "FlowDoc schema rejections: contact data: rejects an event hook the page does not list",
-   "version": "0.2",
-   "sha256": "c63ec39e73b36329de911d032156fdc50428401b17466b94d95e216be5368c93",
+   "version": "0.3",
+   "sha256": "da8761841476d5cede9e3a2e3494ca535a02c7dcef210960b80be4970baf970c",
    "valid": false,
    "errors": [
     {
@@ -1305,15 +1305,15 @@
   },
   {
    "id": "FlowDoc schema rejections: contact data: rejects a literal ARN as an event hook's flow",
-   "version": "0.2",
-   "sha256": "7a39bd3f318b2e1f4cd1f3737a3d08716f812ba096f6ad8e768c1644be601d73",
+   "version": "0.3",
+   "sha256": "ba5c437f5b8021139989c6ebfab2359d36ea47a7f0c5de3335cec2e3642200d7",
    "valid": false,
    "errors": [
     {
      "instancePath": "/content/Actions/6/Parameters/EventHooks/CustomerQueue",
      "schemaPath": "#/$defs/token/pattern",
      "keyword": "pattern",
-     "message": "must match pattern \"^\\$\\{cdref:(queue|hours|lambda|lex|prompt|flow|module|view):[a-z0-9]+(-[a-z0-9]+)*(@[a-z0-9]+(-[a-z0-9]+)*)?\\}$\"",
+     "message": "must match pattern \"^\\$\\{cdref:(queue|hours|lambda|lex|prompt|flow|module|view|tasktemplate|casetemplate|casefield|assistant|phonenumber):[a-z0-9]+(-[a-z0-9]+)*(@[a-z0-9]+(-[a-z0-9]+)*)?\\}$\"",
      "property": ""
     },
     {
@@ -1341,15 +1341,15 @@
   },
   {
    "id": "FlowDoc schema rejections: participant: accepts the fixture as committed",
-   "version": "0.2",
-   "sha256": "56c083e9a077c3d1a66db2bbc61afebe664f7dced38fc206b17577be6ca1e1b4",
+   "version": "0.3",
+   "sha256": "96c2c11f6093772575b2dd9f296c5c43bcf8ad79e62492f3c9db1aab0bf922a8",
    "valid": true,
    "errors": []
   },
   {
    "id": "FlowDoc schema rejections: participant: rejects a loop message with two bodies",
-   "version": "0.2",
-   "sha256": "98c1de9dd944c2a9ad45db2d82f920a0689fa1f47523c48b6c13dd24074292a1",
+   "version": "0.3",
+   "sha256": "ee508d4030b5b6332c11d08eb03cbdeacc534ea1128a521415653f97dcfa86ef",
    "valid": false,
    "errors": [
     {
@@ -1370,8 +1370,8 @@
   },
   {
    "id": "FlowDoc schema rejections: participant: rejects a loop with no messages",
-   "version": "0.2",
-   "sha256": "a2fa72df15888200e5948212d6d81d8bf01fff94144a7469e61525928b572f1d",
+   "version": "0.3",
+   "sha256": "75e404973c6644a24543094d0986cb120fa399fc0335505eb7400a7ff53a032c",
    "valid": false,
    "errors": [
     {
@@ -1392,8 +1392,8 @@
   },
   {
    "id": "FlowDoc schema rejections: participant: rejects an interrupt frequency written as a JSON number",
-   "version": "0.2",
-   "sha256": "9deab726fd94ed0ad3edd65a0cfbdd1d6e72dc4041c766b3a4f592a0ddc2dab2",
+   "version": "0.3",
+   "sha256": "e0ccb596af8490d405cc9f83bcbcf2f51218d17bf9659569903be7b86eb7700c",
    "valid": false,
    "errors": [
     {
@@ -1414,8 +1414,8 @@
   },
   {
    "id": "FlowDoc schema rejections: participant: rejects a media message from somewhere other than S3",
-   "version": "0.2",
-   "sha256": "86372948fa1000179a4ca12a719f60713b9a2358863f7d18a352f195d1995e24",
+   "version": "0.3",
+   "sha256": "de4f88ca46dda03f04e0e579a034c8fb8de4234eb1d324beece2a2e8b008aaef",
    "valid": false,
    "errors": [
     {
@@ -1436,8 +1436,8 @@
   },
   {
    "id": "FlowDoc schema rejections: participant: rejects a Lex bot with both a text and an SSML body",
-   "version": "0.2",
-   "sha256": "d42bbcc193e88b545454d7a5801cd0a519fcc87df8d1860d55836d6df76722b1",
+   "version": "0.3",
+   "sha256": "1fa6d8374cd9b037074d0a5def7156057ebed5695ca50a953b40d47def6b4c14",
    "valid": false,
    "errors": [
     {
@@ -1458,15 +1458,15 @@
   },
   {
    "id": "FlowDoc schema rejections: participant: rejects a Lex bot alias as a literal ARN",
-   "version": "0.2",
-   "sha256": "5b6183ab617e7136c85caa0690b720421ccdc95d6d4d15ab2297846b08d3b1c0",
+   "version": "0.3",
+   "sha256": "667fa34489b16be22224104616a8a86da249a70bc00b6a9584d36ddd5924d896",
    "valid": false,
    "errors": [
     {
      "instancePath": "/content/Actions/2/Parameters/LexV2Bot/AliasArn",
      "schemaPath": "#/$defs/token/pattern",
      "keyword": "pattern",
-     "message": "must match pattern \"^\\$\\{cdref:(queue|hours|lambda|lex|prompt|flow|module|view):[a-z0-9]+(-[a-z0-9]+)*(@[a-z0-9]+(-[a-z0-9]+)*)?\\}$\"",
+     "message": "must match pattern \"^\\$\\{cdref:(queue|hours|lambda|lex|prompt|flow|module|view|tasktemplate|casetemplate|casefield|assistant|phonenumber):[a-z0-9]+(-[a-z0-9]+)*(@[a-z0-9]+(-[a-z0-9]+)*)?\\}$\"",
      "property": ""
     },
     {
@@ -1494,8 +1494,8 @@
   },
   {
    "id": "FlowDoc schema rejections: participant: rejects a Lex timeout written as a JSON number",
-   "version": "0.2",
-   "sha256": "ce962cda78b9f86818aeabfa275fc1cf692fb3b7d2fafa44b62af722ff8d5102",
+   "version": "0.3",
+   "sha256": "59c958c905733b4b41b202874d8f6987b18e7ffae31fa6ab5ff33643d116f032",
    "valid": false,
    "errors": [
     {
@@ -1516,8 +1516,8 @@
   },
   {
    "id": "FlowDoc schema rejections: participant: rejects a Lex timeout below the console's one minute",
-   "version": "0.2",
-   "sha256": "c372f4fc96dfff69d808bc29c1dc34eb760a6c8dac5575d77c827989b97b6a24",
+   "version": "0.3",
+   "sha256": "d8b7fc9bcf54216c69bf0e6e34dfde10f7bdf11c23a1ec611cc8cf7c6e652c45",
    "valid": false,
    "errors": [
     {
@@ -1538,8 +1538,8 @@
   },
   {
    "id": "FlowDoc schema rejections: participant: rejects a Lex timeout above the console's seven days",
-   "version": "0.2",
-   "sha256": "9b7b985c4cd7fdc125d3524b9d024a54135c75cda63afce604f2c00154a4ecaa",
+   "version": "0.3",
+   "sha256": "1eac5fe81b7c2fee29fcfad656a2f39440f1e9f5bb7666b0eec65afadbacf4c1",
    "valid": false,
    "errors": [
     {
@@ -1560,8 +1560,8 @@
   },
   {
    "id": "FlowDoc schema rejections: participant: rejects a Lex action with no bot at all",
-   "version": "0.2",
-   "sha256": "b6a4f2ed225e1d8a927f8bc60298532a2fe7644668367091cfba1874fc0381ec",
+   "version": "0.3",
+   "sha256": "ae2ea14350930d2d543cfb14811cbe81dfb2a6b21b0c8bcda8d6626aea2b9909",
    "valid": false,
    "errors": [
     {
@@ -1596,8 +1596,8 @@
   },
   {
    "id": "FlowDoc schema rejections: participant: rejects a view resource with no id",
-   "version": "0.2",
-   "sha256": "5295daf3e348663e2e2042a9bbfbed8e4bcced37c83d15c72b768866e124f3d3",
+   "version": "0.3",
+   "sha256": "1c9f4574cab01427b66174401a721dfedbdf426cb303bb95ac7c9f5bbef608ac",
    "valid": false,
    "errors": [
     {
@@ -1618,15 +1618,15 @@
   },
   {
    "id": "FlowDoc schema rejections: participant: rejects a view id as a literal ARN",
-   "version": "0.2",
-   "sha256": "309bd8f2f4f42b601ead5cd2f824384cacb9ac578bfc4254d98b239b703e3c0c",
+   "version": "0.3",
+   "sha256": "64ed55974ca00a3125b53da5eb3e7396c0f1e69c8618b868b2d6396516bc68f0",
    "valid": false,
    "errors": [
     {
      "instancePath": "/content/Actions/3/Parameters/ViewResource/Id",
      "schemaPath": "#/$defs/token/pattern",
      "keyword": "pattern",
-     "message": "must match pattern \"^\\$\\{cdref:(queue|hours|lambda|lex|prompt|flow|module|view):[a-z0-9]+(-[a-z0-9]+)*(@[a-z0-9]+(-[a-z0-9]+)*)?\\}$\"",
+     "message": "must match pattern \"^\\$\\{cdref:(queue|hours|lambda|lex|prompt|flow|module|view|tasktemplate|casetemplate|casefield|assistant|phonenumber):[a-z0-9]+(-[a-z0-9]+)*(@[a-z0-9]+(-[a-z0-9]+)*)?\\}$\"",
      "property": ""
     },
     {
@@ -1654,8 +1654,8 @@
   },
   {
    "id": "FlowDoc schema rejections: participant: rejects a view time limit written as a JSON number",
-   "version": "0.2",
-   "sha256": "b0148cc4f7b0f6ba89bbfa24cc918fc36d05132d6f2a6b66fbd2d20f0cf66a5d",
+   "version": "0.3",
+   "sha256": "36c5510efd416e318b836fbc669a6788502dd69751f8dcf8048ae13a480792a9",
    "valid": false,
    "errors": [
     {
@@ -1676,8 +1676,8 @@
   },
   {
    "id": "FlowDoc schema rejections: participant: rejects a view without a time limit, which the service refuses",
-   "version": "0.2",
-   "sha256": "0482afa5671ca79e2ab6d3896cdc129cc3ca0f99bc8d076d81130eafe74b1061",
+   "version": "0.3",
+   "sha256": "90c19b6c37c622fe8de450bc2cd06c94cf07924c12d20db5fd53f9c2ff0ec66f",
    "valid": false,
    "errors": [
     {
@@ -1698,15 +1698,15 @@
   },
   {
    "id": "FlowDoc schema rejections: recording and analytics: accepts the fixture as committed, chat form included",
-   "version": "0.2",
-   "sha256": "7c7caa7eed3b1458bfb9ddd7e702eb00a86f249611c58269544576b94e3ae96f",
+   "version": "0.3",
+   "sha256": "e5ec3b1fe91c0994263bb687df1c3346328fe35ee080cf1a04c3dad45812fa3b",
    "valid": true,
    "errors": []
   },
   {
    "id": "FlowDoc schema rejections: recording and analytics: rejects a recorded participant other than Agent or Customer",
-   "version": "0.2",
-   "sha256": "0113417c9fe5da2727d4b0ef06793ee8bef895d18929c8daa0348721dfb8a5f4",
+   "version": "0.3",
+   "sha256": "accee1d7603ca996fea5d420edc9f194f445dd0121b58804243e5716d5308248",
    "valid": false,
    "errors": [
     {
@@ -1727,8 +1727,8 @@
   },
   {
    "id": "FlowDoc schema rejections: recording and analytics: rejects a participant recorded twice",
-   "version": "0.2",
-   "sha256": "faf1b88aec068b8eaea8d0d727acc2f7aabf5ba60a2bdd260d7820e44772d9e9",
+   "version": "0.3",
+   "sha256": "22c905f1bbcd6a425ddf015131038dc9f57447508b591043ba7446d76300e603",
    "valid": false,
    "errors": [
     {
@@ -1749,8 +1749,8 @@
   },
   {
    "id": "FlowDoc schema rejections: recording and analytics: rejects an IVR recording value other than Enabled or Disabled",
-   "version": "0.2",
-   "sha256": "f5575328eacfbc39c33ea0e78e76fb314519e0d01ae2a1c00234302ae6c08b1e",
+   "version": "0.3",
+   "sha256": "56721218c47306290cc2e4a88893b57510b26b90bbcb40d269567f7b6a2478c6",
    "valid": false,
    "errors": [
     {
@@ -1771,8 +1771,8 @@
   },
   {
    "id": "FlowDoc schema rejections: recording and analytics: rejects a screen recorded participant other than Agent",
-   "version": "0.2",
-   "sha256": "9c7dea21cec339650e787af67e90449ce1243b20cc4a8ac084665798ba5d75a4",
+   "version": "0.3",
+   "sha256": "4b167818cf4e6df8df3374ed08774235ea104894b4b715ddb944059508c8c3fb",
    "valid": false,
    "errors": [
     {
@@ -1793,8 +1793,8 @@
   },
   {
    "id": "FlowDoc schema rejections: recording and analytics: rejects a chat and a voice behavior on one block",
-   "version": "0.2",
-   "sha256": "7d9d6ed49000ddd078bcea81d126f7182754e0d5d06221da2f0a552508fd89d8",
+   "version": "0.3",
+   "sha256": "477e6b3714226af44d1178f03b8b0e2b5a5c293f23fa1171858dc5cd7da4c8b9",
    "valid": false,
    "errors": [
     {
@@ -1815,8 +1815,8 @@
   },
   {
    "id": "FlowDoc schema rejections: recording and analytics: rejects a voice and a screen behavior on one block, which the service refuses",
-   "version": "0.2",
-   "sha256": "1b8a11b67d993f7d53074679ce4d922294e1bc2b4052ab8738d9f8af8c810521",
+   "version": "0.3",
+   "sha256": "716aab98482fcd9e817bcb96cdead53ddbbb27f2874ea5c65897dc952b67c507",
    "valid": false,
    "errors": [
     {
@@ -1844,8 +1844,8 @@
   },
   {
    "id": "FlowDoc schema rejections: recording and analytics: rejects a voice behavior with no recording object",
-   "version": "0.2",
-   "sha256": "910eb6b9e4a20e824a353eafde445eab60ea04c8fa82af13e3ac93a9e3c634e7",
+   "version": "0.3",
+   "sha256": "b26732ae5d3b289f0810a27e0f3b81ce0bf9c03b70a9d8f3db258558cedfb4fb",
    "valid": false,
    "errors": [
     {
@@ -1866,8 +1866,8 @@
   },
   {
    "id": "FlowDoc schema rejections: recording and analytics: rejects a screen behavior with no participant list",
-   "version": "0.2",
-   "sha256": "b235891c86fee1b691ec35c5968491e18b4a05be0cc7cf66ef255855e3a6cea0",
+   "version": "0.3",
+   "sha256": "3ac00f7d8371fc630bc83699adad73b9caa440481cf981beaaa05cb688979c08",
    "valid": false,
    "errors": [
     {
@@ -1888,8 +1888,8 @@
   },
   {
    "id": "FlowDoc schema rejections: recording and analytics: rejects no behavior at all, which the service refuses",
-   "version": "0.2",
-   "sha256": "325a0f70868ae941586437e8b594fcae1827f2209e648e090d28c2bbb04115ee",
+   "version": "0.3",
+   "sha256": "cf2e384540e674cad1df61ee4ab23b8baf6c1756c9350a9f371e0361d8ca0c11",
    "valid": false,
    "errors": [
     {
@@ -1931,8 +1931,8 @@
   },
   {
    "id": "FlowDoc schema rejections: GetParticipantInput: rejects StoreInput that is neither True nor False",
-   "version": "0.2",
-   "sha256": "cae728174b0f224e6aafab036e93f20cb7e4f8da5c974023cb1ec995260c53ea",
+   "version": "0.3",
+   "sha256": "e5c9ea6ca29216b64faf8d9bd49f34e0339b41d889163c0c1cfd18d201d0a6d6",
    "valid": false,
    "errors": [
     {
@@ -1953,8 +1953,8 @@
   },
   {
    "id": "FlowDoc schema rejections: GetParticipantInput: rejects a timeout of zero, as a string",
-   "version": "0.2",
-   "sha256": "25cbce3918caa577527496b0182f2293ce4ab3b0a9f62f37ec447a9e01c7b9bf",
+   "version": "0.3",
+   "sha256": "e79a86bcc914ee022ac8cd7e67e649e6b66c7a24dd4c39f2c7942d529960e054",
    "valid": false,
    "errors": [
     {
@@ -1989,8 +1989,8 @@
   },
   {
    "id": "FlowDoc schema rejections: GetParticipantInput: rejects a timeout of zero, as an integer",
-   "version": "0.2",
-   "sha256": "67f4031874664f8e2333b5fbdf4827d581e4fbb0d0c13da4e56d467183817bbc",
+   "version": "0.3",
+   "sha256": "fd91287fef2a955b837abab05ae8172feb25ab949c0ff0eb51a43c8b3e2cf2f8",
    "valid": false,
    "errors": [
     {
@@ -2025,8 +2025,8 @@
   },
   {
    "id": "FlowDoc schema rejections: GetParticipantInput: rejects a timeout with a leading zero",
-   "version": "0.2",
-   "sha256": "c0212cdc03981bac13d886db7decd433667bcd24007799200a6e4171c1ac0990",
+   "version": "0.3",
+   "sha256": "d366ec733f21f4a2c5389e309c584f6e5441f2ea193ae3611dda8c1be4f7e42d",
    "valid": false,
    "errors": [
     {
@@ -2061,8 +2061,8 @@
   },
   {
    "id": "FlowDoc schema rejections: GetParticipantInput: rejects a fractional timeout",
-   "version": "0.2",
-   "sha256": "024a426ffdd54341ba92f5e5ed221419660e8ad37c13f8d7b57e899743745fa1",
+   "version": "0.3",
+   "sha256": "f820f47e3201c9edab7ab65d39a22d45bc73721fd1584c39c6e1f716c8aa5ae6",
    "valid": false,
    "errors": [
     {
@@ -2097,8 +2097,8 @@
   },
   {
    "id": "FlowDoc schema rejections: GetParticipantInput: rejects Text and SSML together",
-   "version": "0.2",
-   "sha256": "3c047faea1e55093af6306488bc47f5147e7d2df00f5ae177f7a9df8101d6b84",
+   "version": "0.3",
+   "sha256": "9a85bce8b492bdf1647675a5e952d8e98a920e467a27d35a0c76cc1e6b5b7d4d",
    "valid": false,
    "errors": [
     {
@@ -2119,8 +2119,8 @@
   },
   {
    "id": "FlowDoc schema rejections: GetParticipantInput: rejects Text and PromptId together",
-   "version": "0.2",
-   "sha256": "07d1de1910824608b2466d4c431a99013b6f773e50b83477465db3e4f65a23ed",
+   "version": "0.3",
+   "sha256": "ed09bb13adc2776d4329aa057dacfe0ebeae9aba459098bb6b82006ee338608e",
    "valid": false,
    "errors": [
     {
@@ -2141,15 +2141,15 @@
   },
   {
    "id": "FlowDoc schema rejections: GetParticipantInput: rejects a literal ARN in PromptId",
-   "version": "0.2",
-   "sha256": "aa2ef8aaa4656a00737954b8466a1aff7ae993ff7819d2433be325cfd838d20d",
+   "version": "0.3",
+   "sha256": "8c7d70eb981f16f727af83cbadfd33a102ac538c3cba15eddf8ded53e00a545b",
    "valid": false,
    "errors": [
     {
      "instancePath": "/content/Actions/0/Parameters/PromptId",
      "schemaPath": "#/$defs/token/pattern",
      "keyword": "pattern",
-     "message": "must match pattern \"^\\$\\{cdref:(queue|hours|lambda|lex|prompt|flow|module|view):[a-z0-9]+(-[a-z0-9]+)*(@[a-z0-9]+(-[a-z0-9]+)*)?\\}$\"",
+     "message": "must match pattern \"^\\$\\{cdref:(queue|hours|lambda|lex|prompt|flow|module|view|tasktemplate|casetemplate|casefield|assistant|phonenumber):[a-z0-9]+(-[a-z0-9]+)*(@[a-z0-9]+(-[a-z0-9]+)*)?\\}$\"",
      "property": ""
     },
     {
@@ -2177,50 +2177,50 @@
   },
   {
    "id": "FlowDoc schema rejections: GetParticipantInput: still accepts an integer timeout, which Connect's own exports may carry",
-   "version": "0.2",
-   "sha256": "bd2f9899b7c62d30243a0af04037bd2672dbdbf3260680db7e0368cbaa504451",
+   "version": "0.3",
+   "sha256": "59914b6998d4b2a1548f815c5e272dff8337002b30078c64864f6217af14f936",
    "valid": true,
    "errors": []
   },
   {
    "id": "FlowDoc schema rejections: GetParticipantInput: still accepts no StoreInput, which the action page makes optional",
-   "version": "0.2",
-   "sha256": "24311cee6acc7be470745d9e737bfabb6890c91cae9a6e8ecf61a2127ee7ac3c",
+   "version": "0.3",
+   "sha256": "22b3bd4ab0bfb85dd3a5488554fada8dc304f40204651a095cf35e2c3bd93eda",
    "valid": true,
    "errors": []
   },
   {
    "id": "FlowDoc schema rejections: GetParticipantInput: still accepts a JSONPath identifier in PromptId",
-   "version": "0.2",
-   "sha256": "403d876b79a751ffec47a57646c339c6f29b30622211085e7105e451ee185438",
+   "version": "0.3",
+   "sha256": "35ebb14bd22883b341a5404d450a6506ccfa8cc3a85bc73a22775c763f4b95c8",
    "valid": true,
    "errors": []
   },
   {
    "id": "FlowDoc schema rejections: GetParticipantInput: still accepts no prompt at all",
-   "version": "0.2",
-   "sha256": "16d6aedc4e227170a15c6cd7c96a1a22d47766ba18816acc45631251bec398b6",
+   "version": "0.3",
+   "sha256": "92a8871d0ce8cc04527411bb376ae35c286dc8a3b44edd981bdde3bfb94374a7",
    "valid": true,
    "errors": []
   },
   {
    "id": "kind and connectType agree: accepts a flow with a non-module connectType",
-   "version": "0.2",
-   "sha256": "580c83a96acb61017d68e016b148b9333ee29bb42e397171980ceb096c5d8f05",
+   "version": "0.3",
+   "sha256": "94d97d15fb092c7bdbf1357990ce5a52bfd7881904e065fa423b88faecef641b",
    "valid": true,
    "errors": []
   },
   {
    "id": "kind and connectType agree: accepts a module with connectType MODULE",
-   "version": "0.2",
-   "sha256": "aa9d10fc52ef3489dc18118f4159bae3de5f7ca80c481a063d2576338191d9c1",
+   "version": "0.3",
+   "sha256": "055dc6cdce40bfdae76517636d56c72303fe955432bb0e32b4749d1bbe81ba69",
    "valid": true,
    "errors": []
   },
   {
    "id": "kind and connectType agree: rejects a module whose connectType is not MODULE",
-   "version": "0.2",
-   "sha256": "9e031258cfc6052439aeb1b5815db1cb1d452a0465b586110004e668b08c7753",
+   "version": "0.3",
+   "sha256": "2c6212580980327a7fd2bf02c136d3cf33c96b58edcabaf57ad16901422ac4fb",
    "valid": false,
    "errors": [
     {
@@ -2241,8 +2241,8 @@
   },
   {
    "id": "kind and connectType agree: rejects a flow whose connectType is MODULE",
-   "version": "0.2",
-   "sha256": "ecdecb08f7cbc7dfeab3d97a2078b55baa0b5ab0f4ca5d1ae9e44d90f7529c6c",
+   "version": "0.3",
+   "sha256": "166d5f5c8c1db22a9edf3efe1b47defca28a520e62d4b22a1dcdf2b201a5c020",
    "valid": false,
    "errors": [
     {
@@ -2263,8 +2263,8 @@
   },
   {
    "id": "Go port: Ajv parity: a tag key that is a lone carriage return, which ECMA-262's . refuses",
-   "version": "0.2",
-   "sha256": "b7090d135f432b96b1a076414cd547cb9efc8aeedd205a5414250986eaefe328",
+   "version": "0.3",
+   "sha256": "ba418791be99aa2b924ee7a72199d68ee1b289495c33d03c27fbed6addc1b11b",
    "valid": false,
    "errors": [
     {
@@ -2285,8 +2285,8 @@
   },
   {
    "id": "Go port: Ajv parity: a tag key that is U+2028",
-   "version": "0.2",
-   "sha256": "521912ce03c51c2509801c2f3ce90658ad1f23d02c0fd127763cfe1dfafce000",
+   "version": "0.3",
+   "sha256": "570ad5cac64cccebb766825b92b89cf730a5de89fa9779fb1b8ce3c1616f0f27",
    "valid": false,
    "errors": [
     {
@@ -2307,8 +2307,8 @@
   },
   {
    "id": "Go port: Ajv parity: two system tag keys and a non-string value",
-   "version": "0.2",
-   "sha256": "7b9b4f4c4da7fc65054a5857dc245485b2c9954f91618c0d5bdbda742ef2a859",
+   "version": "0.3",
+   "sha256": "aca9e5ca46b5d3a9c083d088f0793cbf247e77259389921cce0cfd9dd9e88a09",
    "valid": false,
    "errors": [
     {
@@ -2357,8 +2357,8 @@
   },
   {
    "id": "Go port: Ajv parity: a text-to-speech engine that is a number",
-   "version": "0.2",
-   "sha256": "d1c00ff0af38f5179b0bf9dc894500cfc8fc030c7e55c20c41bafeed39ff3ad5",
+   "version": "0.3",
+   "sha256": "1ee94078665afc056aa64dc35fccacab1b3897ef4d61f1da7dad47404ade2b5b",
    "valid": false,
    "errors": [
     {
@@ -2393,29 +2393,29 @@
   },
   {
    "id": "Go port: Ajv parity: a tag key with a newline inside, which ECMA-262's . allows after the first character",
-   "version": "0.2",
-   "sha256": "464e06e11980375dea89a6f94e354bf46145c3c9bac85d0232ce060795abb5dc",
+   "version": "0.3",
+   "sha256": "480f7f42571e2c7ce1ba4030a551a6350212373f604abba088b4970094ca3a70",
    "valid": true,
    "errors": []
   },
   {
    "id": "Go port: Ajv parity: a tag key that only contains aws: later",
-   "version": "0.2",
-   "sha256": "b4799b11abacda9a91747a3874dc2b07fbb76b97457762959cabe591b203ec65",
+   "version": "0.3",
+   "sha256": "eeb7b4c90a4418515575a09f32e8f2873c20fba954ad6b329f7ff4681cfb5e65",
    "valid": true,
    "errors": []
   },
   {
    "id": "Go port: Ajv parity: a tag key ending in a carriage return",
-   "version": "0.2",
-   "sha256": "5ff422f75339b42c7c644459c677f6153a519c5705698131e9b0663ccaa4f2db",
+   "version": "0.3",
+   "sha256": "de76453189098c79ff817760d2f47bfc79f90eb05114f8556c7f8968dd850705",
    "valid": true,
    "errors": []
   },
   {
    "id": "Go port: Ajv parity: a wait event list with two repeated pairs",
-   "version": "0.2",
-   "sha256": "cdd306a4a1bf9a59ab53f522b037d4a9750cda2a56eaddec77e4b084549bd2fb",
+   "version": "0.3",
+   "sha256": "e488cbac096e00e9368ad7bf8b4dee0a2b01b975124dc3840046fbd90b954621",
    "valid": false,
    "errors": [
     {
@@ -2436,8 +2436,8 @@
   },
   {
    "id": "Go port: Ajv parity: a percentage branch with no operands",
-   "version": "0.2",
-   "sha256": "b87b23788e67d8b7ebe26853d92c55ff61d9ce08b6b394f17642366fcaf7f32f",
+   "version": "0.3",
+   "sha256": "7b3de0d39c45386ca59da06cc9a5f40c3c85becc3ae1351178d743bc516c96b9",
    "valid": false,
    "errors": [
     {
@@ -2465,8 +2465,8 @@
   },
   {
    "id": "Go port: Ajv parity: an Identifier Connect reserves as a prototype name",
-   "version": "0.2",
-   "sha256": "99f242586ace27b45c90670ed8eb10157aeb7bf8ae2643b9f823df87d20a452d",
+   "version": "0.3",
+   "sha256": "4e76c8228e6c175d8b3335d4b70709e52df389587e051d5ff2ace4d610252462",
    "valid": false,
    "errors": [
     {
@@ -2480,8 +2480,8 @@
   },
   {
    "id": "Go port: Ajv parity: an Identifier over 50 characters",
-   "version": "0.2",
-   "sha256": "c51e982183f3b1027ebf1ec334a1dee0cb744f3b9cac2df5c768e83b103934cd",
+   "version": "0.3",
+   "sha256": "550144939eb3bdeb4dadbd7aa1b81f3eb0f517e080f9d8941e10d87eede2188f",
    "valid": false,
    "errors": [
     {
@@ -2495,8 +2495,8 @@
   },
   {
    "id": "Go port: Ajv parity: an Identifier that is a number",
-   "version": "0.2",
-   "sha256": "a313d93d2c0e0ce7e64be6eaf5337488cd0e078321fb329280d7d385fa069c0e",
+   "version": "0.3",
+   "sha256": "3ddb5b251a0682a1997ad2b219b08940f491c52448f9c9d0b1195db67f994a1e",
    "valid": false,
    "errors": [
     {
@@ -2510,8 +2510,8 @@
   },
   {
    "id": "Go port: Ajv parity: an empty Identifier",
-   "version": "0.2",
-   "sha256": "7ef8a7d3aad5bbf746bfd3f2fd0aaf6db18eb1cd2cebe2692e6726342ff0e496",
+   "version": "0.3",
+   "sha256": "b4db192fba58821d653ceff73b8b937ab27789dab88309d32d9066478aaa4d51",
    "valid": false,
    "errors": [
     {
@@ -2532,8 +2532,8 @@
   },
   {
    "id": "Go port: Ajv parity: two unknown top-level keys",
-   "version": "0.2",
-   "sha256": "ed6e7ed1bfa4096e3a90658fe7e1c111013d6776076070d3d14b0071c3c132b8",
+   "version": "0.3",
+   "sha256": "a1b6aaac0c234ca5998e40dca62d8a943b23b940dadab94d3dfe695f11810ce6",
    "valid": false,
    "errors": [
     {
@@ -2554,8 +2554,8 @@
   },
   {
    "id": "Go port: Ajv parity: a missing name and content",
-   "version": "0.2",
-   "sha256": "009345ef9299dbf049efa281fc80497a6892de709155be2c20c512cfadba0f3b",
+   "version": "0.3",
+   "sha256": "16fe26cc6ec56284b7c5889de8a46d8dc378fa7428c1802cdc83c35a4cf62fca",
    "valid": false,
    "errors": [
     {
@@ -2576,8 +2576,8 @@
   },
   {
    "id": "Go port: Ajv parity: an unknown key in an action and in its transitions",
-   "version": "0.2",
-   "sha256": "b0b8d38271f4890630c3d04ac0abb72302b14c67331f1a4a596a1f0c9a207fef",
+   "version": "0.3",
+   "sha256": "92a285e5ee0de60d5ec5ef0a316db7f731ca903f610b30a5fe9e081afda1435b",
    "valid": false,
    "errors": [
     {
@@ -2598,8 +2598,8 @@
   },
   {
    "id": "Go port: Ajv parity: a layout point with a string coordinate and an extra key",
-   "version": "0.2",
-   "sha256": "d9998ae69a2c533943f9739e0e61f8194917e2984dff6940cb8eb9da01a1d822",
+   "version": "0.3",
+   "sha256": "173e5e7dd0f84918233f3e2bd8588f86965a63e9161fa771f5abaed9b5357b17",
    "valid": false,
    "errors": [
     {
@@ -2620,8 +2620,8 @@
   },
   {
    "id": "Go port: Ajv parity: a malformed source hash",
-   "version": "0.2",
-   "sha256": "dd10e4aecb6ecedf8cf811683d88fb6cf40569476bda6ce4cb7737df88323c32",
+   "version": "0.3",
+   "sha256": "342862a11a2c2f09458a1a41a28807388cd7c369839f0a2cee0035dab63f8040",
    "valid": false,
    "errors": [
     {
@@ -2635,8 +2635,8 @@
   },
   {
    "id": "Go port: Ajv parity: a description over 500 characters",
-   "version": "0.2",
-   "sha256": "cbb58672da241cf66b45942db918785434b94c56660b12df1896ae2ea2d130e7",
+   "version": "0.3",
+   "sha256": "5ff8a17b8cd86c3e321c134240578e53eca52661ee7ec2213cccae7741f5ead0",
    "valid": false,
    "errors": [
     {
@@ -2650,8 +2650,8 @@
   },
   {
    "id": "Go port: Ajv parity: a wrong content version",
-   "version": "0.2",
-   "sha256": "0db03aa2e8dc72b9d29b7b908766d2d67d70eae43b8f1a4478097acbd85bfd45",
+   "version": "0.3",
+   "sha256": "4610b9135157dab6c99dd56ce25e9215dd1e271710b9bdf312ecfa96b0ad6674",
    "valid": false,
    "errors": [
     {
@@ -2665,8 +2665,8 @@
   },
   {
    "id": "Go port: Ajv parity: no actions",
-   "version": "0.2",
-   "sha256": "0a1a0d79509028b69958dba0c72362fc7c75a697e4c526d358b2bb2ead39283a",
+   "version": "0.3",
+   "sha256": "e1f033ec718200f52604aab638836700b406268c2d2aedf3ecf404111fcc5edc",
    "valid": false,
    "errors": [
     {
@@ -2680,10 +2680,95 @@
   },
   {
    "id": "Go port: Ajv parity: a description of exactly 500 astral characters",
-   "version": "0.2",
-   "sha256": "73186ffb602e2f020b32c267011d64e6cf2ef06cff6c22b7449eb8e5af28c715",
+   "version": "0.3",
+   "sha256": "d01679dcfa2eef6e5634778d82f895055e1ecdaa74582bb13f743999a7a25000",
    "valid": true,
    "errors": []
+  },
+  {
+   "id": "FlowDoc migration: 0.3 accepts what 0.2 could not say: the five Phase D reference types",
+   "version": "0.3",
+   "sha256": "9957671d4d9693514aad5a76ef7538680922caf2d98243dd02fb6e088a71dc2c",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "FlowDoc migration: 0.2 refuses the same document",
+   "version": "0.2",
+   "sha256": "e3d44574a6493060ef61ec563219595aa31327c7cb3f3cea68fa539f177f70e8",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/refs/3/token",
+     "schemaPath": "#/$defs/token/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\{cdref:(queue|hours|lambda|lex|prompt|flow|module|view):[a-z0-9]+(-[a-z0-9]+)*(@[a-z0-9]+(-[a-z0-9]+)*)?\\}$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/refs/3/type",
+     "schemaPath": "#/properties/type/enum",
+     "keyword": "enum",
+     "message": "must be equal to one of the allowed values",
+     "property": ""
+    },
+    {
+     "instancePath": "/refs/4/token",
+     "schemaPath": "#/$defs/token/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\{cdref:(queue|hours|lambda|lex|prompt|flow|module|view):[a-z0-9]+(-[a-z0-9]+)*(@[a-z0-9]+(-[a-z0-9]+)*)?\\}$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/refs/4/type",
+     "schemaPath": "#/properties/type/enum",
+     "keyword": "enum",
+     "message": "must be equal to one of the allowed values",
+     "property": ""
+    },
+    {
+     "instancePath": "/refs/5/token",
+     "schemaPath": "#/$defs/token/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\{cdref:(queue|hours|lambda|lex|prompt|flow|module|view):[a-z0-9]+(-[a-z0-9]+)*(@[a-z0-9]+(-[a-z0-9]+)*)?\\}$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/refs/5/type",
+     "schemaPath": "#/properties/type/enum",
+     "keyword": "enum",
+     "message": "must be equal to one of the allowed values",
+     "property": ""
+    },
+    {
+     "instancePath": "/refs/6/token",
+     "schemaPath": "#/$defs/token/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\{cdref:(queue|hours|lambda|lex|prompt|flow|module|view):[a-z0-9]+(-[a-z0-9]+)*(@[a-z0-9]+(-[a-z0-9]+)*)?\\}$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/refs/6/type",
+     "schemaPath": "#/properties/type/enum",
+     "keyword": "enum",
+     "message": "must be equal to one of the allowed values",
+     "property": ""
+    },
+    {
+     "instancePath": "/refs/7/token",
+     "schemaPath": "#/$defs/token/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\{cdref:(queue|hours|lambda|lex|prompt|flow|module|view):[a-z0-9]+(-[a-z0-9]+)*(@[a-z0-9]+(-[a-z0-9]+)*)?\\}$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/refs/7/type",
+     "schemaPath": "#/properties/type/enum",
+     "keyword": "enum",
+     "message": "must be equal to one of the allowed values",
+     "property": ""
+    }
+   ]
   },
   {
    "id": "FlowDoc migration: 0.2 accepts what 0.1 could not say: a view token, a version pin on it, sourceKind, description",
@@ -2722,9 +2807,9 @@
    ]
   },
   {
-   "id": "FlowDoc migration: 0.2 still refuses a sourceKind it does not know",
-   "version": "0.2",
-   "sha256": "6c0ab823473678c76d5073565a10a244b4101e7f20128936d06049aadaf81c54",
+   "id": "FlowDoc migration: 0.3 still refuses a sourceKind it does not know",
+   "version": "0.3",
+   "sha256": "b0ba0ecab296094f38820d6f87aa299e6f5c819b9bdbf5a59f848b61bd5fe48b",
    "valid": false,
    "errors": [
     {
@@ -2744,8 +2829,8 @@
    "errors": []
   },
   {
-   "id": "FlowDoc migration: minimal-0.1: the input is not valid at 0.2",
-   "version": "0.2",
+   "id": "FlowDoc migration: minimal-0.1: the input is not valid at 0.3",
+   "version": "0.3",
    "sha256": "2ed852327a1c9c643eb4cfe5d12842d55f786dee5247bafd39354bb3f438235d",
    "valid": false,
    "errors": [
@@ -2759,16 +2844,60 @@
    ]
   },
   {
-   "id": "FlowDoc migration: minimal-0.1: the migrated document is valid at 0.2",
+   "id": "FlowDoc migration: minimal-0.1: the migrated document is valid at 0.3",
+   "version": "0.3",
+   "sha256": "306f856fd9930348b8ebe78c3e92ef46d0a8cad546eeb0e26c5dd63a8484426f",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "FlowDoc migration: minimal-0.1: the migrated document is not valid at its own version",
+   "version": "0.1",
+   "sha256": "306f856fd9930348b8ebe78c3e92ef46d0a8cad546eeb0e26c5dd63a8484426f",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/flowdoc",
+     "schemaPath": "#/properties/flowdoc/const",
+     "keyword": "const",
+     "message": "must be equal to constant",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc migration: minimal-0.2: the input is valid at its own version",
    "version": "0.2",
    "sha256": "ff6c7fd7e7153bb4ff1beeb282761a8aa2533bfc4cb52c543fd45af8d83aa08a",
    "valid": true,
    "errors": []
   },
   {
-   "id": "FlowDoc migration: minimal-0.1: the migrated document is not valid at 0.1",
-   "version": "0.1",
+   "id": "FlowDoc migration: minimal-0.2: the input is not valid at 0.3",
+   "version": "0.3",
    "sha256": "ff6c7fd7e7153bb4ff1beeb282761a8aa2533bfc4cb52c543fd45af8d83aa08a",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/flowdoc",
+     "schemaPath": "#/properties/flowdoc/const",
+     "keyword": "const",
+     "message": "must be equal to constant",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc migration: minimal-0.2: the migrated document is valid at 0.3",
+   "version": "0.3",
+   "sha256": "306f856fd9930348b8ebe78c3e92ef46d0a8cad546eeb0e26c5dd63a8484426f",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "FlowDoc migration: minimal-0.2: the migrated document is not valid at its own version",
+   "version": "0.2",
+   "sha256": "306f856fd9930348b8ebe78c3e92ef46d0a8cad546eeb0e26c5dd63a8484426f",
    "valid": false,
    "errors": [
     {
@@ -2788,8 +2917,8 @@
    "errors": []
   },
   {
-   "id": "FlowDoc migration: with-meta-0.1: the input is not valid at 0.2",
-   "version": "0.2",
+   "id": "FlowDoc migration: with-meta-0.1: the input is not valid at 0.3",
+   "version": "0.3",
    "sha256": "6fd547be8f97e83aec32afff508df164411245b0927c70a2332269739e43a86a",
    "valid": false,
    "errors": [
@@ -2803,16 +2932,60 @@
    ]
   },
   {
-   "id": "FlowDoc migration: with-meta-0.1: the migrated document is valid at 0.2",
-   "version": "0.2",
-   "sha256": "201abf180d947c3ca053cbce79a001b0e19a6ee659eff176a527e5cf2659ef4c",
+   "id": "FlowDoc migration: with-meta-0.1: the migrated document is valid at 0.3",
+   "version": "0.3",
+   "sha256": "4a4deea61060c4b0b69324c7ecf90d4b200e3cf276be5111f971cc0df3d9c4e4",
    "valid": true,
    "errors": []
   },
   {
-   "id": "FlowDoc migration: with-meta-0.1: the migrated document is not valid at 0.1",
+   "id": "FlowDoc migration: with-meta-0.1: the migrated document is not valid at its own version",
    "version": "0.1",
-   "sha256": "201abf180d947c3ca053cbce79a001b0e19a6ee659eff176a527e5cf2659ef4c",
+   "sha256": "4a4deea61060c4b0b69324c7ecf90d4b200e3cf276be5111f971cc0df3d9c4e4",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/flowdoc",
+     "schemaPath": "#/properties/flowdoc/const",
+     "keyword": "const",
+     "message": "must be equal to constant",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc migration: with-meta-0.2: the input is valid at its own version",
+   "version": "0.2",
+   "sha256": "e8f73de9991be195f92330fb8042ae99999d3938849afd1b8be86027ae88fbb3",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "FlowDoc migration: with-meta-0.2: the input is not valid at 0.3",
+   "version": "0.3",
+   "sha256": "e8f73de9991be195f92330fb8042ae99999d3938849afd1b8be86027ae88fbb3",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/flowdoc",
+     "schemaPath": "#/properties/flowdoc/const",
+     "keyword": "const",
+     "message": "must be equal to constant",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc migration: with-meta-0.2: the migrated document is valid at 0.3",
+   "version": "0.3",
+   "sha256": "982029321e7fe326bc4ea87437b43de16dda83383f1811742dbf7f7dc380ba07",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "FlowDoc migration: with-meta-0.2: the migrated document is not valid at its own version",
+   "version": "0.2",
+   "sha256": "982029321e7fe326bc4ea87437b43de16dda83383f1811742dbf7f7dc380ba07",
    "valid": false,
    "errors": [
     {

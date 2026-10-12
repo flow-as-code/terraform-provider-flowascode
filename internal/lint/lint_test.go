@@ -139,7 +139,7 @@ func TestCompareFindings(t *testing.T) {
 	}
 }
 
-const minimal = `{"flowdoc":"0.2","kind":"flow","name":"%s","connectType":"CONTACT_FLOW","content":{"Version":"2019-10-30","StartAction":"bye","Actions":[{"Identifier":"bye","Type":"DisconnectParticipant","Parameters":{},"Transitions":{}}]},"refs":[]}`
+const minimal = `{"flowdoc":"0.3","kind":"flow","name":"%s","connectType":"CONTACT_FLOW","content":{"Version":"2019-10-30","StartAction":"bye","Actions":[{"Identifier":"bye","Type":"DisconnectParticipant","Parameters":{},"Transitions":{}}]},"refs":[]}`
 
 func TestEngineOptions(t *testing.T) {
 	doc := decode(t, strings.Replace(minimal, "%s", "one", 1))

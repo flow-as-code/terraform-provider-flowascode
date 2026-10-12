@@ -120,26 +120,31 @@ func TestLayoutEdges(t *testing.T) {
 }
 
 // conformance/migrate, as conformance.test.ts's "FlowDoc migration" runs it:
-// each case's input migrates to the expected bytes through Serialize. The
-// schema half of that suite (the input valid at 0.1 and not 0.2, the output
-// the reverse) is the schema package's to hold.
+// each case's input, at the version its directory name ends with, migrates
+// to the expected bytes through Serialize, and the output names Version. The
+// schema half of that suite (the input valid at its own version and not at
+// the current one, the output the reverse) is the schema package's to hold.
 func TestMigrateConformance(t *testing.T) {
 	cases := caseDirs(t, "migrate")
-	if want := []string{"minimal-0.1", "with-meta-0.1"}; !reflect.DeepEqual(cases, want) {
+	if want := []string{"minimal-0.1", "minimal-0.2", "with-meta-0.1", "with-meta-0.2"}; !reflect.DeepEqual(cases, want) {
 		t.Fatalf("migrate cases %v, want %v", cases, want)
 	}
 	for _, c := range cases {
 		t.Run(c, func(t *testing.T) {
+			from := c[strings.LastIndex(c, "-")+1:]
 			input := decodeDoc(t, "migrate/"+c+"/input.flowdoc.json")
-			if field(input, "flowdoc") != "0.1" {
-				t.Fatalf("input is at %v", field(input, "flowdoc"))
+			if field(input, "flowdoc") != from {
+				t.Fatalf("input is at %v, want %s", field(input, "flowdoc"), from)
 			}
 			migrated, err := MigrateFlowDoc(input)
 			if err != nil {
 				t.Fatal(err)
 			}
-			if field(input, "flowdoc") != "0.1" {
+			if field(input, "flowdoc") != from {
 				t.Error("migration changed its input")
+			}
+			if field(migrated, "flowdoc") != Version {
+				t.Errorf("migrated to %v, want %s", field(migrated, "flowdoc"), Version)
 			}
 			if got, want := Serialize(migrated), readFixture(t, "migrate/"+c+"/expected.flowdoc.json"); !bytes.Equal(got, want) {
 				t.Errorf("got\n%s\nwant\n%s", got, want)
@@ -174,9 +179,9 @@ func TestMigrateRefusesEveryVersionItDoesNotRead(t *testing.T) {
 		}
 	}
 	doc := decodeDoc(t, "demo/appointment-line.flowdoc.json")
-	doc.Set("flowdoc", "0.3")
+	doc.Set("flowdoc", "0.4")
 	_, err := MigrateFlowDocIn(doc, "flow-cli lint")
-	if want := `flow-cli lint: FlowDoc version "0.3" is not supported; this build reads "0.1" and "0.2".`; err == nil || err.Error() != want {
+	if want := `flow-cli lint: FlowDoc version "0.4" is not supported; this build reads "0.1", "0.2", "0.3".`; err == nil || err.Error() != want {
 		t.Errorf("got %v, want %s", err, want)
 	}
 }

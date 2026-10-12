@@ -175,7 +175,7 @@ func docCases() []docCase {
 	add := func(group, fixture string, valid bool, rows ...any) {
 		for i := 0; i < len(rows); i += 2 {
 			edit, _ := rows[i+1].(func(*any))
-			cs = append(cs, docCase{group: group, name: rows[i].(string), fixture: fixture, version: "0.2", edit: edit, valid: valid})
+			cs = append(cs, docCase{group: group, name: rows[i].(string), fixture: fixture, version: "0.3", edit: edit, valid: valid})
 		}
 	}
 
@@ -380,25 +380,49 @@ func docCases() []docCase {
 	)
 
 	g = "FlowDoc migration"
+	phaseD := []string{
+		"${cdref:tasktemplate:follow-up}",
+		"${cdref:casetemplate:billing-dispute}",
+		"${cdref:casefield:priority}",
+		"${cdref:assistant:agent-help}",
+		"${cdref:phonenumber:main-did}",
+	}
+	withPhaseD := func(d *any) {
+		push(d, "content.Actions", j(`{"Identifier":"create-task","Type":"CreateTask","Parameters":{"Name":"Follow up","TaskTemplateId":"${cdref:tasktemplate:follow-up}"},"Transitions":{}}`))
+		for _, tok := range phaseD {
+			body := strings.TrimSuffix(strings.TrimPrefix(tok, "${cdref:"), "}")
+			typ, name, _ := strings.Cut(body, ":")
+			push(d, "refs", jsonv.Object{{Key: "token", Value: tok}, {Key: "type", Value: typ}, {Key: "name", Value: name}})
+		}
+	}
+	add(g, demoFixture, true, "0.3 accepts what 0.2 could not say: the five Phase D reference types", withPhaseD)
+	cs = append(cs, docCase{group: g, name: "0.2 refuses the same document", fixture: demoFixture, version: "0.2", edit: func(d *any) {
+		withPhaseD(d)
+		set(d, "flowdoc", "0.2")
+	}})
 	withView := func(d *any) {
 		set(d, "description", "The demo appointment line.")
 		setMeta(d, "sourceKind", "tf")
 		push(d, "content.Actions", j(`{"Identifier":"show-acw","Type":"ShowView","Parameters":{"ViewResource":{"Id":"${cdref:view:after-contact-work@1}"},"InvocationTimeLimitSeconds":"300"},"Transitions":{}}`))
 		push(d, "refs", j(`{"token":"${cdref:view:after-contact-work@1}","type":"view","name":"after-contact-work","alias":"1"}`))
 	}
-	add(g, demoFixture, true, "0.2 accepts what 0.1 could not say: a view token, a version pin on it, sourceKind, description", withView)
+	cs = append(cs, docCase{group: g, name: "0.2 accepts what 0.1 could not say: a view token, a version pin on it, sourceKind, description", fixture: demoFixture, version: "0.2", valid: true, edit: func(d *any) {
+		withView(d)
+		set(d, "flowdoc", "0.2")
+	}})
 	cs = append(cs, docCase{group: g, name: "0.1 refuses the same document", fixture: demoFixture, version: "0.1", edit: func(d *any) {
 		withView(d)
 		set(d, "flowdoc", "0.1")
 	}})
-	add(g, demoFixture, false, "0.2 still refuses a sourceKind it does not know", func(d *any) { setMeta(d, "sourceKind", "yaml") })
-	for _, m := range []string{"minimal-0.1", "with-meta-0.1"} {
+	add(g, demoFixture, false, "0.3 still refuses a sourceKind it does not know", func(d *any) { setMeta(d, "sourceKind", "yaml") })
+	for _, m := range []string{"minimal-0.1", "minimal-0.2", "with-meta-0.1", "with-meta-0.2"} {
+		own := m[strings.LastIndex(m, "-")+1:]
 		in, out := "migrate/"+m+"/input.flowdoc.json", "migrate/"+m+"/expected.flowdoc.json"
 		cs = append(cs,
-			docCase{group: g, name: m + ": the input is valid at its own version", fixture: in, version: "0.1", valid: true},
-			docCase{group: g, name: m + ": the input is not valid at 0.2", fixture: in, version: "0.2"},
-			docCase{group: g, name: m + ": the migrated document is valid at 0.2", fixture: out, version: "0.2", valid: true},
-			docCase{group: g, name: m + ": the migrated document is not valid at 0.1", fixture: out, version: "0.1"},
+			docCase{group: g, name: m + ": the input is valid at its own version", fixture: in, version: own, valid: true},
+			docCase{group: g, name: m + ": the input is not valid at 0.3", fixture: in, version: "0.3"},
+			docCase{group: g, name: m + ": the migrated document is valid at 0.3", fixture: out, version: "0.3", valid: true},
+			docCase{group: g, name: m + ": the migrated document is not valid at its own version", fixture: out, version: own},
 		)
 	}
 	return cs

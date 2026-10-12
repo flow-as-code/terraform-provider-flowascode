@@ -56,7 +56,7 @@ type Result struct {
 }
 
 // RefKeyPattern is the reference key (contract.ts REF_KEY).
-var RefKeyPattern = regexp.MustCompile(`^(queue|hours|lambda|lex|prompt|flow|module|view):([a-z0-9]+(?:-[a-z0-9]+)*)(?:@([a-z0-9]+(?:-[a-z0-9]+)*))?$`)
+var RefKeyPattern = regexp.MustCompile(`^(queue|hours|lambda|lex|prompt|flow|module|view|tasktemplate|casetemplate|casefield|assistant|phonenumber):([a-z0-9]+(?:-[a-z0-9]+)*)(?:@([a-z0-9]+(?:-[a-z0-9]+)*))?$`)
 
 type reader struct {
 	phase      Phase

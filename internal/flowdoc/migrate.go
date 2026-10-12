@@ -11,13 +11,15 @@ import (
 
 // Reading an older FlowDoc, ported from packages/core/src/migrate.ts.
 //
-// 0.1 to 0.2 is a version bump and nothing else. 0.2 added the `view`
-// reference type, `meta.sourceKind`, and an optional `description`, all of
-// which a 0.1 document simply lacks.
+// 0.1 to 0.2 and 0.2 to 0.3 are each a version bump and nothing else. 0.2
+// added the `view` reference type, `meta.sourceKind`, and an optional
+// `description`; 0.3 added the `tasktemplate`, `casetemplate`, `casefield`,
+// `assistant` and `phonenumber` reference types. An older document simply
+// lacks them.
 
 // SupportedFlowDocVersions is migrate.ts's SUPPORTED_FLOWDOC_VERSIONS: every
 // format version this build reads, oldest first.
-var SupportedFlowDocVersions = []string{"0.1", Version}
+var SupportedFlowDocVersions = []string{"0.1", "0.2", Version}
 
 // IsSupportedFlowDocVersion is migrate.ts's isSupportedFlowDocVersion.
 func IsSupportedFlowDocVersion(version any) bool {
@@ -34,7 +36,7 @@ func MigrateFlowDoc(value any) (jsonv.Object, error) {
 // MigrateFlowDocIn is migrate.ts's migrateFlowDoc with an explicit context:
 // a document at the current format version, whatever supported version it
 // was read at. A current document comes back as is (the same Object); a 0.1
-// document comes back as a copy with only `flowdoc` changed, in place, as
+// or 0.2 document comes back as a copy with only `flowdoc` changed, in place, as
 // `{ ...value, flowdoc }` writes it; any other version is an
 // *InvalidFlowDocError naming it and the versions this build reads.
 func MigrateFlowDocIn(value any, context string) (jsonv.Object, error) {
@@ -47,7 +49,7 @@ func MigrateFlowDocIn(value any, context string) (jsonv.Object, error) {
 		switch s {
 		case Version:
 			return doc, nil
-		case "0.1":
+		case "0.1", "0.2":
 			out := append(jsonv.Object{}, doc...)
 			out.Set("flowdoc", Version)
 			return out, nil
@@ -63,5 +65,5 @@ func MigrateFlowDocIn(value any, context string) (jsonv.Object, error) {
 	for i, v := range SupportedFlowDocVersions {
 		quoted[i] = string(jsonv.Encode(v, ""))
 	}
-	return nil, invalid(context + ": FlowDoc version " + shown + " is not supported; this build reads " + strings.Join(quoted, " and ") + ".")
+	return nil, invalid(context + ": FlowDoc version " + shown + " is not supported; this build reads " + strings.Join(quoted, ", ") + ".")
 }

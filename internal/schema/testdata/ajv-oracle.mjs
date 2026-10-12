@@ -28,7 +28,7 @@ const ajvVersion = require("ajv/package.json").version;
 const here = dirname(fileURLToPath(import.meta.url));
 const schemaDir = join(here, "../../conformance/data/schema");
 const validators = {};
-for (const version of ["0.1", "0.2"]) {
+for (const version of ["0.1", "0.2", "0.3"]) {
   const schema = JSON.parse(readFileSync(join(schemaDir, `flowdoc-${version}.schema.json`), "utf8"));
   validators[version] = new Ajv2020({ allErrors: true, strict: false }).compile(schema);
 }

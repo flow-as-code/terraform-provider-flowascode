@@ -18,7 +18,7 @@ import (
 	"github.com/flow-as-code/terraform-provider-flowascode/internal/jsonv"
 )
 
-// The Go writer and reader are inverses: every vendored FlowDoc 0.2, written
+// The Go writer and reader are inverses: every vendored FlowDoc 0.3, written
 // as action blocks (typed or generic), typed by the schema, decoded and read
 // back, is its own view. This is what makes Read's reconstruction after
 // drift or an import show the live flow faithfully.
@@ -42,7 +42,7 @@ func TestActionsFromDocReadsBackToTheDocument(t *testing.T) {
 		if err != nil || !ok {
 			return nil
 		}
-		if ver, _ := doc.Get("flowdoc"); ver != "0.2" {
+		if ver, _ := doc.Get("flowdoc"); ver != "0.3" {
 			return nil
 		}
 		if _, ok := doc.Get("content"); !ok {

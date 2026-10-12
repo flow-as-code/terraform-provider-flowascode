@@ -13,6 +13,7 @@ import (
 	"testing"
 
 	"github.com/flow-as-code/terraform-provider-flowascode/internal/conformance"
+	"github.com/flow-as-code/terraform-provider-flowascode/internal/flowdoc"
 	"github.com/flow-as-code/terraform-provider-flowascode/internal/jsonv"
 )
 
@@ -42,7 +43,7 @@ func TestDocCases(t *testing.T) {
 
 // "all conformance fixtures are schema-valid": every *.flowdoc.json and lint
 // pass-*.json outside schema/ and migrate/, each document in it (its docs,
-// its doc, or itself) valid at 0.2.
+// its doc, or itself) valid at 0.3.
 func TestConformanceFixturesAreSchemaValid(t *testing.T) {
 	root := conformance.FS()
 	var files []string
@@ -80,7 +81,7 @@ func TestConformanceFixturesAreSchemaValid(t *testing.T) {
 				t.Fatal("no document in the file")
 			}
 			for _, d := range docs {
-				vs, err := ValidateVersion("0.2", d)
+				vs, err := ValidateVersion("0.3", d)
 				if err != nil {
 					t.Fatal(err)
 				}
@@ -89,6 +90,76 @@ func TestConformanceFixturesAreSchemaValid(t *testing.T) {
 				}
 			}
 		})
+	}
+}
+
+// "migrates every 0.2 document holding an unmodeled type and validates it at
+// 0.3" (owner decision 3): a 0.3 per-type clause encodes only what the
+// service enforces at create, so every fixture holding an unmodeled type as a
+// generic block, taken back to 0.2, validates there, migrates, and validates
+// at 0.3. A fixture holding a token only 0.3 can say is outside the claim.
+func TestOlderDocumentsWithUnmodeledTypesValidateAfterMigration(t *testing.T) {
+	newIn03 := map[string]bool{"tasktemplate": true, "casetemplate": true, "casefield": true, "assistant": true, "phonenumber": true}
+	n := 0
+	err := fs.WalkDir(conformance.FS(), ".", func(p string, d fs.DirEntry, err error) error {
+		if err != nil || d.IsDir() || strings.HasPrefix(p, "schema/") || strings.HasPrefix(p, "migrate/") {
+			return err
+		}
+		if !strings.HasSuffix(d.Name(), ".flowdoc.json") && !strings.HasPrefix(d.Name(), "pass-") {
+			return nil
+		}
+		obj, _ := load(t, p).(jsonv.Object)
+		doc, _ := obj.Get("doc")
+		if doc == nil {
+			if _, ok := obj.Get("flowdoc"); ok {
+				doc = obj
+			}
+		}
+		o, ok := doc.(jsonv.Object)
+		if !ok {
+			return nil
+		}
+		content, _ := o.Get("content")
+		actions, _ := content.(jsonv.Object).Get("Actions")
+		holds := false
+		for _, a := range actions.([]any) {
+			typ, _ := a.(jsonv.Object).Get("Type")
+			s, _ := typ.(string)
+			if e := flowdoc.CatalogEntry(s); e != nil && !e.Modeled {
+				holds = true
+			}
+		}
+		for _, r := range flowdoc.CollectRefs(content) {
+			if newIn03[r.Type] {
+				holds = false
+			}
+		}
+		if !holds {
+			return nil
+		}
+		n++
+		older := append(jsonv.Object{}, o...)
+		older.Set("flowdoc", "0.2")
+		if vs, err := ValidateVersion("0.2", older); err != nil || len(vs) > 0 {
+			t.Errorf("%s at 0.2: %v %v", p, vs, err)
+		}
+		migrated, err := flowdoc.MigrateFlowDoc(older)
+		if err != nil {
+			t.Fatalf("%s: %v", p, err)
+		}
+		if v, _ := migrated.Get("flowdoc"); v != flowdoc.Version {
+			t.Errorf("%s migrated to %v", p, v)
+		}
+		if vs, err := ValidateVersion(flowdoc.Version, migrated); err != nil || len(vs) > 0 {
+			t.Errorf("%s at %s: %v %v", p, flowdoc.Version, vs, err)
+		}
+		return nil
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if n == 0 {
+		t.Fatal("no fixture holds an unmodeled type")
 	}
 }
 
@@ -107,20 +178,20 @@ func TestValidateDispatchesOnVersion(t *testing.T) {
 		in   string
 		want string
 	}{
-		{`{"flowdoc":"0.3"}`, `/flowdoc must be "0.1" or "0.2", got "0.3"`},
-		{`{"flowdoc":1}`, `/flowdoc must be "0.1" or "0.2", got 1`},
-		{`{"flowdoc":null}`, `/flowdoc must be "0.1" or "0.2", got null`},
-		{`{"name":"x"}`, `/flowdoc must be "0.1" or "0.2", got nothing`},
-		{`[]`, `/flowdoc must be "0.1" or "0.2", got nothing`},
-		{`null`, `/flowdoc must be "0.1" or "0.2", got nothing`},
-		{`{"flowdoc":["0.2"]}`, `/flowdoc must be "0.1" or "0.2", got ["0.2"]`},
+		{`{"flowdoc":"0.4"}`, `/flowdoc must be "0.1" or "0.2" or "0.3", got "0.4"`},
+		{`{"flowdoc":1}`, `/flowdoc must be "0.1" or "0.2" or "0.3", got 1`},
+		{`{"flowdoc":null}`, `/flowdoc must be "0.1" or "0.2" or "0.3", got null`},
+		{`{"name":"x"}`, `/flowdoc must be "0.1" or "0.2" or "0.3", got nothing`},
+		{`[]`, `/flowdoc must be "0.1" or "0.2" or "0.3", got nothing`},
+		{`null`, `/flowdoc must be "0.1" or "0.2" or "0.3", got nothing`},
+		{`{"flowdoc":["0.2"]}`, `/flowdoc must be "0.1" or "0.2" or "0.3", got ["0.2"]`},
 	} {
 		_, err := ValidateJSON([]byte(tc.in))
 		if err == nil || err.Error() != tc.want {
 			t.Errorf("%s: got %v, want %s", tc.in, err, tc.want)
 		}
 	}
-	if _, err := ValidateVersion("0.3", demo); err == nil {
+	if _, err := ValidateVersion("0.4", demo); err == nil {
 		t.Error("a version with no schema validated")
 	}
 	if _, err := ValidateJSON([]byte(`{`)); err == nil {
@@ -361,7 +432,7 @@ func TestViolationOrder(t *testing.T) {
 	set(&d, "zeta", 1.0)
 	set(&d, "alpha", 1.0)
 	set(&d, "name", "Bad")
-	vs, err := ValidateVersion("0.2", d)
+	vs, err := ValidateVersion("0.3", d)
 	if err != nil {
 		t.Fatal(err)
 	}
