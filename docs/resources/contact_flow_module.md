@@ -79,7 +79,9 @@ Optional:
 - `associate_contact_to_customer_profile` (Block, Optional) A AssociateContactToCustomerProfile action: https://docs.aws.amazon.com/connect/latest/devguide/interactions-associatecontacttocustomerprofile.html (see [below for nested schema](#nestedblock--action--associate_contact_to_customer_profile))
 - `check_hours_of_operation` (Block, Optional) A CheckHoursOfOperation action: https://docs.aws.amazon.com/connect/latest/devguide/flow-control-actions-checkhoursofoperation.html (see [below for nested schema](#nestedblock--action--check_hours_of_operation))
 - `check_metric_data` (Block, Optional) A CheckMetricData action: https://docs.aws.amazon.com/connect/latest/devguide/flow-control-actions-checkmetricdata.html (see [below for nested schema](#nestedblock--action--check_metric_data))
+- `check_outbound_call_status` (Block, Optional) A CheckOutboundCallStatus action: https://docs.aws.amazon.com/connect/latest/devguide/flow-control-actions-checkoutboundcallstatus.html (see [below for nested schema](#nestedblock--action--check_outbound_call_status))
 - `compare` (Block, Optional) A Compare action: https://docs.aws.amazon.com/connect/latest/devguide/flow-control-actions-compare.html (see [below for nested schema](#nestedblock--action--compare))
+- `complete_outbound_call` (Block, Optional) A CompleteOutboundCall action: https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-completeoutboundcall.html (see [below for nested schema](#nestedblock--action--complete_outbound_call))
 - `condition` (Block List) One entry of the action's Conditions, in order. (see [below for nested schema](#nestedblock--action--condition))
 - `connect_participant_with_lex_bot` (Block, Optional) A ConnectParticipantWithLexBot action: https://docs.aws.amazon.com/connect/latest/devguide/participant-actions-connectparticipantwithlexbot.html (see [below for nested schema](#nestedblock--action--connect_participant_with_lex_bot))
 - `create_callback_contact` (Block, Optional) A CreateCallbackContact action: https://docs.aws.amazon.com/connect/latest/devguide/interactions-createcallbackcontact.html (see [below for nested schema](#nestedblock--action--create_callback_contact))
@@ -109,6 +111,7 @@ Optional:
 - `position` (Block, Optional) Where the action sits on the canvas, when that is not where the layout puts it. (see [below for nested schema](#nestedblock--action--position))
 - `resume_contact` (Block, Optional) A ResumeContact action: https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatecontactresumecontact.html (see [below for nested schema](#nestedblock--action--resume_contact))
 - `show_view` (Block, Optional) A ShowView action: https://docs.aws.amazon.com/connect/latest/devguide/participant-actions-showview.html (see [below for nested schema](#nestedblock--action--show_view))
+- `start_outbound_chat_contact` (Block, Optional) A StartOutboundChatContact action: https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-startoutboundchatcontact.html (see [below for nested schema](#nestedblock--action--start_outbound_chat_contact))
 - `tag_contact` (Block, Optional) A TagContact action: https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-tagcontact.html (see [below for nested schema](#nestedblock--action--tag_contact))
 - `transfer_contact_to_agent` (Block, Optional) A TransferContactToAgent action: https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-transfercontacttoagent.html (see [below for nested schema](#nestedblock--action--transfer_contact_to_agent))
 - `transfer_contact_to_queue` (Block, Optional) A TransferContactToQueue action: https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-transfercontacttoqueue.html (see [below for nested schema](#nestedblock--action--transfer_contact_to_queue))
@@ -169,12 +172,33 @@ Optional:
 - `queue_id` (String) Flow language parameter QueueId.
 
 
+<a id="nestedblock--action--check_outbound_call_status"></a>
+### Nested Schema for `action.check_outbound_call_status`
+
+
 <a id="nestedblock--action--compare"></a>
 ### Nested Schema for `action.compare`
 
 Optional:
 
 - `comparison_value` (String) Flow language parameter ComparisonValue.
+
+
+<a id="nestedblock--action--complete_outbound_call"></a>
+### Nested Schema for `action.complete_outbound_call`
+
+Optional:
+
+- `caller_id` (Attributes) Flow language parameter CallerId. (see [below for nested schema](#nestedatt--action--complete_outbound_call--caller_id))
+- `connection_time_limit_seconds` (String) Flow language parameter ConnectionTimeLimitSeconds.
+
+<a id="nestedatt--action--complete_outbound_call--caller_id"></a>
+### Nested Schema for `action.complete_outbound_call.caller_id`
+
+Optional:
+
+- `number` (String) Flow language field Number.
+
 
 
 <a id="nestedblock--action--condition"></a>
@@ -633,6 +657,45 @@ Optional:
 
 - `id` (String) Flow language field Id.
 - `version` (String) Flow language field Version.
+
+
+
+<a id="nestedblock--action--start_outbound_chat_contact"></a>
+### Nested Schema for `action.start_outbound_chat_contact`
+
+Optional:
+
+- `contact_flow_arn` (String) Flow language parameter ContactFlowArn.
+- `contact_subtype` (String) Flow language parameter ContactSubtype.
+- `destination_endpoint` (Attributes) Flow language parameter DestinationEndpoint. (see [below for nested schema](#nestedatt--action--start_outbound_chat_contact--destination_endpoint))
+- `initial_system_message` (Attributes) Flow language parameter InitialSystemMessage. (see [below for nested schema](#nestedatt--action--start_outbound_chat_contact--initial_system_message))
+- `related_contact` (String) Flow language parameter RelatedContact.
+- `source_endpoint` (Attributes) Flow language parameter SourceEndpoint. (see [below for nested schema](#nestedatt--action--start_outbound_chat_contact--source_endpoint))
+
+<a id="nestedatt--action--start_outbound_chat_contact--destination_endpoint"></a>
+### Nested Schema for `action.start_outbound_chat_contact.destination_endpoint`
+
+Optional:
+
+- `address` (String) Flow language field Address.
+- `type` (String) Flow language field Type.
+
+
+<a id="nestedatt--action--start_outbound_chat_contact--initial_system_message"></a>
+### Nested Schema for `action.start_outbound_chat_contact.initial_system_message`
+
+Optional:
+
+- `content` (String) Flow language field Content.
+
+
+<a id="nestedatt--action--start_outbound_chat_contact--source_endpoint"></a>
+### Nested Schema for `action.start_outbound_chat_contact.source_endpoint`
+
+Optional:
+
+- `address` (String) Flow language field Address.
+- `type` (String) Flow language field Type.
 
 
 

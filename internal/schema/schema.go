@@ -160,8 +160,11 @@ func ValidateJSON(b []byte) ([]Violation, error) {
 //     evaluating a subschema once `type`, `const` or `enum` fails; Ajv with
 //     allErrors goes on to that subschema's other keywords. The value is
 //     rejected either way; only Ajv's extra errors in that subschema are
-//     missing here. No FlowDoc schema pairs those keywords with one a value
-//     of the wrong type can fail, so on FlowDocs the lists are equal.
+//     missing here. On FlowDocs the lists are equal but for one shape, in
+//     two 0.3 Cases clauses (CaseTemplateId and $defs/caseFieldId): `type:
+//     string` beside an `if` holding only a pattern, which a value of
+//     another type passes, so Ajv goes on into the `then`'s token $ref and
+//     reports its type error as well. schema_test.go names the case.
 //   - multipleOf. Ajv divides in doubles and compares with parseInt, so it
 //     rejects 1e21 against 0.5 and 0.3 against 0.1; santhosh-tekuri divides
 //     exactly and accepts both. A limit (minimum and the like) that is not

@@ -175,8 +175,8 @@ func TestLintConformance(t *testing.T) {
 			}
 		}
 	}
-	if total != 138 {
-		t.Errorf("ran %d lint fixtures, the vendored tree has 138", total)
+	if total != 146 {
+		t.Errorf("ran %d lint fixtures, the vendored tree has 146", total)
 	}
 }
 

@@ -5,8 +5,10 @@ package materialize
 
 import (
 	"bytes"
+	"encoding/json"
 	"io/fs"
 	"path"
+	"reflect"
 	"sort"
 	"strings"
 	"testing"
@@ -71,7 +73,7 @@ func conformanceCases(t *testing.T) []string {
 
 func TestConformanceMaterialize(t *testing.T) {
 	names := conformanceCases(t)
-	want := []string{"binder-passthrough", "casefield-key-with-map", "demo-with-map", "view-with-version"}
+	want := []string{"binder-passthrough", "casefield-key-with-map", "demo-with-map", "phonenumber-with-map", "view-with-version"}
 	if strings.Join(names, ",") != strings.Join(want, ",") {
 		t.Fatalf("materialize cases = %v, want %v; a new case needs a look at its format", names, want)
 	}
@@ -187,5 +189,39 @@ func TestConformanceCasefieldKeyResolvesThroughTheBinder(t *testing.T) {
 	}
 	if bytes.Contains(jsonv.Encode(content, ""), []byte("cdref")) {
 		t.Error("a token survived")
+	}
+}
+
+// materialize.test.ts: "phonenumber-with-map matches its golden and the
+// actions the export read" and "keeps the phonenumber-with-map doc in sync
+// with the export golden" (flow-as-code D04). The document is
+// conformance/export/outbound-sms's exported missed-call flow; materialized
+// with its map it is the content the export read, compared as values, and
+// the SMS source is the number's un-nested ARN.
+func TestConformancePhoneNumberRoundTripsTheExport(t *testing.T) {
+	if !bytes.Equal(
+		readConformance(t, "materialize/phonenumber-with-map/doc.flowdoc.json"),
+		readConformance(t, "export/outbound-sms/expected/missed-call-text.flowdoc.json"),
+	) {
+		t.Error("materialize/phonenumber-with-map/doc.flowdoc.json differs from the export golden")
+	}
+	doc := decode(t, readConformance(t, "materialize/phonenumber-with-map/doc.flowdoc.json"))
+	m := stringMap(t, decode(t, readConformance(t, "materialize/phonenumber-with-map/map.json")))
+	content, err := MaterializeWithMap(doc, m)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var got, want struct{ Actions []any }
+	if err := json.Unmarshal(jsonv.Encode(content, ""), &got); err != nil {
+		t.Fatal(err)
+	}
+	if err := json.Unmarshal(readConformance(t, "export/outbound-sms/flows/cccc3333-0000-4000-8000-000000000051.json"), &want); err != nil {
+		t.Fatal(err)
+	}
+	if !reflect.DeepEqual(got.Actions, want.Actions) {
+		t.Errorf("materialized actions differ from the exported flow's:\n%s\n---\n%s", jsonv.Encode(content, ""), readConformance(t, "export/outbound-sms/flows/cccc3333-0000-4000-8000-000000000051.json"))
+	}
+	if !bytes.Contains(jsonv.Encode(content, ""), []byte(`"arn:aws:connect:us-east-1:111122223333:phone-number/pppp7777-0000-4000-8000-000000000051"`)) {
+		t.Error("the SMS source is not the number's ARN")
 	}
 }

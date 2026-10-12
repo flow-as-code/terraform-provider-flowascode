@@ -1,5 +1,5 @@
 {
- "generatedFrom": "ccee157f7c1915e0212dad52bc59f817d3fe1493",
+ "generatedFrom": "e78970ffb56d7d47fece5ca7db5c5f89102e7eff",
  "ajv": "8.20.0",
  "cases": [
   {
@@ -3471,6 +3471,64 @@
    ]
   },
   {
+   "id": "FlowDoc schema rejections: cases: rejects a template id that is not a string",
+   "version": "0.3",
+   "sha256": "732ab3b03c6772feb3ada8bf3f95f00e6a7e67143b5c4028ce3cf09264c83931",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/3/Parameters/CaseTemplateId",
+     "schemaPath": "#/allOf/42/then/properties/Parameters/properties/CaseTemplateId/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/3/Parameters/CaseTemplateId",
+     "schemaPath": "#/$defs/casetemplateToken/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/3/Parameters/CaseTemplateId",
+     "schemaPath": "#/allOf/42/then/properties/Parameters/properties/CaseTemplateId/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/3",
+     "schemaPath": "#/allOf/42/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: cases: rejects a response field that is not a string",
+   "version": "0.3",
+   "sha256": "46731a76ccea1fa0e4a0a0085e41739af994ed135733cbcc6e0f6dd6937646c1",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/0/Parameters/CaseResponseFields/0",
+     "schemaPath": "#/$defs/caseFieldId/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/0",
+     "schemaPath": "#/allOf/43/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
    "id": "FlowDoc schema rejections: cases: still accepts a literal template id and a literal field id, as published flows write them",
    "version": "0.3",
    "sha256": "718e5b64329d10c42d4dc6acee5cc3069d41f641f63e32dbe68cf9fc9d58b082",
@@ -3988,6 +4046,282 @@
    "id": "FlowDoc schema rejections: routing criteria: still accepts a level, a tag, a preferred agent and a nesting the builder refuses, which no probe has refused",
    "version": "0.3",
    "sha256": "5c8c787ee2ce45ed436d5aaa276eeb735396dc7a56878a01cd06bf688b08bc58",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "FlowDoc schema rejections: outbound: accepts the fixture as committed",
+   "version": "0.3",
+   "sha256": "b4d122ceb69ed6744971e9c47f1fd7d465feaa260af29b05d25b2de6873dbd2b",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "FlowDoc schema rejections: outbound: rejects a caller ID that is not an object",
+   "version": "0.3",
+   "sha256": "ff8362a7826efb217030b90aac9dce7883caddce6fc0a45761c7b3e3ad70b6ed",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/1/Parameters/CallerId",
+     "schemaPath": "#/allOf/46/then/properties/Parameters/properties/CallerId/type",
+     "keyword": "type",
+     "message": "must be object",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/1",
+     "schemaPath": "#/allOf/46/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: outbound: rejects a caller ID number that is not a string",
+   "version": "0.3",
+   "sha256": "708979608a06ba92189497c1a745a9c42b5bfadb539d34ba98b4bf6901a4229c",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/1/Parameters/CallerId/Number",
+     "schemaPath": "#/allOf/46/then/properties/Parameters/properties/CallerId/properties/Number/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/1",
+     "schemaPath": "#/allOf/46/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: outbound: rejects a connection time limit that is neither a string nor an integer",
+   "version": "0.3",
+   "sha256": "af675e0b1aa50803d997f0c8924853b957a7b5bd154c93c87af9bbfd3a22ef67",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/2/Parameters/ConnectionTimeLimitSeconds",
+     "schemaPath": "#/allOf/46/then/properties/Parameters/properties/ConnectionTimeLimitSeconds/type",
+     "keyword": "type",
+     "message": "must be string,integer",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2",
+     "schemaPath": "#/allOf/46/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: outbound: rejects a voice connector that is not an object",
+   "version": "0.3",
+   "sha256": "88a691503847e02daba4fa65e2a626c1b10eb3fdc15d0a8be4a0d3826201a166",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/2/Parameters/VoiceConnector",
+     "schemaPath": "#/allOf/46/then/properties/Parameters/properties/VoiceConnector/type",
+     "keyword": "type",
+     "message": "must be object",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2",
+     "schemaPath": "#/allOf/46/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: outbound: rejects a literal phone number ARN as the SMS source",
+   "version": "0.3",
+   "sha256": "0890e5359729ac48ed9fb90776de75f96ed926e1d4f52596405e64cf6916a55d",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/5/Parameters/SourceEndpoint/Address",
+     "schemaPath": "#/$defs/token/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\{cdref:(queue|hours|lambda|lex|prompt|flow|module|view|tasktemplate|casetemplate|casefield|assistant|phonenumber):[a-z0-9]+(-[a-z0-9]+)*(@[a-z0-9]+(-[a-z0-9]+)*)?\\}$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/5/Parameters/SourceEndpoint/Address",
+     "schemaPath": "#/$defs/jsonPath/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\.[A-Za-z0-9_$.\\[\\]'-]+$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/5/Parameters/SourceEndpoint/Address",
+     "schemaPath": "#/oneOf",
+     "keyword": "oneOf",
+     "message": "must match exactly one schema in oneOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/5",
+     "schemaPath": "#/allOf/47/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: outbound: rejects a literal flow ARN as the SMS flow",
+   "version": "0.3",
+   "sha256": "d8661c6333e1288add0a44be8ed1995b841bd6c95a0646d841b98747740aaa5f",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/5/Parameters/ContactFlowArn",
+     "schemaPath": "#/$defs/token/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\{cdref:(queue|hours|lambda|lex|prompt|flow|module|view|tasktemplate|casetemplate|casefield|assistant|phonenumber):[a-z0-9]+(-[a-z0-9]+)*(@[a-z0-9]+(-[a-z0-9]+)*)?\\}$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/5/Parameters/ContactFlowArn",
+     "schemaPath": "#/$defs/jsonPath/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\.[A-Za-z0-9_$.\\[\\]'-]+$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/5/Parameters/ContactFlowArn",
+     "schemaPath": "#/oneOf",
+     "keyword": "oneOf",
+     "message": "must match exactly one schema in oneOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/5",
+     "schemaPath": "#/allOf/47/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: outbound: rejects a source endpoint that is not an object",
+   "version": "0.3",
+   "sha256": "a4a9251f8bd9274fa789551b9bb17125b15404e50e6514347641d44b8f18eecf",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/5/Parameters/SourceEndpoint",
+     "schemaPath": "#/allOf/47/then/properties/Parameters/properties/SourceEndpoint/type",
+     "keyword": "type",
+     "message": "must be object",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/5",
+     "schemaPath": "#/allOf/47/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: outbound: rejects a destination endpoint that is not an object",
+   "version": "0.3",
+   "sha256": "5827b314e997334bb6a07c95ee58438bc13cac6e53b29091f556e7bb96c730e8",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/6/Parameters/DestinationEndpoint",
+     "schemaPath": "#/allOf/47/then/properties/Parameters/properties/DestinationEndpoint/type",
+     "keyword": "type",
+     "message": "must be object",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/6",
+     "schemaPath": "#/allOf/47/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: outbound: rejects a destination address that is not a string",
+   "version": "0.3",
+   "sha256": "88a86a1c5768d51bed04fa196f08f43b664a4ca55c55e67854e38e869ead246c",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/6/Parameters/DestinationEndpoint/Address",
+     "schemaPath": "#/allOf/47/then/properties/Parameters/properties/DestinationEndpoint/properties/Address/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/6",
+     "schemaPath": "#/allOf/47/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: outbound: rejects an initial message that is not an object",
+   "version": "0.3",
+   "sha256": "4bef36ac32fd254921f09f8a1a3547ab80022b3b73ae910dd07f35f9df957fd5",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/5/Parameters/InitialSystemMessage",
+     "schemaPath": "#/allOf/47/then/properties/Parameters/properties/InitialSystemMessage/type",
+     "keyword": "type",
+     "message": "must be object",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/5",
+     "schemaPath": "#/allOf/47/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: outbound: still accepts a connection time limit as the page's integer",
+   "version": "0.3",
+   "sha256": "818bfbffa0acd8a3fe96dddf2987da804c14c37ed1f3fd4f3a45153356023b4c",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "FlowDoc schema rejections: outbound: still accepts a connection time limit as the decimal string",
+   "version": "0.3",
+   "sha256": "b4d122ceb69ed6744971e9c47f1fd7d465feaa260af29b05d25b2de6873dbd2b",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "FlowDoc schema rejections: outbound: still accepts a connection time limit as a JSONPath",
+   "version": "0.3",
+   "sha256": "1197a963e8fea9dec571f69aa4f5b0cbb9038ad23e58437ec1acfcf38093ac11",
    "valid": true,
    "errors": []
   },

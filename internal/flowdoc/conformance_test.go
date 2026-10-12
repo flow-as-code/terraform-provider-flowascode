@@ -281,20 +281,28 @@ func TestCatalogLoads(t *testing.T) {
 			}
 		}
 	}
-	// The channel restrictions: Wait and ShowView (C03), then the Phase D
-	// types whose pages name channels (D02, D05). The ChannelRestriction
-	// helper reads nil as "none", as channelRestriction reads undefined.
+	// The channel restrictions are the vendored file's `channels`, read on
+	// their own (C03 and the Phase D groups add to them), and Wait and
+	// ShowView are among them. The ChannelRestriction helper reads nil as
+	// "none", as channelRestriction reads undefined.
 	restricted := map[string][]Channel{}
 	for _, a := range c.Actions {
 		if a.Model != nil && a.Model.Channels != nil {
 			restricted[a.Type] = a.Model.Channels
 		}
 	}
-	if want := map[string][]Channel{
-		"Wait": {"CHAT"}, "ShowView": {"CHAT"}, "ResumeContact": {"TASK"},
-		"UpdatePreviousContactParticipantState": {"VOICE"}, "UpdateContactMediaStreamingBehavior": {"VOICE"},
-		"UpdateContactMediaProcessing": {"CHAT"}, "CreateWisdomSession": {"VOICE"},
-	}; !reflect.DeepEqual(restricted, want) {
+	want := map[string][]Channel{}
+	for _, m := range field(decodeDoc(t, CatalogPath), "actions").(jsonv.Object) {
+		if list, ok := field(m.Value, "channels").([]any); ok && field(m.Value, "modeled") == true {
+			for _, c := range list {
+				want[m.Key] = append(want[m.Key], Channel(c.(string)))
+			}
+		}
+	}
+	if !reflect.DeepEqual(restricted["Wait"], []Channel{"CHAT"}) || !reflect.DeepEqual(restricted["ShowView"], []Channel{"CHAT"}) {
+		t.Errorf("Wait and ShowView are not CHAT only: %v", restricted)
+	}
+	if !reflect.DeepEqual(restricted, want) {
 		t.Errorf("channel restrictions %v, want %v", restricted, want)
 	}
 	if got, ok := ChannelRestriction("Wait"); !ok || !reflect.DeepEqual(got, []Channel{"CHAT"}) {
@@ -387,9 +395,9 @@ func phaseDCatalog(t *testing.T, extra *string) []byte {
 		return o
 	}
 
-	unmodeled := entry("CheckOutboundCallStatus")
+	unmodeled := entry("AuthenticateParticipant")
 	unmodeled.Set("channels", []any{"VOICE", "CHAT"})
-	actions.Set("CheckOutboundCallStatus", surprise("unmodeled", unmodeled))
+	actions.Set("AuthenticateParticipant", surprise("unmodeled", unmodeled))
 
 	hooks := entry("UpdateContactEventHooks")
 	transitions := field(hooks, "transitions").(jsonv.Object)
@@ -416,8 +424,8 @@ func TestCatalogReadsThePhaseDVocabulary(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if e := c.Entry("CheckOutboundCallStatus"); e.Modeled || !reflect.DeepEqual(e.Channels, []Channel{"VOICE", "CHAT"}) {
-		t.Errorf("CheckOutboundCallStatus channels %v", e.Channels)
+	if e := c.Entry("AuthenticateParticipant"); e.Modeled || !reflect.DeepEqual(e.Channels, []Channel{"VOICE", "CHAT"}) {
+		t.Errorf("AuthenticateParticipant channels %v", e.Channels)
 	}
 	if e := c.Entry("Wait"); !reflect.DeepEqual(e.Channels, []Channel{"CHAT"}) {
 		t.Errorf("a modeled entry's channels on CatalogAction: %v", e.Channels)

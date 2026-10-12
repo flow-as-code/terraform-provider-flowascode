@@ -1,5 +1,5 @@
 {
- "source": "packages/core/dist built from flow-as-code ccee157, Node v26.10.0, ICU 78.3, locale en-US",
+ "source": "packages/core/dist built from flow-as-code e78970f, Node v26.10.0, ICU 78.3, locale en-US",
  "fixtures": [
   {
    "file": "lint/action-allowed-in-flow-type/fail-callback-in-whisper-flow.json",
@@ -11,6 +11,12 @@
    "file": "lint/action-allowed-in-flow-type/fail-check-metric-in-whisper-flow.json",
    "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 1,\n    \"warnings\": 0\n  },\n  \"findings\": [\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"staffed\",\n      \"message\": \"CheckMetricData is not allowed in a OUTBOUND_WHISPER flow. Allowed: CONTACT_FLOW, AGENT_TRANSFER, QUEUE_TRANSFER, CUSTOMER_QUEUE, MODULE.\",\n      \"rule\": \"action-allowed-in-flow-type\",\n      \"doc\": \"case\"\n    }\n  ]\n}\n",
    "text": "case\n  error (staffed): CheckMetricData is not allowed in a OUTBOUND_WHISPER flow. Allowed: CONTACT_FLOW, AGENT_TRANSFER, QUEUE_TRANSFER, CUSTOMER_QUEUE, MODULE. [action-allowed-in-flow-type]\n\n1 finding(s): 1 error(s), 0 warning(s).\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/action-allowed-in-flow-type/fail-complete-outbound-call-in-inbound-flow.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 2,\n    \"errors\": 1,\n    \"warnings\": 1\n  },\n  \"findings\": [\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"place-call\",\n      \"message\": \"CompleteOutboundCall is not allowed in a CONTACT_FLOW flow. Allowed: OUTBOUND_WHISPER, MODULE.\",\n      \"rule\": \"action-allowed-in-flow-type\",\n      \"doc\": \"call-out\"\n    },\n    {\n      \"severity\": \"warning\",\n      \"blockId\": \"place-call\",\n      \"message\": \"CompleteOutboundCall is supported only on the VOICE channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-completeoutboundcall.html\",\n      \"rule\": \"channel-restricted-action\",\n      \"doc\": \"call-out\"\n    }\n  ]\n}\n",
+   "text": "call-out\n  error (place-call): CompleteOutboundCall is not allowed in a CONTACT_FLOW flow. Allowed: OUTBOUND_WHISPER, MODULE. [action-allowed-in-flow-type]\n  warning (place-call): CompleteOutboundCall is supported only on the VOICE channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-completeoutboundcall.html [channel-restricted-action]\n\n2 finding(s): 1 error(s), 1 warning(s).\n",
    "blocking": false
   },
   {
@@ -65,6 +71,12 @@
    "file": "lint/action-allowed-in-flow-type/fail-transfer-to-agent-in-inbound-flow.json",
    "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 1,\n    \"warnings\": 0\n  },\n  \"findings\": [\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"agent\",\n      \"message\": \"TransferContactToAgent is not allowed in a CONTACT_FLOW flow. Allowed: AGENT_TRANSFER, QUEUE_TRANSFER, MODULE.\",\n      \"rule\": \"action-allowed-in-flow-type\",\n      \"doc\": \"case\"\n    }\n  ]\n}\n",
    "text": "case\n  error (agent): TransferContactToAgent is not allowed in a CONTACT_FLOW flow. Allowed: AGENT_TRANSFER, QUEUE_TRANSFER, MODULE. [action-allowed-in-flow-type]\n\n1 finding(s): 1 error(s), 0 warning(s).\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/action-allowed-in-flow-type/pass-complete-outbound-call-in-outbound-whisper.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 0,\n    \"warnings\": 1\n  },\n  \"findings\": [\n    {\n      \"severity\": \"warning\",\n      \"blockId\": \"place-call\",\n      \"message\": \"CompleteOutboundCall is supported only on the VOICE channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-completeoutboundcall.html\",\n      \"rule\": \"channel-restricted-action\",\n      \"doc\": \"call-out\"\n    }\n  ]\n}\n",
+   "text": "call-out\n  warning (place-call): CompleteOutboundCall is supported only on the VOICE channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-completeoutboundcall.html [channel-restricted-action]\n\n1 finding(s): 0 error(s), 1 warning(s).\n",
    "blocking": false
   },
   {
@@ -131,6 +143,18 @@
    "file": "lint/attribute-set-before-read/pass-single-document.json",
    "json": "{\n  \"summary\": {\n    \"total\": 0,\n    \"errors\": 0,\n    \"warnings\": 0\n  },\n  \"findings\": []\n}\n",
    "text": "No findings.\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/channel-restricted-action/fail-check-outbound-call-status.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 0,\n    \"warnings\": 1\n  },\n  \"findings\": [\n    {\n      \"severity\": \"warning\",\n      \"blockId\": \"check-progress\",\n      \"message\": \"CheckOutboundCallStatus is supported only on the VOICE channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/flow-control-actions-checkoutboundcallstatus.html\",\n      \"rule\": \"channel-restricted-action\",\n      \"doc\": \"call-progress\"\n    }\n  ]\n}\n",
+   "text": "call-progress\n  warning (check-progress): CheckOutboundCallStatus is supported only on the VOICE channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/flow-control-actions-checkoutboundcallstatus.html [channel-restricted-action]\n\n1 finding(s): 0 error(s), 1 warning(s).\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/channel-restricted-action/fail-complete-outbound-call.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 0,\n    \"warnings\": 1\n  },\n  \"findings\": [\n    {\n      \"severity\": \"warning\",\n      \"blockId\": \"place-call\",\n      \"message\": \"CompleteOutboundCall is supported only on the VOICE channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-completeoutboundcall.html\",\n      \"rule\": \"channel-restricted-action\",\n      \"doc\": \"call-out\"\n    }\n  ]\n}\n",
+   "text": "call-out\n  warning (place-call): CompleteOutboundCall is supported only on the VOICE channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-completeoutboundcall.html [channel-restricted-action]\n\n1 finding(s): 0 error(s), 1 warning(s).\n",
    "blocking": false
   },
   {
@@ -278,6 +302,12 @@
    "blocking": false
   },
   {
+   "file": "lint/error-branches/fail-check-outbound-call-status-without-catch-all.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 2,\n    \"errors\": 1,\n    \"warnings\": 1\n  },\n  \"findings\": [\n    {\n      \"severity\": \"warning\",\n      \"blockId\": \"check-progress\",\n      \"message\": \"CheckOutboundCallStatus is supported only on the VOICE channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/flow-control-actions-checkoutboundcallstatus.html\",\n      \"rule\": \"channel-restricted-action\",\n      \"doc\": \"call-progress\"\n    },\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"check-progress\",\n      \"message\": \"CheckOutboundCallStatus does not wire its \\\"NoMatchingError\\\" branch.\",\n      \"rule\": \"error-branches\",\n      \"doc\": \"call-progress\"\n    }\n  ]\n}\n",
+   "text": "call-progress\n  warning (check-progress): CheckOutboundCallStatus is supported only on the VOICE channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/flow-control-actions-checkoutboundcallstatus.html [channel-restricted-action]\n  error (check-progress): CheckOutboundCallStatus does not wire its \"NoMatchingError\" branch. [error-branches]\n\n2 finding(s): 1 error(s), 1 warning(s).\n",
+   "blocking": false
+  },
+  {
    "file": "lint/error-branches/fail-create-case-linking-without-contact-not-linked.json",
    "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 1,\n    \"warnings\": 0\n  },\n  \"findings\": [\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"open-case\",\n      \"message\": \"CreateCase does not wire its \\\"ContactNotLinked\\\" branch.\",\n      \"rule\": \"error-branches\",\n      \"doc\": \"case-intake\"\n    }\n  ]\n}\n",
    "text": "case-intake\n  error (open-case): CreateCase does not wire its \"ContactNotLinked\" branch. [error-branches]\n\n1 finding(s): 1 error(s), 0 warning(s).\n",
@@ -335,6 +365,12 @@
    "file": "lint/error-branches/fail-metric-without-no-match.json",
    "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 1,\n    \"warnings\": 0\n  },\n  \"findings\": [\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"staffed\",\n      \"message\": \"CheckMetricData does not wire its \\\"NoMatchingCondition\\\" branch.\",\n      \"rule\": \"error-branches\",\n      \"doc\": \"case\"\n    }\n  ]\n}\n",
    "text": "case\n  error (staffed): CheckMetricData does not wire its \"NoMatchingCondition\" branch. [error-branches]\n\n1 finding(s): 1 error(s), 0 warning(s).\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/error-branches/fail-outbound-sms-without-catch-all.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 1,\n    \"warnings\": 0\n  },\n  \"findings\": [\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"text-back\",\n      \"message\": \"StartOutboundChatContact does not wire its \\\"NoMatchingError\\\" branch.\",\n      \"rule\": \"error-branches\",\n      \"doc\": \"text-back\"\n    }\n  ]\n}\n",
+   "text": "text-back\n  error (text-back): StartOutboundChatContact does not wire its \"NoMatchingError\" branch. [error-branches]\n\n1 finding(s): 1 error(s), 0 warning(s).\n",
    "blocking": false
   },
   {
@@ -413,6 +449,12 @@
    "file": "lint/error-branches/pass-callback-number-wired.json",
    "json": "{\n  \"summary\": {\n    \"total\": 0,\n    \"errors\": 0,\n    \"warnings\": 0\n  },\n  \"findings\": []\n}\n",
    "text": "No findings.\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/error-branches/pass-complete-outbound-call-without-errors.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 0,\n    \"warnings\": 1\n  },\n  \"findings\": [\n    {\n      \"severity\": \"warning\",\n      \"blockId\": \"place-call\",\n      \"message\": \"CompleteOutboundCall is supported only on the VOICE channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-completeoutboundcall.html\",\n      \"rule\": \"channel-restricted-action\",\n      \"doc\": \"call-out\"\n    }\n  ]\n}\n",
+   "text": "call-out\n  warning (place-call): CompleteOutboundCall is supported only on the VOICE channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-completeoutboundcall.html [channel-restricted-action]\n\n1 finding(s): 0 error(s), 1 warning(s).\n",
    "blocking": false
   },
   {
@@ -587,6 +629,12 @@
    "file": "lint/no-literal-arn/fail-arn-in-message-processor.json",
    "json": "{\n  \"summary\": {\n    \"total\": 2,\n    \"errors\": 1,\n    \"warnings\": 1\n  },\n  \"findings\": [\n    {\n      \"severity\": \"warning\",\n      \"blockId\": \"process-messages\",\n      \"message\": \"UpdateContactMediaProcessing is supported only on the CHAT channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatecontactmediaprocessing.html\",\n      \"rule\": \"channel-restricted-action\",\n      \"doc\": \"chat-redaction\"\n    },\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"process-messages\",\n      \"message\": \"Parameter \\\"ChatProcessor.LambdaProcessorARN\\\" contains a literal ARN. Use a ${cdref:type:name} token instead.\",\n      \"rule\": \"no-literal-arn\",\n      \"doc\": \"chat-redaction\"\n    }\n  ]\n}\n",
    "text": "chat-redaction\n  warning (process-messages): UpdateContactMediaProcessing is supported only on the CHAT channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatecontactmediaprocessing.html [channel-restricted-action]\n  error (process-messages): Parameter \"ChatProcessor.LambdaProcessorARN\" contains a literal ARN. Use a ${cdref:type:name} token instead. [no-literal-arn]\n\n2 finding(s): 1 error(s), 1 warning(s).\n",
+   "blocking": true
+  },
+  {
+   "file": "lint/no-literal-arn/fail-arn-in-outbound-sms-source.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 1,\n    \"warnings\": 0\n  },\n  \"findings\": [\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"text-back\",\n      \"message\": \"Parameter \\\"SourceEndpoint.Address\\\" contains a literal ARN. Use a ${cdref:type:name} token instead.\",\n      \"rule\": \"no-literal-arn\",\n      \"doc\": \"text-back\"\n    }\n  ]\n}\n",
+   "text": "text-back\n  error (text-back): Parameter \"SourceEndpoint.Address\" contains a literal ARN. Use a ${cdref:type:name} token instead. [no-literal-arn]\n\n1 finding(s): 1 error(s), 0 warning(s).\n",
    "blocking": true
   },
   {

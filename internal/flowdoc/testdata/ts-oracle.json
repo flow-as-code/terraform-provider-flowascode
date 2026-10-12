@@ -1,8 +1,8 @@
 {
-  "generatedFrom": "flow-as-code ccee157f7c1915e0212dad52bc59f817d3fe1493, packages/core/dist",
+  "generatedFrom": "flow-as-code e78970ffb56d7d47fece5ca7db5c5f89102e7eff, packages/core/dist",
   "perType": {
     "CompleteOutboundCall": {
-      "modeled": false,
+      "modeled": true,
       "requiredErrors": [],
       "requiredErrorsByParameters": [
         {
@@ -12,18 +12,23 @@
       ],
       "builderErrors": [],
       "minConditions": 0,
-      "conditionsKind": null,
-      "nextRule": null,
+      "conditionsKind": "none",
+      "nextRule": "required",
       "holdsParticipant": false,
       "textBodyPaths": [],
       "announcePaths": [],
       "recordingEnablerPath": null,
       "refPaths": [],
-      "restrictions": null,
+      "restrictions": [
+        "OUTBOUND_WHISPER",
+        "MODULE"
+      ],
       "unrestricted": false,
       "terminal": false,
-      "actionType": false,
-      "channels": null
+      "actionType": true,
+      "channels": [
+        "VOICE"
+      ]
     },
     "CreateCase": {
       "modeled": true,
@@ -327,27 +332,42 @@
       "channels": null
     },
     "StartOutboundChatContact": {
-      "modeled": false,
-      "requiredErrors": [],
+      "modeled": true,
+      "requiredErrors": [
+        "NoMatchingError"
+      ],
       "requiredErrorsByParameters": [
         {
           "parameters": {},
-          "errors": []
+          "errors": [
+            "NoMatchingError"
+          ]
         }
       ],
-      "builderErrors": [],
+      "builderErrors": [
+        "NoMatchingError"
+      ],
       "minConditions": 0,
-      "conditionsKind": null,
-      "nextRule": null,
+      "conditionsKind": "none",
+      "nextRule": "required",
       "holdsParticipant": false,
       "textBodyPaths": [],
       "announcePaths": [],
       "recordingEnablerPath": null,
-      "refPaths": [],
+      "refPaths": [
+        {
+          "path": "SourceEndpoint.Address",
+          "ref": "phonenumber"
+        },
+        {
+          "path": "ContactFlowArn",
+          "ref": "flow"
+        }
+      ],
       "restrictions": null,
-      "unrestricted": false,
+      "unrestricted": true,
       "terminal": false,
-      "actionType": false,
+      "actionType": true,
       "channels": null
     },
     "TagContact": {
@@ -1347,28 +1367,36 @@
       "channels": null
     },
     "CheckOutboundCallStatus": {
-      "modeled": false,
-      "requiredErrors": [],
+      "modeled": true,
+      "requiredErrors": [
+        "NoMatchingError"
+      ],
       "requiredErrorsByParameters": [
         {
           "parameters": {},
-          "errors": []
+          "errors": [
+            "NoMatchingError"
+          ]
         }
       ],
-      "builderErrors": [],
+      "builderErrors": [
+        "NoMatchingError"
+      ],
       "minConditions": 0,
-      "conditionsKind": null,
-      "nextRule": null,
+      "conditionsKind": "enum",
+      "nextRule": "mirrors:error:NoMatchingError",
       "holdsParticipant": false,
       "textBodyPaths": [],
       "announcePaths": [],
       "recordingEnablerPath": null,
       "refPaths": [],
       "restrictions": null,
-      "unrestricted": false,
+      "unrestricted": true,
       "terminal": false,
-      "actionType": false,
-      "channels": null
+      "actionType": true,
+      "channels": [
+        "VOICE"
+      ]
     },
     "CheckVoiceId": {
       "modeled": false,
@@ -2179,6 +2207,7 @@
     }
   },
   "catalogOrder": [
+    "CompleteOutboundCall",
     "CreateCase",
     "CreateTask",
     "CreateWisdomSession",
@@ -2186,6 +2215,7 @@
     "EndFlowModuleExecution",
     "GetCase",
     "InvokeFlowModule",
+    "StartOutboundChatContact",
     "TagContact",
     "TransferContactToAgent",
     "TransferContactToQueue",
@@ -2212,6 +2242,7 @@
     "ShowView",
     "CheckHoursOfOperation",
     "CheckMetricData",
+    "CheckOutboundCallStatus",
     "Compare",
     "DistributeByPercentage",
     "EndFlowExecution",

@@ -31,6 +31,7 @@ const (
 	profilesFixture     = "roundtrip/customer-profiles/doc.flowdoc.json"
 	casesFixture        = "roundtrip/cases/doc.flowdoc.json"
 	routingCritFixture  = "roundtrip/routing-criteria/doc.flowdoc.json"
+	outboundFixture     = "roundtrip/outbound/doc.flowdoc.json"
 )
 
 // docCase is one document and the verdict Ajv gives it.
@@ -437,6 +438,8 @@ func docCases() []docCase {
 		"rejects a response field token of another type", setP("find-case", "Parameters.CaseResponseFields", j(`["${cdref:casetemplate:billing-dispute}"]`)),
 		"rejects an update field key token of another type", setP("update-case", "Parameters.CaseRequestFields", j(`{"${cdref:casetemplate:billing-dispute}":"x"}`)),
 		"rejects response fields that are not a list", setP("find-case", "Parameters.CaseResponseFields", "case_id"),
+		"rejects a template id that is not a string", setP("open-case", "Parameters.CaseTemplateId", 42.0),
+		"rejects a response field that is not a string", setP("find-case", "Parameters.CaseResponseFields", j(`[1]`)),
 	)
 	add(g, casesFixture, true,
 		"still accepts a literal template id and a literal field id, as published flows write them", on("open-case", func(a *any) {
@@ -479,6 +482,26 @@ func docCases() []docCase {
 		"still accepts the whole of RoutingCriteria as a JSONPath, which no probe has refused", setP("from-lambda", "Parameters.RoutingCriteria", "$.External.RoutingCriteria"),
 		"still accepts a level, a tag, a preferred agent and a nesting the builder refuses, which no probe has refused",
 		step(2, "Expression", j(`{"AndExpression":[{"OrExpression":[]},{"NotAttributeCondition":{"Name":"Language","Value":"English"}},{"AttributeCondition":{"ComparisonOperator":"Match","MatchCriteria":{"AgentsCriteria":{"AgentIds":["$.Attributes.agent"]}}}},{"AttributeCondition":{"ComparisonOperator":"Range","Name":"Language","ProficiencyLevel":2.5,"Value":"English"}}]}`)),
+	)
+
+	g = "FlowDoc schema rejections: outbound"
+	add(g, outboundFixture, true, "accepts the fixture as committed", nil)
+	add(g, outboundFixture, false,
+		"rejects a caller ID that is not an object", setP("place-call", "Parameters.CallerId", "+15555550100"),
+		"rejects a caller ID number that is not a string", setP("place-call", "Parameters.CallerId", j(`{"Number":15555550100}`)),
+		"rejects a connection time limit that is neither a string nor an integer", setP("place-call-via-sip", "Parameters.ConnectionTimeLimitSeconds", true),
+		"rejects a voice connector that is not an object", setP("place-call-via-sip", "Parameters.VoiceConnector", "$.Attributes.voiceConnector"),
+		"rejects a literal phone number ARN as the SMS source", setP("text-back", "Parameters.SourceEndpoint", j(`{"Address":"arn:aws:connect:us-east-1:111122223333:phone-number/p1","Type":"CONNECT_PHONENUMBER_ARN"}`)),
+		"rejects a literal flow ARN as the SMS flow", setP("text-back", "Parameters.ContactFlowArn", "arn:aws:connect:us-east-1:111122223333:instance/i1/contact-flow/f1"),
+		"rejects a source endpoint that is not an object", setP("text-back", "Parameters.SourceEndpoint", "${cdref:phonenumber:main-did}"),
+		"rejects a destination endpoint that is not an object", setP("text-from-attributes", "Parameters.DestinationEndpoint", "+15555550101"),
+		"rejects a destination address that is not a string", setP("text-from-attributes", "Parameters.DestinationEndpoint", j(`{"Address":15555550101,"Type":"TELEPHONE_NUMBER"}`)),
+		"rejects an initial message that is not an object", setP("text-back", "Parameters.InitialSystemMessage", "Reply here."),
+	)
+	add(g, outboundFixture, true,
+		"still accepts a connection time limit as the page's integer", setP("place-call-via-sip", "Parameters.ConnectionTimeLimitSeconds", 30.0),
+		"still accepts a connection time limit as the decimal string", setP("place-call-via-sip", "Parameters.ConnectionTimeLimitSeconds", "30"),
+		"still accepts a connection time limit as a JSONPath", setP("place-call-via-sip", "Parameters.ConnectionTimeLimitSeconds", "$.Attributes.connectionLimit"),
 	)
 
 	g = "FlowDoc migration"
