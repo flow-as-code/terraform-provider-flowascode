@@ -131,12 +131,17 @@ Required:
 
 Optional:
 
+- `associate_contact_to_customer_profile` (Block, Optional) A AssociateContactToCustomerProfile action: https://docs.aws.amazon.com/connect/latest/devguide/interactions-associatecontacttocustomerprofile.html (see [below for nested schema](#nestedblock--action--associate_contact_to_customer_profile))
 - `check_hours_of_operation` (Block, Optional) A CheckHoursOfOperation action: https://docs.aws.amazon.com/connect/latest/devguide/flow-control-actions-checkhoursofoperation.html (see [below for nested schema](#nestedblock--action--check_hours_of_operation))
 - `check_metric_data` (Block, Optional) A CheckMetricData action: https://docs.aws.amazon.com/connect/latest/devguide/flow-control-actions-checkmetricdata.html (see [below for nested schema](#nestedblock--action--check_metric_data))
 - `compare` (Block, Optional) A Compare action: https://docs.aws.amazon.com/connect/latest/devguide/flow-control-actions-compare.html (see [below for nested schema](#nestedblock--action--compare))
 - `condition` (Block List) One entry of the action's Conditions, in order. (see [below for nested schema](#nestedblock--action--condition))
 - `connect_participant_with_lex_bot` (Block, Optional) A ConnectParticipantWithLexBot action: https://docs.aws.amazon.com/connect/latest/devguide/participant-actions-connectparticipantwithlexbot.html (see [below for nested schema](#nestedblock--action--connect_participant_with_lex_bot))
 - `create_callback_contact` (Block, Optional) A CreateCallbackContact action: https://docs.aws.amazon.com/connect/latest/devguide/interactions-createcallbackcontact.html (see [below for nested schema](#nestedblock--action--create_callback_contact))
+- `create_case` (Block, Optional) A CreateCase action: https://docs.aws.amazon.com/connect/latest/devguide/createcase.html (see [below for nested schema](#nestedblock--action--create_case))
+- `create_customer_profile` (Block, Optional) A CreateCustomerProfile action: https://docs.aws.amazon.com/connect/latest/devguide/interactions-createcustomerprofile.html (see [below for nested schema](#nestedblock--action--create_customer_profile))
+- `create_task` (Block, Optional) A CreateTask action: https://docs.aws.amazon.com/connect/latest/devguide/createtask.html (see [below for nested schema](#nestedblock--action--create_task))
+- `create_wisdom_session` (Block, Optional) A CreateWisdomSession action: https://docs.aws.amazon.com/connect/latest/devguide/createwisdomsession.html (see [below for nested schema](#nestedblock--action--create_wisdom_session))
 - `dequeue_contact_and_transfer_to_queue` (Block, Optional) A DequeueContactAndTransferToQueue action: https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-dequeuecontactandtransfertoqueue.html (see [below for nested schema](#nestedblock--action--dequeue_contact_and_transfer_to_queue))
 - `disconnect_participant` (Block, Optional) A DisconnectParticipant action: https://docs.aws.amazon.com/connect/latest/devguide/participant-actions-disconnectparticipant.html (see [below for nested schema](#nestedblock--action--disconnect_participant))
 - `distribute_by_percentage` (Block, Optional) A DistributeByPercentage action: https://docs.aws.amazon.com/connect/latest/devguide/flow-control-actions-distributebypercentage.html (see [below for nested schema](#nestedblock--action--distribute_by_percentage))
@@ -144,6 +149,10 @@ Optional:
 - `end_flow_module_execution` (Block, Optional) A EndFlowModuleExecution action: https://docs.aws.amazon.com/connect/latest/devguide/endflowmoduleexecution.html (see [below for nested schema](#nestedblock--action--end_flow_module_execution))
 - `error` (Block List) One entry of the action's Errors, in order. (see [below for nested schema](#nestedblock--action--error))
 - `generic` (Block, Optional) An action type the tooling does not model, as its Flow language Type and Parameters. (see [below for nested schema](#nestedblock--action--generic))
+- `get_calculated_attributes_for_customer_profile` (Block, Optional) A GetCalculatedAttributesForCustomerProfile action: https://docs.aws.amazon.com/connect/latest/devguide/interactions-getcalculatedattributesforcustomerprofile.html (see [below for nested schema](#nestedblock--action--get_calculated_attributes_for_customer_profile))
+- `get_case` (Block, Optional) A GetCase action: https://docs.aws.amazon.com/connect/latest/devguide/getcase.html (see [below for nested schema](#nestedblock--action--get_case))
+- `get_customer_profile` (Block, Optional) A GetCustomerProfile action: https://docs.aws.amazon.com/connect/latest/devguide/interactions-getcustomerprofile.html (see [below for nested schema](#nestedblock--action--get_customer_profile))
+- `get_customer_profile_object` (Block, Optional) A GetCustomerProfileObject action: https://docs.aws.amazon.com/connect/latest/devguide/interactions-getcustomerprofileobject.html (see [below for nested schema](#nestedblock--action--get_customer_profile_object))
 - `get_metric_data` (Block, Optional) A GetMetricData action: https://docs.aws.amazon.com/connect/latest/devguide/flow-control-actions-getmetricdata.html (see [below for nested schema](#nestedblock--action--get_metric_data))
 - `get_participant_input` (Block, Optional) A GetParticipantInput action: https://docs.aws.amazon.com/connect/latest/devguide/participant-actions-getparticipantinput.html (see [below for nested schema](#nestedblock--action--get_participant_input))
 - `invoke_flow_module` (Block, Optional) A InvokeFlowModule action: https://docs.aws.amazon.com/connect/latest/devguide/flow-language-actions-invoke-flow-module.html (see [below for nested schema](#nestedblock--action--invoke_flow_module))
@@ -153,24 +162,49 @@ Optional:
 - `message_participant_iteratively` (Block, Optional) A MessageParticipantIteratively action: https://docs.aws.amazon.com/connect/latest/devguide/participant-actions-messageparticipantiteratively.html (see [below for nested schema](#nestedblock--action--message_participant_iteratively))
 - `next` (String) The action's NextAction.
 - `position` (Block, Optional) Where the action sits on the canvas, when that is not where the layout puts it. (see [below for nested schema](#nestedblock--action--position))
+- `resume_contact` (Block, Optional) A ResumeContact action: https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatecontactresumecontact.html (see [below for nested schema](#nestedblock--action--resume_contact))
 - `show_view` (Block, Optional) A ShowView action: https://docs.aws.amazon.com/connect/latest/devguide/participant-actions-showview.html (see [below for nested schema](#nestedblock--action--show_view))
 - `tag_contact` (Block, Optional) A TagContact action: https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-tagcontact.html (see [below for nested schema](#nestedblock--action--tag_contact))
 - `transfer_contact_to_agent` (Block, Optional) A TransferContactToAgent action: https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-transfercontacttoagent.html (see [below for nested schema](#nestedblock--action--transfer_contact_to_agent))
 - `transfer_contact_to_queue` (Block, Optional) A TransferContactToQueue action: https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-transfercontacttoqueue.html (see [below for nested schema](#nestedblock--action--transfer_contact_to_queue))
 - `transfer_to_flow` (Block, Optional) A TransferToFlow action: https://docs.aws.amazon.com/connect/latest/devguide/flow-control-actions-transfertoflow.html (see [below for nested schema](#nestedblock--action--transfer_to_flow))
 - `untag_contact` (Block, Optional) A UntagContact action: https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-untagcontact.html (see [below for nested schema](#nestedblock--action--untag_contact))
+- `update_case` (Block, Optional) A UpdateCase action: https://docs.aws.amazon.com/connect/latest/devguide/updatecase.html (see [below for nested schema](#nestedblock--action--update_case))
 - `update_contact_attributes` (Block, Optional) A UpdateContactAttributes action: https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatecontactattributes.html (see [below for nested schema](#nestedblock--action--update_contact_attributes))
 - `update_contact_callback_number` (Block, Optional) A UpdateContactCallbackNumber action: https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatecontactcallbacknumber.html (see [below for nested schema](#nestedblock--action--update_contact_callback_number))
 - `update_contact_data` (Block, Optional) A UpdateContactData action: https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatecontactdata.html (see [below for nested schema](#nestedblock--action--update_contact_data))
 - `update_contact_event_hooks` (Block, Optional) A UpdateContactEventHooks action: https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatecontacteventhooks.html (see [below for nested schema](#nestedblock--action--update_contact_event_hooks))
+- `update_contact_media_processing` (Block, Optional) A UpdateContactMediaProcessing action: https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatecontactmediaprocessing.html (see [below for nested schema](#nestedblock--action--update_contact_media_processing))
+- `update_contact_media_streaming_behavior` (Block, Optional) A UpdateContactMediaStreamingBehavior action: https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatecontactmediastreamingbehavior.html (see [below for nested schema](#nestedblock--action--update_contact_media_streaming_behavior))
 - `update_contact_recording_and_analytics_behavior` (Block, Optional) A UpdateContactRecordingAndAnalyticsBehavior action: https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatecontactrecordingandanalyticsbehavior.html (see [below for nested schema](#nestedblock--action--update_contact_recording_and_analytics_behavior))
 - `update_contact_recording_behavior` (Block, Optional) A UpdateContactRecordingBehavior action: https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatecontactrecordingbehavior.html (see [below for nested schema](#nestedblock--action--update_contact_recording_behavior))
 - `update_contact_routing_behavior` (Block, Optional) A UpdateContactRoutingBehavior action: https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatecontactroutingbehavior.html (see [below for nested schema](#nestedblock--action--update_contact_routing_behavior))
 - `update_contact_target_queue` (Block, Optional) A UpdateContactTargetQueue action: https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatecontacttargetqueue.html (see [below for nested schema](#nestedblock--action--update_contact_target_queue))
 - `update_contact_text_to_speech_voice` (Block, Optional) A UpdateContactTextToSpeechVoice action: https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatecontacttexttospeechvoice.html (see [below for nested schema](#nestedblock--action--update_contact_text_to_speech_voice))
+- `update_customer_profile` (Block, Optional) A UpdateCustomerProfile action: https://docs.aws.amazon.com/connect/latest/devguide/interactions-updatecustomerprofile.html (see [below for nested schema](#nestedblock--action--update_customer_profile))
 - `update_flow_attributes` (Block, Optional) A UpdateFlowAttributes action: https://docs.aws.amazon.com/connect/latest/devguide/flow-control-actions-updateflowattributes.html (see [below for nested schema](#nestedblock--action--update_flow_attributes))
 - `update_flow_logging_behavior` (Block, Optional) A UpdateFlowLoggingBehavior action: https://docs.aws.amazon.com/connect/latest/devguide/flow-control-actions-updateflowloggingbehavior.html (see [below for nested schema](#nestedblock--action--update_flow_logging_behavior))
+- `update_previous_contact_participant_state` (Block, Optional) A UpdatePreviousContactParticipantState action: https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatepreviouscontactparticipantstate.html (see [below for nested schema](#nestedblock--action--update_previous_contact_participant_state))
+- `update_routing_criteria` (Block, Optional) A UpdateRoutingCriteria action: https://docs.aws.amazon.com/connect/latest/devguide/flow-control-actions-updateroutingcriteria.html (see [below for nested schema](#nestedblock--action--update_routing_criteria))
 - `wait` (Block, Optional) A Wait action: https://docs.aws.amazon.com/connect/latest/devguide/flow-control-actions-wait.html (see [below for nested schema](#nestedblock--action--wait))
+
+<a id="nestedblock--action--associate_contact_to_customer_profile"></a>
+### Nested Schema for `action.associate_contact_to_customer_profile`
+
+Optional:
+
+- `profile_request_data` (Attributes) Flow language parameter ProfileRequestData. (see [below for nested schema](#nestedatt--action--associate_contact_to_customer_profile--profile_request_data))
+- `profile_response_data` (List of String) Flow language parameter ProfileResponseData.
+
+<a id="nestedatt--action--associate_contact_to_customer_profile--profile_request_data"></a>
+### Nested Schema for `action.associate_contact_to_customer_profile.profile_request_data`
+
+Optional:
+
+- `contact_id` (String) Flow language field ContactId.
+- `profile_id` (String) Flow language field ProfileId.
+
+
 
 <a id="nestedblock--action--check_hours_of_operation"></a>
 ### Nested Schema for `action.check_hours_of_operation`
@@ -282,6 +316,49 @@ Optional:
 - `retry_delay_seconds` (String) Flow language parameter RetryDelaySeconds.
 
 
+<a id="nestedblock--action--create_case"></a>
+### Nested Schema for `action.create_case`
+
+Optional:
+
+- `case_request_fields` (Map of String) Flow language parameter CaseRequestFields.
+- `case_template_id` (String) Flow language parameter CaseTemplateId.
+- `contact_to_link` (String) Flow language parameter ContactToLink.
+- `link_contact_to_case` (String) Flow language parameter LinkContactToCase.
+
+
+<a id="nestedblock--action--create_customer_profile"></a>
+### Nested Schema for `action.create_customer_profile`
+
+Optional:
+
+- `profile_request_data` (Map of String) Flow language parameter ProfileRequestData.
+- `profile_response_data` (List of String) Flow language parameter ProfileResponseData.
+
+
+<a id="nestedblock--action--create_task"></a>
+### Nested Schema for `action.create_task`
+
+Optional:
+
+- `attributes` (Map of String) Flow language parameter Attributes.
+- `contact_flow_id` (String) Flow language parameter ContactFlowId.
+- `delay_seconds` (String) Flow language parameter DelaySeconds.
+- `description` (String) Flow language parameter Description.
+- `name` (String) Flow language parameter Name.
+- `references` (String) Flow language parameter References. Written as jsonencode(...).
+- `scheduled_time` (String) Flow language parameter ScheduledTime.
+- `task_template_id` (String) Flow language parameter TaskTemplateId.
+
+
+<a id="nestedblock--action--create_wisdom_session"></a>
+### Nested Schema for `action.create_wisdom_session`
+
+Optional:
+
+- `wisdom_assistant_arn` (String) Flow language parameter WisdomAssistantArn.
+
+
 <a id="nestedblock--action--dequeue_contact_and_transfer_to_queue"></a>
 ### Nested Schema for `action.dequeue_contact_and_transfer_to_queue`
 
@@ -323,6 +400,86 @@ Optional:
 
 - `parameters` (String) The Parameters object, as jsonencode({...}). Omitted means {}.
 - `type` (String) The Flow language action Type.
+
+
+<a id="nestedblock--action--get_calculated_attributes_for_customer_profile"></a>
+### Nested Schema for `action.get_calculated_attributes_for_customer_profile`
+
+Optional:
+
+- `profile_request_data` (Attributes) Flow language parameter ProfileRequestData. (see [below for nested schema](#nestedatt--action--get_calculated_attributes_for_customer_profile--profile_request_data))
+- `profile_response_data` (List of String) Flow language parameter ProfileResponseData.
+
+<a id="nestedatt--action--get_calculated_attributes_for_customer_profile--profile_request_data"></a>
+### Nested Schema for `action.get_calculated_attributes_for_customer_profile.profile_request_data`
+
+Optional:
+
+- `profile_id` (String) Flow language field ProfileId.
+
+
+
+<a id="nestedblock--action--get_case"></a>
+### Nested Schema for `action.get_case`
+
+Optional:
+
+- `case_request_fields` (Map of String) Flow language parameter CaseRequestFields.
+- `case_response_fields` (List of String) Flow language parameter CaseResponseFields.
+- `contact_to_link` (String) Flow language parameter ContactToLink.
+- `customer_id` (String) Flow language parameter CustomerId.
+- `get_last_updated_case` (String) Flow language parameter GetLastUpdatedCase.
+- `link_contact_to_case` (String) Flow language parameter LinkContactToCase.
+
+
+<a id="nestedblock--action--get_customer_profile"></a>
+### Nested Schema for `action.get_customer_profile`
+
+Optional:
+
+- `profile_request_data` (Attributes) Flow language parameter ProfileRequestData. (see [below for nested schema](#nestedatt--action--get_customer_profile--profile_request_data))
+- `profile_response_data` (List of String) Flow language parameter ProfileResponseData.
+
+<a id="nestedatt--action--get_customer_profile--profile_request_data"></a>
+### Nested Schema for `action.get_customer_profile.profile_request_data`
+
+Optional:
+
+- `identifier_name` (String) Flow language field IdentifierName.
+- `identifier_value` (String) Flow language field IdentifierValue.
+- `logical_operator` (String) Flow language field LogicalOperator.
+- `search_criteria` (Attributes List) Flow language field SearchCriteria. (see [below for nested schema](#nestedatt--action--get_customer_profile--profile_request_data--search_criteria))
+
+<a id="nestedatt--action--get_customer_profile--profile_request_data--search_criteria"></a>
+### Nested Schema for `action.get_customer_profile.profile_request_data.search_criteria`
+
+Optional:
+
+- `identifier_name` (String) Flow language field IdentifierName.
+- `identifier_value` (String) Flow language field IdentifierValue.
+
+
+
+
+<a id="nestedblock--action--get_customer_profile_object"></a>
+### Nested Schema for `action.get_customer_profile_object`
+
+Optional:
+
+- `profile_request_data` (Attributes) Flow language parameter ProfileRequestData. (see [below for nested schema](#nestedatt--action--get_customer_profile_object--profile_request_data))
+- `profile_response_data` (List of String) Flow language parameter ProfileResponseData.
+
+<a id="nestedatt--action--get_customer_profile_object--profile_request_data"></a>
+### Nested Schema for `action.get_customer_profile_object.profile_request_data`
+
+Optional:
+
+- `identifier_name` (String) Flow language field IdentifierName.
+- `identifier_value` (String) Flow language field IdentifierValue.
+- `object_type` (String) Flow language field ObjectType.
+- `profile_id` (String) Flow language field ProfileId.
+- `use_latest` (String) Flow language field UseLatest.
+
 
 
 <a id="nestedblock--action--get_metric_data"></a>
@@ -502,6 +659,10 @@ Optional:
 - `y` (Number)
 
 
+<a id="nestedblock--action--resume_contact"></a>
+### Nested Schema for `action.resume_contact`
+
+
 <a id="nestedblock--action--show_view"></a>
 ### Nested Schema for `action.show_view`
 
@@ -562,6 +723,17 @@ Optional:
 - `tag_keys` (List of String) Flow language parameter TagKeys.
 
 
+<a id="nestedblock--action--update_case"></a>
+### Nested Schema for `action.update_case`
+
+Optional:
+
+- `case_id` (String) Flow language parameter CaseId.
+- `case_request_fields` (Map of String) Flow language parameter CaseRequestFields.
+- `contact_to_link` (String) Flow language parameter ContactToLink.
+- `link_contact_to_case` (String) Flow language parameter LinkContactToCase.
+
+
 <a id="nestedblock--action--update_contact_attributes"></a>
 ### Nested Schema for `action.update_contact_attributes`
 
@@ -606,6 +778,51 @@ Optional:
 Optional:
 
 - `event_hooks` (Map of String) Flow language parameter EventHooks.
+
+
+<a id="nestedblock--action--update_contact_media_processing"></a>
+### Nested Schema for `action.update_contact_media_processing`
+
+Optional:
+
+- `chat_processor` (Attributes) Flow language parameter ChatProcessor. (see [below for nested schema](#nestedatt--action--update_contact_media_processing--chat_processor))
+
+<a id="nestedatt--action--update_contact_media_processing--chat_processor"></a>
+### Nested Schema for `action.update_contact_media_processing.chat_processor`
+
+Optional:
+
+- `chat_processor_settings` (Attributes) Flow language field ChatProcessorSettings. (see [below for nested schema](#nestedatt--action--update_contact_media_processing--chat_processor--chat_processor_settings))
+- `lambda_processor_arn` (String) Flow language field LambdaProcessorARN.
+- `processing_enabled` (String) Flow language field ProcessingEnabled.
+
+<a id="nestedatt--action--update_contact_media_processing--chat_processor--chat_processor_settings"></a>
+### Nested Schema for `action.update_contact_media_processing.chat_processor.chat_processor_settings`
+
+Optional:
+
+- `deliver_unprocessed_messages` (String) Flow language field DeliverUnprocessedMessages.
+
+
+
+
+<a id="nestedblock--action--update_contact_media_streaming_behavior"></a>
+### Nested Schema for `action.update_contact_media_streaming_behavior`
+
+Optional:
+
+- `media_stream_type` (String) Flow language parameter MediaStreamType.
+- `media_streaming_state` (String) Flow language parameter MediaStreamingState.
+- `participants` (Attributes List) Flow language parameter Participants. (see [below for nested schema](#nestedatt--action--update_contact_media_streaming_behavior--participants))
+
+<a id="nestedatt--action--update_contact_media_streaming_behavior--participants"></a>
+### Nested Schema for `action.update_contact_media_streaming_behavior.participants`
+
+Optional:
+
+- `media_directions` (List of String) Flow language field MediaDirections.
+- `participant_type` (String) Flow language field ParticipantType.
+
 
 
 <a id="nestedblock--action--update_contact_recording_and_analytics_behavior"></a>
@@ -691,6 +908,15 @@ Optional:
 - `text_to_speech_voice` (String) Flow language parameter TextToSpeechVoice.
 
 
+<a id="nestedblock--action--update_customer_profile"></a>
+### Nested Schema for `action.update_customer_profile`
+
+Optional:
+
+- `profile_request_data` (Map of String) Flow language parameter ProfileRequestData.
+- `profile_response_data` (List of String) Flow language parameter ProfileResponseData.
+
+
 <a id="nestedblock--action--update_flow_attributes"></a>
 ### Nested Schema for `action.update_flow_attributes`
 
@@ -713,6 +939,47 @@ Optional:
 Optional:
 
 - `flow_logging_behavior` (String) Flow language parameter FlowLoggingBehavior.
+
+
+<a id="nestedblock--action--update_previous_contact_participant_state"></a>
+### Nested Schema for `action.update_previous_contact_participant_state`
+
+Optional:
+
+- `previous_contact_participant_state` (String) Flow language parameter PreviousContactParticipantState.
+
+
+<a id="nestedblock--action--update_routing_criteria"></a>
+### Nested Schema for `action.update_routing_criteria`
+
+Optional:
+
+- `routing_criteria` (Attributes) Flow language parameter RoutingCriteria. (see [below for nested schema](#nestedatt--action--update_routing_criteria--routing_criteria))
+
+<a id="nestedatt--action--update_routing_criteria--routing_criteria"></a>
+### Nested Schema for `action.update_routing_criteria.routing_criteria`
+
+Optional:
+
+- `steps` (Attributes List) Flow language field Steps. (see [below for nested schema](#nestedatt--action--update_routing_criteria--routing_criteria--steps))
+
+<a id="nestedatt--action--update_routing_criteria--routing_criteria--steps"></a>
+### Nested Schema for `action.update_routing_criteria.routing_criteria.steps`
+
+Optional:
+
+- `expiry` (Attributes) Flow language field Expiry. (see [below for nested schema](#nestedatt--action--update_routing_criteria--routing_criteria--steps--expiry))
+- `expression` (String) Flow language field Expression. Written as jsonencode(...).
+
+<a id="nestedatt--action--update_routing_criteria--routing_criteria--steps--expiry"></a>
+### Nested Schema for `action.update_routing_criteria.routing_criteria.steps.expiry`
+
+Optional:
+
+- `duration_in_seconds` (String) Flow language field DurationInSeconds.
+
+
+
 
 
 <a id="nestedblock--action--wait"></a>

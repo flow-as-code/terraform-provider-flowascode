@@ -47,12 +47,21 @@ from what it finds. That listing calls:
 | `ListViews` | views |
 | `ListTaskTemplates` | task templates (FlowDoc 0.3) |
 | `ListPhoneNumbersV2` | claimed phone numbers (FlowDoc 0.3) |
+| `ListIntegrationAssociations` | the instance's Cases domain |
 
 When the listing is refused, the plan says so in a warning and leaves the
 action blocks as they were (none, after an import), while `content` still
 shows the change; bind each ARN in `refs` to see the live blocks.
 
-This provider does not list Cases templates and fields or Amazon Q in
-Connect assistants, so it needs no `cases:` or `wisdom:` permission. A
-Cases template or field ARN, or an assistant ARN, in a live flow is named
-only through a binding in `refs`.
+Two more services are read in the same listing, each with its own IAM
+service prefix:
+
+| Action | Names |
+| --- | --- |
+| `cases:ListTemplates`, `cases:ListFields` | Cases templates and the domain's own fields, which flows hold by id |
+| `wisdom:ListAssistants` | Amazon Q in Connect assistants |
+
+Either may be refused without losing the rest: the provider then names
+none of that service's resources, and a template, field or assistant in a
+live flow is named only through a binding in `refs`. A Cases system field
+(`summary`, `status`) is never a reference and stays literal.

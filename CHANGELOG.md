@@ -8,6 +8,36 @@ it reads.
 
 ## Unreleased
 
+The Phase D type groups, vendored from flow-as-code
+`ccee157f7c1915e0212dad52bc59f817d3fe1493` (the tip of its D02 to D07
+stack, unmerged; re-vendored at the merge commits before release):
+
+- Sixteen action types are modeled, 51 in all, each a typed sub-block of
+  `action`: `resume_contact`, `update_previous_contact_participant_state`,
+  `update_contact_media_streaming_behavior` and
+  `update_contact_media_processing` (contact state); `create_task` and
+  `create_wisdom_session`; the six Customer Profiles types; `create_case`,
+  `get_case` and `update_case`; and `update_routing_criteria`, whose
+  step `expression` is written with `jsonencode`. A configuration that
+  writes one of them as a `generic` block keeps working unchanged; import
+  and drift now show it typed where its parameters fit the typed form.
+- A Cases field reference stands as a key of `case_request_fields` and as
+  an item of `case_response_fields`, written as its reference key
+  (`"casefield:priority" = "high"`); any other key is a literal system
+  field id (`summary`). A reference key of another type there is refused
+  with `REF_KEY_MALFORMED`.
+- `error-branches` requires `ContactNotLinked` on a Cases action that
+  links the contact (`link_contact_to_case = "true"`) and not on one that
+  does not.
+- Reading a live flow back names Cases templates and domain fields by the
+  ids flows hold, keeps system fields literal, and names Amazon Q in
+  Connect assistants. It reads the Cases and Q in Connect services
+  (`cases:ListTemplates`, `cases:ListFields`, `wisdom:ListAssistants`,
+  `connect:ListIntegrationAssociations`); a role refused those reads the
+  rest as before. The `permissions` guide lists them.
+
+The D01 entries follow.
+
 Vendors flow-as-code `conformance/` at
 `007f9a76b339e7e57179d20f3e62c05305c08898` (the head of flow-as-code #44,
 its D01) and reads FlowDoc 0.3. Documents at 0.1 and 0.2 are read through
