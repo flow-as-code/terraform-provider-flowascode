@@ -14,6 +14,8 @@ import (
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/connect"
 	"github.com/aws/aws-sdk-go-v2/service/connect/types"
+	"github.com/aws/aws-sdk-go-v2/service/connectcases"
+	"github.com/aws/aws-sdk-go-v2/service/qconnect"
 )
 
 // Client is what a configured provider hands its resources and data sources.
@@ -80,10 +82,33 @@ type API interface {
 	ListBots(ctx context.Context, in *connect.ListBotsInput, opts ...func(*connect.Options)) (*connect.ListBotsOutput, error)
 	// https://docs.aws.amazon.com/connect/latest/APIReference/API_ListViews.html
 	ListViews(ctx context.Context, in *connect.ListViewsInput, opts ...func(*connect.Options)) (*connect.ListViewsOutput, error)
+	// https://docs.aws.amazon.com/connect/latest/APIReference/API_ListTaskTemplates.html
+	ListTaskTemplates(ctx context.Context, in *connect.ListTaskTemplatesInput, opts ...func(*connect.Options)) (*connect.ListTaskTemplatesOutput, error)
+	// https://docs.aws.amazon.com/connect/latest/APIReference/API_ListPhoneNumbersV2.html
+	ListPhoneNumbersV2(ctx context.Context, in *connect.ListPhoneNumbersV2Input, opts ...func(*connect.Options)) (*connect.ListPhoneNumbersV2Output, error)
+	// https://docs.aws.amazon.com/connect/latest/APIReference/API_ListIntegrationAssociations.html
+	ListIntegrationAssociations(ctx context.Context, in *connect.ListIntegrationAssociationsInput, opts ...func(*connect.Options)) (*connect.ListIntegrationAssociationsOutput, error)
 	// https://docs.aws.amazon.com/connect/latest/APIReference/API_TagResource.html
 	TagResource(ctx context.Context, in *connect.TagResourceInput, opts ...func(*connect.Options)) (*connect.TagResourceOutput, error)
 	// https://docs.aws.amazon.com/connect/latest/APIReference/API_UntagResource.html
 	UntagResource(ctx context.Context, in *connect.UntagResourceInput, opts ...func(*connect.Options)) (*connect.UntagResourceOutput, error)
+}
+
+// CasesAPI is the subset of the Amazon Connect Cases SDK client the export
+// inventory uses. Cases is its own service (`cases`), with its own client
+// and its own token spelling (nextToken).
+type CasesAPI interface {
+	// https://docs.aws.amazon.com/connect/latest/APIReference/API_connect-cases_ListTemplates.html
+	ListTemplates(ctx context.Context, in *connectcases.ListTemplatesInput, opts ...func(*connectcases.Options)) (*connectcases.ListTemplatesOutput, error)
+	// https://docs.aws.amazon.com/connect/latest/APIReference/API_connect-cases_ListFields.html
+	ListFields(ctx context.Context, in *connectcases.ListFieldsInput, opts ...func(*connectcases.Options)) (*connectcases.ListFieldsOutput, error)
+}
+
+// QConnectAPI is the subset of the Amazon Q in Connect SDK client the export
+// inventory uses.
+type QConnectAPI interface {
+	// https://docs.aws.amazon.com/amazon-q-connect/latest/APIReference/API_ListAssistants.html
+	ListAssistants(ctx context.Context, in *qconnect.ListAssistantsInput, opts ...func(*qconnect.Options)) (*qconnect.ListAssistantsOutput, error)
 }
 
 // IsNotFound reports whether err is Connect's ResourceNotFoundException,
@@ -122,4 +147,8 @@ func Detail(err error) string {
 	return b.String()
 }
 
-var _ API = (*connect.Client)(nil)
+var (
+	_ API         = (*connect.Client)(nil)
+	_ CasesAPI    = (*connectcases.Client)(nil)
+	_ QConnectAPI = (*qconnect.Client)(nil)
+)

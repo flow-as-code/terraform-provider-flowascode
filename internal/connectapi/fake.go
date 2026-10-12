@@ -30,6 +30,10 @@ type Fake struct {
 	prompts []types.PromptSummary
 	lambdas []string
 	bots    []types.LexBotConfig
+	// The FlowDoc 0.3 listings.
+	taskTemplates []types.TaskTemplateMetadata
+	phoneNumbers  []types.ListPhoneNumbersSummary
+	integrations  []types.IntegrationAssociationSummary
 	// neverPublished holds the ids of flows that have only ever been saved.
 	neverPublished map[string]bool
 	// Calls records every operation, in order, for assertions.

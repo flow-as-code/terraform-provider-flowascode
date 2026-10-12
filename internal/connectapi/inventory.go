@@ -20,17 +20,33 @@ package connectapi
 //   ListLambdaFunctions        https://docs.aws.amazon.com/connect/latest/APIReference/API_ListLambdaFunctions.html
 //   ListBots                   https://docs.aws.amazon.com/connect/latest/APIReference/API_ListBots.html
 //   ListViews                  https://docs.aws.amazon.com/connect/latest/APIReference/API_ListViews.html
+//
+// Added for FlowDoc 0.3, as export.ts adds them (flow-as-code tasks/D01):
+//   ListTaskTemplates           https://docs.aws.amazon.com/connect/latest/APIReference/API_ListTaskTemplates.html
+//   ListPhoneNumbersV2          https://docs.aws.amazon.com/connect/latest/APIReference/API_ListPhoneNumbersV2.html
+//   ListIntegrationAssociations https://docs.aws.amazon.com/connect/latest/APIReference/API_ListIntegrationAssociations.html
+//   Cases ListTemplates         https://docs.aws.amazon.com/connect/latest/APIReference/API_connect-cases_ListTemplates.html
+//   Cases ListFields            https://docs.aws.amazon.com/connect/latest/APIReference/API_connect-cases_ListFields.html
+//   Q in Connect ListAssistants https://docs.aws.amazon.com/amazon-q-connect/latest/APIReference/API_ListAssistants.html
+// The first two are Connect's and always read. The Cases and Q in Connect
+// lists are other services' clients, optional in InventoryOptions as `cases`
+// and `qconnect` are on createConnectInventoryClient: without one the
+// inventory names no Cases resource or no assistant, and such an ARN in flow
+// content is reported as unknown.
 
 import (
 	"context"
 	"math"
 	"strconv"
+	"strings"
 	"sync"
 	"time"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/connect"
 	"github.com/aws/aws-sdk-go-v2/service/connect/types"
+	"github.com/aws/aws-sdk-go-v2/service/connectcases"
+	"github.com/aws/aws-sdk-go-v2/service/qconnect"
 
 	"github.com/flow-as-code/terraform-provider-flowascode/internal/export"
 )
@@ -44,6 +60,9 @@ const (
 	lambdaAndBotMaxResults int32 = 25
 	// viewsMaxResults is ListViews' maximum, smaller than the other lists'.
 	viewsMaxResults int32 = 100
+	// smallListMaxResults is the maximum of ListTaskTemplates,
+	// ListIntegrationAssociations, and the Cases and Q in Connect lists.
+	smallListMaxResults int32 = 100
 	// aliasesMaxResults is ListContactFlowModuleAliases' maximum, also 100:
 	// the sandbox refused 1000 on 2026-09-29 ("MaxResults must have a length
 	// less than or equal to 100").
@@ -71,6 +90,13 @@ type InventoryOptions struct {
 	Sleep func(ctx context.Context, d time.Duration) error
 	// Now is the clock. Injected for tests; nil is time.Now.
 	Now func() time.Time
+	// Cases is an Amazon Connect Cases client for the same account and
+	// Region. Nil means the inventory reads no Cases domain, and a Cases
+	// template or field ARN in flow content is reported as unknown.
+	Cases CasesAPI
+	// QConnect is an Amazon Q in Connect client for the same account and
+	// Region. Nil means the inventory lists no assistants.
+	QConnect QConnectAPI
 }
 
 // NewInventory returns an export.ConnectInventoryClient over api for one
@@ -94,20 +120,33 @@ func NewInventoryWithOptions(api API, instanceID string, options InventoryOption
 	}
 	return &inventory{
 		api:        api,
+		cases:      options.Cases,
+		qconnect:   options.QConnect,
 		instanceID: instanceID,
 		maxResults: maxResults,
 		limiter:    newRateLimiter(rps, options.Sleep, options.Now),
 	}
 }
 
+// inventory is the adapter. One limiter serves the three clients: they are
+// one account's quotas, read in one sitting.
 type inventory struct {
 	api        API
+	cases      CasesAPI
+	qconnect   QConnectAPI
 	instanceID string
 	maxResults int32
 	limiter    *rateLimiter
 }
 
-var _ export.ConnectInventoryClient = (*inventory)(nil)
+var (
+	_ export.ConnectInventoryClient = (*inventory)(nil)
+	_ export.ModuleAliasLister      = (*inventory)(nil)
+	_ export.TaskTemplateLister     = (*inventory)(nil)
+	_ export.PhoneNumberLister      = (*inventory)(nil)
+	_ export.CasesDomainDescriber   = (*inventory)(nil)
+	_ export.AssistantLister        = (*inventory)(nil)
+)
 
 // rateLimiter is aws.ts's createRateLimiter: calls are spaced at least
 // ceil(1000/rps) milliseconds apart, the first one not at all. The mutex is
@@ -494,6 +533,159 @@ func (c *inventory) ListContactFlowModuleAliases(ctx context.Context, moduleID s
 				continue
 			}
 			items = append(items, export.ModuleAlias{AliasID: *a.AliasId, Name: *a.AliasName})
+		}
+		return items, out.NextToken, nil
+	})
+}
+
+// ListTaskTemplates caps a page at 100 and documents NextToken as always
+// null, so one page is the whole list; the loop costs nothing if that
+// changes.
+// https://docs.aws.amazon.com/connect/latest/APIReference/API_ListTaskTemplates.html
+func (c *inventory) ListTaskTemplates(ctx context.Context) ([]export.ResourceSummary, error) {
+	return paginate(ctx, c.limiter, func(ctx context.Context, nextToken *string) ([]export.ResourceSummary, *string, error) {
+		out, err := c.api.ListTaskTemplates(ctx, &connect.ListTaskTemplatesInput{
+			InstanceId: aws.String(c.instanceID),
+			MaxResults: aws.Int32(min(c.maxResults, smallListMaxResults)),
+			NextToken:  nextToken,
+		})
+		if err != nil {
+			return nil, nil, err
+		}
+		items := make([]export.ResourceSummary, 0, len(out.TaskTemplates))
+		for _, t := range out.TaskTemplates {
+			items = append(items, summary(t.Arn, t.Id, t.Name))
+		}
+		return items, out.NextToken, nil
+	})
+}
+
+// ListPhoneNumbers is ListPhoneNumbersV2, which takes the instance as
+// InstanceId or as TargetArn (which may also be a traffic distribution
+// group); with neither it lists the whole account. The response names the
+// ARN PhoneNumberArn, not Arn.
+// https://docs.aws.amazon.com/connect/latest/APIReference/API_ListPhoneNumbersV2.html
+func (c *inventory) ListPhoneNumbers(ctx context.Context) ([]export.PhoneNumberSummary, error) {
+	return paginate(ctx, c.limiter, func(ctx context.Context, nextToken *string) ([]export.PhoneNumberSummary, *string, error) {
+		in := &connect.ListPhoneNumbersV2Input{MaxResults: aws.Int32(c.maxResults), NextToken: nextToken}
+		if strings.HasPrefix(c.instanceID, "arn:") {
+			in.TargetArn = aws.String(c.instanceID)
+		} else {
+			in.InstanceId = aws.String(c.instanceID)
+		}
+		out, err := c.api.ListPhoneNumbersV2(ctx, in)
+		if err != nil {
+			return nil, nil, err
+		}
+		items := make([]export.PhoneNumberSummary, 0, len(out.ListPhoneNumbersSummaryList))
+		for _, n := range out.ListPhoneNumbersSummaryList {
+			items = append(items, export.PhoneNumberSummary{
+				Arn:         aws.ToString(n.PhoneNumberArn),
+				ID:          aws.ToString(n.PhoneNumberId),
+				Number:      aws.ToString(n.PhoneNumber),
+				Description: n.PhoneNumberDescription,
+				Type:        enum(n.PhoneNumberType),
+			})
+		}
+		return items, out.NextToken, nil
+	})
+}
+
+// DescribeCasesDomain finds the instance's Cases domain as the IntegrationArn
+// of its CASES_DOMAIN association, then lists the domain's templates and
+// fields from the Cases service. Nil, with no call made, when the adapter has
+// no Cases client; nil when the instance has no domain.
+// https://docs.aws.amazon.com/connect/latest/APIReference/API_ListIntegrationAssociations.html
+// https://docs.aws.amazon.com/connect/latest/APIReference/API_connect-cases_ListTemplates.html
+// https://docs.aws.amazon.com/connect/latest/APIReference/API_connect-cases_ListFields.html
+func (c *inventory) DescribeCasesDomain(ctx context.Context) (*export.CasesDomainInventory, error) {
+	if c.cases == nil {
+		return nil, nil
+	}
+	associations, err := paginate(ctx, c.limiter, func(ctx context.Context, nextToken *string) ([]types.IntegrationAssociationSummary, *string, error) {
+		out, err := c.api.ListIntegrationAssociations(ctx, &connect.ListIntegrationAssociationsInput{
+			InstanceId:      aws.String(c.instanceID),
+			IntegrationType: types.IntegrationTypeCasesDomain,
+			MaxResults:      aws.Int32(smallListMaxResults),
+			NextToken:       nextToken,
+		})
+		if err != nil {
+			return nil, nil, err
+		}
+		return out.IntegrationAssociationSummaryList, out.NextToken, nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	domainArn := ""
+	for _, a := range associations {
+		if arn := aws.ToString(a.IntegrationArn); arn != "" {
+			if _, ok := export.ParseCasesArn(arn); ok {
+				domainArn = arn
+				break
+			}
+		}
+	}
+	if domainArn == "" {
+		return nil, nil
+	}
+	parsed, _ := export.ParseCasesArn(domainArn)
+	domainID := parsed.DomainID
+	templates, err := paginate(ctx, c.limiter, func(ctx context.Context, nextToken *string) ([]export.ResourceSummary, *string, error) {
+		out, err := c.cases.ListTemplates(ctx, &connectcases.ListTemplatesInput{
+			DomainId: aws.String(domainID), MaxResults: aws.Int32(smallListMaxResults), NextToken: nextToken,
+		})
+		if err != nil {
+			return nil, nil, err
+		}
+		items := make([]export.ResourceSummary, 0, len(out.Templates))
+		for _, t := range out.Templates {
+			items = append(items, export.ResourceSummary{Arn: aws.ToString(t.TemplateArn), ID: aws.String(aws.ToString(t.TemplateId)), Name: aws.ToString(t.Name)})
+		}
+		return items, out.NextToken, nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	fields, err := paginate(ctx, c.limiter, func(ctx context.Context, nextToken *string) ([]export.ResourceSummary, *string, error) {
+		out, err := c.cases.ListFields(ctx, &connectcases.ListFieldsInput{
+			DomainId: aws.String(domainID), MaxResults: aws.Int32(smallListMaxResults), NextToken: nextToken,
+		})
+		if err != nil {
+			return nil, nil, err
+		}
+		items := make([]export.ResourceSummary, 0, len(out.Fields))
+		for _, f := range out.Fields {
+			items = append(items, export.ResourceSummary{Arn: aws.ToString(f.FieldArn), ID: aws.String(aws.ToString(f.FieldId)), Name: aws.ToString(f.Name)})
+		}
+		return items, out.NextToken, nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	return &export.CasesDomainInventory{DomainArn: domainArn, DomainID: domainID, Templates: templates, Fields: fields}, nil
+}
+
+// ListAssistants lists Amazon Q in Connect assistants from that service's
+// own client; a page caps at 100. Nil, with no call made, when the adapter
+// has no Q in Connect client. It is account-wide: every assistant the
+// account has in the Region is named, associated with this instance or not,
+// the stance ListViews takes with AWS-managed views.
+// https://docs.aws.amazon.com/amazon-q-connect/latest/APIReference/API_ListAssistants.html
+func (c *inventory) ListAssistants(ctx context.Context) ([]export.ResourceSummary, error) {
+	if c.qconnect == nil {
+		return nil, nil
+	}
+	return paginate(ctx, c.limiter, func(ctx context.Context, nextToken *string) ([]export.ResourceSummary, *string, error) {
+		out, err := c.qconnect.ListAssistants(ctx, &qconnect.ListAssistantsInput{
+			MaxResults: aws.Int32(smallListMaxResults), NextToken: nextToken,
+		})
+		if err != nil {
+			return nil, nil, err
+		}
+		items := make([]export.ResourceSummary, 0, len(out.AssistantSummaries))
+		for _, a := range out.AssistantSummaries {
+			items = append(items, export.ResourceSummary{Arn: aws.ToString(a.AssistantArn), ID: aws.String(aws.ToString(a.AssistantId)), Name: aws.ToString(a.Name)})
 		}
 		return items, out.NextToken, nil
 	})

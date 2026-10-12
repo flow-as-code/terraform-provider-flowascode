@@ -16,6 +16,8 @@ import (
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/connect/types"
+	casestypes "github.com/aws/aws-sdk-go-v2/service/connectcases/types"
+	qtypes "github.com/aws/aws-sdk-go-v2/service/qconnect/types"
 
 	"github.com/flow-as-code/terraform-provider-flowascode/internal/conformance"
 	"github.com/flow-as-code/terraform-provider-flowascode/internal/export"
@@ -37,9 +39,26 @@ func readConformance(t *testing.T, name string) []byte {
 	return b
 }
 
+// seededCase is a case's instance: the Fake, and the Cases and Q in Connect
+// fakes holding the FlowDoc 0.3 resources its inventory.json lists.
+type seededCase struct {
+	*Fake
+	cases    *FakeCases
+	qconnect *FakeQConnect
+}
+
+// options are the adapter options that hand it the seeded Cases and Q in
+// Connect clients beside the given ones.
+func (s seededCase) options(o InventoryOptions) InventoryOptions {
+	o.Cases, o.QConnect = s.cases, s.qconnect
+	return o
+}
+
 // seedFromCase builds a Fake holding what a case's inventory.json lists. A
-// flow with only a flows/<id>.saved.json is marked never published.
-func seedFromCase(t *testing.T, name string) (*Fake, export.InstanceInventory) {
+// flow with only a flows/<id>.saved.json is marked never published. The
+// FlowDoc 0.3 lists go to the Fake (task templates, phone numbers, the
+// CASES_DOMAIN association) and to the Cases and Q in Connect fakes.
+func seedFromCase(t *testing.T, name string) (seededCase, export.InstanceInventory) {
 	t.Helper()
 	var inv export.InstanceInventory
 	if err := json.Unmarshal(readConformance(t, "export/"+name+"/inventory.json"), &inv); err != nil {
@@ -114,7 +133,37 @@ func seedFromCase(t *testing.T, name string) (*Fake, export.InstanceInventory) {
 		})
 	}
 	f.SetViews(views)
-	return f, inv
+
+	var templates []types.TaskTemplateMetadata
+	for _, s := range inv.TaskTemplates {
+		templates = append(templates, types.TaskTemplateMetadata{Arn: aws.String(s.Arn), Id: s.ID, Name: aws.String(s.Name)})
+	}
+	f.SetTaskTemplates(templates)
+	var numbers []types.ListPhoneNumbersSummary
+	for _, n := range inv.PhoneNumbers {
+		numbers = append(numbers, types.ListPhoneNumbersSummary{
+			PhoneNumberArn: aws.String(n.Arn), PhoneNumberId: aws.String(n.ID), PhoneNumber: aws.String(n.Number),
+			PhoneNumberDescription: n.Description, PhoneNumberType: types.PhoneNumberType(aws.ToString(n.Type)),
+		})
+	}
+	f.SetPhoneNumbers(numbers)
+	out := seededCase{Fake: f, cases: &FakeCases{}, qconnect: &FakeQConnect{}}
+	if d := inv.CasesDomain; d != nil {
+		f.SetIntegrationAssociations([]types.IntegrationAssociationSummary{{
+			IntegrationArn: aws.String(d.DomainArn), IntegrationType: types.IntegrationTypeCasesDomain,
+		}})
+		out.cases.DomainID = d.DomainID
+		for _, s := range d.Templates {
+			out.cases.Templates = append(out.cases.Templates, casestypes.TemplateSummary{TemplateArn: aws.String(s.Arn), TemplateId: s.ID, Name: aws.String(s.Name)})
+		}
+		for _, s := range d.Fields {
+			out.cases.Fields = append(out.cases.Fields, casestypes.FieldSummary{FieldArn: aws.String(s.Arn), FieldId: s.ID, Name: aws.String(s.Name)})
+		}
+	}
+	for _, s := range inv.Assistants {
+		out.qconnect.Assistants = append(out.qconnect.Assistants, qtypes.AssistantSummary{AssistantArn: aws.String(s.Arn), AssistantId: s.ID, Name: aws.String(s.Name)})
+	}
+	return out, inv
 }
 
 func exportCaseNames(t *testing.T) []string {
@@ -143,7 +192,7 @@ func TestCollectInventoryOverAdapterIsTheRecordedInventory(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			f, want := seedFromCase(t, name)
 			sort.SliceStable(want.LexBots, func(i, j int) bool { return want.LexBots[i].LexVersion < want.LexBots[j].LexVersion })
-			client := NewInventoryWithOptions(&spy{Fake: f}, testInstanceID, InventoryOptions{MaxResults: 1, RequestsPerSecond: noLimit()})
+			client := NewInventoryWithOptions(&spy{Fake: f.Fake}, testInstanceID, f.options(InventoryOptions{MaxResults: 1, RequestsPerSecond: noLimit()}))
 			got, err := export.CollectInventory(context.Background(), client, export.CollectInventoryOptions{})
 			if err != nil {
 				t.Fatal(err)
@@ -164,7 +213,7 @@ func TestExportInstanceOverAdapterMatchesGoldens(t *testing.T) {
 	for _, name := range exportCaseNames(t) {
 		t.Run(name, func(t *testing.T) {
 			f, _ := seedFromCase(t, name)
-			client := NewInventoryWithOptions(&spy{Fake: f}, testInstanceID, InventoryOptions{RequestsPerSecond: noLimit()})
+			client := NewInventoryWithOptions(&spy{Fake: f.Fake}, testInstanceID, f.options(InventoryOptions{RequestsPerSecond: noLimit()}))
 			ctx := context.Background()
 
 			if b, err := fs.ReadFile(conformance.FS(), "export/"+name+"/expected-error.json"); err == nil {
