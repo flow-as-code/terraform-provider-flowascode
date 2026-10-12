@@ -7,4 +7,10 @@
 *.tfvars.json
 *.auto.tfvars
 outputs.json
+# A saved plan holds the instance id, account id and ARNs; OpenTofu writes
+# crash.log with a state dump on a panic.
+*.tfplan
+*.plan
+crash.log
+crash.*.log
 !.terraform.lock.hcl
