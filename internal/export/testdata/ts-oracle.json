@@ -1,5 +1,5 @@
 {
-  "generatedFrom": "c83df60ea49bc349e6ab6360a3f69d6e07d6dc9b",
+  "generatedFrom": "007f9a76b339e7e57179d20f3e62c05305c08898",
   "parseConnectArn": [
     {
       "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/q1",
@@ -221,6 +221,74 @@
     {
       "input": "arn:aws:connect:r:1:other/i/queue/q",
       "output": null
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:phone-number/p1",
+      "output": {
+        "partition": "aws",
+        "region": "us-east-1",
+        "account": "111122223333",
+        "instanceId": "",
+        "resourceType": "phone-number",
+        "resourceId": "p1"
+      }
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:phone-number/p1:q",
+      "output": {
+        "partition": "aws",
+        "region": "us-east-1",
+        "account": "111122223333",
+        "instanceId": "",
+        "resourceType": "phone-number",
+        "resourceId": "p1",
+        "qualifier": "q"
+      }
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:phone-number/",
+      "output": null
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:phone-number/p1/x",
+      "output": null
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:phone-number",
+      "output": null
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/task-template/t1",
+      "output": {
+        "partition": "aws",
+        "region": "us-east-1",
+        "account": "111122223333",
+        "instanceId": "11111111-2222-3333-4444-555555555555",
+        "resourceType": "task-template",
+        "resourceId": "t1"
+      }
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/phone-number/p1",
+      "output": {
+        "partition": "aws",
+        "region": "us-east-1",
+        "account": "111122223333",
+        "instanceId": "11111111-2222-3333-4444-555555555555",
+        "resourceType": "phone-number",
+        "resourceId": "p1"
+      }
+    },
+    {
+      "input": "arn:aws-cn:connect:cn-north-1:111122223333:phone-number/p2",
+      "output": {
+        "partition": "aws-cn",
+        "region": "cn-north-1",
+        "account": "111122223333",
+        "instanceId": "",
+        "resourceType": "phone-number",
+        "resourceId": "p2"
+      }
     }
   ],
   "parseLambdaFunctionArn": [
@@ -405,6 +473,42 @@
     {
       "input": "arn:x:y",
       "output": "arn:x:y"
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/phone-number/p1",
+      "output": "arn:aws:connect:us-east-1:111122223333:phone-number/p1"
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/phone-number/p1:$SAVED",
+      "output": "arn:aws:connect:us-east-1:111122223333:phone-number/p1"
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/phone-number/",
+      "output": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/phone-number/"
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:instance//phone-number/p1",
+      "output": "arn:aws:connect:us-east-1:111122223333:instance//phone-number/p1"
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/phone-number/p1/extra",
+      "output": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/phone-number/p1/extra"
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:phone-number/p1:q",
+      "output": "arn:aws:connect:us-east-1:111122223333:phone-number/p1"
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/task-template/t1:x",
+      "output": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/task-template/t1"
+    },
+    {
+      "input": "arn:aws:cases:us-east-1:111122223333:domain/d1/field/f1",
+      "output": "arn:aws:cases:us-east-1:111122223333:domain/d1/field/f1"
+    },
+    {
+      "input": "arn:aws:wisdom:us-east-1:111122223333:assistant/a1",
+      "output": "arn:aws:wisdom:us-east-1:111122223333:assistant/a1"
     }
   ],
   "slugifyResourceName": [
@@ -711,6 +815,125 @@
       ],
       "warnings": [
         "Two prompt resources slug to \"b\"; arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/prompt/p exported as \"b-2\"."
+      ]
+    },
+    {
+      "inventory": "{\"contactFlows\": [{\"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000031\", \"id\": \"cccc3333-0000-4000-8000-000000000031\", \"name\": \"Case Intake\", \"contactFlowType\": \"CONTACT_FLOW\", \"contactFlowState\": \"ACTIVE\", \"contactFlowStatus\": \"PUBLISHED\"}, {\"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000032\", \"id\": \"cccc3333-0000-4000-8000-000000000032\", \"name\": \"Task Follow Up\", \"contactFlowType\": \"CONTACT_FLOW\", \"contactFlowState\": \"ACTIVE\", \"contactFlowStatus\": \"PUBLISHED\"}, {\"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000033\", \"id\": \"cccc3333-0000-4000-8000-000000000033\", \"name\": \"Legacy Text Back\", \"contactFlowType\": \"CONTACT_FLOW\", \"contactFlowState\": \"ACTIVE\", \"contactFlowStatus\": \"PUBLISHED\"}], \"contactFlowModules\": [], \"queues\": [], \"hoursOfOperations\": [], \"prompts\": [], \"lambdaFunctions\": [], \"lexBots\": [], \"views\": [], \"taskTemplates\": [{\"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/task-template/tttt6666-0000-4000-8000-000000000001\", \"id\": \"tttt6666-0000-4000-8000-000000000001\", \"name\": \"Follow Up\"}], \"phoneNumbers\": [{\"arn\": \"arn:aws:connect:us-east-1:111122223333:phone-number/pppp7777-0000-4000-8000-000000000001\", \"id\": \"pppp7777-0000-4000-8000-000000000001\", \"number\": \"+15555550100\", \"description\": \"Main DID\", \"type\": \"DID\"}, {\"arn\": \"arn:aws:connect:us-east-1:111122223333:phone-number/pppp7777-0000-4000-8000-000000000002\", \"id\": \"pppp7777-0000-4000-8000-000000000002\", \"number\": \"+15555550199\", \"type\": \"DID\"}], \"casesDomain\": {\"domainArn\": \"arn:aws:cases:us-east-1:111122223333:domain/dddd8888-0000-4000-8000-000000000001\", \"domainId\": \"dddd8888-0000-4000-8000-000000000001\", \"templates\": [{\"arn\": \"arn:aws:cases:us-east-1:111122223333:domain/dddd8888-0000-4000-8000-000000000001/template/eeee9999-0000-4000-8000-000000000001\", \"id\": \"eeee9999-0000-4000-8000-000000000001\", \"name\": \"Billing Dispute\"}], \"fields\": [{\"arn\": \"arn:aws:cases:us-east-1:111122223333:domain/dddd8888-0000-4000-8000-000000000001/field/ffff0000-0000-4000-8000-000000000001\", \"id\": \"ffff0000-0000-4000-8000-000000000001\", \"name\": \"Priority\"}]}, \"assistants\": [{\"arn\": \"arn:aws:wisdom:us-east-1:111122223333:assistant/aaaa0000-0000-4000-8000-000000000001\", \"id\": \"aaaa0000-0000-4000-8000-000000000001\", \"name\": \"Agent Help\"}]}",
+      "byArn": [
+        {
+          "arn": "arn:aws:cases:us-east-1:111122223333:domain/dddd8888-0000-4000-8000-000000000001/field/ffff0000-0000-4000-8000-000000000001",
+          "token": "${cdref:casefield:priority}",
+          "type": "casefield",
+          "name": "priority"
+        },
+        {
+          "arn": "arn:aws:cases:us-east-1:111122223333:domain/dddd8888-0000-4000-8000-000000000001/template/eeee9999-0000-4000-8000-000000000001",
+          "token": "${cdref:casetemplate:billing-dispute}",
+          "type": "casetemplate",
+          "name": "billing-dispute"
+        },
+        {
+          "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000031",
+          "token": "${cdref:flow:case-intake}",
+          "type": "flow",
+          "name": "case-intake"
+        },
+        {
+          "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000032",
+          "token": "${cdref:flow:task-follow-up}",
+          "type": "flow",
+          "name": "task-follow-up"
+        },
+        {
+          "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/cccc3333-0000-4000-8000-000000000033",
+          "token": "${cdref:flow:legacy-text-back}",
+          "type": "flow",
+          "name": "legacy-text-back"
+        },
+        {
+          "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/task-template/tttt6666-0000-4000-8000-000000000001",
+          "token": "${cdref:tasktemplate:follow-up}",
+          "type": "tasktemplate",
+          "name": "follow-up"
+        },
+        {
+          "arn": "arn:aws:connect:us-east-1:111122223333:phone-number/pppp7777-0000-4000-8000-000000000001",
+          "token": "${cdref:phonenumber:main-did}",
+          "type": "phonenumber",
+          "name": "main-did"
+        },
+        {
+          "arn": "arn:aws:connect:us-east-1:111122223333:phone-number/pppp7777-0000-4000-8000-000000000002",
+          "token": "${cdref:phonenumber:15555550199}",
+          "type": "phonenumber",
+          "name": "15555550199"
+        },
+        {
+          "arn": "arn:aws:wisdom:us-east-1:111122223333:assistant/aaaa0000-0000-4000-8000-000000000001",
+          "token": "${cdref:assistant:agent-help}",
+          "type": "assistant",
+          "name": "agent-help"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "inventory": "{\"contactFlows\": [], \"contactFlowModules\": [], \"queues\": [], \"hoursOfOperations\": [], \"prompts\": [], \"lambdaFunctions\": [], \"lexBots\": [], \"views\": [], \"phoneNumbers\": [{\"arn\": \"arn:aws:connect:us-east-1:111122223333:phone-number/n1\", \"id\": \"n1\", \"number\": \"+15555550100\", \"description\": \"  \\u00a0 \", \"type\": \"DID\"}, {\"arn\": \"arn:aws:connect:us-east-1:111122223333:phone-number/n2\", \"id\": \"n2\", \"number\": \"+15555550101\", \"description\": \"\\ufeffMain Line\\u2028\"}, {\"arn\": \"arn:aws:connect:us-east-1:111122223333:phone-number/n3\", \"id\": \"n3\", \"number\": \"+15555550102\", \"description\": \"Main Line\"}, {\"arn\": \"arn:aws:connect:us-east-1:111122223333:phone-number/n4\", \"id\": \"n4\", \"number\": \"\", \"description\": \"\"}, {\"arn\": \"\", \"id\": \"n5\", \"number\": \"+15555550103\"}], \"taskTemplates\": [{\"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/task-template/t1\", \"id\": \"t1\", \"name\": \"Follow Up\"}, {\"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/task-template/t2\", \"id\": \"t2\", \"name\": \"!!!\"}], \"casesDomain\": {\"domainArn\": \"arn:aws:cases:us-east-1:111122223333:domain/d1\", \"domainId\": \"d1\", \"templates\": [{\"arn\": \"arn:aws:cases:us-east-1:111122223333:domain/d1/template/t1\", \"id\": \"t1\", \"name\": \"Billing\"}], \"fields\": [{\"arn\": \"arn:aws:cases:us-east-1:111122223333:domain/d1/field/f1\", \"id\": \"f1\", \"name\": \"Billing\"}, {\"arn\": \"arn:aws:cases:us-east-1:111122223333:domain/d1/field/f2\", \"id\": \"f2\", \"name\": \"billing\"}]}, \"assistants\": [{\"arn\": \"arn:aws:wisdom:us-east-1:111122223333:assistant/a1\", \"id\": \"a1\", \"name\": \"Agent Help\"}]}",
+      "byArn": [
+        {
+          "arn": "arn:aws:cases:us-east-1:111122223333:domain/d1/field/f1",
+          "token": "${cdref:casefield:billing}",
+          "type": "casefield",
+          "name": "billing"
+        },
+        {
+          "arn": "arn:aws:cases:us-east-1:111122223333:domain/d1/field/f2",
+          "token": "${cdref:casefield:billing-2}",
+          "type": "casefield",
+          "name": "billing-2"
+        },
+        {
+          "arn": "arn:aws:cases:us-east-1:111122223333:domain/d1/template/t1",
+          "token": "${cdref:casetemplate:billing}",
+          "type": "casetemplate",
+          "name": "billing"
+        },
+        {
+          "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/task-template/t1",
+          "token": "${cdref:tasktemplate:follow-up}",
+          "type": "tasktemplate",
+          "name": "follow-up"
+        },
+        {
+          "arn": "arn:aws:connect:us-east-1:111122223333:phone-number/n1",
+          "token": "${cdref:phonenumber:15555550100}",
+          "type": "phonenumber",
+          "name": "15555550100"
+        },
+        {
+          "arn": "arn:aws:connect:us-east-1:111122223333:phone-number/n2",
+          "token": "${cdref:phonenumber:main-line}",
+          "type": "phonenumber",
+          "name": "main-line"
+        },
+        {
+          "arn": "arn:aws:connect:us-east-1:111122223333:phone-number/n3",
+          "token": "${cdref:phonenumber:main-line-2}",
+          "type": "phonenumber",
+          "name": "main-line-2"
+        },
+        {
+          "arn": "arn:aws:wisdom:us-east-1:111122223333:assistant/a1",
+          "token": "${cdref:assistant:agent-help}",
+          "type": "assistant",
+          "name": "agent-help"
+        }
+      ],
+      "warnings": [
+        "Skipping tasktemplate arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/task-template/t2: name \"!!!\" has no slug form.",
+        "Skipping phonenumber arn:aws:connect:us-east-1:111122223333:phone-number/n4: name \"\" has no slug form.",
+        "Two casefield resources slug to \"billing\"; arn:aws:cases:us-east-1:111122223333:domain/d1/field/f2 exported as \"billing-2\".",
+        "Two phonenumber resources slug to \"main-line\"; arn:aws:connect:us-east-1:111122223333:phone-number/n3 exported as \"main-line-2\"."
       ]
     }
   ],
@@ -1437,6 +1660,140 @@
           }
         ]
       }
+    },
+    {
+      "spec": "{\"inventory\": {\"contactFlows\": [{\"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f1\", \"id\": \"f1\", \"name\": \"Legacy\", \"contactFlowType\": \"CONTACT_FLOW\"}, {\"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f2\", \"id\": \"f2\", \"name\": \"Unlisted\", \"contactFlowType\": \"CONTACT_FLOW\"}], \"contactFlowModules\": [], \"queues\": [], \"hoursOfOperations\": [], \"prompts\": [], \"lambdaFunctions\": [], \"lexBots\": [], \"views\": [], \"taskTemplates\": [{\"arn\": \"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/task-template/tttt6666-0000-4000-8000-000000000001\", \"id\": \"tttt6666-0000-4000-8000-000000000001\", \"name\": \"Follow Up\"}], \"phoneNumbers\": [{\"arn\": \"arn:aws:connect:us-east-1:111122223333:phone-number/pppp7777-0000-4000-8000-000000000001\", \"id\": \"pppp7777-0000-4000-8000-000000000001\", \"number\": \"+15555550100\", \"description\": \"Main DID\", \"type\": \"DID\"}, {\"arn\": \"arn:aws:connect:us-east-1:111122223333:phone-number/pppp7777-0000-4000-8000-000000000002\", \"id\": \"pppp7777-0000-4000-8000-000000000002\", \"number\": \"+15555550199\", \"type\": \"DID\"}], \"casesDomain\": {\"domainArn\": \"arn:aws:cases:us-east-1:111122223333:domain/dddd8888-0000-4000-8000-000000000001\", \"domainId\": \"dddd8888-0000-4000-8000-000000000001\", \"templates\": [{\"arn\": \"arn:aws:cases:us-east-1:111122223333:domain/dddd8888-0000-4000-8000-000000000001/template/eeee9999-0000-4000-8000-000000000001\", \"id\": \"eeee9999-0000-4000-8000-000000000001\", \"name\": \"Billing Dispute\"}], \"fields\": [{\"arn\": \"arn:aws:cases:us-east-1:111122223333:domain/dddd8888-0000-4000-8000-000000000001/field/ffff0000-0000-4000-8000-000000000001\", \"id\": \"ffff0000-0000-4000-8000-000000000001\", \"name\": \"Priority\"}]}, \"assistants\": [{\"arn\": \"arn:aws:wisdom:us-east-1:111122223333:assistant/aaaa0000-0000-4000-8000-000000000001\", \"id\": \"aaaa0000-0000-4000-8000-000000000001\", \"name\": \"Agent Help\"}]}, \"flows\": {\"f1\": {\"name\": \"Legacy\", \"content\": \"{\\\"Version\\\": \\\"2019-10-30\\\", \\\"StartAction\\\": \\\"a\\\", \\\"Actions\\\": [{\\\"Identifier\\\": \\\"a\\\", \\\"Type\\\": \\\"StartOutboundChatContact\\\", \\\"Parameters\\\": {\\\"SourceEndpoint\\\": {\\\"Type\\\": \\\"CONNECT_PHONENUMBER_ARN\\\", \\\"Address\\\": \\\"arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/phone-number/pppp7777-0000-4000-8000-000000000001\\\"}}, \\\"Transitions\\\": {}}]}\"}, \"f2\": {\"name\": \"Unlisted\", \"content\": \"{\\\"Version\\\": \\\"2019-10-30\\\", \\\"StartAction\\\": \\\"a\\\", \\\"Actions\\\": [{\\\"Identifier\\\": \\\"a\\\", \\\"Type\\\": \\\"CreateWisdomSession\\\", \\\"Parameters\\\": {\\\"WisdomAssistantArn\\\": \\\"arn:aws:wisdom:us-east-1:111122223333:assistant/zz\\\"}, \\\"Transitions\\\": {}}]}\"}}}",
+      "options": {
+        "onError": "collect"
+      },
+      "calls": [
+        "f1",
+        "f2"
+      ],
+      "result": {
+        "flows": [
+          {
+            "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f1",
+            "id": "f1",
+            "sourceName": "Legacy",
+            "doc": "{\n  \"flowdoc\": \"0.3\",\n  \"kind\": \"flow\",\n  \"name\": \"legacy\",\n  \"displayName\": \"Legacy\",\n  \"connectType\": \"CONTACT_FLOW\",\n  \"content\": {\n    \"Version\": \"2019-10-30\",\n    \"StartAction\": \"a\",\n    \"Actions\": [\n      {\n        \"Identifier\": \"a\",\n        \"Type\": \"StartOutboundChatContact\",\n        \"Parameters\": {\n          \"SourceEndpoint\": {\n            \"Address\": \"${cdref:phonenumber:main-did}\",\n            \"Type\": \"CONNECT_PHONENUMBER_ARN\"\n          }\n        },\n        \"Transitions\": {}\n      }\n    ]\n  },\n  \"layout\": {\n    \"a\": {\n      \"x\": 20,\n      \"y\": 20\n    }\n  },\n  \"refs\": [\n    {\n      \"token\": \"${cdref:phonenumber:main-did}\",\n      \"type\": \"phonenumber\",\n      \"name\": \"main-did\"\n    }\n  ],\n  \"meta\": {\n    \"generator\": \"core@0.3\",\n    \"source\": {\n      \"id\": \"f1\",\n      \"instanceId\": \"11111111-2222-3333-4444-555555555555\",\n      \"name\": \"Legacy\"\n    }\n  }\n}\n"
+          }
+        ],
+        "warnings": [],
+        "failures": [
+          {
+            "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f2",
+            "name": "Unlisted",
+            "reason": "Cannot export \"unlisted\": 1 ARN(s) not found in the instance inventory: arn:aws:wisdom:us-east-1:111122223333:assistant/zz",
+            "unknownArns": [
+              "arn:aws:wisdom:us-east-1:111122223333:assistant/zz"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "parseCasesArn": [
+    {
+      "input": "arn:aws:cases:us-east-1:111122223333:domain/d1",
+      "output": {
+        "partition": "aws",
+        "region": "us-east-1",
+        "account": "111122223333",
+        "domainId": "d1"
+      }
+    },
+    {
+      "input": "arn:aws:cases:us-east-1:111122223333:domain/d1/template/t1",
+      "output": {
+        "partition": "aws",
+        "region": "us-east-1",
+        "account": "111122223333",
+        "domainId": "d1",
+        "resourceType": "template",
+        "resourceId": "t1"
+      }
+    },
+    {
+      "input": "arn:aws:cases:us-east-1:111122223333:domain/d1/field/f1",
+      "output": {
+        "partition": "aws",
+        "region": "us-east-1",
+        "account": "111122223333",
+        "domainId": "d1",
+        "resourceType": "field",
+        "resourceId": "f1"
+      }
+    },
+    {
+      "input": "arn:aws:cases:us-east-1:111122223333:domain/d1/field/",
+      "output": null
+    },
+    {
+      "input": "arn:aws:cases:us-east-1:111122223333:domain/d1/other/x",
+      "output": null
+    },
+    {
+      "input": "arn:aws:cases:us-east-1:111122223333:domain/d1/field/f1/x",
+      "output": null
+    },
+    {
+      "input": "arn:aws:cases:us-east-1:111122223333:domain/",
+      "output": null
+    },
+    {
+      "input": "arn:aws:cases:us-east-1:111122223333:domain/d1/template",
+      "output": null
+    },
+    {
+      "input": "arn:aws:cases:us-east-1:111122223333:domain",
+      "output": null
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:domain/d1",
+      "output": null
+    },
+    {
+      "input": "arn:aws:cases:us-east-1:111122223333:domain/d1:x",
+      "output": null
+    },
+    {
+      "input": "nope",
+      "output": null
+    }
+  ],
+  "parseAssistantArn": [
+    {
+      "input": "arn:aws:wisdom:us-east-1:111122223333:assistant/a1",
+      "output": "a1"
+    },
+    {
+      "input": "arn:aws:wisdom:us-east-1:111122223333:assistant/",
+      "output": null
+    },
+    {
+      "input": "arn:aws:wisdom:us-east-1:111122223333:assistant/a1/x",
+      "output": null
+    },
+    {
+      "input": "arn:aws:wisdom:us-east-1:111122223333:knowledge-base/k1",
+      "output": null
+    },
+    {
+      "input": "arn:aws:wisdom:us-east-1:111122223333:assistant",
+      "output": null
+    },
+    {
+      "input": "arn:aws:connect:us-east-1:111122223333:assistant/a1",
+      "output": null
+    },
+    {
+      "input": "arn:aws:wisdom:us-east-1:111122223333:assistant/a1:v",
+      "output": null
+    },
+    {
+      "input": "nope",
+      "output": null
     }
   ]
 }

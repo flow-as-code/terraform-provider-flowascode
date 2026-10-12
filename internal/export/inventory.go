@@ -56,6 +56,34 @@ type ViewSummary struct {
 	Status *string `json:"status,omitempty"`
 }
 
+// PhoneNumberSummary is export.ts's PhoneNumberSummary: one claimed phone
+// number, as ListPhoneNumbersV2 returns it. The summary has no name:
+// PhoneNumberDescription is optional free text, and the number itself is
+// E.164. The reverse map slugs the description when there is one and the
+// number's digits otherwise.
+// https://docs.aws.amazon.com/connect/latest/APIReference/API_ListPhoneNumbersV2.html
+type PhoneNumberSummary struct {
+	Arn string `json:"arn"`
+	ID  string `json:"id"`
+	// Number is E.164, as PhoneNumber.
+	Number      string  `json:"number"`
+	Description *string `json:"description,omitempty"`
+	// Type is PhoneNumberType: DID, TOLL_FREE, UIFN, SHARED, THIRD_PARTY_TF,
+	// THIRD_PARTY_DID or SHORT_CODE.
+	Type *string `json:"type,omitempty"`
+}
+
+// CasesDomainInventory is export.ts's CasesDomainInventory: the instance's
+// Cases domain and what it holds. One instance has one domain, named by its
+// CASES_DOMAIN integration association; templates and fields are per domain,
+// which is why a field is a reference (flow-as-code docs/adr/0008).
+type CasesDomainInventory struct {
+	DomainArn string            `json:"domainArn"`
+	DomainID  string            `json:"domainId"`
+	Templates []ResourceSummary `json:"templates"`
+	Fields    []ResourceSummary `json:"fields"`
+}
+
 // InstanceInventory is export.ts's InstanceInventory.
 type InstanceInventory struct {
 	ContactFlows       []ContactFlowSummary       `json:"contactFlows"`
@@ -72,6 +100,17 @@ type InstanceInventory struct {
 	// a flow invokes an alias as <module ARN>:<alias id>, and the reverse map
 	// needs the id to read that back as module:<name>@<alias name>.
 	ModuleAliases []ModuleAliasSummary `json:"moduleAliases,omitempty"`
+	// The FlowDoc 0.3 resources, each optional so an inventory recorded
+	// before the bump still reads; nil is TypeScript's undefined, a client
+	// that does not offer the list. TaskTemplates is ListTaskTemplates,
+	// PhoneNumbers ListPhoneNumbersV2, CasesDomain the domain with its
+	// templates and fields (nil too when the instance has none), Assistants
+	// Amazon Q in Connect's ListAssistants. JSON writes an empty list as
+	// absent, which only the recorded inventories read.
+	TaskTemplates []ResourceSummary     `json:"taskTemplates,omitempty"`
+	PhoneNumbers  []PhoneNumberSummary  `json:"phoneNumbers,omitempty"`
+	CasesDomain   *CasesDomainInventory `json:"casesDomain,omitempty"`
+	Assistants    []ResourceSummary     `json:"assistants,omitempty"`
 }
 
 // ModuleAliasSummary is export.ts's ModuleAliasSummary.
@@ -93,6 +132,38 @@ type ModuleAlias struct {
 // https://docs.aws.amazon.com/connect/latest/APIReference/API_ListContactFlowModuleAliases.html
 type ModuleAliasLister interface {
 	ListContactFlowModuleAliases(ctx context.Context, contactFlowModuleID string) ([]ModuleAlias, error)
+}
+
+// TaskTemplateLister is export.ts's optional
+// ConnectInventoryClient.listTaskTemplates (FlowDoc 0.3). The FlowDoc 0.3
+// lists are each optional for the reason the aliases are: a client written
+// before the bump still collects, and a reference of a type it cannot list
+// stays an unknown ARN on export rather than a crash.
+// https://docs.aws.amazon.com/connect/latest/APIReference/API_ListTaskTemplates.html
+type TaskTemplateLister interface {
+	ListTaskTemplates(ctx context.Context) ([]ResourceSummary, error)
+}
+
+// PhoneNumberLister is export.ts's optional listPhoneNumbers.
+// https://docs.aws.amazon.com/connect/latest/APIReference/API_ListPhoneNumbersV2.html
+type PhoneNumberLister interface {
+	ListPhoneNumbers(ctx context.Context) ([]PhoneNumberSummary, error)
+}
+
+// CasesDomainDescriber is export.ts's optional describeCasesDomain: the
+// instance's Cases domain, or nil when it has none or the client has no
+// Cases access.
+// https://docs.aws.amazon.com/connect/latest/APIReference/API_ListIntegrationAssociations.html
+type CasesDomainDescriber interface {
+	DescribeCasesDomain(ctx context.Context) (*CasesDomainInventory, error)
+}
+
+// AssistantLister is export.ts's optional listAssistants. A nil list with
+// no error is a client that does not offer it after all (an adapter built
+// without a Q in Connect client), which the inventory records as absent.
+// https://docs.aws.amazon.com/amazon-q-connect/latest/APIReference/API_ListAssistants.html
+type AssistantLister interface {
+	ListAssistants(ctx context.Context) ([]ResourceSummary, error)
 }
 
 // DescribedContactFlow is export.ts's DescribedContactFlow: the operation that
@@ -157,8 +228,8 @@ type CollectInventoryOptions struct {
 	ExcludeModules bool
 }
 
-// CollectInventory is export.ts's collectInventory: the list operations
-// assembled into one inventory. The TypeScript runs them concurrently with
+// CollectInventory is export.ts's collectInventory: the list operations the
+// client offers assembled into one inventory. The TypeScript runs them concurrently with
 // Promise.all; this runs them in the same order one after another, so on
 // failure it returns the first error in that order rather than the first to
 // happen.
@@ -190,6 +261,26 @@ func CollectInventory(ctx context.Context, client ConnectInventoryClient, option
 	}
 	if inv.Views, err = client.ListViews(ctx); err != nil {
 		return InstanceInventory{}, err
+	}
+	if lister, ok := client.(TaskTemplateLister); ok {
+		if inv.TaskTemplates, err = lister.ListTaskTemplates(ctx); err != nil {
+			return InstanceInventory{}, err
+		}
+	}
+	if lister, ok := client.(PhoneNumberLister); ok {
+		if inv.PhoneNumbers, err = lister.ListPhoneNumbers(ctx); err != nil {
+			return InstanceInventory{}, err
+		}
+	}
+	if describer, ok := client.(CasesDomainDescriber); ok {
+		if inv.CasesDomain, err = describer.DescribeCasesDomain(ctx); err != nil {
+			return InstanceInventory{}, err
+		}
+	}
+	if lister, ok := client.(AssistantLister); ok {
+		if inv.Assistants, err = lister.ListAssistants(ctx); err != nil {
+			return InstanceInventory{}, err
+		}
 	}
 	if lister, ok := client.(ModuleAliasLister); ok {
 		for _, m := range inv.ContactFlowModules {

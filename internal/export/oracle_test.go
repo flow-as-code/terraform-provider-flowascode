@@ -44,6 +44,14 @@ type oracle struct {
 		Input  string `json:"input"`
 		Output string `json:"output"`
 	} `json:"slugifyResourceName"`
+	ParseCasesArn []struct {
+		Input  string          `json:"input"`
+		Output json.RawMessage `json:"output"`
+	} `json:"parseCasesArn"`
+	ParseAssistantArn []struct {
+		Input  string  `json:"input"`
+		Output *string `json:"output"`
+	} `json:"parseAssistantArn"`
 	BuildReverseMap []struct {
 		Inventory string      `json:"inventory"`
 		ByArn     []oracleRef `json:"byArn"`
@@ -178,6 +186,40 @@ func TestOracleLambdaAndNormalize(t *testing.T) {
 	for _, c := range o.NormalizeArn {
 		if got := NormalizeArn(c.Input); got != c.Output {
 			t.Errorf("NormalizeArn(%q) = %q, want %q", c.Input, got, c.Output)
+		}
+	}
+}
+
+// The two FlowDoc 0.3 parsers for other services' ARNs: Cases (`cases`,
+// nested under a domain) and Amazon Q in Connect (`wisdom`).
+func TestOracleCasesAndAssistantArns(t *testing.T) {
+	o := loadOracle(t)
+	if len(o.ParseCasesArn) < 10 || len(o.ParseAssistantArn) < 6 {
+		t.Fatalf("only %d and %d cases", len(o.ParseCasesArn), len(o.ParseAssistantArn))
+	}
+	for _, c := range o.ParseCasesArn {
+		got, ok := ParseCasesArn(c.Input)
+		var gotJSON any
+		if ok {
+			m := map[string]any{"partition": got.Partition, "region": got.Region, "account": got.Account, "domainId": got.DomainID}
+			if got.ResourceType != "" {
+				m["resourceType"] = got.ResourceType
+				m["resourceId"] = got.ResourceID
+			}
+			gotJSON = m
+		}
+		var want any
+		if err := json.Unmarshal(c.Output, &want); err != nil {
+			t.Fatal(err)
+		}
+		if !reflect.DeepEqual(gotJSON, want) {
+			t.Errorf("ParseCasesArn(%q) = %v, want %v", c.Input, gotJSON, want)
+		}
+	}
+	for _, c := range o.ParseAssistantArn {
+		got, ok := ParseAssistantArn(c.Input)
+		if ok != (c.Output != nil) || (ok && got != *c.Output) {
+			t.Errorf("ParseAssistantArn(%q) = %q %v, want %v", c.Input, got, ok, c.Output)
 		}
 	}
 }
@@ -407,6 +449,20 @@ func (c *scriptedClient) ListBots(context.Context) ([]LexBotSummary, error) {
 }
 func (c *scriptedClient) ListViews(context.Context) ([]ViewSummary, error) {
 	return c.inventory.Views, nil
+}
+
+// The FlowDoc 0.3 lists, as export-oracle.mjs's scripted client offers them.
+func (c *scriptedClient) ListTaskTemplates(context.Context) ([]ResourceSummary, error) {
+	return orEmpty(c.inventory.TaskTemplates), nil
+}
+func (c *scriptedClient) ListPhoneNumbers(context.Context) ([]PhoneNumberSummary, error) {
+	return orEmpty(c.inventory.PhoneNumbers), nil
+}
+func (c *scriptedClient) DescribeCasesDomain(context.Context) (*CasesDomainInventory, error) {
+	return c.inventory.CasesDomain, nil
+}
+func (c *scriptedClient) ListAssistants(context.Context) ([]ResourceSummary, error) {
+	return orEmpty(c.inventory.Assistants), nil
 }
 
 func TestOracleExportInstance(t *testing.T) {

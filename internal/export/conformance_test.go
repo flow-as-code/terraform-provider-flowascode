@@ -170,6 +170,29 @@ func (c *fixtureClient) ListViews(context.Context) ([]ViewSummary, error) {
 	return c.inventory.Views, nil
 }
 
+// The FlowDoc 0.3 lists, offered as the SDK adapter offers them: every
+// fixture written before the bump carries none, and the methods then answer
+// empty, which is what an instance without the resources answers.
+func (c *fixtureClient) ListTaskTemplates(context.Context) ([]ResourceSummary, error) {
+	return orEmpty(c.inventory.TaskTemplates), nil
+}
+func (c *fixtureClient) ListPhoneNumbers(context.Context) ([]PhoneNumberSummary, error) {
+	return orEmpty(c.inventory.PhoneNumbers), nil
+}
+func (c *fixtureClient) DescribeCasesDomain(context.Context) (*CasesDomainInventory, error) {
+	return c.inventory.CasesDomain, nil
+}
+func (c *fixtureClient) ListAssistants(context.Context) ([]ResourceSummary, error) {
+	return orEmpty(c.inventory.Assistants), nil
+}
+
+func orEmpty[T any](list []T) []T {
+	if list == nil {
+		return []T{}
+	}
+	return list
+}
+
 func (c *fixtureClient) ListContactFlowModuleAliases(_ context.Context, id string) ([]ModuleAlias, error) {
 	var out []ModuleAlias
 	for _, a := range c.inventory.ModuleAliases {

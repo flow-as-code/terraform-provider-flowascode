@@ -46,3 +46,17 @@ func SlugifyResourceName(name string) string {
 	}
 	return b.String()
 }
+
+// trimJS is String.prototype.trim: WhiteSpace and LineTerminator stripped
+// from both ends, which is not Go's unicode.IsSpace (it takes U+0085 and
+// leaves U+FEFF). internal/lint's jsTrim is the same set.
+// https://tc39.es/ecma262/#sec-string.prototype.trim
+func trimJS(s string) string {
+	return strings.TrimFunc(s, func(r rune) bool {
+		switch r {
+		case '\t', '\n', '\v', '\f', '\r', ' ', 0x00a0, 0x1680, 0x2028, 0x2029, 0x202f, 0x205f, 0x3000, 0xfeff:
+			return true
+		}
+		return r >= 0x2000 && r <= 0x200a
+	})
+}

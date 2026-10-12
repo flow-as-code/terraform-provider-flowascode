@@ -141,6 +141,39 @@ func BuildReverseMap(inventory InstanceInventory) ReverseMap {
 	for _, v := range inventory.Views {
 		add(v.Arn, named(v.Name), "view")
 	}
+	// FlowDoc 0.3. A phone number has no name of its own: its description
+	// when one is set, else the number's digits, which slug to a valid name
+	// (+15555550100 becomes 15555550100) and are what an operator reads in
+	// the console anyway. A Cases template or field is keyed by its own ARN,
+	// a `cases` ARN; CaseTemplateId and the field keys may hold the bare id
+	// instead, which no reverse map can match (flow-as-code D05 and D06
+	// settle what the service writes). An assistant ARN is the `wisdom` ARN
+	// the action holds.
+	for _, t := range inventory.TaskTemplates {
+		add(t.Arn, named(t.Name), "tasktemplate")
+	}
+	for _, n := range inventory.PhoneNumbers {
+		description := ""
+		if n.Description != nil {
+			description = trimJS(*n.Description)
+		}
+		if description == "" {
+			add(n.Arn, named(n.Number), "phonenumber")
+		} else {
+			add(n.Arn, named(description), "phonenumber")
+		}
+	}
+	if d := inventory.CasesDomain; d != nil {
+		for _, t := range d.Templates {
+			add(t.Arn, named(t.Name), "casetemplate")
+		}
+		for _, f := range d.Fields {
+			add(f.Arn, named(f.Name), "casefield")
+		}
+	}
+	for _, a := range inventory.Assistants {
+		add(a.Arn, named(a.Name), "assistant")
+	}
 
 	for _, arn := range inventory.LambdaFunctions {
 		fn, ok := ParseLambdaFunctionArn(arn)

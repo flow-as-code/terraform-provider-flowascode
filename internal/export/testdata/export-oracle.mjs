@@ -31,6 +31,8 @@ for (const [section, fn] of [
   ["parseLambdaFunctionArn", core.parseLambdaFunctionArn],
   ["normalizeArn", core.normalizeArn],
   ["slugifyResourceName", core.slugifyResourceName],
+  ["parseCasesArn", core.parseCasesArn],
+  ["parseAssistantArn", core.parseAssistantArn],
 ]) {
   o[section].forEach((c, i) => {
     const out = fn(c.input);
@@ -100,6 +102,12 @@ function scripted(spec, calls) {
     listLambdaFunctions: async () => inv.lambdaFunctions,
     listBots: async () => inv.lexBots,
     listViews: async () => inv.views,
+    // The FlowDoc 0.3 lists, offered as the SDK adapter offers them and
+    // answering empty when the spec records none.
+    listTaskTemplates: async () => inv.taskTemplates ?? [],
+    listPhoneNumbers: async () => inv.phoneNumbers ?? [],
+    describeCasesDomain: async () => inv.casesDomain,
+    listAssistants: async () => inv.assistants ?? [],
   };
 }
 
