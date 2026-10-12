@@ -53,7 +53,7 @@ const act = (Identifier, Type, Parameters = {}, Transitions = {}) => ({
   Transitions,
 });
 const doc = (name, actions, extra = {}) => ({
-  flowdoc: "0.2",
+  flowdoc: "0.3",
   kind: "flow",
   name,
   connectType: "CONTACT_FLOW",
@@ -97,7 +97,7 @@ add("sort-locale-order", ["b", "B", "a-b", "a_b", "ab", "A", "_z", "10", "9", "a
 // text puts a non-index key before an index key, which JSON.parse reorders.
 add(
   "tie-key-order",
-  `[{"flowdoc":"0.2","kind":"flow","name":"t","connectType":"CONTACT_FLOW","content":{"Version":"2019-10-30","StartAction":"m","Actions":[` +
+  `[{"flowdoc":"0.3","kind":"flow","name":"t","connectType":"CONTACT_FLOW","content":{"Version":"2019-10-30","StartAction":"m","Actions":[` +
     `{"Identifier":"m","Type":"MessageParticipant","Parameters":{"\\u00011":"arn:aws:x:1","b":{"z":"arn:aws-cn:q","0":"arn:aws:q:"},"1":"arn:aws:y:2","L":["x","arn:aws:z:"]},"Transitions":{"NextAction":"bye","Errors":[{"ErrorType":"NoMatchingError","NextAction":"bye"}],"Conditions":[{"NextAction":"bye","Condition":{"Operator":"Equals","Operands":["arn:aws:connect:"]}}]}},` +
     `{"Identifier":"bye","Type":"DisconnectParticipant","Parameters":{},"Transitions":{}}]},"refs":[]}]`,
 );

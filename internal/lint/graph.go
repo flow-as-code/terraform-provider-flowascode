@@ -142,7 +142,12 @@ type StringAt struct {
 // WalkStrings is graph.ts's walkStrings: every string in a value with the
 // path it sits at. An array element is `path[i]` (so `[0]` at the root), an
 // object member `path.key` (just `key` at the root), and an object's members
-// come in Object.entries order.
+// come in Object.entries order. A key is a string too, yielded before its
+// member's strings at `path.key~` with the key as its value (the catalog's
+// `*~` form, flowdoc.ReadPath), because a casefield reference stands as a
+// whole key of CaseRequestFields (FlowDoc invariant 4, ADR 0008) and a rule
+// that read values alone let a malformed or unindexed token in a key
+// through.
 func WalkStrings(value any, path string) []StringAt {
 	switch t := value.(type) {
 	case string:
@@ -160,6 +165,7 @@ func WalkStrings(value any, path string) []StringAt {
 			if path != "" {
 				child = path + "." + m.Key
 			}
+			out = append(out, StringAt{Path: child + "~", Value: m.Key})
 			out = append(out, WalkStrings(m.Value, child)...)
 		}
 		return out

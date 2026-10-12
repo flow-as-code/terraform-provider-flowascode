@@ -68,25 +68,26 @@ func TestJSString(t *testing.T) {
 }
 
 // graph.ts's path syntax: [i] for elements (from the root too), dotted keys,
-// and Object.entries order, which puts array-index keys first.
+// and Object.entries order, which puts array-index keys first. Each key is
+// yielded at `<path>~` before its member's strings (FlowDoc 0.3).
 func TestWalkStrings(t *testing.T) {
 	v := decode(t, `{"b":{"z":"1","0":"2"},"10":"3","2":"4","L":["5",{"k":"6"},7,null,["8"]],"01":"9"}`)
 	var got []string
 	for _, s := range WalkStrings(v, "") {
 		got = append(got, s.Path+"="+s.Value)
 	}
-	want := []string{"2=4", "10=3", "b.0=2", "b.z=1", "L[0]=5", "L[1].k=6", "L[4][0]=8", "01=9"}
+	want := []string{"2~=2", "2=4", "10~=10", "10=3", "b~=b", "b.0~=0", "b.0=2", "b.z~=z", "b.z=1", "L~=L", "L[0]=5", "L[1].k~=k", "L[1].k=6", "L[4][0]=8", "01~=01", "01=9"}
 	if !reflect.DeepEqual(got, want) {
 		t.Fatalf("got %v\nwant %v", got, want)
 	}
 	if got := WalkStrings(decode(t, `["a"]`), ""); len(got) != 1 || got[0].Path != "[0]" {
 		t.Fatalf("root array: %+v", got)
 	}
-	if got := WalkStrings(decode(t, `{"a":"x"}`), "refs"); got[0].Path != "refs.a" {
+	if got := WalkStrings(decode(t, `{"a":"x"}`), "refs"); got[0].Path != "refs.a~" || got[1].Path != "refs.a" {
 		t.Fatalf("prefixed: %+v", got)
 	}
-	arns := LiteralArnPaths(decode(t, `{"a":"arn:aws-cn:x","b":["no","arn:aws:y"],"c":"arn:awsX:"}`))
-	if !reflect.DeepEqual(arns, []string{"a", "b[1]"}) {
+	arns := LiteralArnPaths(decode(t, `{"a":"arn:aws-cn:x","b":["no","arn:aws:y"],"c":"arn:awsX:","arn:aws:k":1}`))
+	if !reflect.DeepEqual(arns, []string{"a", "b[1]", "arn:aws:k~"}) {
 		t.Fatalf("LiteralArnPaths = %v", arns)
 	}
 	if got := LiteralArnPaths("clean"); got == nil || len(got) != 0 {
