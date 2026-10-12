@@ -18,14 +18,19 @@ import (
 // labels. Each edit is the TypeScript's, written against a jsonv tree.
 
 const (
-	demoFixture        = "demo/appointment-line.flowdoc.json"
-	routingFixture     = "roundtrip/contact-routing/doc.flowdoc.json"
-	flowControlFixture = "roundtrip/flow-control/doc.flowdoc.json"
-	contactDataFixture = "roundtrip/contact-data/doc.flowdoc.json"
-	participantFixture = "roundtrip/participant/doc.flowdoc.json"
-	recordingFixture   = "roundtrip/recording-analytics/doc.flowdoc.json"
-	menuFixture        = "roundtrip/dtmf-menu/doc.flowdoc.json"
-	moduleFixture      = "roundtrip/after-call-survey/doc.flowdoc.json"
+	demoFixture         = "demo/appointment-line.flowdoc.json"
+	routingFixture      = "roundtrip/contact-routing/doc.flowdoc.json"
+	flowControlFixture  = "roundtrip/flow-control/doc.flowdoc.json"
+	contactDataFixture  = "roundtrip/contact-data/doc.flowdoc.json"
+	participantFixture  = "roundtrip/participant/doc.flowdoc.json"
+	recordingFixture    = "roundtrip/recording-analytics/doc.flowdoc.json"
+	menuFixture         = "roundtrip/dtmf-menu/doc.flowdoc.json"
+	moduleFixture       = "roundtrip/after-call-survey/doc.flowdoc.json"
+	contactStateFixture = "roundtrip/contact-state/doc.flowdoc.json"
+	tasksFixture        = "roundtrip/tasks-and-assistants/doc.flowdoc.json"
+	profilesFixture     = "roundtrip/customer-profiles/doc.flowdoc.json"
+	casesFixture        = "roundtrip/cases/doc.flowdoc.json"
+	routingCritFixture  = "roundtrip/routing-criteria/doc.flowdoc.json"
 )
 
 // docCase is one document and the verdict Ajv gives it.
@@ -377,6 +382,103 @@ func docCases() []docCase {
 	)
 	add(g, demoFixture, true,
 		"a description of exactly 500 astral characters", func(d *any) { set(d, "description", strings.Repeat("\U0001F600", 500)) },
+	)
+
+	// The Phase D clauses (flow-as-code D02, D05, D03, D06, D07), as
+	// conformance.test.ts's five "FlowDoc schema rejections" groups for them
+	// state each.
+	g = "FlowDoc schema rejections: contact state"
+	add(g, contactStateFixture, true, "accepts the fixture as committed", nil)
+	add(g, contactStateFixture, false,
+		"rejects a previous-participant state the page does not list", setP("hold-agent", "Parameters.PreviousContactParticipantState", "OnHold"),
+		"rejects a media streaming state other than Enabled or Disabled", setP("start-stream", "Parameters.MediaStreamingState", "Paused"),
+		"rejects an agent as the streamed participant, which the page does not support", setP("start-stream", "Parameters.Participants.0.ParticipantType", "Agent"),
+		"rejects a media direction other than From or To", setP("start-stream", "Parameters.Participants.0.MediaDirections", j(`["Both"]`)),
+		"rejects a stream type other than Audio", setP("start-stream", "Parameters.MediaStreamType", "Video"),
+		"rejects a literal ARN as the chat message processor", setP("process-messages", "Parameters.ChatProcessor.LambdaProcessorARN", "arn:aws:lambda:us-east-1:111122223333:function:redactor"),
+		"rejects a JSONPath as the chat message processor, which the page says is static", setP("process-messages", "Parameters.ChatProcessor.LambdaProcessorARN", "$.Attributes.processor"),
+		"rejects processing enabled spelled other than True or False", setP("process-messages", "Parameters.ChatProcessor.ProcessingEnabled", "true"),
+	)
+
+	g = "FlowDoc schema rejections: tasks and AI agents"
+	add(g, tasksFixture, true, "accepts the fixture as committed", nil)
+	add(g, tasksFixture, false,
+		"rejects a literal ARN as the task's flow", setP("follow-up", "Parameters.ContactFlowId", "arn:aws:connect:us-east-1:111122223333:instance/i/contact-flow/f"),
+		"rejects a literal ARN as the task template", setP("templated", "Parameters.TaskTemplateId", "arn:aws:connect:us-east-1:111122223333:instance/i/task-template/t"),
+		"rejects a literal ARN as the AI agents assistant", setP("assist", "Parameters.WisdomAssistantArn", "arn:aws:wisdom:us-east-1:111122223333:assistant/agent-help"),
+		"rejects a JSONPath as the task template, which the page says is static", setP("templated", "Parameters.TaskTemplateId", "$.Attributes.template"),
+	)
+	add(g, tasksFixture, true, "still accepts a JSONPath as the task's flow", setP("follow-up", "Parameters.ContactFlowId", "$.Attributes.f"))
+
+	g = "FlowDoc schema rejections: customer profiles"
+	add(g, profilesFixture, true, "accepts the fixture as committed", nil)
+	add(g, profilesFixture, false,
+		"rejects request data that is not an object", setP("link-contact", "Parameters.ProfileRequestData", "$.Customer.ProfileId"),
+		"rejects response data written as the page's object rather than a list", setP("link-contact", "Parameters.ProfileResponseData", j(`{}`)),
+		"rejects a response name that is not a string", setP("link-contact", "Parameters.ProfileResponseData", j(`[1]`)),
+		"rejects a create's request data as a string", setP("create-profile", "Parameters.ProfileRequestData", "FirstName"),
+		"rejects an update's response data as the page's object", setP("update-profile", "Parameters.ProfileResponseData", j(`{"Attributes.preferredLanguage":"x"}`)),
+		"rejects a profile lookup's response name that is not a string", setP("find-caller", "Parameters.ProfileResponseData", j(`["FirstName",2]`)),
+		"rejects an object lookup's request data as a list", setP("latest-order", "Parameters.ProfileRequestData", j(`[{"ProfileId":"$.Customer.ProfileId"}]`)),
+		"rejects a calculated attribute lookup's response data as one string", setP("calculated", "Parameters.ProfileResponseData", "CalculatedAttributes._frequent_caller"),
+	)
+	add(g, profilesFixture, true, "still accepts an association with no response data, which no probe has refused",
+		on("link-contact", func(a *any) { del(a, "Parameters.ProfileResponseData") }))
+
+	g = "FlowDoc schema rejections: cases"
+	add(g, casesFixture, true, "accepts the fixture as committed", nil)
+	add(g, casesFixture, false,
+		"rejects a template token of another type", setP("open-case", "Parameters.CaseTemplateId", "${cdref:tasktemplate:follow-up}"),
+		"rejects a template token interpolated into a longer string", setP("open-case", "Parameters.CaseTemplateId", "${cdref:casetemplate:billing-dispute}-v2"),
+		"rejects a field key token of another type", setP("open-case", "Parameters.CaseRequestFields", j(`{"${cdref:queue:front-desk}":"x"}`)),
+		"rejects a malformed field key token", setP("open-case", "Parameters.CaseRequestFields", j(`{"${cdref:casefield:priority":"x"}`)),
+		"rejects request fields that are not an object", setP("open-case", "Parameters.CaseRequestFields", j(`["summary"]`)),
+		"rejects a search field key token of another type", setP("find-case", "Parameters.CaseRequestFields", j(`{"${cdref:queue:front-desk}":"x"}`)),
+		"rejects a response field token of another type", setP("find-case", "Parameters.CaseResponseFields", j(`["${cdref:casetemplate:billing-dispute}"]`)),
+		"rejects an update field key token of another type", setP("update-case", "Parameters.CaseRequestFields", j(`{"${cdref:casetemplate:billing-dispute}":"x"}`)),
+		"rejects response fields that are not a list", setP("find-case", "Parameters.CaseResponseFields", "case_id"),
+	)
+	add(g, casesFixture, true,
+		"still accepts a literal template id and a literal field id, as published flows write them", on("open-case", func(a *any) {
+			set(a, "Parameters.CaseTemplateId", "f9b90c5f-5cc6-4d9b-a18d-fc14f601ef88")
+			set(a, "Parameters.CaseRequestFields", j(`{"12345678-aaaa-bbbb-cccc-123456789012":"x"}`))
+		}),
+		"still accepts a literal response field id, as published flows write it", setP("find-case", "Parameters.CaseResponseFields", j(`["12345678-aaaa-bbbb-cccc-123456789012"]`)),
+	)
+
+	g = "FlowDoc schema rejections: routing criteria"
+	step := func(i int, path string, value any) func(*any) {
+		return on("by-proficiency", func(a *any) {
+			steps := ref(a, "Parameters.RoutingCriteria.Steps")
+			if path == "" {
+				*ref(steps, strconv.Itoa(i)) = value
+				return
+			}
+			set(ref(steps, strconv.Itoa(i)), path, value)
+		})
+	}
+	add(g, routingCritFixture, true, "accepts the fixture as committed", nil)
+	add(g, routingCritFixture, false,
+		"rejects routing criteria that are neither an object nor a JSONPath", setP("by-proficiency", "Parameters.RoutingCriteria", 30.0),
+		"rejects steps written as one object rather than a list", on("by-proficiency", func(a *any) {
+			first := *ref(a, "Parameters.RoutingCriteria.Steps.0")
+			set(a, "Parameters.RoutingCriteria", jsonv.Object{{Key: "Steps", Value: first}})
+		}),
+		"rejects steps written as text that is not a JSONPath", setP("from-lambda", "Parameters.RoutingCriteria", j(`{"Steps":"routingSteps"}`)),
+		"rejects a step that is not an object", step(2, "", "Language"),
+		"rejects an expression that is not an object", step(2, "Expression", "Language >= 1"),
+		"rejects an expiry that is not an object", step(0, "Expiry", 30.0),
+		"rejects a requirement that is not an object", step(2, "Expression", j(`{"AttributeCondition":"Language"}`)),
+		"rejects an AndExpression that is not a list", step(1, "Expression", j(`{"AndExpression":{}}`)),
+		"rejects an OrExpression that is not a list", step(0, "Expression", j(`{"OrExpression":"Language"}`)),
+		"rejects a requirement nested in an AND inside an OR that is not an object", on("by-proficiency", func(a *any) {
+			*ref(a, "Parameters.RoutingCriteria.Steps.0.Expression.OrExpression.0.AndExpression.1") = "Technology"
+		}),
+	)
+	add(g, routingCritFixture, true,
+		"still accepts the whole of RoutingCriteria as a JSONPath, which no probe has refused", setP("from-lambda", "Parameters.RoutingCriteria", "$.External.RoutingCriteria"),
+		"still accepts a level, a tag, a preferred agent and a nesting the builder refuses, which no probe has refused",
+		step(2, "Expression", j(`{"AndExpression":[{"OrExpression":[]},{"NotAttributeCondition":{"Name":"Language","Value":"English"}},{"AttributeCondition":{"ComparisonOperator":"Match","MatchCriteria":{"AgentsCriteria":{"AgentIds":["$.Attributes.agent"]}}}},{"AttributeCondition":{"ComparisonOperator":"Range","Name":"Language","ProficiencyLevel":2.5,"Value":"English"}}]}`)),
 	)
 
 	g = "FlowDoc migration"

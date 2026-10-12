@@ -1,5 +1,5 @@
 {
- "generatedFrom": "007f9a76b339e7e57179d20f3e62c05305c08898",
+ "generatedFrom": "ccee157f7c1915e0212dad52bc59f817d3fe1493",
  "ajv": "8.20.0",
  "cases": [
   {
@@ -2682,6 +2682,1312 @@
    "id": "Go port: Ajv parity: a description of exactly 500 astral characters",
    "version": "0.3",
    "sha256": "d01679dcfa2eef6e5634778d82f895055e1ecdaa74582bb13f743999a7a25000",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "FlowDoc schema rejections: contact state: accepts the fixture as committed",
+   "version": "0.3",
+   "sha256": "08143ae27a309304423a7edfc6a636a0fc47c11dd0953532ef25c29989f0e94d",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "FlowDoc schema rejections: contact state: rejects a previous-participant state the page does not list",
+   "version": "0.3",
+   "sha256": "62edc75fd4ff193c65025f1a5ac4abd324744d7acbf01764bdb5bc36edb1d5b6",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/0/Parameters/PreviousContactParticipantState",
+     "schemaPath": "#/allOf/31/then/properties/Parameters/properties/PreviousContactParticipantState/enum",
+     "keyword": "enum",
+     "message": "must be equal to one of the allowed values",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/0",
+     "schemaPath": "#/allOf/31/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: contact state: rejects a media streaming state other than Enabled or Disabled",
+   "version": "0.3",
+   "sha256": "42ad592ee078f06d22f95cd6ab8d64c21608c6d4deb26734cfab05e4419b1e94",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/3/Parameters/MediaStreamingState",
+     "schemaPath": "#/allOf/32/then/properties/Parameters/properties/MediaStreamingState/enum",
+     "keyword": "enum",
+     "message": "must be equal to one of the allowed values",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/3",
+     "schemaPath": "#/allOf/32/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: contact state: rejects an agent as the streamed participant, which the page does not support",
+   "version": "0.3",
+   "sha256": "83c51ae63d0f04b044bea0ccc145cebad72d1e3cd4cad827e2006c0020c5ce75",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/3/Parameters/Participants/0/ParticipantType",
+     "schemaPath": "#/allOf/32/then/properties/Parameters/properties/Participants/items/properties/ParticipantType/enum",
+     "keyword": "enum",
+     "message": "must be equal to one of the allowed values",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/3",
+     "schemaPath": "#/allOf/32/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: contact state: rejects a media direction other than From or To",
+   "version": "0.3",
+   "sha256": "f552abb9f8c9b7fceb05dd91dc4a76f2ddfb264976a85d5e97318db089042db7",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/3/Parameters/Participants/0/MediaDirections/0",
+     "schemaPath": "#/allOf/32/then/properties/Parameters/properties/Participants/items/properties/MediaDirections/items/enum",
+     "keyword": "enum",
+     "message": "must be equal to one of the allowed values",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/3",
+     "schemaPath": "#/allOf/32/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: contact state: rejects a stream type other than Audio",
+   "version": "0.3",
+   "sha256": "3294e5f8011bea0241619d06e1ba287e56fbeac7f21c8a718de31259861c415d",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/3/Parameters/MediaStreamType",
+     "schemaPath": "#/allOf/32/then/properties/Parameters/properties/MediaStreamType/enum",
+     "keyword": "enum",
+     "message": "must be equal to one of the allowed values",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/3",
+     "schemaPath": "#/allOf/32/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: contact state: rejects a literal ARN as the chat message processor",
+   "version": "0.3",
+   "sha256": "414582fcc8731e06f5c39128568a7515546892b98fd96b14c7344ecf263f8aa6",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/6/Parameters/ChatProcessor/LambdaProcessorARN",
+     "schemaPath": "#/$defs/token/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\{cdref:(queue|hours|lambda|lex|prompt|flow|module|view|tasktemplate|casetemplate|casefield|assistant|phonenumber):[a-z0-9]+(-[a-z0-9]+)*(@[a-z0-9]+(-[a-z0-9]+)*)?\\}$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/6",
+     "schemaPath": "#/allOf/33/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: contact state: rejects a JSONPath as the chat message processor, which the page says is static",
+   "version": "0.3",
+   "sha256": "a963bddb7a9f603cb2458b360ca1c686c12617623ce2598b271319f09e8c361e",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/6/Parameters/ChatProcessor/LambdaProcessorARN",
+     "schemaPath": "#/$defs/token/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\{cdref:(queue|hours|lambda|lex|prompt|flow|module|view|tasktemplate|casetemplate|casefield|assistant|phonenumber):[a-z0-9]+(-[a-z0-9]+)*(@[a-z0-9]+(-[a-z0-9]+)*)?\\}$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/6",
+     "schemaPath": "#/allOf/33/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: contact state: rejects processing enabled spelled other than True or False",
+   "version": "0.3",
+   "sha256": "c3128cc7e1c7ab2d1fd8539fdb1d7e79156051aca20e70d763f3cd3595a26b25",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/6/Parameters/ChatProcessor/ProcessingEnabled",
+     "schemaPath": "#/allOf/33/then/properties/Parameters/properties/ChatProcessor/properties/ProcessingEnabled/enum",
+     "keyword": "enum",
+     "message": "must be equal to one of the allowed values",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/6",
+     "schemaPath": "#/allOf/33/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: tasks and AI agents: accepts the fixture as committed",
+   "version": "0.3",
+   "sha256": "5220920a1f6a70e67fdaa1976ab99ed92556d9940ddf139511614c3d4ac6b817",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "FlowDoc schema rejections: tasks and AI agents: rejects a literal ARN as the task's flow",
+   "version": "0.3",
+   "sha256": "afae00dd1e292c9ae3cd0ed7f642d373a8e19aadbcfe96626ec7344fbb023c43",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/2/Parameters/ContactFlowId",
+     "schemaPath": "#/$defs/token/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\{cdref:(queue|hours|lambda|lex|prompt|flow|module|view|tasktemplate|casetemplate|casefield|assistant|phonenumber):[a-z0-9]+(-[a-z0-9]+)*(@[a-z0-9]+(-[a-z0-9]+)*)?\\}$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/ContactFlowId",
+     "schemaPath": "#/$defs/jsonPath/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\.[A-Za-z0-9_$.\\[\\]'-]+$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/ContactFlowId",
+     "schemaPath": "#/oneOf",
+     "keyword": "oneOf",
+     "message": "must match exactly one schema in oneOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2",
+     "schemaPath": "#/allOf/34/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: tasks and AI agents: rejects a literal ARN as the task template",
+   "version": "0.3",
+   "sha256": "cf9a880df2457d16a8ba48d4fbd4d9fb96ed460cc032882937f023411a2a907b",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/3/Parameters/TaskTemplateId",
+     "schemaPath": "#/$defs/token/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\{cdref:(queue|hours|lambda|lex|prompt|flow|module|view|tasktemplate|casetemplate|casefield|assistant|phonenumber):[a-z0-9]+(-[a-z0-9]+)*(@[a-z0-9]+(-[a-z0-9]+)*)?\\}$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/3",
+     "schemaPath": "#/allOf/34/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: tasks and AI agents: rejects a literal ARN as the AI agents assistant",
+   "version": "0.3",
+   "sha256": "33dff25e83061ac3000af6486de0bc7232fd9aa60777b9d4f5255c60c2bea60a",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/0/Parameters/WisdomAssistantArn",
+     "schemaPath": "#/$defs/token/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\{cdref:(queue|hours|lambda|lex|prompt|flow|module|view|tasktemplate|casetemplate|casefield|assistant|phonenumber):[a-z0-9]+(-[a-z0-9]+)*(@[a-z0-9]+(-[a-z0-9]+)*)?\\}$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/0/Parameters/WisdomAssistantArn",
+     "schemaPath": "#/$defs/jsonPath/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\.[A-Za-z0-9_$.\\[\\]'-]+$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/0/Parameters/WisdomAssistantArn",
+     "schemaPath": "#/oneOf",
+     "keyword": "oneOf",
+     "message": "must match exactly one schema in oneOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/0",
+     "schemaPath": "#/allOf/35/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: tasks and AI agents: rejects a JSONPath as the task template, which the page says is static",
+   "version": "0.3",
+   "sha256": "9c29f734462484a6e72d20bc0b86000caae15ec5ac8e7b7d9514fce78c10f310",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/3/Parameters/TaskTemplateId",
+     "schemaPath": "#/$defs/token/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\{cdref:(queue|hours|lambda|lex|prompt|flow|module|view|tasktemplate|casetemplate|casefield|assistant|phonenumber):[a-z0-9]+(-[a-z0-9]+)*(@[a-z0-9]+(-[a-z0-9]+)*)?\\}$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/3",
+     "schemaPath": "#/allOf/34/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: tasks and AI agents: still accepts a JSONPath as the task's flow",
+   "version": "0.3",
+   "sha256": "71feaba3f926c5dde9e25a06ba096987f257e26c704c63e99fbca5e53b2ab9f2",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "FlowDoc schema rejections: customer profiles: accepts the fixture as committed",
+   "version": "0.3",
+   "sha256": "1574f3ad824b75203987865c17ac08a5ead7eedf5a988841cff6733499be14b6",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "FlowDoc schema rejections: customer profiles: rejects request data that is not an object",
+   "version": "0.3",
+   "sha256": "af9990f598a7185e59eda1625220dabbe0a095ae52f9504b5107d016888e4a79",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/3/Parameters/ProfileRequestData",
+     "schemaPath": "#/allOf/36/then/properties/Parameters/properties/ProfileRequestData/type",
+     "keyword": "type",
+     "message": "must be object",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/3",
+     "schemaPath": "#/allOf/36/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: customer profiles: rejects response data written as the page's object rather than a list",
+   "version": "0.3",
+   "sha256": "151944e54fd95a354a6cef266490ee08859e42124ad72dc9270fb64dcedf60ef",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/3/Parameters/ProfileResponseData",
+     "schemaPath": "#/allOf/36/then/properties/Parameters/properties/ProfileResponseData/type",
+     "keyword": "type",
+     "message": "must be array",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/3",
+     "schemaPath": "#/allOf/36/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: customer profiles: rejects a response name that is not a string",
+   "version": "0.3",
+   "sha256": "8cce89be322f2b4b44507521cd7e1c15c18a5719cd7bb31ee21d0c522e8220cf",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/3/Parameters/ProfileResponseData/0",
+     "schemaPath": "#/allOf/36/then/properties/Parameters/properties/ProfileResponseData/items/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/3",
+     "schemaPath": "#/allOf/36/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: customer profiles: rejects a create's request data as a string",
+   "version": "0.3",
+   "sha256": "434f4dea1049051a87d5b0ad83b5cdee494011d2dd2476f5a19810bb37e1b84d",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/2/Parameters/ProfileRequestData",
+     "schemaPath": "#/allOf/37/then/properties/Parameters/properties/ProfileRequestData/type",
+     "keyword": "type",
+     "message": "must be object",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2",
+     "schemaPath": "#/allOf/37/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: customer profiles: rejects an update's response data as the page's object",
+   "version": "0.3",
+   "sha256": "72ee0b23a7f53b339f4f768a99978b675a6780eced3833853b9f9a95dc7489bc",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/4/Parameters/ProfileResponseData",
+     "schemaPath": "#/allOf/38/then/properties/Parameters/properties/ProfileResponseData/type",
+     "keyword": "type",
+     "message": "must be array",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/4",
+     "schemaPath": "#/allOf/38/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: customer profiles: rejects a profile lookup's response name that is not a string",
+   "version": "0.3",
+   "sha256": "f0559155603f248eedc370f77718219a61ef63e8fad8e36e3f76b28c5b38325b",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/0/Parameters/ProfileResponseData/1",
+     "schemaPath": "#/allOf/39/then/properties/Parameters/properties/ProfileResponseData/items/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/0",
+     "schemaPath": "#/allOf/39/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: customer profiles: rejects an object lookup's request data as a list",
+   "version": "0.3",
+   "sha256": "34b72db23c01877e79e195fe15f98ef67386177eae5e0ffa897634949cdeb5f1",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/5/Parameters/ProfileRequestData",
+     "schemaPath": "#/allOf/40/then/properties/Parameters/properties/ProfileRequestData/type",
+     "keyword": "type",
+     "message": "must be object",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/5",
+     "schemaPath": "#/allOf/40/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: customer profiles: rejects a calculated attribute lookup's response data as one string",
+   "version": "0.3",
+   "sha256": "9912752a1491855c0e7e116a5e752d38fb32af4e12dd95bfbab87823e84b001a",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/7/Parameters/ProfileResponseData",
+     "schemaPath": "#/allOf/41/then/properties/Parameters/properties/ProfileResponseData/type",
+     "keyword": "type",
+     "message": "must be array",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/7",
+     "schemaPath": "#/allOf/41/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: customer profiles: still accepts an association with no response data, which no probe has refused",
+   "version": "0.3",
+   "sha256": "dff8375f86e22b1946c68c6547f8592d1636fa1b60f3b1b66f1bf035049b37d0",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "FlowDoc schema rejections: cases: accepts the fixture as committed",
+   "version": "0.3",
+   "sha256": "e42c706af869bdaf46dc2c3fad44df032fd3731b53874d68333d95caf8ae1f7f",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "FlowDoc schema rejections: cases: rejects a template token of another type",
+   "version": "0.3",
+   "sha256": "10321a1a189d32850573c014d73db37c01a60a562ba975c8f5bf64dc16660f72",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/3/Parameters/CaseTemplateId",
+     "schemaPath": "#/$defs/casetemplateToken/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\{cdref:casetemplate:[a-z0-9]+(-[a-z0-9]+)*\\}$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/3/Parameters/CaseTemplateId",
+     "schemaPath": "#/allOf/42/then/properties/Parameters/properties/CaseTemplateId/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/3",
+     "schemaPath": "#/allOf/42/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: cases: rejects a template token interpolated into a longer string",
+   "version": "0.3",
+   "sha256": "dfccbfa9ddede79553db4e210bade635dedda7d4bd1e43cee2496c079bc9dffe",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/3/Parameters/CaseTemplateId",
+     "schemaPath": "#/$defs/casetemplateToken/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\{cdref:casetemplate:[a-z0-9]+(-[a-z0-9]+)*\\}$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/3/Parameters/CaseTemplateId",
+     "schemaPath": "#/allOf/42/then/properties/Parameters/properties/CaseTemplateId/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/3",
+     "schemaPath": "#/allOf/42/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: cases: rejects a field key token of another type",
+   "version": "0.3",
+   "sha256": "773b1b2930cb210e2bb57482f8cee80a2636ae60f35552b3b5db12566595b20f",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/3/Parameters/CaseRequestFields",
+     "schemaPath": "#/$defs/caseFieldId/then/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\{cdref:casefield:[a-z0-9]+(-[a-z0-9]+)*\\}$\"",
+     "property": "${cdref:queue:front-desk}"
+    },
+    {
+     "instancePath": "/content/Actions/3/Parameters/CaseRequestFields",
+     "schemaPath": "#/$defs/caseFieldId/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": "${cdref:queue:front-desk}"
+    },
+    {
+     "instancePath": "/content/Actions/3/Parameters/CaseRequestFields",
+     "schemaPath": "#/allOf/42/then/properties/Parameters/properties/CaseRequestFields/propertyNames",
+     "keyword": "propertyNames",
+     "message": "property name must be valid",
+     "property": "${cdref:queue:front-desk}"
+    },
+    {
+     "instancePath": "/content/Actions/3",
+     "schemaPath": "#/allOf/42/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: cases: rejects a malformed field key token",
+   "version": "0.3",
+   "sha256": "c0e2c0f5da8f9620f437fd26c55beafcf7c3b29b2b3638b78321634088a4db13",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/3/Parameters/CaseRequestFields",
+     "schemaPath": "#/$defs/caseFieldId/then/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\{cdref:casefield:[a-z0-9]+(-[a-z0-9]+)*\\}$\"",
+     "property": "${cdref:casefield:priority"
+    },
+    {
+     "instancePath": "/content/Actions/3/Parameters/CaseRequestFields",
+     "schemaPath": "#/$defs/caseFieldId/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": "${cdref:casefield:priority"
+    },
+    {
+     "instancePath": "/content/Actions/3/Parameters/CaseRequestFields",
+     "schemaPath": "#/allOf/42/then/properties/Parameters/properties/CaseRequestFields/propertyNames",
+     "keyword": "propertyNames",
+     "message": "property name must be valid",
+     "property": "${cdref:casefield:priority"
+    },
+    {
+     "instancePath": "/content/Actions/3",
+     "schemaPath": "#/allOf/42/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: cases: rejects request fields that are not an object",
+   "version": "0.3",
+   "sha256": "58cc9b669cb521dd2bf25ba16ac99d9b2bf58e54be0fff831fbb19a8982e3a98",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/3/Parameters/CaseRequestFields",
+     "schemaPath": "#/allOf/42/then/properties/Parameters/properties/CaseRequestFields/type",
+     "keyword": "type",
+     "message": "must be object",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/3",
+     "schemaPath": "#/allOf/42/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: cases: rejects a search field key token of another type",
+   "version": "0.3",
+   "sha256": "b62729f70b07f89daa993d5aa74471b81e0af6bbc1d8560457929eaa77228cd4",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/0/Parameters/CaseRequestFields",
+     "schemaPath": "#/$defs/caseFieldId/then/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\{cdref:casefield:[a-z0-9]+(-[a-z0-9]+)*\\}$\"",
+     "property": "${cdref:queue:front-desk}"
+    },
+    {
+     "instancePath": "/content/Actions/0/Parameters/CaseRequestFields",
+     "schemaPath": "#/$defs/caseFieldId/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": "${cdref:queue:front-desk}"
+    },
+    {
+     "instancePath": "/content/Actions/0/Parameters/CaseRequestFields",
+     "schemaPath": "#/allOf/43/then/properties/Parameters/properties/CaseRequestFields/propertyNames",
+     "keyword": "propertyNames",
+     "message": "property name must be valid",
+     "property": "${cdref:queue:front-desk}"
+    },
+    {
+     "instancePath": "/content/Actions/0",
+     "schemaPath": "#/allOf/43/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: cases: rejects a response field token of another type",
+   "version": "0.3",
+   "sha256": "d0b3d28e269318c50cdb14b7ecec1928e3b7114f9fa10886d367d8601aa0a327",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/0/Parameters/CaseResponseFields/0",
+     "schemaPath": "#/$defs/caseFieldId/then/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\{cdref:casefield:[a-z0-9]+(-[a-z0-9]+)*\\}$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/0/Parameters/CaseResponseFields/0",
+     "schemaPath": "#/$defs/caseFieldId/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/0",
+     "schemaPath": "#/allOf/43/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: cases: rejects an update field key token of another type",
+   "version": "0.3",
+   "sha256": "375a63309ddc6f868b4ccd4ee37dc1dce551106911907751236ecf11959faaac",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/2/Parameters/CaseRequestFields",
+     "schemaPath": "#/$defs/caseFieldId/then/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\{cdref:casefield:[a-z0-9]+(-[a-z0-9]+)*\\}$\"",
+     "property": "${cdref:casetemplate:billing-dispute}"
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/CaseRequestFields",
+     "schemaPath": "#/$defs/caseFieldId/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": "${cdref:casetemplate:billing-dispute}"
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/CaseRequestFields",
+     "schemaPath": "#/allOf/44/then/properties/Parameters/properties/CaseRequestFields/propertyNames",
+     "keyword": "propertyNames",
+     "message": "property name must be valid",
+     "property": "${cdref:casetemplate:billing-dispute}"
+    },
+    {
+     "instancePath": "/content/Actions/2",
+     "schemaPath": "#/allOf/44/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: cases: rejects response fields that are not a list",
+   "version": "0.3",
+   "sha256": "2b7f4c4dc70ebf447e6e04516debf86ece3e3d85cdd533f52eacc1fc6819b88d",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/0/Parameters/CaseResponseFields",
+     "schemaPath": "#/allOf/43/then/properties/Parameters/properties/CaseResponseFields/type",
+     "keyword": "type",
+     "message": "must be array",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/0",
+     "schemaPath": "#/allOf/43/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: cases: still accepts a literal template id and a literal field id, as published flows write them",
+   "version": "0.3",
+   "sha256": "718e5b64329d10c42d4dc6acee5cc3069d41f641f63e32dbe68cf9fc9d58b082",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "FlowDoc schema rejections: cases: still accepts a literal response field id, as published flows write it",
+   "version": "0.3",
+   "sha256": "f281f6c63675b914e429cd2e5d3aecff27a42c31ba4dc344b0ab076c6493c508",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "FlowDoc schema rejections: routing criteria: accepts the fixture as committed",
+   "version": "0.3",
+   "sha256": "c1011052e81f18751bb2faca2e33e1fd38f3f47547b3095dd1f3332846ddde78",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "FlowDoc schema rejections: routing criteria: rejects routing criteria that are neither an object nor a JSONPath",
+   "version": "0.3",
+   "sha256": "724005cd2e105e373a78c517f5e5214709da82628b38be83e4456eebbd901623",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/2/Parameters/RoutingCriteria",
+     "schemaPath": "#/$defs/jsonPath/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/RoutingCriteria",
+     "schemaPath": "#/allOf/45/then/properties/Parameters/properties/RoutingCriteria/anyOf/1/type",
+     "keyword": "type",
+     "message": "must be object",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/RoutingCriteria",
+     "schemaPath": "#/allOf/45/then/properties/Parameters/properties/RoutingCriteria/anyOf",
+     "keyword": "anyOf",
+     "message": "must match a schema in anyOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2",
+     "schemaPath": "#/allOf/45/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: routing criteria: rejects steps written as one object rather than a list",
+   "version": "0.3",
+   "sha256": "151daeffd2439c2633803b39f93642c06f5e87a5528bc612045719c57f007229",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/2/Parameters/RoutingCriteria",
+     "schemaPath": "#/$defs/jsonPath/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/RoutingCriteria/Steps",
+     "schemaPath": "#/$defs/jsonPath/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/RoutingCriteria/Steps",
+     "schemaPath": "#/allOf/45/then/properties/Parameters/properties/RoutingCriteria/anyOf/1/properties/Steps/anyOf/1/type",
+     "keyword": "type",
+     "message": "must be array",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/RoutingCriteria/Steps",
+     "schemaPath": "#/allOf/45/then/properties/Parameters/properties/RoutingCriteria/anyOf/1/properties/Steps/anyOf",
+     "keyword": "anyOf",
+     "message": "must match a schema in anyOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/RoutingCriteria",
+     "schemaPath": "#/allOf/45/then/properties/Parameters/properties/RoutingCriteria/anyOf",
+     "keyword": "anyOf",
+     "message": "must match a schema in anyOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2",
+     "schemaPath": "#/allOf/45/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: routing criteria: rejects steps written as text that is not a JSONPath",
+   "version": "0.3",
+   "sha256": "7883d70e89d9e90461b4baeaf0c758c92b52cae37de267f86c5c3ea55a1c081f",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/1/Parameters/RoutingCriteria",
+     "schemaPath": "#/$defs/jsonPath/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/1/Parameters/RoutingCriteria/Steps",
+     "schemaPath": "#/$defs/jsonPath/pattern",
+     "keyword": "pattern",
+     "message": "must match pattern \"^\\$\\.[A-Za-z0-9_$.\\[\\]'-]+$\"",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/1/Parameters/RoutingCriteria/Steps",
+     "schemaPath": "#/allOf/45/then/properties/Parameters/properties/RoutingCriteria/anyOf/1/properties/Steps/anyOf/1/type",
+     "keyword": "type",
+     "message": "must be array",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/1/Parameters/RoutingCriteria/Steps",
+     "schemaPath": "#/allOf/45/then/properties/Parameters/properties/RoutingCriteria/anyOf/1/properties/Steps/anyOf",
+     "keyword": "anyOf",
+     "message": "must match a schema in anyOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/1/Parameters/RoutingCriteria",
+     "schemaPath": "#/allOf/45/then/properties/Parameters/properties/RoutingCriteria/anyOf",
+     "keyword": "anyOf",
+     "message": "must match a schema in anyOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/1",
+     "schemaPath": "#/allOf/45/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: routing criteria: rejects a step that is not an object",
+   "version": "0.3",
+   "sha256": "2a610320e91f6c02018e5039edde225cc9619a217c1f7c7a8fe751b16f83e1f5",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/2/Parameters/RoutingCriteria",
+     "schemaPath": "#/$defs/jsonPath/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/RoutingCriteria/Steps",
+     "schemaPath": "#/$defs/jsonPath/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/RoutingCriteria/Steps/2",
+     "schemaPath": "#/allOf/45/then/properties/Parameters/properties/RoutingCriteria/anyOf/1/properties/Steps/anyOf/1/items/type",
+     "keyword": "type",
+     "message": "must be object",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/RoutingCriteria/Steps",
+     "schemaPath": "#/allOf/45/then/properties/Parameters/properties/RoutingCriteria/anyOf/1/properties/Steps/anyOf",
+     "keyword": "anyOf",
+     "message": "must match a schema in anyOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/RoutingCriteria",
+     "schemaPath": "#/allOf/45/then/properties/Parameters/properties/RoutingCriteria/anyOf",
+     "keyword": "anyOf",
+     "message": "must match a schema in anyOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2",
+     "schemaPath": "#/allOf/45/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: routing criteria: rejects an expression that is not an object",
+   "version": "0.3",
+   "sha256": "8414010381fb666538ee9934f3d21d9a9a26556163c8e079a5f111d8725ca18e",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/2/Parameters/RoutingCriteria",
+     "schemaPath": "#/$defs/jsonPath/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/RoutingCriteria/Steps",
+     "schemaPath": "#/$defs/jsonPath/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/RoutingCriteria/Steps/2/Expression",
+     "schemaPath": "#/type",
+     "keyword": "type",
+     "message": "must be object",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/RoutingCriteria/Steps",
+     "schemaPath": "#/allOf/45/then/properties/Parameters/properties/RoutingCriteria/anyOf/1/properties/Steps/anyOf",
+     "keyword": "anyOf",
+     "message": "must match a schema in anyOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/RoutingCriteria",
+     "schemaPath": "#/allOf/45/then/properties/Parameters/properties/RoutingCriteria/anyOf",
+     "keyword": "anyOf",
+     "message": "must match a schema in anyOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2",
+     "schemaPath": "#/allOf/45/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: routing criteria: rejects an expiry that is not an object",
+   "version": "0.3",
+   "sha256": "2ae34960ed6c0d2ff8c1a1eec9dbe2a3e68e88100130b4357392ad6fff8578ce",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/2/Parameters/RoutingCriteria",
+     "schemaPath": "#/$defs/jsonPath/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/RoutingCriteria/Steps",
+     "schemaPath": "#/$defs/jsonPath/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/RoutingCriteria/Steps/0/Expiry",
+     "schemaPath": "#/allOf/45/then/properties/Parameters/properties/RoutingCriteria/anyOf/1/properties/Steps/anyOf/1/items/properties/Expiry/type",
+     "keyword": "type",
+     "message": "must be object",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/RoutingCriteria/Steps",
+     "schemaPath": "#/allOf/45/then/properties/Parameters/properties/RoutingCriteria/anyOf/1/properties/Steps/anyOf",
+     "keyword": "anyOf",
+     "message": "must match a schema in anyOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/RoutingCriteria",
+     "schemaPath": "#/allOf/45/then/properties/Parameters/properties/RoutingCriteria/anyOf",
+     "keyword": "anyOf",
+     "message": "must match a schema in anyOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2",
+     "schemaPath": "#/allOf/45/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: routing criteria: rejects a requirement that is not an object",
+   "version": "0.3",
+   "sha256": "79feb4ecc336465508b7a95fe6aedb14d278168a4fedf89f1493e4a5edc396d1",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/2/Parameters/RoutingCriteria",
+     "schemaPath": "#/$defs/jsonPath/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/RoutingCriteria/Steps",
+     "schemaPath": "#/$defs/jsonPath/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/RoutingCriteria/Steps/2/Expression/AttributeCondition",
+     "schemaPath": "#/properties/AttributeCondition/type",
+     "keyword": "type",
+     "message": "must be object",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/RoutingCriteria/Steps",
+     "schemaPath": "#/allOf/45/then/properties/Parameters/properties/RoutingCriteria/anyOf/1/properties/Steps/anyOf",
+     "keyword": "anyOf",
+     "message": "must match a schema in anyOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/RoutingCriteria",
+     "schemaPath": "#/allOf/45/then/properties/Parameters/properties/RoutingCriteria/anyOf",
+     "keyword": "anyOf",
+     "message": "must match a schema in anyOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2",
+     "schemaPath": "#/allOf/45/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: routing criteria: rejects an AndExpression that is not a list",
+   "version": "0.3",
+   "sha256": "9b757be93a6f5a5a3acc21029b6e565166794c655e8c48175f989f4d8ebc6ca2",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/2/Parameters/RoutingCriteria",
+     "schemaPath": "#/$defs/jsonPath/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/RoutingCriteria/Steps",
+     "schemaPath": "#/$defs/jsonPath/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/RoutingCriteria/Steps/1/Expression/AndExpression",
+     "schemaPath": "#/properties/AndExpression/type",
+     "keyword": "type",
+     "message": "must be array",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/RoutingCriteria/Steps",
+     "schemaPath": "#/allOf/45/then/properties/Parameters/properties/RoutingCriteria/anyOf/1/properties/Steps/anyOf",
+     "keyword": "anyOf",
+     "message": "must match a schema in anyOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/RoutingCriteria",
+     "schemaPath": "#/allOf/45/then/properties/Parameters/properties/RoutingCriteria/anyOf",
+     "keyword": "anyOf",
+     "message": "must match a schema in anyOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2",
+     "schemaPath": "#/allOf/45/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: routing criteria: rejects an OrExpression that is not a list",
+   "version": "0.3",
+   "sha256": "ad8373f84361a59e861c9bacc704e6a9ad2f62727bbdacca5378c01e28a8dc6d",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/2/Parameters/RoutingCriteria",
+     "schemaPath": "#/$defs/jsonPath/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/RoutingCriteria/Steps",
+     "schemaPath": "#/$defs/jsonPath/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/RoutingCriteria/Steps/0/Expression/OrExpression",
+     "schemaPath": "#/properties/OrExpression/type",
+     "keyword": "type",
+     "message": "must be array",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/RoutingCriteria/Steps",
+     "schemaPath": "#/allOf/45/then/properties/Parameters/properties/RoutingCriteria/anyOf/1/properties/Steps/anyOf",
+     "keyword": "anyOf",
+     "message": "must match a schema in anyOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/RoutingCriteria",
+     "schemaPath": "#/allOf/45/then/properties/Parameters/properties/RoutingCriteria/anyOf",
+     "keyword": "anyOf",
+     "message": "must match a schema in anyOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2",
+     "schemaPath": "#/allOf/45/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: routing criteria: rejects a requirement nested in an AND inside an OR that is not an object",
+   "version": "0.3",
+   "sha256": "9c91a18823a8e6cad0892234d93012f075c107e1b3395c507e93fcb10b97ba88",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/2/Parameters/RoutingCriteria",
+     "schemaPath": "#/$defs/jsonPath/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/RoutingCriteria/Steps",
+     "schemaPath": "#/$defs/jsonPath/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/RoutingCriteria/Steps/0/Expression/OrExpression/0/AndExpression/1",
+     "schemaPath": "#/type",
+     "keyword": "type",
+     "message": "must be object",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/RoutingCriteria/Steps",
+     "schemaPath": "#/allOf/45/then/properties/Parameters/properties/RoutingCriteria/anyOf/1/properties/Steps/anyOf",
+     "keyword": "anyOf",
+     "message": "must match a schema in anyOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2/Parameters/RoutingCriteria",
+     "schemaPath": "#/allOf/45/then/properties/Parameters/properties/RoutingCriteria/anyOf",
+     "keyword": "anyOf",
+     "message": "must match a schema in anyOf",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2",
+     "schemaPath": "#/allOf/45/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: routing criteria: still accepts the whole of RoutingCriteria as a JSONPath, which no probe has refused",
+   "version": "0.3",
+   "sha256": "478d3df0d2ece171acdaf102fbbe87a75dd6897e74d37af2cc3762f68e819824",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "FlowDoc schema rejections: routing criteria: still accepts a level, a tag, a preferred agent and a nesting the builder refuses, which no probe has refused",
+   "version": "0.3",
+   "sha256": "5c8c787ee2ce45ed436d5aaa276eeb735396dc7a56878a01cd06bf688b08bc58",
    "valid": true,
    "errors": []
   },
