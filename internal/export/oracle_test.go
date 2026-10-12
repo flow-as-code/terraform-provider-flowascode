@@ -128,21 +128,6 @@ var knownDeviations = map[string]string{
 	"spread": "non-object actions: flowdoc.CanonicalAction and flowdoc.AutoLayout",
 }
 
-// awaitingRebase are oracle cases recorded from a flow-as-code commit that
-// predates a change the provider already carries: the Phase D stack
-// (recorded at ccee157) branched from D01 at c83df60, before D01's recheck
-// added the legacy instance-nested phone-number fold to normalizeArn
-// (d9b1f0e). The provider keeps the fold. Each case is held to still
-// differ, so an entry goes stale loudly once the stack is rebased onto
-// D01's final head and the oracle re-recorded; then the list is emptied.
-var awaitingRebase = map[string]bool{
-	"normalizeArn " + legacyPhone:              true,
-	"normalizeArn " + legacyPhone + ":$SAVED":  true,
-	"exportInstance legacy-phone-number-flows": true,
-}
-
-const legacyPhone = "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/phone-number/p1"
-
 func loadOracle(t *testing.T) oracle {
 	t.Helper()
 	b, err := os.ReadFile("testdata/ts-oracle.json")
@@ -199,14 +184,7 @@ func TestOracleLambdaAndNormalize(t *testing.T) {
 		}
 	}
 	for _, c := range o.NormalizeArn {
-		got := NormalizeArn(c.Input)
-		if awaitingRebase["normalizeArn "+c.Input] {
-			if got == c.Output {
-				t.Errorf("NormalizeArn(%q) now agrees with the oracle; empty awaitingRebase", c.Input)
-			}
-			continue
-		}
-		if got != c.Output {
+		if got := NormalizeArn(c.Input); got != c.Output {
 			t.Errorf("NormalizeArn(%q) = %q, want %q", c.Input, got, c.Output)
 		}
 	}
@@ -534,14 +512,6 @@ func TestOracleExportInstance(t *testing.T) {
 		}
 		if err != nil {
 			t.Fatalf("%s: %v", label, err)
-		}
-		if strings.Contains(c.Spec, "555555555555/phone-number/") && awaitingRebase["exportInstance legacy-phone-number-flows"] {
-			// A flow holding the legacy phone-number ARN: the provider names
-			// it and the ccee157 oracle fails it (awaitingRebase).
-			if len(result.Failures) == len(c.Result.Failures) {
-				t.Errorf("%s now agrees with the oracle on its failures; empty awaitingRebase", label)
-			}
-			continue
 		}
 		if !reflect.DeepEqual(result.Warnings, c.Result.Warnings) {
 			t.Errorf("%s: warnings\n got %q\nwant %q", label, result.Warnings, c.Result.Warnings)

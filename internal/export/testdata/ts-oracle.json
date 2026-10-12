@@ -1,5 +1,5 @@
 {
-  "generatedFrom": "ccee157f7c1915e0212dad52bc59f817d3fe1493",
+  "generatedFrom": "e78970ffb56d7d47fece5ca7db5c5f89102e7eff",
   "parseConnectArn": [
     {
       "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/q1",
@@ -476,11 +476,11 @@
     },
     {
       "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/phone-number/p1",
-      "output": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/phone-number/p1"
+      "output": "arn:aws:connect:us-east-1:111122223333:phone-number/p1"
     },
     {
       "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/phone-number/p1:$SAVED",
-      "output": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/phone-number/p1"
+      "output": "arn:aws:connect:us-east-1:111122223333:phone-number/p1"
     },
     {
       "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/phone-number/",
@@ -1769,17 +1769,16 @@
         "f2"
       ],
       "result": {
-        "flows": [],
-        "warnings": [],
-        "failures": [
+        "flows": [
           {
             "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f1",
-            "name": "Legacy",
-            "reason": "Cannot export \"legacy\": 1 ARN(s) not found in the instance inventory: arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/phone-number/pppp7777-0000-4000-8000-000000000001",
-            "unknownArns": [
-              "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/phone-number/pppp7777-0000-4000-8000-000000000001"
-            ]
-          },
+            "id": "f1",
+            "sourceName": "Legacy",
+            "doc": "{\n  \"flowdoc\": \"0.3\",\n  \"kind\": \"flow\",\n  \"name\": \"legacy\",\n  \"displayName\": \"Legacy\",\n  \"connectType\": \"CONTACT_FLOW\",\n  \"content\": {\n    \"Version\": \"2019-10-30\",\n    \"StartAction\": \"a\",\n    \"Actions\": [\n      {\n        \"Identifier\": \"a\",\n        \"Type\": \"StartOutboundChatContact\",\n        \"Parameters\": {\n          \"SourceEndpoint\": {\n            \"Address\": \"${cdref:phonenumber:main-did}\",\n            \"Type\": \"CONNECT_PHONENUMBER_ARN\"\n          }\n        },\n        \"Transitions\": {}\n      }\n    ]\n  },\n  \"layout\": {\n    \"a\": {\n      \"x\": 20,\n      \"y\": 20\n    }\n  },\n  \"refs\": [\n    {\n      \"token\": \"${cdref:phonenumber:main-did}\",\n      \"type\": \"phonenumber\",\n      \"name\": \"main-did\"\n    }\n  ],\n  \"meta\": {\n    \"generator\": \"core@0.3\",\n    \"source\": {\n      \"id\": \"f1\",\n      \"instanceId\": \"11111111-2222-3333-4444-555555555555\",\n      \"name\": \"Legacy\"\n    }\n  }\n}\n"
+          }
+        ],
+        "warnings": [],
+        "failures": [
           {
             "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f2",
             "name": "Unlisted",
