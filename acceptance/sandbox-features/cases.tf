@@ -12,12 +12,14 @@ resource "awscc_cases_domain" "sandbox" {
   tags = local.awscc_tags
 }
 
-# IntegrationType CASES_DOMAIN is in the CloudFormation allowed values:
+# IntegrationType CASES_DOMAIN is in the CloudFormation allowed values. Every
+# property but Tags is "Update requires: Replacement"; Tags updates in place:
 # https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-connect-integrationassociation.html
 resource "awscc_connect_integration_association" "cases" {
   instance_id      = local.instance_arn
   integration_arn  = awscc_cases_domain.sandbox.domain_arn
   integration_type = "CASES_DOMAIN"
+  tags             = local.awscc_tags
 
   depends_on = [awscc_customerprofiles_integration.connect]
 }

@@ -11,7 +11,10 @@ shared through CI.
 Everything it creates is named `fac-sbx-*` (the Customer Profiles domain
 `amazon-connect-fac-sbx-profiles`, for the reason in its table row) and
 tagged `Project=flow-as-code`, `Purpose=phase-d-probes`,
-`Root=acceptance/sandbox-features`. Nothing costs
+`Root=acceptance/sandbox-features`, except the predefined attribute, which
+takes no tags. The assistant's tags are written out on it rather than taken
+from `locals.tf`, because any change to an assistant's tags or description
+replaces it and changes its ARN. Nothing costs
 money while idle except the Customer Profiles KMS key (about $1 a month) and
 the claimed phone number (about $0.90 a month). Creating a flow that names
 any of these runs nothing and bills nothing.

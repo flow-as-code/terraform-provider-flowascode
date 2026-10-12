@@ -72,6 +72,7 @@ resource "awscc_connect_integration_association" "message_processor" {
   instance_id      = local.instance_arn
   integration_arn  = aws_lambda_function.message_processor.arn
   integration_type = "MESSAGE_PROCESSOR"
+  tags             = local.awscc_tags
 
   depends_on = [aws_lambda_permission.connect]
 }
