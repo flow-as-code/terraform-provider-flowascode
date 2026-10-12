@@ -1,5 +1,5 @@
 {
- "generatedFrom": "e9d3c2119260bc425d8e10e0eca07f9a4e136dc7",
+ "generatedFrom": "6e17eaf8b116182a1e18ba1935533d25d1251323",
  "ajv": "8.20.0",
  "cases": [
   {
@@ -3481,20 +3481,6 @@
      "schemaPath": "#/allOf/42/then/properties/Parameters/properties/CaseTemplateId/type",
      "keyword": "type",
      "message": "must be string",
-     "property": ""
-    },
-    {
-     "instancePath": "/content/Actions/3/Parameters/CaseTemplateId",
-     "schemaPath": "#/$defs/casetemplateToken/type",
-     "keyword": "type",
-     "message": "must be string",
-     "property": ""
-    },
-    {
-     "instancePath": "/content/Actions/3/Parameters/CaseTemplateId",
-     "schemaPath": "#/allOf/42/then/properties/Parameters/properties/CaseTemplateId/if",
-     "keyword": "if",
-     "message": "must match \"then\" schema",
      "property": ""
     },
     {

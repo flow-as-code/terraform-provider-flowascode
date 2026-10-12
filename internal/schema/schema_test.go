@@ -302,26 +302,9 @@ func earlyStop(missing oracleError, got []Violation) bool {
 			if v.SchemaPath[:vs] == base {
 				return true
 			}
-			// A `then` reached past a failed `type` through a $ref: Ajv
-			// reports the referenced definition's errors at its own
-			// schema path, under $defs.
-			if v.Keyword == "type" && strings.HasPrefix(missing.SchemaPath, "#/$defs/") {
-				return true
-			}
 		}
 	}
 	return false
-}
-
-// knownEarlyStops are cases on which santhosh-tekuri stops where Ajv goes
-// on, held to still stop so an entry goes stale loudly. The FlowDoc 0.3
-// Cases clauses (flow-as-code D06) pair `type: string` with an
-// `if: {pattern}` that a non-string passes, so for a number Ajv also
-// evaluates the `then`'s token $ref and reports its type error too. The
-// verdict is the same. Writing `"type": "string"` inside the `if` upstream
-// would make the lists equal again; until then the case is named here.
-var knownEarlyStops = map[string]bool{
-	"FlowDoc schema rejections: cases: rejects a template id that is not a string": true,
 }
 
 // oracleRecord is one recorded Ajv run.
@@ -428,9 +411,8 @@ func TestAjvOracle(t *testing.T) {
 			}
 			// The FlowDoc schemas pair type, const or enum with no keyword a
 			// value of the wrong type can fail, so on them the lists are equal.
-			stops := compareWithAjv(t, r, vs)
-			if known := knownEarlyStops[c.id()]; known != (stops != 0) {
-				t.Errorf("%d early stops (known: %v)", stops, known)
+			if stops := compareWithAjv(t, r, vs); stops != 0 {
+				t.Errorf("%d early stops", stops)
 			}
 		})
 	}
