@@ -111,6 +111,8 @@ The two differ, and the console name is what task A01 originally listed.
 | Check call progress | `CheckOutboundCallStatus` | flow control | [doc](https://docs.aws.amazon.com/connect/latest/devguide/flow-control-actions-checkoutboundcallstatus.html) |
 | Call phone number | `CompleteOutboundCall` | contact | [doc](https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-completeoutboundcall.html) |
 | Send message (SMS) | `StartOutboundChatContact` | contact | [doc](https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-startoutboundchatcontact.html) |
+| Get stored content | `LoadContactContent` | other | [doc](https://docs.aws.amazon.com/connect/latest/adminguide/get-stored-content.html) (admin guide; no Developer Guide page) |
+| Transfer to phone number | `TransferParticipantToThirdParty` | other | [export](exports/transfer-participant-to-third-party.json), [block](https://docs.aws.amazon.com/connect/latest/adminguide/transfer-to-phone-number.html) (no page documents the Type) |
 
 ## Reference-bearing parameters
 
@@ -2349,6 +2351,201 @@ is read rather than when the type is modeled.
       https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-startoutboundchatcontact.html
       https://docs.aws.amazon.com/connect/latest/adminguide/send-message.html
       https://docs.aws.amazon.com/connect/latest/adminguide/setup-sms-messaging.html
+47. Census additions (tasks/D09; the admin guide's block pages read
+    2026-10-05 for rule 40 and again on 2026-10-12). The Types D00's census
+    added from outside the Developer Guide are modeled where a page or a
+    kept console export shows their shape and the service has not refused
+    them by name; the rest are recorded here as not modeled, with what
+    would settle each. **Probe pending**: the create sweep the evidence rule
+    asks for (tasks/README.md, Phase D) has not run. On 2026-10-12 the
+    sandbox's AWS credentials had expired. Its inputs are kept in
+    `probes/47/`, with `PENDING.md` saying what the run needs. Until the
+    sweep, every required key, error, `next` and flow-type entry below is
+    the page's or the export's reading, and each bullet names the probes
+    that settle it.
+    - `LoadContactContent`, modeled from the Get stored content block page
+      (its catalog `doc`, `source` `adminguide`). The page: "You can
+      configure the **Get stored content** block by using the Connect
+      Customer admin website or by using the `LoadContactContent` in the
+      Connect Customer Flow language"; its one option, Email message (Plain
+      text), "will download the plain text version of the email message
+      present in your S3 bucket and store it on the
+      `$.Email.EmailMessage.Plaintext` flow attribute", up to 64 KB. Its
+      Flow language example carries `"ContentType": enum "EmailMessage"`,
+      a `NextAction` and one error, `NoMatchingError`. Channels voice, chat
+      and task "No", email "Yes"; flow types inbound, customer queue,
+      customer hold, customer whisper, outbound whisper, agent hold, agent
+      whisper, transfer to agent, transfer to queue and disconnect. The
+      catalog records `ContentType` as an optional `enum` of the one value
+      (rule 40's create was accepted with `Parameters` empty), channels
+      `EMAIL`, `flowTypes` `unrestricted` (the ten listed are every FlowDoc
+      connect type, a disconnect flow being a `CONTACT_FLOW`, and only a
+      campaign flow, which FlowDoc does not model, is left out; a module by
+      the note above `IN_MODULE`), `next` required and the catch-all
+      required and wired by the builder. The class writes the page's form;
+      codegen reads back only that form, and an action without
+      `ContentType` stays generic. The 0.3 schema clause holds
+      `ContentType` to the page's one value.
+      Planned probes: `load-required-set-alone` (the catalog's required set
+      alone, `Parameters` empty; the accepted-set probe) and
+      `load-required` (the class's form); `load-no-catch-all` and
+      `load-no-next` (each a removal alone); `load-content-type-unknown`
+      and `load-content-type-jsonpath` (the schema clause's one value); and
+      `load-customer-hold`, `load-outbound-whisper` and `load-module` (flow
+      types no other probe covers, the last one the page does not name).
+      The type has no optional container.
+      https://docs.aws.amazon.com/connect/latest/adminguide/get-stored-content.html
+    - `TransferParticipantToThirdParty`, modeled from the kept export
+      (its catalog `doc`,
+      `conformance/flow-language/exports/transfer-participant-to-third-party.json`,
+      `source` `console-export`; the export's README says what it is: the
+      action `roundtrip/unknown-actions` carried from 2026-09-11 in the
+      shape of the console's sample flows, not a file the console wrote as
+      it stands). No AWS page documents the Type: its API Reference page,
+      https://docs.aws.amazon.com/connect/latest/APIReference/participant-actions-transferparticipanttothirdparty.html,
+      renders only its title (rule 40). The export carries
+      `ThirdPartyPhoneNumber` (a JSONPath), `ThirdPartyConnectionTimeLimitSeconds`
+      (`"30"`) and `ContinueFlowExecution` (`"True"`), a `NextAction`, and
+      `CallFailed`, `ConnectionTimeLimitExceeded` and `NoMatchingError` in
+      that order. The Transfer to phone number block page, which the
+      console writes as this Type, gives the restrictions: channels voice
+      "Yes", chat, task and email "No - Error branch"; flow types inbound,
+      customer queue, transfer to agent and transfer to queue; branches
+      Success, Call Failed, Timeout and Error; Resume flow after disconnect
+      "works only if the external party disconnects, and the customer
+      doesn't disconnect"; Send DTMF, Caller ID number and Caller ID name,
+      none with a key the export shows. The service evidence is the
+      showcase repository's VERIFY 16.8
+      (https://github.com/flow-as-code/hollow-hour-example-typescript/blob/84db5c0c849d456a90cf5a94bf76ba6681ef5d8b/VERIFY.md,
+      read 2026-10-12): on 2026-09-30 (us-west-2) the export's shape with
+      a JSONPath number was accepted in a contact flow, and each of the
+      three errors removed alone was refused, "Action is missing required
+      error. Error: <branch>, Path: Actions[0]"; and rule 40's create of the
+      same shape was accepted on 2026-10-05. A comment in this repository's
+      Terraform cookbook, removed by D09 when the recipe moved to another
+      type, said that with `ContinueFlowExecution` `"False"` the action
+      takes "only the catch-all (sandbox, 2026-09-29)"; no message was
+      recorded with it, so it is a reading, not evidence
+      (https://github.com/flow-as-code/flow-as-code/blob/8a7c3d71e0f92882b04229dbcd4fd83614be6790/examples/terraform-provider/cookbook/unmodeled-action.tf,
+      lines 4 to 6). `third-required-set-alone` (`"False"` with the
+      catch-all alone) and `third-end-all-branches` (`"False"` with all
+      three) settle it.
+      The catalog records the three keys as required (the export's), the
+      number a `stringOrJsonPath`, the time limit an `integerString` with
+      no bound (no page states one), `ContinueFlowExecution` an `enum` of
+      `"True"` and `"False"` (the export's capitalisation), channels
+      `VOICE`, flow types `CONTACT_FLOW`, `CUSTOMER_QUEUE`,
+      `AGENT_TRANSFER`, `QUEUE_TRANSFER` and `MODULE` (a module by the note
+      above `IN_MODULE`), `next` required, the catch-all required, and a
+      shape: with `ContinueFlowExecution` `"True"`, `CallFailed` and
+      `ConnectionTimeLimitExceeded` are required, which the
+      `conditional-shape` lint rule enforces. With `"False"` neither is
+      required: the cookbook's reading, until the sweep. The builder takes
+      the number as a JSONPath only (a destination is supplied at run time,
+      and whether the service takes a static one is the sweep's), writes
+      the time limit as a decimal string and refuses one that is not a
+      positive integer, writes all three branches with `continueFlow:
+      true`, and with `continueFlow: false` the catch-all and whichever of
+      the other two the author wires. Codegen reads back only those forms;
+      a static number, a numeric or JSONPath time limit, another
+      `ContinueFlowExecution` spelling, another key (Send DTMF or caller
+      ID) or another error order stays generic. The 0.3 schema clause holds
+      the number and the time limit to strings and the flag to its two
+      values.
+      Planned probes: `third-required-set-alone` (the catalog's required
+      set alone: the three keys, `"False"`, the catch-all alone; the
+      accepted-set probe) and `third-required` (the export's form);
+      `third-continue-no-call-failed`, `third-continue-no-timeout` and
+      `third-continue-no-catch-all` (the shape's branches and the
+      catch-all, each removed alone from the `"True"` form) and
+      `third-end-no-catch-all` (from the `"False"` form);
+      `third-end-all-branches` (the cookbook's reading of the `"False"`
+      form); `third-continue-no-next` and `third-end-no-next` (each form
+      without `NextAction`); `third-no-continue`, `third-no-time-limit`
+      and `third-no-number` (each required key removed alone);
+      `third-static-number` (a static destination, which tasks/D09 asks
+      the sweep to record); `third-continue-lowercase` and
+      `third-time-limit-number` (the clause's spellings);
+      `third-time-limit-zero`, `third-time-limit-600` and
+      `third-time-limit-jsonpath` (a bound and a dynamic form); and
+      `third-customer-queue`, `third-agent-transfer`, `third-queue-transfer`
+      and `third-module` (allowed) against `third-customer-whisper` and
+      `third-customer-hold` (forbidden). The type has no optional
+      container.
+      https://docs.aws.amazon.com/connect/latest/adminguide/transfer-to-phone-number.html
+    - Not modeled, with what would settle each (owner decision 8 for the
+      exports; none was obtainable by 2026-10-12, and the sandbox's 20
+      default and sample flows carry none of these, rule 40):
+      - `RouteContactToAgent` (Interrupt agent): blocked on evidence. The
+        page (read again 2026-10-12) names the Type, the customer queue
+        flow alone ("If this block is used inside a Flow module that is
+        invoked from a flow type other than Customer queue flow, the block
+        takes the **Error** branch"), every channel, the Success and Error
+        branches and an agent "from the instance-level user list" or "as a
+        contact attribute" (User ARN, User ID or Username), with no
+        parameter key and no prerequisite feature. The service refused the
+        Type by name on 2026-10-05 ("Invalid Action type", rule 40) on an
+        instance in us-east-1. A type the service refused as unknown is not
+        modeled on page evidence alone. `route-keys` puts the same probe to
+        the sandbox in us-west-2: a refusal naming a parameter shows the
+        Type exists there and names its key; another "Invalid Action type"
+        leaves the spelling or a Region rollout as the question, which a
+        console export of the block settles. The agent would need a `user`
+        ref type, which FlowDoc 0.3 does not carry, so even with an export
+        the type waits for a format bump planned in tasks/D09 or stays
+        generic with the reason recorded.
+      - `CheckSegmentMembership` (Customer profiles, Check segment
+        membership): blocked on evidence. Refused as "Invalid Action type"
+        on 2026-10-05 on an instance with no Customer Profiles domain (rule
+        40). The page names a segment ("SegmentDefinitionName in the
+        ListSegmentDefinitions operation") and a required profile id, each
+        set manually or dynamically, and the branches In segment, Not in
+        segment and Error, with no key. `segment-keys` repeats the probe on
+        an instance with a domain. A static segment would need a `segment`
+        ref type, which 0.3 does not carry.
+        https://docs.aws.amazon.com/connect/latest/adminguide/customer-profiles-block.html
+      - `AuthenticateParticipant` (Authenticate Customer): blocked on an
+        export. The service named three required keys
+        (`CognitoConfiguration`, `CustomerProfilesConfiguration`,
+        `TimeLimitMinutes`), a required `TimeLimitExceeded` branch and a
+        `Conditions` shape the empty list did not meet (rule 40), but no
+        page or export shows what the two objects hold or what the
+        conditions are, so a model would be invented.
+        `authenticate-nested-keys` sends the three keys with empty objects
+        so the refusal names the nested keys; the shapes still need an
+        export.
+      - The console-only blocks (Agentic CX, External Tool, Data Table,
+        Create persistent contact association, Get profile
+        recommendations): no Type is known, and none is invented. Each
+        waits for the owner's export (owner decision 8) and is listed in
+        the table under "Unmodeled actions"; tasks/D10 names them in the
+        release notes.
+    - The Set Touchtone Buffer Behavior form of `GetParticipantInput`
+      (`EnableDTMFBuffer`, tasks/D09's last type bullet) is not typed yet.
+      The page (read again 2026-10-12) writes the Enable form as
+      `"EnableDTMFBuffer": "true"` alone, with no `InputTimeLimitSeconds`
+      and no `StoreInput`, both of which the catalog requires of every
+      `GetParticipantInput` (the second by a shape the service set on
+      2026-09-29). Typing it means a catalog shape conditioned on a key
+      being present, a form the vocabulary does not have, and its port to
+      the provider's lint, so it waits for the sweep to say which
+      requirements the buffer form is exempt from. The page's
+      `InputEncryption` (`EncryptionKeyId`, `Key`) matches what the catalog
+      records; nothing was re-added. Planned probes: `dtmf-buffer-enable`
+      (the page's form; the control), `dtmf-buffer-enable-capitalised`
+      (`"True"` against the page's `"true"`), `dtmf-buffer-stop`,
+      `dtmf-buffer-stop-store` and `dtmf-buffer-stop-store-encrypted` (the
+      Stop and Clear forms, the last the page's example), and
+      `dtmf-buffer-outbound-whisper` and `dtmf-buffer-module` (a flow type
+      the page lists and the catalog's `GetParticipantInput` does not, and
+      a module). A document carrying the form round-trips as a generic
+      block meanwhile, and `conditional-shape` reports the page's own
+      Enable example three times (it "needs StoreInput", and without
+      `StoreInput` `"True"` its `InputTimeLimitExceeded` and
+      `NoMatchingCondition` branches; checked 2026-10-12), so such a
+      document disables that rule until the sweep says whether the service
+      agrees.
+      https://docs.aws.amazon.com/connect/latest/adminguide/set-touchtone-buffer-behavior.html
 
 ## Per-action parameter shapes
 
@@ -2471,6 +2668,11 @@ StartOutboundChatContact { SourceEndpoint: { Address: phonenumber, Type: "CONNEC
                            DestinationEndpoint: { Address, Type: "TELEPHONE_NUMBER" },   // E.164 or a JSONPath
                            ContactFlowArn: flow, ContactSubtype: "connect:SMS",
                            InitialSystemMessage?: { Content }, RelatedContact?: "CURRENT" }
+LoadContactContent       { ContentType?: "EmailMessage" }   // the admin guide's example; email only
+TransferParticipantToThirdParty { ThirdPartyPhoneNumber,   // a JSONPath in the builder; static pending rule 47
+                           ThirdPartyConnectionTimeLimitSeconds,   // decimal string
+                           ContinueFlowExecution: "True" | "False" }   // "True": CallFailed and
+                                                                       // ConnectionTimeLimitExceeded required; voice only
 ```
 
 `GetParticipantInput` was recorded 2026-09-01 from
@@ -2643,7 +2845,7 @@ the 49 recorded on 2026-08-31, and rechecked 2026-10-05, matching), plus 4
 documented only in the Administrator Guide, plus 1 seen only in a console
 export. Beside it, not in it, 5 console blocks have no documented Type at
 all and enter the count only when an export names one. The builder models
-54 of the 61. Everything not in the modeled set above parses to a
+56 of the 61. Everything not in the modeled set above parses to a
 GenericBlock and round-trips verbatim. That is what makes a small modeled
 set survivable. The `conformance/roundtrip/unknown-actions` fixture holds
 only actions the builder does not model (with tokens inside their
@@ -2703,17 +2905,29 @@ fixture name both forms (`CompleteOutboundCall` with `VoiceConnector`,
 `StartOutboundChatContact` with `InitialTemplatedSystemMessage`) and allow
 no other modeled type.
 https://docs.aws.amazon.com/connect/latest/APIReference/API_StartOutboundChatContact.html
+On 2026-10-12, when D09 modeled `LoadContactContent`, the fixture dropped
+it: `CompleteOutboundCall` goes on to `TransferParticipantToThirdParty`,
+and `StartVoiceIdStream` loops back to that action instead. When D09 then
+modeled `TransferParticipantToThirdParty`, the fixture dropped it too:
+`CompleteOutboundCall` goes on to `StartVoiceIdStream`, which loops back
+to `CompleteOutboundCall`. The flow token stays in
+`StartOutboundChatContact` and the queue token in `CompleteOutboundCall`,
+in the two generic forms of modeled types, and `StartVoiceIdStream` is the
+one unmodeled type left. The Terraform cookbook's generic recipe moved from
+`TransferParticipantToThirdParty` to `StartVoiceIdStream` the same day.
 
 | Part of the count       | Types | Modeled | Where                                                       |
 | ----------------------- | ----- | ------- | ----------------------------------------------------------- |
 | Developer Guide pages   | 56    | 54      | the four category lists in `catalog.json`                   |
-| Administrator Guide     | 4     | 0       | `catalog.json` category `other`, `source` `adminguide`      |
-| Console export          | 1     | 0       | `catalog.json` category `other`, `source` `console-export`  |
-| Denominator             | 61    | 54      |                                                             |
+| Administrator Guide     | 4     | 1       | `catalog.json` category `other`, `source` `adminguide`      |
+| Console export          | 1     | 1       | `catalog.json` category `other`, `source` `console-export`  |
+| Denominator             | 61    | 56      |                                                             |
 | Console-only blocks     | 5     |         | awaiting an export (owner decision 8); listed below, no Type |
 
 Types outside the Developer Guide (rule 40 has the page quotes and the
-2026-10-05 create probes; each entry is `modeled: false` until its D09 task.
+2026-10-05 create probes, rule 47 what D09 modeled and why the rest wait;
+`LoadContactContent` and `TransferParticipantToThirdParty` are modeled,
+the other three are `modeled: false`.
 Of the five, the service accepted `LoadContactContent` and
 `TransferParticipantToThirdParty`, refused `AuthenticateParticipant` naming
 its required keys and branch, and refused `CheckSegmentMembership` and
@@ -2749,4 +2963,5 @@ console-only forms (rule 37's refused `Events` shape); and the Set
 Touchtone Buffer Behavior form of `GetParticipantInput`, which the admin
 guide writes with `EnableDTMFBuffer` (with `StoreInput` and
 `InputEncryption` for Stop and Clear), a parameter the catalog does not
-record. D09 types that form after C04 (rule 40 quotes the page).
+record. D09 left that form untyped pending rule 47's buffer probes (rule
+40 quotes the page; rule 47 says why).

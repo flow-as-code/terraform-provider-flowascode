@@ -2107,6 +2107,63 @@
               }
             }
           }
+        },
+        {
+          "if": {
+            "properties": {
+              "Type": {
+                "const": "LoadContactContent"
+              }
+            },
+            "required": [
+              "Type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "Parameters": {
+                "properties": {
+                  "ContentType": {
+                    "enum": [
+                      "EmailMessage"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "Type": {
+                "const": "TransferParticipantToThirdParty"
+              }
+            },
+            "required": [
+              "Type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "Parameters": {
+                "properties": {
+                  "ThirdPartyPhoneNumber": {
+                    "type": "string"
+                  },
+                  "ThirdPartyConnectionTimeLimitSeconds": {
+                    "type": "string"
+                  },
+                  "ContinueFlowExecution": {
+                    "enum": [
+                      "True",
+                      "False"
+                    ]
+                  }
+                }
+              }
+            }
+          }
         }
       ]
     },
