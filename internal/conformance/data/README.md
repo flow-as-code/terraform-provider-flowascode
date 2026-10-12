@@ -170,7 +170,37 @@ analytics form the builder leaves generic, with its third error); and a flow
 of the stored-input form of `GetParticipantInput` (`stored-input`: digits
 kept by length, a local phone number with its country code and its
 `InvalidPhoneNumber` branch, and an E.164 number, with Text, PromptId and
-SSML bodies; the menu form stays in `dtmf-menu`).
+SSML bodies; the menu form stays in `dtmf-menu`); and a flow of the
+contact-state actions (`contact-state`: the previous participants put on
+hold in each of the three states, the customer's audio streamed both ways
+and from the customer alone and the stream stopped, chat messages processed
+by a Lambda reference with and without delivering what fails processing
+and processing stopped, and a paused task resumed); and a flow of the task
+and AI agent actions (`tasks-and-assistants`: an AI agents assistant
+associated by reference and by attribute, a task created from a flow reference with
+attributes, a description and a delay, from a task template reference
+alone, from both on a schedule read from an attribute, and with its flow
+and delay read from attributes, then a paused task resumed); and a flow of
+the Customer Profiles actions (`customer-profiles`: the caller looked up by
+one identifier, then by two search criteria joined by AND when several
+match, a profile created with
+listed fields and a custom attribute, storing one of each, the contact
+associated with it by two JSONPath ids, and a custom attribute and an email
+address updated, the latest order and an asset by its identifier read,
+and a predefined and a custom calculated attribute read); and a flow of
+the Cases actions (`cases`: the caller's open cases searched by system
+fields, linking the contact and storing a domain field by `casefield`
+reference beside two system fields, the last updated case read by customer
+id when several match, the case found updated with a domain field by
+reference and its summary, linking the current contact, and when none is
+found a case opened from a template
+reference with a domain field by reference and three system fields,
+linking the current contact, then a call log case opened without
+linking); and a flow
+setting routing criteria before a transfer to queue (`routing-criteria`:
+the steps read from a JSONPath, then three typed steps, an OR of an AND and
+a requirement, an AND of two requirements, and a requirement whose value is
+read from an attribute, the last never expiring).
 
 An HCL case is a companion file and the document it stands for.
 `conformance/hcl/README.md` is the contract both the TypeScript writer and

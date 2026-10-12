@@ -142,17 +142,222 @@
     "CreateCase": {
       "category": "contact",
       "doc": "https://docs.aws.amazon.com/connect/latest/devguide/createcase.html",
-      "modeled": false
+      "modeled": true,
+      "block": "create_case",
+      "terminal": false,
+      "flowTypes": "unrestricted",
+      "parameters": [
+        {
+          "key": "LinkContactToCase",
+          "attr": "link_contact_to_case",
+          "kind": "enum",
+          "required": true,
+          "values": [
+            "true",
+            "false"
+          ]
+        },
+        {
+          "key": "ContactToLink",
+          "attr": "contact_to_link",
+          "kind": "enum",
+          "required": false,
+          "values": [
+            "Current",
+            "Related"
+          ]
+        },
+        {
+          "key": "CaseTemplateId",
+          "attr": "case_template_id",
+          "kind": "ref",
+          "required": true,
+          "ref": "casetemplate"
+        },
+        {
+          "key": "CaseRequestFields",
+          "attr": "case_request_fields",
+          "kind": "map",
+          "required": false,
+          "keys": [
+            "assigned_queue",
+            "assigned_user",
+            "case_id",
+            "case_reason",
+            "created_by",
+            "customer_id",
+            "last_closed_datetime",
+            "created_datetime",
+            "last_updated_datetime",
+            "last_updated_user",
+            "reference_number",
+            "reference_id",
+            "status",
+            "summary",
+            "title"
+          ]
+        }
+      ],
+      "refs": [
+        {
+          "path": "CaseTemplateId",
+          "ref": "casetemplate"
+        },
+        {
+          "path": "CaseRequestFields.*~",
+          "ref": "casefield"
+        }
+      ],
+      "transitions": {
+        "next": "required",
+        "conditions": "none",
+        "errors": [
+          {
+            "type": "ContactNotLinked",
+            "required": false,
+            "builder": true,
+            "requiredWhenValue": {
+              "key": "LinkContactToCase",
+              "equals": "true"
+            }
+          },
+          {
+            "type": "NoMatchingError",
+            "required": true,
+            "builder": true
+          }
+        ]
+      }
     },
     "CreateTask": {
       "category": "contact",
       "doc": "https://docs.aws.amazon.com/connect/latest/devguide/createtask.html",
-      "modeled": false
+      "modeled": true,
+      "block": "create_task",
+      "terminal": false,
+      "flowTypes": "unrestricted",
+      "parameters": [
+        {
+          "key": "ContactFlowId",
+          "attr": "contact_flow_id",
+          "kind": "ref",
+          "required": false,
+          "ref": "flow"
+        },
+        {
+          "key": "Attributes",
+          "attr": "attributes",
+          "kind": "map",
+          "required": false
+        },
+        {
+          "key": "Name",
+          "attr": "name",
+          "kind": "string",
+          "required": true
+        },
+        {
+          "key": "Description",
+          "attr": "description",
+          "kind": "string",
+          "required": false
+        },
+        {
+          "key": "References",
+          "attr": "references",
+          "kind": "json",
+          "required": false
+        },
+        {
+          "key": "DelaySeconds",
+          "attr": "delay_seconds",
+          "kind": "integerString",
+          "required": false,
+          "min": 1,
+          "max": 518400,
+          "dynamic": true
+        },
+        {
+          "key": "ScheduledTime",
+          "attr": "scheduled_time",
+          "kind": "stringOrJsonPath",
+          "required": false
+        },
+        {
+          "key": "TaskTemplateId",
+          "attr": "task_template_id",
+          "kind": "ref",
+          "required": false,
+          "ref": "tasktemplate"
+        }
+      ],
+      "constraints": [
+        {
+          "rule": "atMostOne",
+          "keys": [
+            "DelaySeconds",
+            "ScheduledTime"
+          ]
+        }
+      ],
+      "refs": [
+        {
+          "path": "ContactFlowId",
+          "ref": "flow"
+        },
+        {
+          "path": "TaskTemplateId",
+          "ref": "tasktemplate"
+        }
+      ],
+      "transitions": {
+        "next": "required",
+        "conditions": "none",
+        "errors": [
+          {
+            "type": "NoMatchingError",
+            "required": true,
+            "builder": true
+          }
+        ]
+      }
     },
     "CreateWisdomSession": {
       "category": "contact",
       "doc": "https://docs.aws.amazon.com/connect/latest/devguide/createwisdomsession.html",
-      "modeled": false
+      "modeled": true,
+      "block": "create_wisdom_session",
+      "terminal": false,
+      "flowTypes": "unrestricted",
+      "channels": [
+        "VOICE"
+      ],
+      "parameters": [
+        {
+          "key": "WisdomAssistantArn",
+          "attr": "wisdom_assistant_arn",
+          "kind": "ref",
+          "required": true,
+          "ref": "assistant"
+        }
+      ],
+      "refs": [
+        {
+          "path": "WisdomAssistantArn",
+          "ref": "assistant"
+        }
+      ],
+      "transitions": {
+        "next": "required",
+        "conditions": "none",
+        "errors": [
+          {
+            "type": "NoMatchingError",
+            "required": true,
+            "builder": true
+          }
+        ]
+      }
     },
     "DequeueContactAndTransferToQueue": {
       "category": "contact",
@@ -236,7 +441,138 @@
     "GetCase": {
       "category": "contact",
       "doc": "https://docs.aws.amazon.com/connect/latest/devguide/getcase.html",
-      "modeled": false
+      "modeled": true,
+      "block": "get_case",
+      "terminal": false,
+      "flowTypes": "unrestricted",
+      "parameters": [
+        {
+          "key": "LinkContactToCase",
+          "attr": "link_contact_to_case",
+          "kind": "enum",
+          "required": true,
+          "values": [
+            "true",
+            "false"
+          ]
+        },
+        {
+          "key": "ContactToLink",
+          "attr": "contact_to_link",
+          "kind": "enum",
+          "required": false,
+          "values": [
+            "Current",
+            "Related"
+          ]
+        },
+        {
+          "key": "GetLastUpdatedCase",
+          "attr": "get_last_updated_case",
+          "kind": "enum",
+          "required": true,
+          "values": [
+            "true",
+            "false"
+          ]
+        },
+        {
+          "key": "CustomerId",
+          "attr": "customer_id",
+          "kind": "stringOrJsonPath",
+          "required": false
+        },
+        {
+          "key": "CaseRequestFields",
+          "attr": "case_request_fields",
+          "kind": "map",
+          "required": false,
+          "keys": [
+            "assigned_queue",
+            "assigned_user",
+            "case_id",
+            "case_reason",
+            "created_by",
+            "customer_id",
+            "last_closed_datetime",
+            "created_datetime",
+            "last_updated_datetime",
+            "last_updated_user",
+            "reference_number",
+            "reference_id",
+            "status",
+            "summary",
+            "title"
+          ]
+        },
+        {
+          "key": "CaseResponseFields",
+          "attr": "case_response_fields",
+          "kind": "list",
+          "required": false,
+          "of": {
+            "kind": "string"
+          },
+          "max": 10,
+          "keys": [
+            "assigned_queue",
+            "assigned_user",
+            "case_id",
+            "case_reason",
+            "created_by",
+            "customer_id",
+            "last_closed_datetime",
+            "created_datetime",
+            "last_updated_datetime",
+            "last_updated_user",
+            "reference_number",
+            "reference_id",
+            "status",
+            "summary",
+            "title"
+          ]
+        }
+      ],
+      "refs": [
+        {
+          "path": "CaseRequestFields.*~",
+          "ref": "casefield"
+        },
+        {
+          "path": "CaseResponseFields[]",
+          "ref": "casefield"
+        }
+      ],
+      "transitions": {
+        "next": "required",
+        "conditions": "none",
+        "errors": [
+          {
+            "type": "ContactNotLinked",
+            "required": false,
+            "builder": true,
+            "requiredWhenValue": {
+              "key": "LinkContactToCase",
+              "equals": "true"
+            }
+          },
+          {
+            "type": "MultipleFound",
+            "required": false,
+            "builder": true
+          },
+          {
+            "type": "NoneFound",
+            "required": false,
+            "builder": true
+          },
+          {
+            "type": "NoMatchingError",
+            "required": true,
+            "builder": true
+          }
+        ]
+      }
     },
     "InvokeFlowModule": {
       "category": "contact",
@@ -394,7 +730,87 @@
     "UpdateCase": {
       "category": "contact",
       "doc": "https://docs.aws.amazon.com/connect/latest/devguide/updatecase.html",
-      "modeled": false
+      "modeled": true,
+      "block": "update_case",
+      "terminal": false,
+      "flowTypes": "unrestricted",
+      "parameters": [
+        {
+          "key": "LinkContactToCase",
+          "attr": "link_contact_to_case",
+          "kind": "enum",
+          "required": true,
+          "values": [
+            "true",
+            "false"
+          ]
+        },
+        {
+          "key": "ContactToLink",
+          "attr": "contact_to_link",
+          "kind": "enum",
+          "required": false,
+          "values": [
+            "Current",
+            "Related"
+          ]
+        },
+        {
+          "key": "CaseId",
+          "attr": "case_id",
+          "kind": "stringOrJsonPath",
+          "required": true
+        },
+        {
+          "key": "CaseRequestFields",
+          "attr": "case_request_fields",
+          "kind": "map",
+          "required": false,
+          "keys": [
+            "assigned_queue",
+            "assigned_user",
+            "case_id",
+            "case_reason",
+            "created_by",
+            "customer_id",
+            "last_closed_datetime",
+            "created_datetime",
+            "last_updated_datetime",
+            "last_updated_user",
+            "reference_number",
+            "reference_id",
+            "status",
+            "summary",
+            "title"
+          ]
+        }
+      ],
+      "refs": [
+        {
+          "path": "CaseRequestFields.*~",
+          "ref": "casefield"
+        }
+      ],
+      "transitions": {
+        "next": "required",
+        "conditions": "none",
+        "errors": [
+          {
+            "type": "ContactNotLinked",
+            "required": false,
+            "builder": true,
+            "requiredWhenValue": {
+              "key": "LinkContactToCase",
+              "equals": "true"
+            }
+          },
+          {
+            "type": "NoMatchingError",
+            "required": true,
+            "builder": true
+          }
+        ]
+      }
     },
     "UpdateContactAttributes": {
       "category": "contact",
@@ -651,12 +1067,167 @@
     "UpdateContactMediaProcessing": {
       "category": "contact",
       "doc": "https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatecontactmediaprocessing.html",
-      "modeled": false
+      "modeled": true,
+      "block": "update_contact_media_processing",
+      "terminal": false,
+      "flowTypes": "unrestricted",
+      "channels": [
+        "CHAT"
+      ],
+      "parameters": [
+        {
+          "key": "ChatProcessor",
+          "attr": "chat_processor",
+          "kind": "object",
+          "required": true,
+          "fields": [
+            {
+              "key": "ProcessingEnabled",
+              "attr": "processing_enabled",
+              "kind": "enum",
+              "required": true,
+              "values": [
+                "True",
+                "False"
+              ]
+            },
+            {
+              "key": "LambdaProcessorARN",
+              "attr": "lambda_processor_arn",
+              "kind": "ref",
+              "required": false,
+              "ref": "lambda"
+            },
+            {
+              "key": "ChatProcessorSettings",
+              "attr": "chat_processor_settings",
+              "kind": "object",
+              "required": false,
+              "fields": [
+                {
+                  "key": "DeliverUnprocessedMessages",
+                  "attr": "deliver_unprocessed_messages",
+                  "kind": "enum",
+                  "required": true,
+                  "values": [
+                    "True",
+                    "False"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "refs": [
+        {
+          "path": "ChatProcessor.LambdaProcessorARN",
+          "ref": "lambda"
+        }
+      ],
+      "transitions": {
+        "next": "required",
+        "conditions": "none",
+        "errors": [
+          {
+            "type": "NoMatchingError",
+            "required": true,
+            "builder": true
+          },
+          {
+            "type": "ChannelMismatch",
+            "required": false,
+            "builder": true,
+            "when": "the contact's channel is not chat; the page does not say it must be defined, and rule 41's probe decides whether the service requires it"
+          }
+        ]
+      }
     },
     "UpdateContactMediaStreamingBehavior": {
       "category": "contact",
       "doc": "https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatecontactmediastreamingbehavior.html",
-      "modeled": false
+      "modeled": true,
+      "block": "update_contact_media_streaming_behavior",
+      "terminal": false,
+      "flowTypes": [
+        "CONTACT_FLOW",
+        "CUSTOMER_QUEUE",
+        "AGENT_TRANSFER",
+        "QUEUE_TRANSFER",
+        "CUSTOMER_WHISPER",
+        "AGENT_WHISPER",
+        "OUTBOUND_WHISPER",
+        "MODULE"
+      ],
+      "channels": [
+        "VOICE"
+      ],
+      "parameters": [
+        {
+          "key": "MediaStreamingState",
+          "attr": "media_streaming_state",
+          "kind": "enum",
+          "required": true,
+          "values": [
+            "Enabled",
+            "Disabled"
+          ]
+        },
+        {
+          "key": "Participants",
+          "attr": "participants",
+          "kind": "list",
+          "required": true,
+          "of": {
+            "kind": "object",
+            "fields": [
+              {
+                "key": "ParticipantType",
+                "attr": "participant_type",
+                "kind": "enum",
+                "required": true,
+                "values": [
+                  "Customer"
+                ]
+              },
+              {
+                "key": "MediaDirections",
+                "attr": "media_directions",
+                "kind": "list",
+                "required": true,
+                "of": {
+                  "kind": "enum",
+                  "values": [
+                    "From",
+                    "To"
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "key": "MediaStreamType",
+          "attr": "media_stream_type",
+          "kind": "enum",
+          "required": true,
+          "values": [
+            "Audio"
+          ]
+        }
+      ],
+      "refs": [],
+      "transitions": {
+        "next": "required",
+        "conditions": "none",
+        "errors": [
+          {
+            "type": "NoMatchingError",
+            "required": true,
+            "builder": true
+          }
+        ]
+      }
     },
     "UpdateContactRecordingAndAnalyticsBehavior": {
       "category": "contact",
@@ -850,7 +1421,26 @@
     "ResumeContact": {
       "category": "contact",
       "doc": "https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatecontactresumecontact.html",
-      "modeled": false
+      "modeled": true,
+      "block": "resume_contact",
+      "terminal": false,
+      "flowTypes": "unrestricted",
+      "channels": [
+        "TASK"
+      ],
+      "parameters": [],
+      "refs": [],
+      "transitions": {
+        "next": "required",
+        "conditions": "none",
+        "errors": [
+          {
+            "type": "NoMatchingError",
+            "required": true,
+            "builder": true
+          }
+        ]
+      }
     },
     "UpdateContactRoutingBehavior": {
       "category": "contact",
@@ -1007,7 +1597,43 @@
     "UpdatePreviousContactParticipantState": {
       "category": "contact",
       "doc": "https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatepreviouscontactparticipantstate.html",
-      "modeled": false
+      "modeled": true,
+      "block": "update_previous_contact_participant_state",
+      "terminal": false,
+      "flowTypes": [
+        "CONTACT_FLOW",
+        "AGENT_TRANSFER",
+        "QUEUE_TRANSFER",
+        "MODULE"
+      ],
+      "channels": [
+        "VOICE"
+      ],
+      "parameters": [
+        {
+          "key": "PreviousContactParticipantState",
+          "attr": "previous_contact_participant_state",
+          "kind": "enum",
+          "required": true,
+          "values": [
+            "AgentOnHold",
+            "CustomerOnHold",
+            "OffHold"
+          ]
+        }
+      ],
+      "refs": [],
+      "transitions": {
+        "next": "required",
+        "conditions": "none",
+        "errors": [
+          {
+            "type": "NoMatchingError",
+            "required": true,
+            "builder": true
+          }
+        ]
+      }
     },
     "ConnectParticipantWithLexBot": {
       "category": "participant",
@@ -2273,7 +2899,70 @@
     "UpdateRoutingCriteria": {
       "category": "flowControl",
       "doc": "https://docs.aws.amazon.com/connect/latest/devguide/flow-control-actions-updateroutingcriteria.html",
-      "modeled": false
+      "modeled": true,
+      "block": "update_routing_criteria",
+      "terminal": false,
+      "flowTypes": [
+        "CONTACT_FLOW",
+        "CUSTOMER_QUEUE",
+        "AGENT_TRANSFER",
+        "QUEUE_TRANSFER",
+        "MODULE"
+      ],
+      "parameters": [
+        {
+          "key": "RoutingCriteria",
+          "attr": "routing_criteria",
+          "kind": "object",
+          "required": true,
+          "fields": [
+            {
+              "key": "Steps",
+              "attr": "steps",
+              "kind": "list",
+              "required": true,
+              "dynamic": true,
+              "of": {
+                "kind": "object",
+                "fields": [
+                  {
+                    "key": "Expression",
+                    "attr": "expression",
+                    "kind": "json",
+                    "required": true
+                  },
+                  {
+                    "key": "Expiry",
+                    "attr": "expiry",
+                    "kind": "object",
+                    "required": false,
+                    "fields": [
+                      {
+                        "key": "DurationInSeconds",
+                        "attr": "duration_in_seconds",
+                        "kind": "integerString",
+                        "required": true
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "refs": [],
+      "transitions": {
+        "next": "required",
+        "conditions": "none",
+        "errors": [
+          {
+            "type": "NoMatchingError",
+            "required": true,
+            "builder": true
+          }
+        ]
+      }
     },
     "Wait": {
       "category": "flowControl",
@@ -2336,7 +3025,53 @@
     "AssociateContactToCustomerProfile": {
       "category": "interaction",
       "doc": "https://docs.aws.amazon.com/connect/latest/devguide/interactions-associatecontacttocustomerprofile.html",
-      "modeled": false
+      "modeled": true,
+      "block": "associate_contact_to_customer_profile",
+      "terminal": false,
+      "flowTypes": "unrestricted",
+      "parameters": [
+        {
+          "key": "ProfileRequestData",
+          "attr": "profile_request_data",
+          "kind": "object",
+          "required": true,
+          "fields": [
+            {
+              "key": "ProfileId",
+              "attr": "profile_id",
+              "kind": "stringOrJsonPath",
+              "required": true
+            },
+            {
+              "key": "ContactId",
+              "attr": "contact_id",
+              "kind": "stringOrJsonPath",
+              "required": true
+            }
+          ]
+        },
+        {
+          "key": "ProfileResponseData",
+          "attr": "profile_response_data",
+          "kind": "list",
+          "required": false,
+          "of": {
+            "kind": "string"
+          }
+        }
+      ],
+      "refs": [],
+      "transitions": {
+        "next": "required",
+        "conditions": "none",
+        "errors": [
+          {
+            "type": "NoMatchingError",
+            "required": true,
+            "builder": true
+          }
+        ]
+      }
     },
     "CreateCallbackContact": {
       "category": "interaction",
@@ -2441,7 +3176,159 @@
     "CreateCustomerProfile": {
       "category": "interaction",
       "doc": "https://docs.aws.amazon.com/connect/latest/devguide/interactions-createcustomerprofile.html",
-      "modeled": false
+      "modeled": true,
+      "block": "create_customer_profile",
+      "terminal": false,
+      "flowTypes": "unrestricted",
+      "parameters": [
+        {
+          "key": "ProfileRequestData",
+          "attr": "profile_request_data",
+          "kind": "map",
+          "required": false,
+          "keys": [
+            "FirstName",
+            "MiddleName",
+            "LastName",
+            "PhoneNumber",
+            "EmailAddress",
+            "AccountNumber",
+            "AdditionalInformation",
+            "PartyType",
+            "BusinessName",
+            "BirthDate",
+            "Gender",
+            "MobilePhoneNumber",
+            "HomePhoneNumber",
+            "BusinessPhoneNumber",
+            "BusinessEmailAddress",
+            "Address1",
+            "Address2",
+            "Address3",
+            "Address4",
+            "City",
+            "County",
+            "Country",
+            "PostalCode",
+            "Province",
+            "State",
+            "ShippingAddress1",
+            "ShippingAddress2",
+            "ShippingAddress3",
+            "ShippingAddress4",
+            "ShippingCity",
+            "ShippingCounty",
+            "ShippingCountry",
+            "ShippingPostalCode",
+            "ShippingProvince",
+            "ShippingState",
+            "MailingAddress1",
+            "MailingAddress2",
+            "MailingAddress3",
+            "MailingAddress4",
+            "MailingCity",
+            "MailingCounty",
+            "MailingCountry",
+            "MailingPostalCode",
+            "MailingProvince",
+            "MailingState",
+            "BillingAddress1",
+            "BillingAddress2",
+            "BillingAddress3",
+            "BillingAddress4",
+            "BillingCity",
+            "BillingCounty",
+            "BillingCountry",
+            "BillingPostalCode",
+            "BillingProvince",
+            "BillingState"
+          ],
+          "keyPatterns": [
+            "^Attributes\\.[^.]+$"
+          ]
+        },
+        {
+          "key": "ProfileResponseData",
+          "attr": "profile_response_data",
+          "kind": "list",
+          "required": false,
+          "of": {
+            "kind": "string"
+          },
+          "keys": [
+            "FirstName",
+            "MiddleName",
+            "LastName",
+            "PhoneNumber",
+            "EmailAddress",
+            "AccountNumber",
+            "AdditionalInformation",
+            "PartyType",
+            "BusinessName",
+            "BirthDate",
+            "Gender",
+            "MobilePhoneNumber",
+            "HomePhoneNumber",
+            "BusinessPhoneNumber",
+            "BusinessEmailAddress",
+            "Address1",
+            "Address2",
+            "Address3",
+            "Address4",
+            "City",
+            "County",
+            "Country",
+            "PostalCode",
+            "Province",
+            "State",
+            "ShippingAddress1",
+            "ShippingAddress2",
+            "ShippingAddress3",
+            "ShippingAddress4",
+            "ShippingCity",
+            "ShippingCounty",
+            "ShippingCountry",
+            "ShippingPostalCode",
+            "ShippingProvince",
+            "ShippingState",
+            "MailingAddress1",
+            "MailingAddress2",
+            "MailingAddress3",
+            "MailingAddress4",
+            "MailingCity",
+            "MailingCounty",
+            "MailingCountry",
+            "MailingPostalCode",
+            "MailingProvince",
+            "MailingState",
+            "BillingAddress1",
+            "BillingAddress2",
+            "BillingAddress3",
+            "BillingAddress4",
+            "BillingCity",
+            "BillingCounty",
+            "BillingCountry",
+            "BillingPostalCode",
+            "BillingProvince",
+            "BillingState"
+          ],
+          "keyPatterns": [
+            "^Attributes\\.[^.]+$"
+          ]
+        }
+      ],
+      "refs": [],
+      "transitions": {
+        "next": "required",
+        "conditions": "none",
+        "errors": [
+          {
+            "type": "NoMatchingError",
+            "required": true,
+            "builder": true
+          }
+        ]
+      }
     },
     "InvokeLambdaFunction": {
       "category": "interaction",
@@ -2522,22 +3409,563 @@
     "GetCustomerProfile": {
       "category": "interaction",
       "doc": "https://docs.aws.amazon.com/connect/latest/devguide/interactions-getcustomerprofile.html",
-      "modeled": false
+      "modeled": true,
+      "block": "get_customer_profile",
+      "terminal": false,
+      "flowTypes": "unrestricted",
+      "parameters": [
+        {
+          "key": "ProfileRequestData",
+          "attr": "profile_request_data",
+          "kind": "object",
+          "required": true,
+          "fields": [
+            {
+              "key": "IdentifierName",
+              "attr": "identifier_name",
+              "kind": "string",
+              "required": false
+            },
+            {
+              "key": "IdentifierValue",
+              "attr": "identifier_value",
+              "kind": "stringOrJsonPath",
+              "required": false
+            },
+            {
+              "key": "SearchCriteria",
+              "attr": "search_criteria",
+              "kind": "list",
+              "required": false,
+              "of": {
+                "kind": "object",
+                "fields": [
+                  {
+                    "key": "IdentifierName",
+                    "attr": "identifier_name",
+                    "kind": "string",
+                    "required": true
+                  },
+                  {
+                    "key": "IdentifierValue",
+                    "attr": "identifier_value",
+                    "kind": "stringOrJsonPath",
+                    "required": true
+                  }
+                ]
+              },
+              "min": 1,
+              "max": 5
+            },
+            {
+              "key": "LogicalOperator",
+              "attr": "logical_operator",
+              "kind": "enum",
+              "required": false,
+              "values": [
+                "AND",
+                "OR"
+              ]
+            }
+          ],
+          "constraints": [
+            {
+              "rule": "exactlyOne",
+              "groups": [
+                [
+                  "IdentifierName",
+                  "IdentifierValue"
+                ],
+                [
+                  "SearchCriteria",
+                  "LogicalOperator"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "key": "ProfileResponseData",
+          "attr": "profile_response_data",
+          "kind": "list",
+          "required": false,
+          "of": {
+            "kind": "string"
+          },
+          "keys": [
+            "FirstName",
+            "MiddleName",
+            "LastName",
+            "PhoneNumber",
+            "EmailAddress",
+            "AccountNumber",
+            "AdditionalInformation",
+            "PartyType",
+            "BusinessName",
+            "BirthDate",
+            "Gender",
+            "MobilePhoneNumber",
+            "HomePhoneNumber",
+            "BusinessPhoneNumber",
+            "BusinessEmailAddress",
+            "Address1",
+            "Address2",
+            "Address3",
+            "Address4",
+            "City",
+            "County",
+            "Country",
+            "PostalCode",
+            "Province",
+            "State",
+            "ShippingAddress1",
+            "ShippingAddress2",
+            "ShippingAddress3",
+            "ShippingAddress4",
+            "ShippingCity",
+            "ShippingCounty",
+            "ShippingCountry",
+            "ShippingPostalCode",
+            "ShippingProvince",
+            "ShippingState",
+            "MailingAddress1",
+            "MailingAddress2",
+            "MailingAddress3",
+            "MailingAddress4",
+            "MailingCity",
+            "MailingCounty",
+            "MailingCountry",
+            "MailingPostalCode",
+            "MailingProvince",
+            "MailingState",
+            "BillingAddress1",
+            "BillingAddress2",
+            "BillingAddress3",
+            "BillingAddress4",
+            "BillingCity",
+            "BillingCounty",
+            "BillingCountry",
+            "BillingPostalCode",
+            "BillingProvince",
+            "BillingState"
+          ],
+          "keyPatterns": [
+            "^Attributes\\.[^.]+$"
+          ]
+        }
+      ],
+      "refs": [],
+      "transitions": {
+        "next": "required",
+        "conditions": "none",
+        "errors": [
+          {
+            "type": "NoMatchingError",
+            "required": true,
+            "builder": true
+          },
+          {
+            "type": "MultipleFoundError",
+            "required": false,
+            "builder": true
+          },
+          {
+            "type": "NoneFoundError",
+            "required": false,
+            "builder": true
+          }
+        ]
+      }
     },
     "GetCustomerProfileObject": {
       "category": "interaction",
       "doc": "https://docs.aws.amazon.com/connect/latest/devguide/interactions-getcustomerprofileobject.html",
-      "modeled": false
+      "modeled": true,
+      "block": "get_customer_profile_object",
+      "terminal": false,
+      "flowTypes": "unrestricted",
+      "parameters": [
+        {
+          "key": "ProfileRequestData",
+          "attr": "profile_request_data",
+          "kind": "object",
+          "required": true,
+          "fields": [
+            {
+              "key": "ProfileId",
+              "attr": "profile_id",
+              "kind": "stringOrJsonPath",
+              "required": true
+            },
+            {
+              "key": "ObjectType",
+              "attr": "object_type",
+              "kind": "string",
+              "required": true
+            },
+            {
+              "key": "IdentifierName",
+              "attr": "identifier_name",
+              "kind": "string",
+              "required": false
+            },
+            {
+              "key": "IdentifierValue",
+              "attr": "identifier_value",
+              "kind": "stringOrJsonPath",
+              "required": false
+            },
+            {
+              "key": "UseLatest",
+              "attr": "use_latest",
+              "kind": "enum",
+              "required": false,
+              "values": [
+                "true",
+                "false"
+              ]
+            }
+          ],
+          "constraints": [
+            {
+              "rule": "exactlyOne",
+              "groups": [
+                [
+                  "UseLatest"
+                ],
+                [
+                  "IdentifierName",
+                  "IdentifierValue"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "key": "ProfileResponseData",
+          "attr": "profile_response_data",
+          "kind": "list",
+          "required": false,
+          "of": {
+            "kind": "string"
+          },
+          "keys": [
+            "AssetAssetId",
+            "AssetProfileId",
+            "AssetAssetName",
+            "AssetSerialNumber",
+            "AssetModelNumber",
+            "AssetModelName",
+            "AssetProductSKU",
+            "AssetPurchaseDate",
+            "AssetUsageEndDate",
+            "AssetStatus",
+            "AssetPrice",
+            "AssetQuantity",
+            "AssetDescription",
+            "AssetAdditionalInformation",
+            "AssetDataSource",
+            "OrderOrderId",
+            "OrderProfileId",
+            "OrderCustomerEmail",
+            "OrderCustomerPhone",
+            "OrderCreatedDate",
+            "OrderUpdatedDate",
+            "OrderProcessedDate",
+            "OrderClosedDate",
+            "OrderCancelledDate",
+            "OrderCancelReason",
+            "OrderName",
+            "OrderAdditionalInformation",
+            "OrderGateway",
+            "OrderStatus",
+            "OrderStatusCode",
+            "OrderStatusUrl",
+            "OrderCreditCardNumber",
+            "OrderCreditCardCompany",
+            "OrderFulfillmentStatus",
+            "OrderTotalPrice",
+            "OrderTotalTax",
+            "OrderTotalDiscounts",
+            "OrderTotalItemsPrice",
+            "OrderTotalShippingPrice",
+            "OrderTotalTipReceived",
+            "OrderCurrency",
+            "OrderTotalWeight",
+            "OrderBillingName",
+            "OrderBillingAddress1",
+            "OrderBillingAddress2",
+            "OrderBillingAddress3",
+            "OrderBillingAddress4",
+            "OrderBillingCity",
+            "OrderBillingCounty",
+            "OrderBillingCountry",
+            "OrderBillingPostalCode",
+            "OrderBillingProvince",
+            "OrderBillingState",
+            "OrderShippingName",
+            "OrderShippingAddress1",
+            "OrderShippingAddress2",
+            "OrderShippingAddress3",
+            "OrderShippingAddress4",
+            "OrderShippingCity",
+            "OrderShippingCounty",
+            "OrderShippingCountry",
+            "OrderShippingPostalCode",
+            "OrderShippingProvince",
+            "OrderShippingState",
+            "CaseCaseId",
+            "CaseProfileId",
+            "CaseTitle",
+            "CaseSummary",
+            "CaseStatus",
+            "CaseReason",
+            "CaseCreatedBy",
+            "CaseCreatedDate",
+            "CaseUpdatedDate",
+            "CaseClosedDate",
+            "CaseAdditionalInformation",
+            "CaseDataSource"
+          ],
+          "keyPatterns": [
+            "^AssetAttributes\\.[^.]+$",
+            "^OrderAttributes\\.[^.]+$",
+            "^CaseAttributes\\.[^.]+$",
+            "^ObjectAttributes\\.[^.]+$"
+          ]
+        }
+      ],
+      "refs": [],
+      "transitions": {
+        "next": "required",
+        "conditions": "none",
+        "errors": [
+          {
+            "type": "NoMatchingError",
+            "required": true,
+            "builder": true
+          },
+          {
+            "type": "NoneFoundError",
+            "required": false,
+            "builder": true
+          }
+        ]
+      }
     },
     "GetCalculatedAttributesForCustomerProfile": {
       "category": "interaction",
       "doc": "https://docs.aws.amazon.com/connect/latest/devguide/interactions-getcalculatedattributesforcustomerprofile.html",
-      "modeled": false
+      "modeled": true,
+      "block": "get_calculated_attributes_for_customer_profile",
+      "terminal": false,
+      "flowTypes": "unrestricted",
+      "parameters": [
+        {
+          "key": "ProfileRequestData",
+          "attr": "profile_request_data",
+          "kind": "object",
+          "required": true,
+          "fields": [
+            {
+              "key": "ProfileId",
+              "attr": "profile_id",
+              "kind": "stringOrJsonPath",
+              "required": true
+            }
+          ]
+        },
+        {
+          "key": "ProfileResponseData",
+          "attr": "profile_response_data",
+          "kind": "list",
+          "required": false,
+          "of": {
+            "kind": "string"
+          },
+          "keys": [
+            "CalculatedAttributes._average_hold_time",
+            "CalculatedAttributes._frequent_caller"
+          ],
+          "keyPatterns": [
+            "^CalculatedAttributes\\.[^.]+$"
+          ]
+        }
+      ],
+      "refs": [],
+      "transitions": {
+        "next": "required",
+        "conditions": "none",
+        "errors": [
+          {
+            "type": "NoMatchingError",
+            "required": true,
+            "builder": true
+          },
+          {
+            "type": "NoneFoundError",
+            "required": false,
+            "builder": true
+          }
+        ]
+      }
     },
     "UpdateCustomerProfile": {
       "category": "interaction",
       "doc": "https://docs.aws.amazon.com/connect/latest/devguide/interactions-updatecustomerprofile.html",
-      "modeled": false
+      "modeled": true,
+      "block": "update_customer_profile",
+      "terminal": false,
+      "flowTypes": "unrestricted",
+      "parameters": [
+        {
+          "key": "ProfileRequestData",
+          "attr": "profile_request_data",
+          "kind": "map",
+          "required": false,
+          "keys": [
+            "FirstName",
+            "MiddleName",
+            "LastName",
+            "PhoneNumber",
+            "EmailAddress",
+            "AccountNumber",
+            "AdditionalInformation",
+            "PartyType",
+            "BusinessName",
+            "BirthDate",
+            "Gender",
+            "MobilePhoneNumber",
+            "HomePhoneNumber",
+            "BusinessPhoneNumber",
+            "BusinessEmailAddress",
+            "Address1",
+            "Address2",
+            "Address3",
+            "Address4",
+            "City",
+            "County",
+            "Country",
+            "PostalCode",
+            "Province",
+            "State",
+            "ShippingAddress1",
+            "ShippingAddress2",
+            "ShippingAddress3",
+            "ShippingAddress4",
+            "ShippingCity",
+            "ShippingCounty",
+            "ShippingCountry",
+            "ShippingPostalCode",
+            "ShippingProvince",
+            "ShippingState",
+            "MailingAddress1",
+            "MailingAddress2",
+            "MailingAddress3",
+            "MailingAddress4",
+            "MailingCity",
+            "MailingCounty",
+            "MailingCountry",
+            "MailingPostalCode",
+            "MailingProvince",
+            "MailingState",
+            "BillingAddress1",
+            "BillingAddress2",
+            "BillingAddress3",
+            "BillingAddress4",
+            "BillingCity",
+            "BillingCounty",
+            "BillingCountry",
+            "BillingPostalCode",
+            "BillingProvince",
+            "BillingState"
+          ],
+          "keyPatterns": [
+            "^Attributes\\.[^.]+$"
+          ]
+        },
+        {
+          "key": "ProfileResponseData",
+          "attr": "profile_response_data",
+          "kind": "list",
+          "required": false,
+          "of": {
+            "kind": "string"
+          },
+          "keys": [
+            "FirstName",
+            "MiddleName",
+            "LastName",
+            "PhoneNumber",
+            "EmailAddress",
+            "AccountNumber",
+            "AdditionalInformation",
+            "PartyType",
+            "BusinessName",
+            "BirthDate",
+            "Gender",
+            "MobilePhoneNumber",
+            "HomePhoneNumber",
+            "BusinessPhoneNumber",
+            "BusinessEmailAddress",
+            "Address1",
+            "Address2",
+            "Address3",
+            "Address4",
+            "City",
+            "County",
+            "Country",
+            "PostalCode",
+            "Province",
+            "State",
+            "ShippingAddress1",
+            "ShippingAddress2",
+            "ShippingAddress3",
+            "ShippingAddress4",
+            "ShippingCity",
+            "ShippingCounty",
+            "ShippingCountry",
+            "ShippingPostalCode",
+            "ShippingProvince",
+            "ShippingState",
+            "MailingAddress1",
+            "MailingAddress2",
+            "MailingAddress3",
+            "MailingAddress4",
+            "MailingCity",
+            "MailingCounty",
+            "MailingCountry",
+            "MailingPostalCode",
+            "MailingProvince",
+            "MailingState",
+            "BillingAddress1",
+            "BillingAddress2",
+            "BillingAddress3",
+            "BillingAddress4",
+            "BillingCity",
+            "BillingCounty",
+            "BillingCountry",
+            "BillingPostalCode",
+            "BillingProvince",
+            "BillingState"
+          ],
+          "keyPatterns": [
+            "^Attributes\\.[^.]+$"
+          ]
+        }
+      ],
+      "refs": [],
+      "transitions": {
+        "next": "required",
+        "conditions": "none",
+        "errors": [
+          {
+            "type": "NoMatchingError",
+            "required": true,
+            "builder": true
+          }
+        ]
+      }
     },
     "RouteContactToAgent": {
       "category": "other",

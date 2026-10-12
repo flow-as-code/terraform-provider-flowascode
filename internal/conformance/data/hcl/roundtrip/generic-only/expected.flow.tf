@@ -12,18 +12,21 @@ resource "flowascode_contact_flow" "unknown_actions" {
   }
 
   action {
-    id   = "create-task"
-    next = "resume-participant"
+    id   = "text-back"
+    next = "dial-connector"
     generic {
-      type = "CreateTask"
+      type = "StartOutboundChatContact"
       parameters = jsonencode({
-        Attributes = {
-          CustomerPhoneNumber = "$.CustomerEndpoint.Address"
-          queue               = "$${cdref:queue:support}"
+        ContactFlowArn = "$${cdref:flow:task-flow}"
+        ContactSubtype = "connect:SMS"
+        DestinationEndpoint = {
+          Address = "$.CustomerEndpoint.Address"
+          Type    = "TELEPHONE_NUMBER"
         }
-        ContactFlowId = "$${cdref:flow:task-flow}"
-        Description   = "A task for the agent, with the customer's number."
-        Name          = "Follow up"
+        SourceEndpoint = {
+          Address = "$.Attributes.smsNumberArn"
+          Type    = "CONNECT_PHONENUMBER_ARN"
+        }
       })
     }
     error {
@@ -33,12 +36,29 @@ resource "flowascode_contact_flow" "unknown_actions" {
   }
 
   action {
-    id   = "resume-participant"
+    id   = "dial-connector"
+    next = "load-content"
+    generic {
+      type = "CompleteOutboundCall"
+      parameters = jsonencode({
+        VoiceConnector = {
+          FromUser              = "$.Attributes.fromUser"
+          ToUser                = "$.CustomerEndpoint.Address"
+          UserToUserInformation = "$${cdref:queue:support}"
+          VoiceConnectorArn     = "$.Attributes.voiceConnectorArn"
+          VoiceConnectorType    = "ChimeConnector"
+        }
+      })
+    }
+  }
+
+  action {
+    id   = "load-content"
     next = "transfer-third-party"
     generic {
-      type = "UpdatePreviousContactParticipantState"
+      type = "LoadContactContent"
       parameters = jsonencode({
-        PreviousContactParticipantState = "OffHold"
+        ContentType = "EmailMessage"
       })
     }
     error {
@@ -73,9 +93,14 @@ resource "flowascode_contact_flow" "unknown_actions" {
   }
 
   action {
-    id = "hand-off"
+    id   = "hand-off"
+    next = "load-content"
     generic {
-      type = "ResumeContact"
+      type = "StartVoiceIdStream"
+    }
+    error {
+      type = "NoMatchingError"
+      next = "load-content"
     }
   }
 }

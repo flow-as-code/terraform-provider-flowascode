@@ -5,22 +5,25 @@
   "connectType": "CONTACT_FLOW",
   "content": {
     "Version": "2019-10-30",
-    "StartAction": "create-task",
+    "StartAction": "text-back",
     "Actions": [
       {
-        "Identifier": "create-task",
-        "Type": "CreateTask",
+        "Identifier": "text-back",
+        "Type": "StartOutboundChatContact",
         "Parameters": {
-          "Attributes": {
-            "CustomerPhoneNumber": "$.CustomerEndpoint.Address",
-            "queue": "${cdref:queue:support}"
+          "ContactFlowArn": "${cdref:flow:task-flow}",
+          "ContactSubtype": "connect:SMS",
+          "DestinationEndpoint": {
+            "Address": "$.CustomerEndpoint.Address",
+            "Type": "TELEPHONE_NUMBER"
           },
-          "ContactFlowId": "${cdref:flow:task-flow}",
-          "Description": "A task for the agent, with the customer's number.",
-          "Name": "Follow up"
+          "SourceEndpoint": {
+            "Address": "$.Attributes.smsNumberArn",
+            "Type": "CONNECT_PHONENUMBER_ARN"
+          }
         },
         "Transitions": {
-          "NextAction": "resume-participant",
+          "NextAction": "dial-connector",
           "Errors": [
             {
               "ErrorType": "NoMatchingError",
@@ -31,10 +34,28 @@
         }
       },
       {
-        "Identifier": "resume-participant",
-        "Type": "UpdatePreviousContactParticipantState",
+        "Identifier": "dial-connector",
+        "Type": "CompleteOutboundCall",
         "Parameters": {
-          "PreviousContactParticipantState": "OffHold"
+          "VoiceConnector": {
+            "FromUser": "$.Attributes.fromUser",
+            "ToUser": "$.CustomerEndpoint.Address",
+            "UserToUserInformation": "${cdref:queue:support}",
+            "VoiceConnectorArn": "$.Attributes.voiceConnectorArn",
+            "VoiceConnectorType": "ChimeConnector"
+          }
+        },
+        "Transitions": {
+          "NextAction": "load-content",
+          "Errors": [],
+          "Conditions": []
+        }
+      },
+      {
+        "Identifier": "load-content",
+        "Type": "LoadContactContent",
+        "Parameters": {
+          "ContentType": "EmailMessage"
         },
         "Transitions": {
           "NextAction": "transfer-third-party",
@@ -76,27 +97,40 @@
       },
       {
         "Identifier": "hand-off",
-        "Type": "ResumeContact",
+        "Type": "StartVoiceIdStream",
         "Parameters": {},
-        "Transitions": {}
+        "Transitions": {
+          "NextAction": "load-content",
+          "Errors": [
+            {
+              "ErrorType": "NoMatchingError",
+              "NextAction": "load-content"
+            }
+          ],
+          "Conditions": []
+        }
       }
     ]
   },
   "layout": {
-    "create-task": {
-      "x": 20,
-      "y": 20
-    },
-    "hand-off": {
-      "x": 800,
-      "y": 20
-    },
-    "resume-participant": {
+    "dial-connector": {
       "x": 280,
       "y": 20
     },
-    "transfer-third-party": {
+    "hand-off": {
+      "x": 1060,
+      "y": 20
+    },
+    "load-content": {
       "x": 540,
+      "y": 20
+    },
+    "text-back": {
+      "x": 20,
+      "y": 20
+    },
+    "transfer-third-party": {
+      "x": 800,
       "y": 20
     }
   },

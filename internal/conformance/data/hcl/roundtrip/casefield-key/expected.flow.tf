@@ -19,16 +19,13 @@ resource "flowascode_contact_flow" "casefield_key" {
   action {
     id   = "open-case"
     next = "read-case"
-    generic {
-      type = "CreateCase"
-      parameters = jsonencode({
-        CaseRequestFields = {
-          "$${cdref:casefield:priority}" = "high"
-          "$${cdref:casefield:summary}"  = "$.Attributes.summary"
-        }
-        CaseTemplateId    = "$${cdref:casetemplate:billing-dispute}"
-        LinkContactToCase = "true"
-      })
+    create_case {
+      case_request_fields = {
+        "casefield:priority" = "high"
+        "casefield:summary"  = "$.Attributes.summary"
+      }
+      case_template_id     = "casetemplate:billing-dispute"
+      link_contact_to_case = "true"
     }
     error {
       type = "ContactNotLinked"
@@ -43,14 +40,11 @@ resource "flowascode_contact_flow" "casefield_key" {
   action {
     id   = "read-case"
     next = "follow-up"
-    generic {
-      type = "GetCase"
-      parameters = jsonencode({
-        CaseResponseFields = ["$${cdref:casefield:priority}"]
-        CustomerId         = "$.Customer.ProfileId"
-        GetLastUpdatedCase = "true"
-        LinkContactToCase  = "false"
-      })
+    get_case {
+      case_response_fields  = ["casefield:priority"]
+      customer_id           = "$.Customer.ProfileId"
+      get_last_updated_case = "true"
+      link_contact_to_case  = "false"
     }
     error {
       type = "NoMatchingError"
@@ -65,13 +59,10 @@ resource "flowascode_contact_flow" "casefield_key" {
   action {
     id   = "follow-up"
     next = "assist"
-    generic {
-      type = "CreateTask"
-      parameters = jsonencode({
-        ContactFlowId  = "$${cdref:flow:task-line}"
-        Name           = "Follow up"
-        TaskTemplateId = "$${cdref:tasktemplate:follow-up}"
-      })
+    create_task {
+      contact_flow_id  = "flow:task-line"
+      name             = "Follow up"
+      task_template_id = "tasktemplate:follow-up"
     }
     error {
       type = "NoMatchingError"
@@ -86,11 +77,8 @@ resource "flowascode_contact_flow" "casefield_key" {
   action {
     id   = "assist"
     next = "text-back"
-    generic {
-      type = "CreateWisdomSession"
-      parameters = jsonencode({
-        WisdomAssistantArn = "$${cdref:assistant:agent-help}"
-      })
+    create_wisdom_session {
+      wisdom_assistant_arn = "assistant:agent-help"
     }
     error {
       type = "NoMatchingError"
