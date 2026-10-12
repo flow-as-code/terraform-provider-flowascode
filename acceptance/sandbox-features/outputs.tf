@@ -160,6 +160,12 @@ output "lambda_arn" {
   sensitive   = false
 }
 
+output "plain_lambda_arn" {
+  description = "D02: a Lambda ARN associated to the instance plainly and never as a MESSAGE_PROCESSOR."
+  value       = aws_lambda_function.plain.arn
+  sensitive   = false
+}
+
 output "lambda_name" {
   description = "D02: the Lambda function name."
   value       = aws_lambda_function.message_processor.function_name

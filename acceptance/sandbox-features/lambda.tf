@@ -3,6 +3,13 @@
 # an InvokeLambdaFunction probe can name a function the instance may call.
 # The handler implements the custom message processor contract and returns
 # every message approved unchanged.
+#
+# A second function from the same code is associated plainly and never as a
+# MESSAGE_PROCESSOR. D02's evidence asks for an UpdateContactMediaProcessing
+# create with a LambdaProcessorARN the instance has not associated as
+# MESSAGE_PROCESSOR, and one it has; with only an ARN the instance has never
+# seen, "not a message processor" and "not associated at all" would be the
+# same probe.
 # https://docs.aws.amazon.com/connect/latest/adminguide/redaction-message-processing.html
 #
 # Cost: invocations only; none while idle.
@@ -75,4 +82,24 @@ resource "awscc_connect_integration_association" "message_processor" {
   tags             = local.awscc_tags
 
   depends_on = [aws_lambda_permission.connect]
+}
+
+# The plain-only function: associated as a Lambda function, never as a
+# MESSAGE_PROCESSOR.
+resource "aws_lambda_function" "plain" {
+  function_name    = "${local.prefix}-plain-lambda"
+  description      = "Associated plainly, never as a MESSAGE_PROCESSOR; for the Phase D probes"
+  role             = aws_iam_role.message_processor.arn
+  runtime          = "nodejs22.x"
+  handler          = "index.handler"
+  architectures    = ["arm64"]
+  filename         = data.archive_file.message_processor.output_path
+  source_code_hash = data.archive_file.message_processor.output_base64sha256
+  timeout          = 3
+  memory_size      = 128
+}
+
+resource "aws_connect_lambda_function_association" "plain" {
+  instance_id  = var.instance_id
+  function_arn = aws_lambda_function.plain.arn
 }
