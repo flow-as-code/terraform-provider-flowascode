@@ -397,6 +397,9 @@ func ExportFlow(content any, reverseMap ReverseMap, options ExportFlowOptions) (
 		if err != nil {
 			return nil, err
 		}
+		if reverseMap.ByCasesID != nil {
+			normalized = nameCasesIDs(normalized, reverseMap.ByCasesID)
+		}
 		actions[i] = normalized
 	}
 	metadataValue, _ := raw.Get("Metadata")
@@ -540,4 +543,88 @@ func identifierOf(action any) (string, bool) {
 	v, _ := o.Get("Identifier")
 	s, ok := v.(string)
 	return s, ok
+}
+
+var casesIDPath = regexp.MustCompile(`^([A-Za-z0-9_$-]+)(\.\*~|\[\])?$`)
+
+// nameCasesIDs is export.ts's nameCasesIds: the Cases ids an action holds at
+// its catalog's casetemplate and casefield paths (CaseTemplateId, every key
+// of CaseRequestFields, every item of CaseResponseFields), each a template
+// or domain field id the inventory lists, become its token; any other
+// string, a system field id among them, is kept, since a literal id is not
+// an ARN and the service accepts it (flow-as-code docs/adr/0008). Only the
+// paths the catalog names are read, so an id elsewhere in content is never
+// mistaken for a reference. A rebuilt map is in JavaScript's own-key order,
+// as Object.fromEntries writes it.
+func nameCasesIDs(action any, byCasesID map[string]flowdoc.RefEntry) any {
+	a, ok := action.(jsonv.Object)
+	if !ok {
+		return action
+	}
+	typ, _ := a.Get("Type")
+	t, _ := typ.(string)
+	var paths []flowdoc.RefPath
+	for _, r := range flowdoc.RefPathsOf(t) {
+		if r.Ref == "casetemplate" || r.Ref == "casefield" {
+			paths = append(paths, r)
+		}
+	}
+	if len(paths) == 0 {
+		return action
+	}
+	pv, _ := a.Get("Parameters")
+	params, ok := pv.(jsonv.Object)
+	if !ok {
+		return action
+	}
+	params = append(jsonv.Object{}, params...)
+	name := func(v any, refType string) any {
+		if s, ok := v.(string); ok {
+			if e, ok := byCasesID[refType+":"+s]; ok {
+				return e.Token
+			}
+		}
+		return v
+	}
+	for _, rp := range paths {
+		m := casesIDPath.FindStringSubmatch(rp.Path)
+		if m == nil {
+			continue
+		}
+		key := m[1]
+		value, has := params.Get(key)
+		if !has {
+			continue
+		}
+		switch m[2] {
+		case "":
+			params.Set(key, name(value, rp.Ref))
+		case "[]":
+			if list, ok := value.([]any); ok {
+				out := make([]any, len(list))
+				for i, x := range list {
+					out[i] = name(x, rp.Ref)
+				}
+				params.Set(key, out)
+			}
+		default:
+			if o, ok := value.(jsonv.Object); ok {
+				built := jsonv.Object{}
+				for _, k := range jsKeyOrder(o.Keys()) {
+					x, _ := o.Get(k)
+					nk, _ := name(k, rp.Ref).(string)
+					built.Set(nk, x)
+				}
+				out := jsonv.Object{}
+				for _, k := range jsKeyOrder(built.Keys()) {
+					x, _ := built.Get(k)
+					out = append(out, jsonv.Member{Key: k, Value: x})
+				}
+				params.Set(key, out)
+			}
+		}
+	}
+	out := append(jsonv.Object{}, a...)
+	out.Set("Parameters", params)
+	return out
 }

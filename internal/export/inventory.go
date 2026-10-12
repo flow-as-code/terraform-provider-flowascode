@@ -78,10 +78,23 @@ type PhoneNumberSummary struct {
 // CASES_DOMAIN integration association; templates and fields are per domain,
 // which is why a field is a reference (flow-as-code docs/adr/0008).
 type CasesDomainInventory struct {
-	DomainArn string            `json:"domainArn"`
-	DomainID  string            `json:"domainId"`
-	Templates []ResourceSummary `json:"templates"`
-	Fields    []ResourceSummary `json:"fields"`
+	DomainArn string              `json:"domainArn"`
+	DomainID  string              `json:"domainId"`
+	Templates []ResourceSummary   `json:"templates"`
+	Fields    []CasesFieldSummary `json:"fields"`
+}
+
+// CasesFieldSummary is export.ts's CasesFieldSummary: one field of a Cases
+// domain, as ListFields returns it. Namespace is "System" for the fields
+// every domain shares under the same id (summary, status, customer_id),
+// which a flow names literally, and "Custom" for the domain's own, whose
+// UUID is per domain and which export names as a casefield reference
+// (flow-as-code docs/adr/0008). Nil when not recorded; such a field is
+// judged by its id.
+// https://docs.aws.amazon.com/connect/latest/APIReference/API_connect-cases_FieldSummary.html
+type CasesFieldSummary struct {
+	ResourceSummary
+	Namespace *string `json:"namespace,omitempty"`
 }
 
 // InstanceInventory is export.ts's InstanceInventory.

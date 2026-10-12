@@ -1,5 +1,5 @@
 {
-  "generatedFrom": "007f9a76b339e7e57179d20f3e62c05305c08898",
+  "generatedFrom": "ccee157f7c1915e0212dad52bc59f817d3fe1493",
   "parseConnectArn": [
     {
       "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/q1",
@@ -476,11 +476,11 @@
     },
     {
       "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/phone-number/p1",
-      "output": "arn:aws:connect:us-east-1:111122223333:phone-number/p1"
+      "output": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/phone-number/p1"
     },
     {
       "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/phone-number/p1:$SAVED",
-      "output": "arn:aws:connect:us-east-1:111122223333:phone-number/p1"
+      "output": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/phone-number/p1"
     },
     {
       "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/phone-number/",
@@ -935,6 +935,42 @@
         "Two casefield resources slug to \"billing\"; arn:aws:cases:us-east-1:111122223333:domain/d1/field/f2 exported as \"billing-2\".",
         "Two phonenumber resources slug to \"main-line\"; arn:aws:connect:us-east-1:111122223333:phone-number/n3 exported as \"main-line-2\"."
       ]
+    },
+    {
+      "inventory": "{\"contactFlows\": [], \"contactFlowModules\": [], \"queues\": [], \"hoursOfOperations\": [], \"prompts\": [], \"lambdaFunctions\": [], \"lexBots\": [], \"views\": [], \"casesDomain\": {\"domainArn\": \"arn:aws:cases:us-east-1:111122223333:domain/d1\", \"domainId\": \"d1\", \"templates\": [{\"arn\": \"arn:aws:cases:us-east-1:111122223333:domain/d1/template/t1\", \"id\": \"t1\", \"name\": \"Billing\"}, {\"arn\": \"arn:aws:cases:us-east-1:111122223333:domain/d1/template/t2\", \"name\": \"No Id\"}], \"fields\": [{\"arn\": \"arn:aws:cases:us-east-1:111122223333:domain/d1/field/f1\", \"id\": \"f1\", \"name\": \"Priority\", \"namespace\": \"Custom\"}, {\"arn\": \"arn:aws:cases:us-east-1:111122223333:domain/d1/field/summary\", \"id\": \"summary\", \"name\": \"Summary\", \"namespace\": \"System\"}, {\"arn\": \"arn:aws:cases:us-east-1:111122223333:domain/d1/field/status\", \"id\": \"status\", \"name\": \"Status\"}, {\"arn\": \"arn:aws:cases:us-east-1:111122223333:domain/d1/field/f2\", \"id\": \"f2\", \"name\": \"Tier\"}, {\"arn\": \"arn:aws:cases:us-east-1:111122223333:domain/d1/field/f3\", \"id\": \"f3\", \"name\": \"Odd\", \"namespace\": \"Other\"}]}}",
+      "byArn": [
+        {
+          "arn": "arn:aws:cases:us-east-1:111122223333:domain/d1/field/f1",
+          "token": "${cdref:casefield:priority}",
+          "type": "casefield",
+          "name": "priority"
+        },
+        {
+          "arn": "arn:aws:cases:us-east-1:111122223333:domain/d1/field/f2",
+          "token": "${cdref:casefield:tier}",
+          "type": "casefield",
+          "name": "tier"
+        },
+        {
+          "arn": "arn:aws:cases:us-east-1:111122223333:domain/d1/field/f3",
+          "token": "${cdref:casefield:odd}",
+          "type": "casefield",
+          "name": "odd"
+        },
+        {
+          "arn": "arn:aws:cases:us-east-1:111122223333:domain/d1/template/t1",
+          "token": "${cdref:casetemplate:billing}",
+          "type": "casetemplate",
+          "name": "billing"
+        },
+        {
+          "arn": "arn:aws:cases:us-east-1:111122223333:domain/d1/template/t2",
+          "token": "${cdref:casetemplate:no-id}",
+          "type": "casetemplate",
+          "name": "no-id"
+        }
+      ],
+      "warnings": []
     }
   ],
   "reverseMapOfResourceMap": [
@@ -964,6 +1000,41 @@
         "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/q1 is mapped by both ${cdref:queue:a} and ${cdref:queue:b}; keeping the first.",
         "Skipping map key that is not a reference token: not-a-token"
       ]
+    },
+    {
+      "map": {
+        "${cdref:casefield:priority}": "f1",
+        "${cdref:casetemplate:billing}": "t1",
+        "${cdref:casefield:tier}": "arn:aws:cases:us-east-1:111122223333:domain/d1/field/f2",
+        "${cdref:queue:q}": "not-an-arn"
+      },
+      "byArn": [
+        {
+          "arn": "arn:aws:cases:us-east-1:111122223333:domain/d1/field/f2",
+          "token": "${cdref:casefield:tier}",
+          "type": "casefield",
+          "name": "tier"
+        },
+        {
+          "arn": "f1",
+          "token": "${cdref:casefield:priority}",
+          "type": "casefield",
+          "name": "priority"
+        },
+        {
+          "arn": "not-an-arn",
+          "token": "${cdref:queue:q}",
+          "type": "queue",
+          "name": "q"
+        },
+        {
+          "arn": "t1",
+          "token": "${cdref:casetemplate:billing}",
+          "type": "casetemplate",
+          "name": "billing"
+        }
+      ],
+      "warnings": []
     }
   ],
   "exportFlow": [
@@ -1407,6 +1478,33 @@
         "doc": "{\n  \"flowdoc\": \"0.3\",\n  \"kind\": \"flow\",\n  \"name\": \"rm\",\n  \"connectType\": \"AGENT_WHISPER\",\n  \"content\": {\n    \"Version\": \"2019-10-30\",\n    \"StartAction\": \"a\",\n    \"Actions\": [\n      {\n        \"Identifier\": \"a\",\n        \"Type\": \"DisconnectParticipant\",\n        \"Parameters\": {\n          \"Q\": \"${cdref:queue:a}\",\n          \"V\": \"${cdref:view:v@1}\"\n        },\n        \"Transitions\": {}\n      }\n    ]\n  },\n  \"layout\": {\n    \"a\": {\n      \"x\": 20,\n      \"y\": 20\n    }\n  },\n  \"refs\": [\n    {\n      \"token\": \"${cdref:queue:a}\",\n      \"type\": \"queue\",\n      \"name\": \"a\"\n    },\n    {\n      \"token\": \"${cdref:view:v@1}\",\n      \"type\": \"view\",\n      \"name\": \"v\",\n      \"alias\": \"1\"\n    }\n  ],\n  \"meta\": {\n    \"generator\": \"core@0.3\"\n  }\n}\n",
         "refs": "[{\"token\":\"${cdref:queue:a}\",\"type\":\"queue\",\"name\":\"a\"},{\"token\":\"${cdref:view:v@1}\",\"type\":\"view\",\"name\":\"v\",\"alias\":\"1\"}]"
       }
+    },
+    {
+      "content": "{\"Version\": \"2019-10-30\", \"StartAction\": \"c\", \"Actions\": [{\"Identifier\": \"c\", \"Type\": \"CreateCase\", \"Parameters\": {\"LinkContactToCase\": \"false\", \"CaseTemplateId\": \"t1\", \"CaseRequestFields\": {\"f1\": \"high\", \"summary\": \"s\", \"10\": \"x\", \"f2\": \"$.Attributes.t\", \"t1\": \"not a template here\"}}, \"Transitions\": {\"NextAction\": \"g\", \"Errors\": [{\"ErrorType\": \"NoMatchingError\", \"NextAction\": \"g\"}]}}, {\"Identifier\": \"g\", \"Type\": \"GetCase\", \"Parameters\": {\"LinkContactToCase\": \"false\", \"GetLastUpdatedCase\": \"true\", \"CaseResponseFields\": [\"f1\", \"status\", \"f2\"], \"CaseRequestFields\": {\"customer_id\": \"$.x\"}}, \"Transitions\": {\"NextAction\": \"u\", \"Errors\": [{\"ErrorType\": \"NoMatchingError\", \"NextAction\": \"u\"}]}}, {\"Identifier\": \"u\", \"Type\": \"UpdateContactAttributes\", \"Parameters\": {\"Attributes\": {\"f1\": \"t1\"}}, \"Transitions\": {\"NextAction\": \"d\", \"Errors\": [{\"ErrorType\": \"NoMatchingError\", \"NextAction\": \"d\"}]}}, {\"Identifier\": \"d\", \"Type\": \"DisconnectParticipant\", \"Parameters\": {}, \"Transitions\": {}}]}",
+      "inv": "{\"contactFlows\": [], \"contactFlowModules\": [], \"queues\": [], \"hoursOfOperations\": [], \"prompts\": [], \"lambdaFunctions\": [], \"lexBots\": [], \"views\": [], \"casesDomain\": {\"domainArn\": \"arn:aws:cases:us-east-1:111122223333:domain/d1\", \"domainId\": \"d1\", \"templates\": [{\"arn\": \"arn:aws:cases:us-east-1:111122223333:domain/d1/template/t1\", \"id\": \"t1\", \"name\": \"Billing\"}, {\"arn\": \"arn:aws:cases:us-east-1:111122223333:domain/d1/template/t2\", \"name\": \"No Id\"}], \"fields\": [{\"arn\": \"arn:aws:cases:us-east-1:111122223333:domain/d1/field/f1\", \"id\": \"f1\", \"name\": \"Priority\", \"namespace\": \"Custom\"}, {\"arn\": \"arn:aws:cases:us-east-1:111122223333:domain/d1/field/summary\", \"id\": \"summary\", \"name\": \"Summary\", \"namespace\": \"System\"}, {\"arn\": \"arn:aws:cases:us-east-1:111122223333:domain/d1/field/status\", \"id\": \"status\", \"name\": \"Status\"}, {\"arn\": \"arn:aws:cases:us-east-1:111122223333:domain/d1/field/f2\", \"id\": \"f2\", \"name\": \"Tier\"}, {\"arn\": \"arn:aws:cases:us-east-1:111122223333:domain/d1/field/f3\", \"id\": \"f3\", \"name\": \"Odd\", \"namespace\": \"Other\"}]}}",
+      "options": {
+        "name": "cases-by-id",
+        "connectType": "CONTACT_FLOW"
+      },
+      "result": {
+        "doc": "{\n  \"flowdoc\": \"0.3\",\n  \"kind\": \"flow\",\n  \"name\": \"cases-by-id\",\n  \"connectType\": \"CONTACT_FLOW\",\n  \"content\": {\n    \"Version\": \"2019-10-30\",\n    \"StartAction\": \"c\",\n    \"Actions\": [\n      {\n        \"Identifier\": \"c\",\n        \"Type\": \"CreateCase\",\n        \"Parameters\": {\n          \"CaseRequestFields\": {\n            \"10\": \"x\",\n            \"${cdref:casefield:priority}\": \"high\",\n            \"${cdref:casefield:tier}\": \"$.Attributes.t\",\n            \"summary\": \"s\",\n            \"t1\": \"not a template here\"\n          },\n          \"CaseTemplateId\": \"${cdref:casetemplate:billing}\",\n          \"LinkContactToCase\": \"false\"\n        },\n        \"Transitions\": {\n          \"NextAction\": \"g\",\n          \"Errors\": [\n            {\n              \"ErrorType\": \"NoMatchingError\",\n              \"NextAction\": \"g\"\n            }\n          ]\n        }\n      },\n      {\n        \"Identifier\": \"g\",\n        \"Type\": \"GetCase\",\n        \"Parameters\": {\n          \"CaseRequestFields\": {\n            \"customer_id\": \"$.x\"\n          },\n          \"CaseResponseFields\": [\n            \"${cdref:casefield:priority}\",\n            \"status\",\n            \"${cdref:casefield:tier}\"\n          ],\n          \"GetLastUpdatedCase\": \"true\",\n          \"LinkContactToCase\": \"false\"\n        },\n        \"Transitions\": {\n          \"NextAction\": \"u\",\n          \"Errors\": [\n            {\n              \"ErrorType\": \"NoMatchingError\",\n              \"NextAction\": \"u\"\n            }\n          ]\n        }\n      },\n      {\n        \"Identifier\": \"u\",\n        \"Type\": \"UpdateContactAttributes\",\n        \"Parameters\": {\n          \"Attributes\": {\n            \"f1\": \"t1\"\n          }\n        },\n        \"Transitions\": {\n          \"NextAction\": \"d\",\n          \"Errors\": [\n            {\n              \"ErrorType\": \"NoMatchingError\",\n              \"NextAction\": \"d\"\n            }\n          ]\n        }\n      },\n      {\n        \"Identifier\": \"d\",\n        \"Type\": \"DisconnectParticipant\",\n        \"Parameters\": {},\n        \"Transitions\": {}\n      }\n    ]\n  },\n  \"layout\": {\n    \"c\": {\n      \"x\": 20,\n      \"y\": 20\n    },\n    \"d\": {\n      \"x\": 800,\n      \"y\": 20\n    },\n    \"g\": {\n      \"x\": 280,\n      \"y\": 20\n    },\n    \"u\": {\n      \"x\": 540,\n      \"y\": 20\n    }\n  },\n  \"refs\": [\n    {\n      \"token\": \"${cdref:casefield:priority}\",\n      \"type\": \"casefield\",\n      \"name\": \"priority\"\n    },\n    {\n      \"token\": \"${cdref:casefield:tier}\",\n      \"type\": \"casefield\",\n      \"name\": \"tier\"\n    },\n    {\n      \"token\": \"${cdref:casetemplate:billing}\",\n      \"type\": \"casetemplate\",\n      \"name\": \"billing\"\n    }\n  ],\n  \"meta\": {\n    \"generator\": \"core@0.3\"\n  }\n}\n",
+        "refs": "[{\"token\":\"${cdref:casefield:priority}\",\"type\":\"casefield\",\"name\":\"priority\"},{\"token\":\"${cdref:casefield:tier}\",\"type\":\"casefield\",\"name\":\"tier\"},{\"token\":\"${cdref:casetemplate:billing}\",\"type\":\"casetemplate\",\"name\":\"billing\"}]"
+      }
+    },
+    {
+      "content": "{\"Version\": \"2019-10-30\", \"StartAction\": \"c\", \"Actions\": [{\"Identifier\": \"c\", \"Type\": \"CreateCase\", \"Parameters\": {\"LinkContactToCase\": \"false\", \"CaseTemplateId\": \"t1\", \"CaseRequestFields\": {\"f1\": \"high\", \"summary\": \"s\", \"10\": \"x\", \"f2\": \"$.Attributes.t\", \"t1\": \"not a template here\"}}, \"Transitions\": {\"NextAction\": \"g\", \"Errors\": [{\"ErrorType\": \"NoMatchingError\", \"NextAction\": \"g\"}]}}, {\"Identifier\": \"g\", \"Type\": \"GetCase\", \"Parameters\": {\"LinkContactToCase\": \"false\", \"GetLastUpdatedCase\": \"true\", \"CaseResponseFields\": [\"f1\", \"status\", \"f2\"], \"CaseRequestFields\": {\"customer_id\": \"$.x\"}}, \"Transitions\": {\"NextAction\": \"u\", \"Errors\": [{\"ErrorType\": \"NoMatchingError\", \"NextAction\": \"u\"}]}}, {\"Identifier\": \"u\", \"Type\": \"UpdateContactAttributes\", \"Parameters\": {\"Attributes\": {\"f1\": \"t1\"}}, \"Transitions\": {\"NextAction\": \"d\", \"Errors\": [{\"ErrorType\": \"NoMatchingError\", \"NextAction\": \"d\"}]}}, {\"Identifier\": \"d\", \"Type\": \"DisconnectParticipant\", \"Parameters\": {}, \"Transitions\": {}}]}",
+      "resourceMap": {
+        "${cdref:casefield:priority}": "f1",
+        "${cdref:casetemplate:billing}": "t1"
+      },
+      "options": {
+        "name": "cases-by-bound-id",
+        "connectType": "CONTACT_FLOW"
+      },
+      "result": {
+        "doc": "{\n  \"flowdoc\": \"0.3\",\n  \"kind\": \"flow\",\n  \"name\": \"cases-by-bound-id\",\n  \"connectType\": \"CONTACT_FLOW\",\n  \"content\": {\n    \"Version\": \"2019-10-30\",\n    \"StartAction\": \"c\",\n    \"Actions\": [\n      {\n        \"Identifier\": \"c\",\n        \"Type\": \"CreateCase\",\n        \"Parameters\": {\n          \"CaseRequestFields\": {\n            \"10\": \"x\",\n            \"${cdref:casefield:priority}\": \"high\",\n            \"f2\": \"$.Attributes.t\",\n            \"summary\": \"s\",\n            \"t1\": \"not a template here\"\n          },\n          \"CaseTemplateId\": \"${cdref:casetemplate:billing}\",\n          \"LinkContactToCase\": \"false\"\n        },\n        \"Transitions\": {\n          \"NextAction\": \"g\",\n          \"Errors\": [\n            {\n              \"ErrorType\": \"NoMatchingError\",\n              \"NextAction\": \"g\"\n            }\n          ]\n        }\n      },\n      {\n        \"Identifier\": \"g\",\n        \"Type\": \"GetCase\",\n        \"Parameters\": {\n          \"CaseRequestFields\": {\n            \"customer_id\": \"$.x\"\n          },\n          \"CaseResponseFields\": [\n            \"${cdref:casefield:priority}\",\n            \"status\",\n            \"f2\"\n          ],\n          \"GetLastUpdatedCase\": \"true\",\n          \"LinkContactToCase\": \"false\"\n        },\n        \"Transitions\": {\n          \"NextAction\": \"u\",\n          \"Errors\": [\n            {\n              \"ErrorType\": \"NoMatchingError\",\n              \"NextAction\": \"u\"\n            }\n          ]\n        }\n      },\n      {\n        \"Identifier\": \"u\",\n        \"Type\": \"UpdateContactAttributes\",\n        \"Parameters\": {\n          \"Attributes\": {\n            \"f1\": \"t1\"\n          }\n        },\n        \"Transitions\": {\n          \"NextAction\": \"d\",\n          \"Errors\": [\n            {\n              \"ErrorType\": \"NoMatchingError\",\n              \"NextAction\": \"d\"\n            }\n          ]\n        }\n      },\n      {\n        \"Identifier\": \"d\",\n        \"Type\": \"DisconnectParticipant\",\n        \"Parameters\": {},\n        \"Transitions\": {}\n      }\n    ]\n  },\n  \"layout\": {\n    \"c\": {\n      \"x\": 20,\n      \"y\": 20\n    },\n    \"d\": {\n      \"x\": 800,\n      \"y\": 20\n    },\n    \"g\": {\n      \"x\": 280,\n      \"y\": 20\n    },\n    \"u\": {\n      \"x\": 540,\n      \"y\": 20\n    }\n  },\n  \"refs\": [\n    {\n      \"token\": \"${cdref:casefield:priority}\",\n      \"type\": \"casefield\",\n      \"name\": \"priority\"\n    },\n    {\n      \"token\": \"${cdref:casetemplate:billing}\",\n      \"type\": \"casetemplate\",\n      \"name\": \"billing\"\n    }\n  ],\n  \"meta\": {\n    \"generator\": \"core@0.3\"\n  }\n}\n",
+        "refs": "[{\"token\":\"${cdref:casefield:priority}\",\"type\":\"casefield\",\"name\":\"priority\"},{\"token\":\"${cdref:casetemplate:billing}\",\"type\":\"casetemplate\",\"name\":\"billing\"}]"
+      }
     }
   ],
   "exportInstance": [
@@ -1671,16 +1769,17 @@
         "f2"
       ],
       "result": {
-        "flows": [
-          {
-            "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f1",
-            "id": "f1",
-            "sourceName": "Legacy",
-            "doc": "{\n  \"flowdoc\": \"0.3\",\n  \"kind\": \"flow\",\n  \"name\": \"legacy\",\n  \"displayName\": \"Legacy\",\n  \"connectType\": \"CONTACT_FLOW\",\n  \"content\": {\n    \"Version\": \"2019-10-30\",\n    \"StartAction\": \"a\",\n    \"Actions\": [\n      {\n        \"Identifier\": \"a\",\n        \"Type\": \"StartOutboundChatContact\",\n        \"Parameters\": {\n          \"SourceEndpoint\": {\n            \"Address\": \"${cdref:phonenumber:main-did}\",\n            \"Type\": \"CONNECT_PHONENUMBER_ARN\"\n          }\n        },\n        \"Transitions\": {}\n      }\n    ]\n  },\n  \"layout\": {\n    \"a\": {\n      \"x\": 20,\n      \"y\": 20\n    }\n  },\n  \"refs\": [\n    {\n      \"token\": \"${cdref:phonenumber:main-did}\",\n      \"type\": \"phonenumber\",\n      \"name\": \"main-did\"\n    }\n  ],\n  \"meta\": {\n    \"generator\": \"core@0.3\",\n    \"source\": {\n      \"id\": \"f1\",\n      \"instanceId\": \"11111111-2222-3333-4444-555555555555\",\n      \"name\": \"Legacy\"\n    }\n  }\n}\n"
-          }
-        ],
+        "flows": [],
         "warnings": [],
         "failures": [
+          {
+            "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f1",
+            "name": "Legacy",
+            "reason": "Cannot export \"legacy\": 1 ARN(s) not found in the instance inventory: arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/phone-number/pppp7777-0000-4000-8000-000000000001",
+            "unknownArns": [
+              "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/phone-number/pppp7777-0000-4000-8000-000000000001"
+            ]
+          },
           {
             "arn": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/contact-flow/f2",
             "name": "Unlisted",

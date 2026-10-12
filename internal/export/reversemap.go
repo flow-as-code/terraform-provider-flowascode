@@ -16,6 +16,13 @@ import (
 type ReverseMap struct {
 	// ByArn maps a normalized ARN to the ref entry that replaces it.
 	ByArn map[string]flowdoc.RefEntry
+	// ByCasesID is a Cases template or domain field by its bare id, keyed
+	// `<type>:<id>` (casetemplate:<id>, casefield:<id>). CaseTemplateId and
+	// the case field keys and items hold ids, never ARNs (actions.md, rule
+	// 44), so no ARN-keyed entry matches them; ExportFlow reads them at the
+	// catalog's casetemplate and casefield paths only. Nil when empty
+	// (TypeScript: absent).
+	ByCasesID map[string]flowdoc.RefEntry
 	// Warnings are names that collided, bots with no ARN, and anything else
 	// lossy, in the order the TypeScript pushes them.
 	Warnings []string
@@ -163,11 +170,19 @@ func BuildReverseMap(inventory InstanceInventory) ReverseMap {
 			add(n.Arn, named(description), "phonenumber")
 		}
 	}
+	// A system field (summary, status) has the same id on every domain and
+	// stays literal in a flow, so it is never a reference (flow-as-code D06).
+	var customFields []CasesFieldSummary
 	if d := inventory.CasesDomain; d != nil {
+		for _, f := range d.Fields {
+			if !isSystemCaseField(f) {
+				customFields = append(customFields, f)
+			}
+		}
 		for _, t := range d.Templates {
 			add(t.Arn, named(t.Name), "casetemplate")
 		}
-		for _, f := range d.Fields {
+		for _, f := range customFields {
 			add(f.Arn, named(f.Name), "casefield")
 		}
 	}
@@ -208,6 +223,24 @@ func BuildReverseMap(inventory InstanceInventory) ReverseMap {
 	}
 
 	byArn := assignNames(candidates, &warnings)
+	// A Cases template or domain field is held by its bare id in flow
+	// content (rule 44), so each is keyed by id as well, under the name its
+	// ARN took.
+	byCasesID := map[string]flowdoc.RefEntry{}
+	byID := func(typ string, arn string, id *string) {
+		entry, ok := byArn[NormalizeArn(arn)]
+		if id != nil && *id != "" && ok {
+			byCasesID[typ+":"+*id] = entry
+		}
+	}
+	if d := inventory.CasesDomain; d != nil {
+		for _, t := range d.Templates {
+			byID("casetemplate", t.Arn, t.ID)
+		}
+	}
+	for _, f := range customFields {
+		byID("casefield", f.Arn, f.ID)
+	}
 	// An invocation through an alias names it by id; key it so the document
 	// reads module:<name>@<alias name>. An alias name that is not a slug
 	// keeps the id.
@@ -223,7 +256,43 @@ func BuildReverseMap(inventory InstanceInventory) ReverseMap {
 		byArn[NormalizeArn(a.ModuleArn)+":"+a.AliasID] = flowdoc.RefEntry{
 			Token: "${cdref:module:" + module.Name + "@" + a.Name + "}", Type: "module", Name: module.Name, Alias: a.Name}
 	}
-	return ReverseMap{ByArn: byArn, Warnings: warnings}
+	if len(byCasesID) == 0 {
+		byCasesID = nil
+	}
+	return ReverseMap{ByArn: byArn, ByCasesID: byCasesID, Warnings: warnings}
+}
+
+// isSystemCaseField is export.ts's isSystemCaseField: ListFields' System
+// namespace, or a known system field id (CASE_SYSTEM_FIELDS, which the
+// catalog records as the keys of CreateCase's CaseRequestFields).
+func isSystemCaseField(f CasesFieldSummary) bool {
+	if f.Namespace != nil && *f.Namespace == "System" {
+		return true
+	}
+	id := ""
+	if f.ID != nil {
+		id = *f.ID
+	}
+	for _, k := range caseSystemFields() {
+		if k == id {
+			return true
+		}
+	}
+	return false
+}
+
+// caseSystemFields is actions.ts's CASE_SYSTEM_FIELDS, read from the
+// catalog, where CreateCase's CaseRequestFields lists them as its keys
+// (catalog.test.ts holds the two equal).
+func caseSystemFields() []string {
+	if e := flowdoc.ModeledEntry("CreateCase"); e != nil {
+		for _, p := range e.Parameters {
+			if p.Key == "CaseRequestFields" {
+				return p.Keys
+			}
+		}
+	}
+	return nil
 }
 
 // ReverseMapOfResourceMap is export.ts's reverseMapOfResourceMap: the reverse
@@ -232,6 +301,7 @@ func BuildReverseMap(inventory InstanceInventory) ReverseMap {
 func ReverseMapOfResourceMap(resourceMap map[string]string) ReverseMap {
 	warnings := []string{}
 	byArn := map[string]flowdoc.RefEntry{}
+	byCasesID := map[string]flowdoc.RefEntry{}
 	keys := make([]string, 0, len(resourceMap))
 	for k := range resourceMap {
 		keys = append(keys, k)
@@ -247,6 +317,12 @@ func ReverseMapOfResourceMap(resourceMap map[string]string) ReverseMap {
 		// as bound, so two aliases of one module stay two entries; LookupArn
 		// still falls back to the bare ARN.
 		arn := resourceMap[token]
+		// A Cases template or field bound to its bare id (what an awscc
+		// template_id or field_id output holds) is keyed by id as ExportFlow
+		// reads it, so the offline round trip names it again.
+		if (entry.Type == "casetemplate" || entry.Type == "casefield") && !strings.HasPrefix(arn, "arn:") {
+			byCasesID[entry.Type+":"+arn] = entry
+		}
 		if entry.Alias == "" {
 			arn = NormalizeArn(arn)
 		}
@@ -257,7 +333,10 @@ func ReverseMapOfResourceMap(resourceMap map[string]string) ReverseMap {
 		}
 		byArn[arn] = entry
 	}
-	return ReverseMap{ByArn: byArn, Warnings: warnings}
+	if len(byCasesID) == 0 {
+		byCasesID = nil
+	}
+	return ReverseMap{ByArn: byArn, ByCasesID: byCasesID, Warnings: warnings}
 }
 
 // LookupArn is export.ts's lookupArn: tolerant of a `:$SAVED` or version
