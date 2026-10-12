@@ -1066,7 +1066,7 @@
   "roundtrip/unknown-actions/doc.flowdoc.json": "0b77441ef22fe90975b33af8598ed5158b6114e2c3bd1bd084bd5bd49edbd683",
   "schema/flowdoc-0.1.schema.json": "47e06f2beb4d717d8c78c579324f1161767126379359979f625996b67f8c2942",
   "schema/flowdoc-0.2.schema.json": "66edb9d45c51a44712d04deb472cbd5e1879810297229e15e0afcbcfe9db6437",
-  "schema/flowdoc-0.3.schema.json": "0353821bd74f5509d2d57d105c27ed24cd32c74ba56f72423db37ebaf320462f",
+  "schema/flowdoc-0.3.schema.json": "234c2e536a87ef19645183065a7c2fc179c137174caebaf53aaef0a7a15128b3",
   "schema/lint-report-0.1.schema.json": "b80883fc4994db886c295fe8c310437964e68727c8ad0dc040e4aa61b1b4e62f",
   "schema/scenario-0.1.schema.json": "99965c4ccbcc8ee2a8eead24422ca6d8c911af8764c81aa7fbbb45123473a41f",
   "simulate/after-hours-message/expected.testcase.json": "6c7594001e223f038ddf7b752a5c56734f0a310e839fd522fc80576d2f6b2088",
