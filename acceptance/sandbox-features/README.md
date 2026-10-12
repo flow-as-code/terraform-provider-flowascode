@@ -26,7 +26,8 @@ any of these runs nothing and bills nothing.
 | Customer Profiles domain `amazon-connect-fac-sbx-profiles`, its customer managed key `alias/fac-sbx-profiles`, the standard CTR object type and the integration whose Uri is the instance ARN | D03      | The six Customer Profiles actions are refused on an instance with no domain; the integration is what links instance and domain. The Connect service-linked role may use only domains named `amazon-connect-*`, hence the name | Profiles holding only Connect data are free; the key about $1 a month                            |
 | Cases domain `fac-sbx-cases`, `CASES_DOMAIN` association, fields `fac-sbx-notes` (text) and `fac-sbx-lantern` (single select), template `fac-sbx-probe` | D06      | `CreateCase`, `GetCase` and `UpdateCase` name a template id and per-domain field ids; the system field `title` needs no creation           | $0.12 per case created; a flow create creates none                                               |
 | AI agents assistant `fac-sbx-assistant` (AWS-owned key, no knowledge base) and its `WISDOM_ASSISTANT` association | D05      | `CreateWisdomSession` names the assistant; the `AmazonConnectEnabled=True` tag is set here so an apply never strips what Connect expects   | Included under Connect Customer pricing; $0.0080 a minute of voice under Customer Basic          |
-| Task template `fac-sbx-task`                                                       | D05      | `CreateTask` carries a static `TaskTemplateId`                                                                                              | $0.070 per task run                                                                              |
+| Task template `fac-sbx-task` (a `NAME` field, a `QUICK_CONNECT` field and one text field) | D05      | `CreateTask` carries a static `TaskTemplateId`                                                                                              | $0.070 per task run                                                                              |
+| Flow `fac-sbx-probe-target` (disconnects), and the default `BasicQueue` read, not created | D04, D05 | `CreateTask.ContactFlowId` and `StartOutboundChatContact.ContactFlowArn` name a flow; `{{QUEUE_ID}}` is the probes README's worked example | Free                                                                                             |
 | Predefined attribute `fac-sbx-lantern-certified` (`apprentice`, `keeper`, `master`) | D07      | `UpdateRoutingCriteria` names a predefined attribute                                                                                        | Free                                                                                             |
 | Live media streaming, prefix `fac-sbx-media`, no data retention, `aws/kinesisvideo` key | D02      | `UpdateContactMediaStreamingBehavior` is refused on an instance without media streaming                                                     | $0.0085 per GB ingested; nothing stored                                                          |
 | Lambda `fac-sbx-message-processor`, associated plainly and as `MESSAGE_PROCESSOR` | D02      | `UpdateContactMediaProcessing` names a message processor; the plain association gives an `InvokeLambdaFunction` probe a function to name   | Invocations only                                                                                 |
@@ -103,11 +104,15 @@ export CONNECT_INSTANCE_ID=<id> AWS_ACCOUNT_ID=$(aws sts get-caller-identity --q
 So a probe reads `{{CASES_TEMPLATE_ID}}` where it needs the template,
 `{{ASSISTANT_ARN}}` for the assistant, `{{TASK_TEMPLATE_ID}}`,
 `{{PREDEFINED_ATTRIBUTE_NAME}}`, `{{LAMBDA_ARN}}`, `{{PHONE_NUMBER_ARN}}`,
-`{{CASES_FIELD_TEXT_ID}}`, `{{CASES_FIELD_SELECT_ID}}` and so on; the three
+`{{FLOW_ARN}}`, `{{QUEUE_ID}}`, `{{CASES_FIELD_TEXT_ID}}`,
+`{{CASES_FIELD_SELECT_ID}}` and so on; the three
 well-known placeholders (`{{ACCOUNT}}`, `{{REGION}}`, `{{INSTANCE}}`) come
 from `AWS_ACCOUNT_ID`, `AWS_REGION` and `CONNECT_INSTANCE_ID`. The list
 outputs (`cases_field_select_values`, `predefined_attribute_values`) are for
-reading, not placeholders. `tofu output -json > outputs.json` is gitignored
+reading, not placeholders. The Cases system field `title` has no output: a
+probe carries that constant literally, because the runner scrubs every
+filled value out of service messages and would turn the word "title" in a
+refusal into a placeholder. `tofu output -json > outputs.json` is gitignored
 if anyone does it; do not move that file elsewhere.
 
 ## Teardown order

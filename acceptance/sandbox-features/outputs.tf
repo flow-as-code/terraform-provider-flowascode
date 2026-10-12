@@ -10,6 +10,30 @@ output "instance_arn" {
   sensitive   = false
 }
 
+output "flow_id" {
+  description = "D04 and D05: the probe target flow's id."
+  value       = aws_connect_contact_flow.probe_target.contact_flow_id
+  sensitive   = false
+}
+
+output "flow_arn" {
+  description = "D04 and D05: the probe target flow's ARN."
+  value       = aws_connect_contact_flow.probe_target.arn
+  sensitive   = false
+}
+
+output "queue_id" {
+  description = "The instance's default BasicQueue id."
+  value       = data.aws_connect_queue.basic.queue_id
+  sensitive   = false
+}
+
+output "queue_arn" {
+  description = "The instance's default BasicQueue ARN."
+  value       = data.aws_connect_queue.basic.arn
+  sensitive   = false
+}
+
 output "profiles_domain_name" {
   description = "D03: the Customer Profiles domain name."
   value       = aws_customerprofiles_domain.sandbox.domain_name
@@ -55,12 +79,6 @@ output "cases_template_id" {
 output "cases_template_arn" {
   description = "D06: the template ARN."
   value       = awscc_cases_template.probe.template_arn
-  sensitive   = false
-}
-
-output "cases_field_title_id" {
-  description = "D06: the system title field's id; a constant, never created."
-  value       = "title"
   sensitive   = false
 }
 
