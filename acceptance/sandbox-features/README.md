@@ -66,8 +66,8 @@ Three things to know before the first apply:
   with the same credentials. The same call by hand, should it ever be needed:
 
   ```
-  aws connectcases batch-put-field-options --domain-id <cases_domain_id> --field-id <cases_field_select_id> \
-    --options Name=Unlit,Value=unlit,Active=true Name=Lit,Value=lit,Active=true Name=Guttering,Value=guttering,Active=true
+  aws connectcases batch-put-field-options --region us-west-2 --domain-id <cases_domain_id> --field-id <cases_field_select_id> \
+    --options name=Unlit,value=unlit,active=true name=Lit,value=lit,active=true name=Guttering,value=guttering,active=true
   ```
 
 - The media streaming key is the AWS managed key `alias/aws/kinesisvideo`.

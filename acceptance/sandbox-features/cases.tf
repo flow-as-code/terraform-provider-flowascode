@@ -41,10 +41,13 @@ resource "awscc_cases_field" "lantern" {
 }
 
 # Single-select options are not a CloudFormation property; the Cases API sets
-# them with BatchPutFieldOptions, which is idempotent. The aws CLI must be on
-# PATH with the same credentials as the providers. The README gives the same
-# call to run by hand.
-# https://docs.aws.amazon.com/connectcases/latest/APIReference/API_BatchPutFieldOptions.html
+# them with BatchPutFieldOptions, which creates and updates (so a re-run is
+# harmless). The aws CLI must be on PATH with the same credentials as the
+# providers. The README gives the same call to run by hand.
+# https://docs.aws.amazon.com/connect/latest/APIReference/API_connect-cases_BatchPutFieldOptions.html
+# The CLI shorthand members are lower case (name, value, active); capitalised
+# keys fail the CLI's parameter validation before any request is sent:
+# https://docs.aws.amazon.com/cli/latest/reference/connectcases/batch-put-field-options.html
 locals {
   lantern_options = [
     { name = "Unlit", value = "unlit" },
@@ -52,7 +55,7 @@ locals {
     { name = "Guttering", value = "guttering" },
   ]
   lantern_options_cli = join(" ", [
-    for o in local.lantern_options : "Name=${o.name},Value=${o.value},Active=true"
+    for o in local.lantern_options : "name=${o.name},value=${o.value},active=true"
   ])
 }
 
