@@ -97,6 +97,14 @@ type InventoryOptions struct {
 	// QConnect is an Amazon Q in Connect client for the same account and
 	// Region. Nil means the inventory lists no assistants.
 	QConnect QConnectAPI
+	// OptionalDeniedIsAbsent reads an AccessDeniedException from the Cases
+	// domain lookup (ListIntegrationAssociations and the Cases lists) or from
+	// ListAssistants as those lists not being offered, rather than failing
+	// the inventory. The provider sets it: its configuration cannot leave
+	// the two clients out the way a CLI user leaves the optional SDK peers
+	// uninstalled, and a role without those permissions should read a flow
+	// back as it did before they were listed.
+	OptionalDeniedIsAbsent bool
 }
 
 // NewInventory returns an export.ConnectInventoryClient over api for one
@@ -119,24 +127,26 @@ func NewInventoryWithOptions(api API, instanceID string, options InventoryOption
 		rps = *options.RequestsPerSecond
 	}
 	return &inventory{
-		api:        api,
-		cases:      options.Cases,
-		qconnect:   options.QConnect,
-		instanceID: instanceID,
-		maxResults: maxResults,
-		limiter:    newRateLimiter(rps, options.Sleep, options.Now),
+		api:                    api,
+		cases:                  options.Cases,
+		qconnect:               options.QConnect,
+		optionalDeniedIsAbsent: options.OptionalDeniedIsAbsent,
+		instanceID:             instanceID,
+		maxResults:             maxResults,
+		limiter:                newRateLimiter(rps, options.Sleep, options.Now),
 	}
 }
 
 // inventory is the adapter. One limiter serves the three clients: they are
 // one account's quotas, read in one sitting.
 type inventory struct {
-	api        API
-	cases      CasesAPI
-	qconnect   QConnectAPI
-	instanceID string
-	maxResults int32
-	limiter    *rateLimiter
+	api                    API
+	cases                  CasesAPI
+	qconnect               QConnectAPI
+	optionalDeniedIsAbsent bool
+	instanceID             string
+	maxResults             int32
+	limiter                *rateLimiter
 }
 
 var (
@@ -602,6 +612,14 @@ func (c *inventory) DescribeCasesDomain(ctx context.Context) (*export.CasesDomai
 	if c.cases == nil {
 		return nil, nil
 	}
+	d, err := c.describeCasesDomain(ctx)
+	if err != nil && c.optionalDeniedIsAbsent && IsAccessDenied(err) {
+		return nil, nil
+	}
+	return d, err
+}
+
+func (c *inventory) describeCasesDomain(ctx context.Context) (*export.CasesDomainInventory, error) {
 	associations, err := paginate(ctx, c.limiter, func(ctx context.Context, nextToken *string) ([]types.IntegrationAssociationSummary, *string, error) {
 		out, err := c.api.ListIntegrationAssociations(ctx, &connect.ListIntegrationAssociationsInput{
 			InstanceId:      aws.String(c.instanceID),
@@ -647,16 +665,25 @@ func (c *inventory) DescribeCasesDomain(ctx context.Context) (*export.CasesDomai
 	if err != nil {
 		return nil, err
 	}
-	fields, err := paginate(ctx, c.limiter, func(ctx context.Context, nextToken *string) ([]export.ResourceSummary, *string, error) {
+	fields, err := paginate(ctx, c.limiter, func(ctx context.Context, nextToken *string) ([]export.CasesFieldSummary, *string, error) {
 		out, err := c.cases.ListFields(ctx, &connectcases.ListFieldsInput{
 			DomainId: aws.String(domainID), MaxResults: aws.Int32(smallListMaxResults), NextToken: nextToken,
 		})
 		if err != nil {
 			return nil, nil, err
 		}
-		items := make([]export.ResourceSummary, 0, len(out.Fields))
+		items := make([]export.CasesFieldSummary, 0, len(out.Fields))
 		for _, f := range out.Fields {
-			items = append(items, export.ResourceSummary{Arn: aws.ToString(f.FieldArn), ID: aws.String(aws.ToString(f.FieldId)), Name: aws.ToString(f.Name)})
+			// The namespace is kept only when it is one of the two the
+			// reverse map reads (a System field is never a reference).
+			var namespace *string
+			if ns := string(f.Namespace); ns == "System" || ns == "Custom" {
+				namespace = &ns
+			}
+			items = append(items, export.CasesFieldSummary{
+				ResourceSummary: export.ResourceSummary{Arn: aws.ToString(f.FieldArn), ID: aws.String(aws.ToString(f.FieldId)), Name: aws.ToString(f.Name)},
+				Namespace:       namespace,
+			})
 		}
 		return items, out.NextToken, nil
 	})
@@ -676,6 +703,14 @@ func (c *inventory) ListAssistants(ctx context.Context) ([]export.ResourceSummar
 	if c.qconnect == nil {
 		return nil, nil
 	}
+	list, err := c.listAssistants(ctx)
+	if err != nil && c.optionalDeniedIsAbsent && IsAccessDenied(err) {
+		return nil, nil
+	}
+	return list, err
+}
+
+func (c *inventory) listAssistants(ctx context.Context) ([]export.ResourceSummary, error) {
 	return paginate(ctx, c.limiter, func(ctx context.Context, nextToken *string) ([]export.ResourceSummary, *string, error) {
 		out, err := c.qconnect.ListAssistants(ctx, &qconnect.ListAssistantsInput{
 			MaxResults: aws.Int32(smallListMaxResults), NextToken: nextToken,

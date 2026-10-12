@@ -13,6 +13,8 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/connect"
 	"github.com/aws/aws-sdk-go-v2/service/connect/types"
 	casestypes "github.com/aws/aws-sdk-go-v2/service/connectcases/types"
+	"github.com/aws/aws-sdk-go-v2/service/qconnect"
+	qtypes "github.com/aws/aws-sdk-go-v2/service/qconnect/types"
 
 	"github.com/flow-as-code/terraform-provider-flowascode/internal/export"
 )
@@ -112,10 +114,43 @@ func TestCasesDomainComesFromItsAssociation(t *testing.T) {
 				return
 			}
 			want := &export.CasesDomainInventory{DomainArn: domain, DomainID: "d1", Templates: []export.ResourceSummary{},
-				Fields: []export.ResourceSummary{{Arn: domain + "/field/f1", ID: aws.String("f1"), Name: "Priority"}}}
+				Fields: []export.CasesFieldSummary{{ResourceSummary: export.ResourceSummary{Arn: domain + "/field/f1", ID: aws.String("f1"), Name: "Priority"}}}}
 			if !reflect.DeepEqual(got, want) {
 				t.Errorf("got %+v", got)
 			}
 		})
+	}
+}
+
+// deniedAssistants is a Q in Connect client whose role may not list.
+type deniedAssistants struct{}
+
+func (deniedAssistants) ListAssistants(context.Context, *qconnect.ListAssistantsInput, ...func(*qconnect.Options)) (*qconnect.ListAssistantsOutput, error) {
+	return nil, &qtypes.AccessDeniedException{Message: aws.String("not authorized to perform wisdom:ListAssistants")}
+}
+
+// With OptionalDeniedIsAbsent, a role that may not list Cases resources or
+// assistants collects the rest of the inventory, the two lists absent; without
+// it the refusal fails the inventory, as export.ts's does.
+func TestOptionalDeniedIsAbsent(t *testing.T) {
+	f := NewFake()
+	f.SetIntegrationAssociations([]types.IntegrationAssociationSummary{{
+		IntegrationArn: aws.String("arn:aws:cases:us-east-1:111122223333:domain/d1"), IntegrationType: types.IntegrationTypeCasesDomain,
+	}})
+	cases := &FakeCases{DomainID: "other"} // the domain lookup's ListTemplates is refused below
+	for _, absent := range []bool{true, false} {
+		options := InventoryOptions{RequestsPerSecond: noLimit(), QConnect: deniedAssistants{}, OptionalDeniedIsAbsent: absent}
+		inv, err := export.CollectInventory(context.Background(), NewInventoryWithOptions(f, testInstanceID, options), export.CollectInventoryOptions{})
+		if absent && (err != nil || inv.Assistants != nil) {
+			t.Errorf("absent: %v %v", inv.Assistants, err)
+		}
+		if !absent && !IsAccessDenied(err) {
+			t.Errorf("not absent: %v", err)
+		}
+	}
+	// A Cases error other than a denial still fails the inventory.
+	options := InventoryOptions{RequestsPerSecond: noLimit(), Cases: cases, OptionalDeniedIsAbsent: true}
+	if _, err := export.CollectInventory(context.Background(), NewInventoryWithOptions(f, testInstanceID, options), export.CollectInventoryOptions{}); err == nil {
+		t.Error("a missing domain was read as absent")
 	}
 }

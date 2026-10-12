@@ -157,7 +157,10 @@ func seedFromCase(t *testing.T, name string) (seededCase, export.InstanceInvento
 			out.cases.Templates = append(out.cases.Templates, casestypes.TemplateSummary{TemplateArn: aws.String(s.Arn), TemplateId: s.ID, Name: aws.String(s.Name)})
 		}
 		for _, s := range d.Fields {
-			out.cases.Fields = append(out.cases.Fields, casestypes.FieldSummary{FieldArn: aws.String(s.Arn), FieldId: s.ID, Name: aws.String(s.Name)})
+			out.cases.Fields = append(out.cases.Fields, casestypes.FieldSummary{
+				FieldArn: aws.String(s.Arn), FieldId: s.ID, Name: aws.String(s.Name),
+				Namespace: casestypes.FieldNamespace(aws.ToString(s.Namespace)),
+			})
 		}
 	}
 	for _, s := range inv.Assistants {

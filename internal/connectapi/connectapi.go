@@ -16,12 +16,19 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/connect/types"
 	"github.com/aws/aws-sdk-go-v2/service/connectcases"
 	"github.com/aws/aws-sdk-go-v2/service/qconnect"
+	"github.com/aws/smithy-go"
 )
 
 // Client is what a configured provider hands its resources and data sources.
 type Client struct {
 	// Connect is the SDK client, behind the API interface.
 	Connect API
+	// Cases and QConnect are the Amazon Connect Cases and Amazon Q in
+	// Connect clients the export inventory names Cases templates and fields
+	// and assistants with when it reads a live flow back. Nil means not
+	// read.
+	Cases    CasesAPI
+	QConnect QConnectAPI
 	// Region the client was configured for, used in diagnostics.
 	Region string
 }
@@ -109,6 +116,14 @@ type CasesAPI interface {
 type QConnectAPI interface {
 	// https://docs.aws.amazon.com/amazon-q-connect/latest/APIReference/API_ListAssistants.html
 	ListAssistants(ctx context.Context, in *qconnect.ListAssistantsInput, opts ...func(*qconnect.Options)) (*qconnect.ListAssistantsOutput, error)
+}
+
+// IsAccessDenied reports whether err is any service's
+// AccessDeniedException, by its error code, which Connect, Cases and Q in
+// Connect all spell the same.
+func IsAccessDenied(err error) bool {
+	var api smithy.APIError
+	return errors.As(err, &api) && api.ErrorCode() == "AccessDeniedException"
 }
 
 // IsNotFound reports whether err is Connect's ResourceNotFoundException,

@@ -444,7 +444,10 @@ func (r *flowResource) reconstruct(ctx context.Context, a flowAttrs, l live, sta
 		// An ARN no binding in state names (every one, after an import): list
 		// the instance once and map through its inventory, the bindings in
 		// state taking precedence so a key the user chose stays theirs.
-		inv, ierr := export.CollectInventory(ctx, connectapi.NewInventory(r.client.Connect, a.InstanceID.ValueString()), export.CollectInventoryOptions{})
+		inventory := connectapi.NewInventoryWithOptions(r.client.Connect, a.InstanceID.ValueString(), connectapi.InventoryOptions{
+			Cases: r.client.Cases, QConnect: r.client.QConnect, OptionalDeniedIsAbsent: true,
+		})
+		inv, ierr := export.CollectInventory(ctx, inventory, export.CollectInventoryOptions{})
 		if ierr != nil {
 			diags.AddWarning("The live "+r.kind+" is not shown as blocks",
 				fmt.Sprintf("%s, and listing the instance to name them failed: %s. Allow the provider's Connect List operations, or bind each ARN in refs.", err.Error(), ierr.Error()))

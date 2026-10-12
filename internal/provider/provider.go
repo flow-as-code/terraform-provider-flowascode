@@ -13,6 +13,8 @@ import (
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/connect"
+	"github.com/aws/aws-sdk-go-v2/service/connectcases"
+	"github.com/aws/aws-sdk-go-v2/service/qconnect"
 	awsbase "github.com/hashicorp/aws-sdk-go-base/v2"
 	basediag "github.com/hashicorp/aws-sdk-go-base/v2/diag"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
@@ -172,7 +174,12 @@ func (p *flowascode) Configure(ctx context.Context, req provider.ConfigureReques
 				o.BaseEndpoint = aws.String(endpoint)
 			}
 		}),
-		Region: awsConfig.Region,
+		// Read only when a live flow is read back, to name Cases templates
+		// and fields and Amazon Q in Connect assistants (the permissions
+		// guide); endpoints has no override for either.
+		Cases:    connectcases.NewFromConfig(awsConfig),
+		QConnect: qconnect.NewFromConfig(awsConfig),
+		Region:   awsConfig.Region,
 	}
 	resp.ResourceData = client
 	resp.DataSourceData = client
