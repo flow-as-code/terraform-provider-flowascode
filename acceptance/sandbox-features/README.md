@@ -1,9 +1,10 @@
 # Sandbox features for the Phase D probe sweeps
 
 An operator-only OpenTofu root that puts on the shared sandbox Amazon Connect
-instance the features flow-as-code's Phase D probe sweeps need
+instance most of the features flow-as-code's Phase D probe sweeps need
 (flow-as-code `tasks/README.md`, Phase D, owner decision 7, and the "Sandbox
-prerequisites and cost" section of each of D02 to D09). The acceptance lane
+prerequisites and cost" section of each of D02 to D09). What it leaves out
+is listed under the table. The acceptance lane
 (`.github/workflows/acceptance.yml`) never runs it. Its state is local, under
 `state/` (gitignored), and stays on the operator's machine; nothing here is
 shared through CI.
@@ -37,6 +38,31 @@ Not created, by owner decision 6 and the Voice ID end of support: outbound
 campaigns (a quota ticket), SMS (a registration taking up to 15 business
 days), and a Voice ID domain (the service ended on 2026-05-20).
 
+Not created yet, although a task lists them; a probe of the action named
+runs against an instance without the feature until they are added, and a
+refusal it records may be the missing feature's rather than the catalog's:
+
+- D03, `GetCustomerProfileObject`: an object of a type. The CTR object type
+  exists, but an object is data, written by a contact through the
+  integration or by `PutProfileObject`, not a resource.
+- D03, `GetCalculatedAttributesForCustomerProfile`: a calculated attribute
+  definition. The service-linked role half of that prerequisite is met by
+  the domain's `amazon-connect-` name.
+- D09, `AuthenticateParticipant`: a Cognito user pool.
+- D09, `CheckSegmentMembership`: a segment definition on the Profiles domain.
+- D09, `LoadContactContent`: an email address on the instance, if D00's
+  probe shows one is needed.
+
+Cases is enabled here through the API (the domain and its `CASES_DOMAIN`
+association). The console's onboarding also needs `iam:PutRolePolicy`
+(https://docs.aws.amazon.com/connect/latest/adminguide/enable-cases.html),
+and the Connect service-linked role's managed policy has no `cases:`
+statement
+(https://docs.aws.amazon.com/aws-managed-policy/latest/reference/AmazonConnectServiceLinkedRolePolicy.html),
+so the console writes a role policy this root does not. A create probe does
+not run the block and needs nothing from the role; a Cases block exercised
+on a live contact may be denied until Cases is onboarded in the console.
+
 Each `.tf` file carries the AWS documentation URL the resource's shape
 relies on.
 
@@ -59,7 +85,8 @@ tofu plan -var instance_id=<id>
 tofu apply -var instance_id=<id>
 ```
 
-`tofu init` (without `-backend=false`) creates `state/`. The lock file is
+`tofu init` writes no state; the first `tofu apply` creates
+`state/terraform.tfstate`. The lock file is
 tracked for darwin and linux on amd64 and arm64, so every operator gets the
 same provider builds. Offline, `tofu init -backend=false`, `tofu validate`
 and `tofu fmt -check` are what CI could run; none needs credentials.
@@ -134,15 +161,21 @@ state, so:
    `tofu import -var instance_id=<id> aws_connect_phone_number.did <phone_number_id>`.
 2. `tofu destroy -var instance_id=<id>` removes the rest in dependency
    order: the three integration associations (`MESSAGE_PROCESSOR`,
-   `WISDOM_ASSISTANT`, `CASES_DOMAIN`), then the Lambda, its permission and
-   role, the assistant, the task template, the predefined attribute, the
-   media streaming storage config, the Cases template, fields and domain,
-   then the Customer Profiles integration, object type and domain, and last
-   the KMS key, which enters its 7 day deletion window.
-3. Check nothing named `fac-sbx-*` remains: `aws connect
-   list-integration-associations --instance-id <id>`, `aws customer-profiles
-   list-domains`, `aws connectcases list-domains`, `aws qconnect
-   list-assistants`, `aws lambda list-functions`.
+   `WISDOM_ASSISTANT`, `CASES_DOMAIN`) and the two plain Lambda
+   associations, then the two Lambdas, the permission and the role, the
+   assistant, the task template, the flow `fac-sbx-probe-target`, the
+   predefined attribute, the media streaming storage config, the Cases
+   template, fields and domain, then the Customer Profiles integration,
+   object type and domain, and last the KMS key, which enters its 7 day
+   deletion window. `BasicQueue` is read, not created, and stays.
+3. Check nothing named `fac-sbx-*` or `amazon-connect-fac-sbx-*` remains:
+   `aws connect list-integration-associations --instance-id <id>`,
+   `aws connect list-lambda-functions --instance-id <id>`,
+   `aws connect list-contact-flows --instance-id <id>`,
+   `aws connect list-predefined-attributes --instance-id <id>`,
+   `aws connect list-task-templates --instance-id <id>`,
+   `aws customer-profiles list-domains`, `aws connectcases list-domains`,
+   `aws qconnect list-assistants`, `aws lambda list-functions`.
 
 Destroying the Customer Profiles domain deletes every profile and object
 in it without asking: DeleteDomain "Deletes a specific domain and all of

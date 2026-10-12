@@ -3,6 +3,8 @@
 # UpdateCase probes have ids to reference. Cases needs Customer Profiles on
 # the instance first, hence the depends_on.
 # https://docs.aws.amazon.com/connect/latest/adminguide/enable-cases.html
+# That page's console onboarding also needs iam:PutRolePolicy, a role policy
+# this API-only enablement does not write; the README says what that leaves.
 #
 # Cost: $0.12 per case created; nothing idle. Creating a flow creates no case.
 # https://aws.amazon.com/products/connect/customer/pricing/appendix/
