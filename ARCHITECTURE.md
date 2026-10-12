@@ -61,7 +61,9 @@ flowchart TB
 - `internal/connectapi`: exactly the Connect operations the provider calls,
   each with its API reference URL, the inventory lists import uses, and an
   in-memory fake that behaves like Connect where the tests depend on it
-  (published and saved content, module versions an alias holds).
+  (published and saved content, module versions an alias holds). The
+  inventory also takes optional Cases and Amazon Q in Connect clients, with
+  fakes of their own, as export.ts does; the provider passes neither.
 - `internal/conformance`: flow-as-code's `conformance/` at the commit in
   `COMMIT`, embedded. `scripts/sync-conformance.sh` is the only writer, and
   `MANIFEST.json` lets a test detect a hand edit.

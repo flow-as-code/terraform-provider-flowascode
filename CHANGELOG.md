@@ -9,8 +9,40 @@ it reads.
 ## Unreleased
 
 Vendors flow-as-code `conformance/` at
-`78b0a87d01992d532624d40a89686400c19b512c` (the merge of flow-as-code #35,
-the last of its Phase C batch) and reads FlowDoc 0.2.
+`007f9a76b339e7e57179d20f3e62c05305c08898` (the head of flow-as-code #44,
+its D01) and reads FlowDoc 0.3. Documents at 0.1 and 0.2 are read through
+migration. The Phase C entries below came with the
+`78b0a87d01992d532624d40a89686400c19b512c` re-vendor before it.
+
+- FlowDoc 0.3. Five reference types join the eight: `tasktemplate`,
+  `casetemplate`, `casefield`, `assistant` and `phonenumber`, as tokens in
+  `generic` parameters and as `refs` keys (`casefield:priority`). A
+  document is validated against `flowdoc-0.3.schema.json`, and 0.1 and 0.2
+  documents are migrated on the way in. A release before this one refuses
+  a 0.3 document. Upgrade note: the computed `flowdoc` attribute is written
+  at 0.3, so the first refresh after upgrading changes it once for every
+  flow and module with no change to the flow itself, and every
+  `<name>_document_sha256` output of an emitted tree changes with it. A
+  promotion gate that reads those outputs sees that change once.
+- A `casefield` token may stand as a whole map key, as
+  `CreateCase.CaseRequestFields` holds a Cases field id (flow-as-code ADR
+  0008). The key is resolved when the content is materialized, and a token
+  embedded in a longer key or value is refused before anything is
+  substituted. `no-unresolved-token` and `no-literal-arn` read map keys
+  too, so a malformed or unbound token, or an ARN, in a key is reported.
+- Reading a live flow back names task templates and claimed phone numbers
+  from the instance, a phone number by its description or else its digits,
+  and folds the legacy instance-nested phone-number ARN onto the current
+  form. It calls `ListTaskTemplates` and `ListPhoneNumbersV2`, so an import
+  or drift that lists the instance needs `connect:ListTaskTemplates` and
+  `connect:ListPhoneNumbersV2`. A role without them gets the existing
+  warning in place of the live blocks. The new registry guide `permissions` lists
+  the operations each feature calls. Cases templates and fields and Amazon
+  Q in Connect assistants are named only through a `refs` binding.
+- The catalog reader accepts the vocabulary the Phase D action types will
+  use: `channels` on an unmodeled type, `requiredWhenValue` on an error
+  branch (read by `error-branches`), `keyPatterns` on a map, `groups` on a
+  constraint and `dynamic` on a list. No action type uses them yet.
 
 - Two lint rules, fifteen in all. `channel-restricted-action` is a warning
   on `wait` and `show_view`, whose action pages restrict them to the chat

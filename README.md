@@ -206,8 +206,10 @@ flowchart LR
 A `moved` block takes over an `aws_connect_contact_flow` or
 `aws_connect_contact_flow_module` in place. Import reads a live flow back as
 action blocks and recovers each `refs` binding from the instance's queues,
-hours of operation, prompts, Lambda functions, flows, modules, Lex bots and
-views. The registry guide `migrate-from-aws-provider` has the steps.
+hours of operation, prompts, Lambda functions, flows, modules, Lex bots,
+views, task templates and phone numbers. The registry guide
+`migrate-from-aws-provider` has the steps, and `permissions` lists the
+operations each feature calls.
 
 ## Requirements
 
