@@ -1,5 +1,5 @@
 {
- "source": "packages/core/dist built from flow-as-code 007f9a7, Node v26.10.0, ICU 78.3, locale en-US",
+ "source": "packages/core/dist built from flow-as-code ccee157, Node v26.10.0, ICU 78.3, locale en-US",
  "fixtures": [
   {
    "file": "lint/action-allowed-in-flow-type/fail-callback-in-whisper-flow.json",
@@ -15,14 +15,26 @@
   },
   {
    "file": "lint/action-allowed-in-flow-type/fail-hold-flow-message-and-hours.json",
-   "json": "{\n  \"summary\": {\n    \"total\": 4,\n    \"errors\": 3,\n    \"warnings\": 1\n  },\n  \"findings\": [\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"check-hours\",\n      \"message\": \"CheckHoursOfOperation is not allowed in a CUSTOMER_HOLD flow. Allowed: CONTACT_FLOW, AGENT_TRANSFER, QUEUE_TRANSFER, CUSTOMER_QUEUE, MODULE.\",\n      \"rule\": \"action-allowed-in-flow-type\",\n      \"doc\": \"hold-music\"\n    },\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"hold-message\",\n      \"message\": \"MessageParticipant is not allowed in a CUSTOMER_HOLD flow. Allowed: CONTACT_FLOW, AGENT_TRANSFER, QUEUE_TRANSFER, CUSTOMER_WHISPER, AGENT_WHISPER, OUTBOUND_WHISPER, CUSTOMER_QUEUE, MODULE.\",\n      \"rule\": \"action-allowed-in-flow-type\",\n      \"doc\": \"hold-music\"\n    },\n    {\n      \"severity\": \"error\",\n      \"message\": \"No terminal action is reachable from StartAction; the flow cannot end.\",\n      \"rule\": \"terminal-blocks\",\n      \"doc\": \"hold-music\"\n    },\n    {\n      \"severity\": \"warning\",\n      \"blockId\": \"resume\",\n      \"message\": \"ResumeContact has no transitions but is not a terminal action type, so the flow dead-ends here.\",\n      \"rule\": \"terminal-blocks\",\n      \"doc\": \"hold-music\"\n    }\n  ]\n}\n",
-   "text": "hold-music\n  error (check-hours): CheckHoursOfOperation is not allowed in a CUSTOMER_HOLD flow. Allowed: CONTACT_FLOW, AGENT_TRANSFER, QUEUE_TRANSFER, CUSTOMER_QUEUE, MODULE. [action-allowed-in-flow-type]\n  error (hold-message): MessageParticipant is not allowed in a CUSTOMER_HOLD flow. Allowed: CONTACT_FLOW, AGENT_TRANSFER, QUEUE_TRANSFER, CUSTOMER_WHISPER, AGENT_WHISPER, OUTBOUND_WHISPER, CUSTOMER_QUEUE, MODULE. [action-allowed-in-flow-type]\n  error: No terminal action is reachable from StartAction; the flow cannot end. [terminal-blocks]\n  warning (resume): ResumeContact has no transitions but is not a terminal action type, so the flow dead-ends here. [terminal-blocks]\n\n4 finding(s): 3 error(s), 1 warning(s).\n",
+   "json": "{\n  \"summary\": {\n    \"total\": 2,\n    \"errors\": 2,\n    \"warnings\": 0\n  },\n  \"findings\": [\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"check-hours\",\n      \"message\": \"CheckHoursOfOperation is not allowed in a CUSTOMER_HOLD flow. Allowed: CONTACT_FLOW, AGENT_TRANSFER, QUEUE_TRANSFER, CUSTOMER_QUEUE, MODULE.\",\n      \"rule\": \"action-allowed-in-flow-type\",\n      \"doc\": \"hold-music\"\n    },\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"hold-message\",\n      \"message\": \"MessageParticipant is not allowed in a CUSTOMER_HOLD flow. Allowed: CONTACT_FLOW, AGENT_TRANSFER, QUEUE_TRANSFER, CUSTOMER_WHISPER, AGENT_WHISPER, OUTBOUND_WHISPER, CUSTOMER_QUEUE, MODULE.\",\n      \"rule\": \"action-allowed-in-flow-type\",\n      \"doc\": \"hold-music\"\n    }\n  ]\n}\n",
+   "text": "hold-music\n  error (check-hours): CheckHoursOfOperation is not allowed in a CUSTOMER_HOLD flow. Allowed: CONTACT_FLOW, AGENT_TRANSFER, QUEUE_TRANSFER, CUSTOMER_QUEUE, MODULE. [action-allowed-in-flow-type]\n  error (hold-message): MessageParticipant is not allowed in a CUSTOMER_HOLD flow. Allowed: CONTACT_FLOW, AGENT_TRANSFER, QUEUE_TRANSFER, CUSTOMER_WHISPER, AGENT_WHISPER, OUTBOUND_WHISPER, CUSTOMER_QUEUE, MODULE. [action-allowed-in-flow-type]\n\n2 finding(s): 2 error(s), 0 warning(s).\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/action-allowed-in-flow-type/fail-hold-participant-in-customer-queue.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 2,\n    \"errors\": 1,\n    \"warnings\": 1\n  },\n  \"findings\": [\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"hold-agent\",\n      \"message\": \"UpdatePreviousContactParticipantState is not allowed in a CUSTOMER_QUEUE flow. Allowed: CONTACT_FLOW, AGENT_TRANSFER, QUEUE_TRANSFER, MODULE.\",\n      \"rule\": \"action-allowed-in-flow-type\",\n      \"doc\": \"queue-hold\"\n    },\n    {\n      \"severity\": \"warning\",\n      \"blockId\": \"hold-agent\",\n      \"message\": \"UpdatePreviousContactParticipantState is supported only on the VOICE channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatepreviouscontactparticipantstate.html\",\n      \"rule\": \"channel-restricted-action\",\n      \"doc\": \"queue-hold\"\n    }\n  ]\n}\n",
+   "text": "queue-hold\n  error (hold-agent): UpdatePreviousContactParticipantState is not allowed in a CUSTOMER_QUEUE flow. Allowed: CONTACT_FLOW, AGENT_TRANSFER, QUEUE_TRANSFER, MODULE. [action-allowed-in-flow-type]\n  warning (hold-agent): UpdatePreviousContactParticipantState is supported only on the VOICE channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatepreviouscontactparticipantstate.html [channel-restricted-action]\n\n2 finding(s): 1 error(s), 1 warning(s).\n",
    "blocking": false
   },
   {
    "file": "lint/action-allowed-in-flow-type/fail-in-hold-flow.json",
    "json": "{\n  \"summary\": {\n    \"total\": 2,\n    \"errors\": 2,\n    \"warnings\": 0\n  },\n  \"findings\": [\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"bye\",\n      \"message\": \"DisconnectParticipant is not allowed in a CUSTOMER_HOLD flow. Allowed: CONTACT_FLOW, AGENT_TRANSFER, QUEUE_TRANSFER, CUSTOMER_QUEUE, MODULE.\",\n      \"rule\": \"action-allowed-in-flow-type\",\n      \"doc\": \"case\"\n    },\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"route\",\n      \"message\": \"TransferContactToQueue is not allowed in a CUSTOMER_HOLD flow. Allowed: CONTACT_FLOW, AGENT_TRANSFER, QUEUE_TRANSFER, MODULE.\",\n      \"rule\": \"action-allowed-in-flow-type\",\n      \"doc\": \"case\"\n    }\n  ]\n}\n",
    "text": "case\n  error (bye): DisconnectParticipant is not allowed in a CUSTOMER_HOLD flow. Allowed: CONTACT_FLOW, AGENT_TRANSFER, QUEUE_TRANSFER, CUSTOMER_QUEUE, MODULE. [action-allowed-in-flow-type]\n  error (route): TransferContactToQueue is not allowed in a CUSTOMER_HOLD flow. Allowed: CONTACT_FLOW, AGENT_TRANSFER, QUEUE_TRANSFER, MODULE. [action-allowed-in-flow-type]\n\n2 finding(s): 2 error(s), 0 warning(s).\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/action-allowed-in-flow-type/fail-media-streaming-in-hold-flow.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 2,\n    \"errors\": 1,\n    \"warnings\": 1\n  },\n  \"findings\": [\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"start-stream\",\n      \"message\": \"UpdateContactMediaStreamingBehavior is not allowed in a CUSTOMER_HOLD flow. Allowed: CONTACT_FLOW, CUSTOMER_QUEUE, AGENT_TRANSFER, QUEUE_TRANSFER, CUSTOMER_WHISPER, AGENT_WHISPER, OUTBOUND_WHISPER, MODULE.\",\n      \"rule\": \"action-allowed-in-flow-type\",\n      \"doc\": \"hold-stream\"\n    },\n    {\n      \"severity\": \"warning\",\n      \"blockId\": \"start-stream\",\n      \"message\": \"UpdateContactMediaStreamingBehavior is supported only on the VOICE channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatecontactmediastreamingbehavior.html\",\n      \"rule\": \"channel-restricted-action\",\n      \"doc\": \"hold-stream\"\n    }\n  ]\n}\n",
+   "text": "hold-stream\n  error (start-stream): UpdateContactMediaStreamingBehavior is not allowed in a CUSTOMER_HOLD flow. Allowed: CONTACT_FLOW, CUSTOMER_QUEUE, AGENT_TRANSFER, QUEUE_TRANSFER, CUSTOMER_WHISPER, AGENT_WHISPER, OUTBOUND_WHISPER, MODULE. [action-allowed-in-flow-type]\n  warning (start-stream): UpdateContactMediaStreamingBehavior is supported only on the VOICE channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatecontactmediastreamingbehavior.html [channel-restricted-action]\n\n2 finding(s): 1 error(s), 1 warning(s).\n",
    "blocking": false
   },
   {
@@ -35,6 +47,12 @@
    "file": "lint/action-allowed-in-flow-type/fail-queue-to-queue-in-inbound-flow.json",
    "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 1,\n    \"warnings\": 0\n  },\n  \"findings\": [\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"requeue\",\n      \"message\": \"DequeueContactAndTransferToQueue is not allowed in a CONTACT_FLOW flow. Allowed: CUSTOMER_QUEUE, MODULE.\",\n      \"rule\": \"action-allowed-in-flow-type\",\n      \"doc\": \"case\"\n    }\n  ]\n}\n",
    "text": "case\n  error (requeue): DequeueContactAndTransferToQueue is not allowed in a CONTACT_FLOW flow. Allowed: CUSTOMER_QUEUE, MODULE. [action-allowed-in-flow-type]\n\n1 finding(s): 1 error(s), 0 warning(s).\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/action-allowed-in-flow-type/fail-routing-criteria-in-whisper-flow.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 1,\n    \"warnings\": 0\n  },\n  \"findings\": [\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"routing\",\n      \"message\": \"UpdateRoutingCriteria is not allowed in a CUSTOMER_WHISPER flow. Allowed: CONTACT_FLOW, CUSTOMER_QUEUE, AGENT_TRANSFER, QUEUE_TRANSFER, MODULE.\",\n      \"rule\": \"action-allowed-in-flow-type\",\n      \"doc\": \"whisper-routing\"\n    }\n  ]\n}\n",
+   "text": "whisper-routing\n  error (routing): UpdateRoutingCriteria is not allowed in a CUSTOMER_WHISPER flow. Allowed: CONTACT_FLOW, CUSTOMER_QUEUE, AGENT_TRANSFER, QUEUE_TRANSFER, MODULE. [action-allowed-in-flow-type]\n\n1 finding(s): 1 error(s), 0 warning(s).\n",
    "blocking": false
   },
   {
@@ -56,7 +74,25 @@
    "blocking": false
   },
   {
+   "file": "lint/action-allowed-in-flow-type/pass-hold-participant-in-agent-transfer.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 0,\n    \"warnings\": 1\n  },\n  \"findings\": [\n    {\n      \"severity\": \"warning\",\n      \"blockId\": \"hold-agent\",\n      \"message\": \"UpdatePreviousContactParticipantState is supported only on the VOICE channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatepreviouscontactparticipantstate.html\",\n      \"rule\": \"channel-restricted-action\",\n      \"doc\": \"transfer-hold\"\n    }\n  ]\n}\n",
+   "text": "transfer-hold\n  warning (hold-agent): UpdatePreviousContactParticipantState is supported only on the VOICE channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatepreviouscontactparticipantstate.html [channel-restricted-action]\n\n1 finding(s): 0 error(s), 1 warning(s).\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/action-allowed-in-flow-type/pass-media-streaming-in-agent-whisper.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 0,\n    \"warnings\": 1\n  },\n  \"findings\": [\n    {\n      \"severity\": \"warning\",\n      \"blockId\": \"start-stream\",\n      \"message\": \"UpdateContactMediaStreamingBehavior is supported only on the VOICE channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatecontactmediastreamingbehavior.html\",\n      \"rule\": \"channel-restricted-action\",\n      \"doc\": \"whisper-stream\"\n    }\n  ]\n}\n",
+   "text": "whisper-stream\n  warning (start-stream): UpdateContactMediaStreamingBehavior is supported only on the VOICE channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatecontactmediastreamingbehavior.html [channel-restricted-action]\n\n1 finding(s): 0 error(s), 1 warning(s).\n",
+   "blocking": false
+  },
+  {
    "file": "lint/action-allowed-in-flow-type/pass-module.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 0,\n    \"errors\": 0,\n    \"warnings\": 0\n  },\n  \"findings\": []\n}\n",
+   "text": "No findings.\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/action-allowed-in-flow-type/pass-routing-criteria-in-customer-queue.json",
    "json": "{\n  \"summary\": {\n    \"total\": 0,\n    \"errors\": 0,\n    \"warnings\": 0\n  },\n  \"findings\": []\n}\n",
    "text": "No findings.\n",
    "blocking": false
@@ -98,6 +134,30 @@
    "blocking": false
   },
   {
+   "file": "lint/channel-restricted-action/fail-hold-participant.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 0,\n    \"warnings\": 1\n  },\n  \"findings\": [\n    {\n      \"severity\": \"warning\",\n      \"blockId\": \"hold-agent\",\n      \"message\": \"UpdatePreviousContactParticipantState is supported only on the VOICE channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatepreviouscontactparticipantstate.html\",\n      \"rule\": \"channel-restricted-action\",\n      \"doc\": \"secure-input-hold\"\n    }\n  ]\n}\n",
+   "text": "secure-input-hold\n  warning (hold-agent): UpdatePreviousContactParticipantState is supported only on the VOICE channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatepreviouscontactparticipantstate.html [channel-restricted-action]\n\n1 finding(s): 0 error(s), 1 warning(s).\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/channel-restricted-action/fail-media-streaming.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 0,\n    \"warnings\": 1\n  },\n  \"findings\": [\n    {\n      \"severity\": \"warning\",\n      \"blockId\": \"start-stream\",\n      \"message\": \"UpdateContactMediaStreamingBehavior is supported only on the VOICE channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatecontactmediastreamingbehavior.html\",\n      \"rule\": \"channel-restricted-action\",\n      \"doc\": \"stream-customer-audio\"\n    }\n  ]\n}\n",
+   "text": "stream-customer-audio\n  warning (start-stream): UpdateContactMediaStreamingBehavior is supported only on the VOICE channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatecontactmediastreamingbehavior.html [channel-restricted-action]\n\n1 finding(s): 0 error(s), 1 warning(s).\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/channel-restricted-action/fail-message-processor.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 0,\n    \"warnings\": 1\n  },\n  \"findings\": [\n    {\n      \"severity\": \"warning\",\n      \"blockId\": \"process-messages\",\n      \"message\": \"UpdateContactMediaProcessing is supported only on the CHAT channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatecontactmediaprocessing.html\",\n      \"rule\": \"channel-restricted-action\",\n      \"doc\": \"chat-redaction\"\n    }\n  ]\n}\n",
+   "text": "chat-redaction\n  warning (process-messages): UpdateContactMediaProcessing is supported only on the CHAT channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatecontactmediaprocessing.html [channel-restricted-action]\n\n1 finding(s): 0 error(s), 1 warning(s).\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/channel-restricted-action/fail-resume-contact.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 0,\n    \"warnings\": 1\n  },\n  \"findings\": [\n    {\n      \"severity\": \"warning\",\n      \"blockId\": \"resume-task\",\n      \"message\": \"ResumeContact is supported only on the TASK channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatecontactresumecontact.html\",\n      \"rule\": \"channel-restricted-action\",\n      \"doc\": \"resume-paused-task\"\n    }\n  ]\n}\n",
+   "text": "resume-paused-task\n  warning (resume-task): ResumeContact is supported only on the TASK channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatecontactresumecontact.html [channel-restricted-action]\n\n1 finding(s): 0 error(s), 1 warning(s).\n",
+   "blocking": false
+  },
+  {
    "file": "lint/channel-restricted-action/fail-show-view-in-contact-flow.json",
    "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 0,\n    \"warnings\": 1\n  },\n  \"findings\": [\n    {\n      \"severity\": \"warning\",\n      \"blockId\": \"show-form\",\n      \"message\": \"ShowView is supported only on the CHAT channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/participant-actions-showview.html\",\n      \"rule\": \"channel-restricted-action\",\n      \"doc\": \"guide\"\n    }\n  ]\n}\n",
    "text": "guide\n  warning (show-form): ShowView is supported only on the CHAT channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/participant-actions-showview.html [channel-restricted-action]\n\n1 finding(s): 0 error(s), 1 warning(s).\n",
@@ -116,7 +176,31 @@
    "blocking": false
   },
   {
+   "file": "lint/channel-restricted-action/fail-wisdom-session.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 0,\n    \"warnings\": 1\n  },\n  \"findings\": [\n    {\n      \"severity\": \"warning\",\n      \"blockId\": \"assist\",\n      \"message\": \"CreateWisdomSession is supported only on the VOICE channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/createwisdomsession.html\",\n      \"rule\": \"channel-restricted-action\",\n      \"doc\": \"agent-assist\"\n    }\n  ]\n}\n",
+   "text": "agent-assist\n  warning (assist): CreateWisdomSession is supported only on the VOICE channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/createwisdomsession.html [channel-restricted-action]\n\n1 finding(s): 0 error(s), 1 warning(s).\n",
+   "blocking": false
+  },
+  {
    "file": "lint/channel-restricted-action/pass-contact-flow.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 0,\n    \"errors\": 0,\n    \"warnings\": 0\n  },\n  \"findings\": []\n}\n",
+   "text": "No findings.\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/channel-restricted-action/pass-create-task.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 0,\n    \"errors\": 0,\n    \"warnings\": 0\n  },\n  \"findings\": []\n}\n",
+   "text": "No findings.\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/channel-restricted-action/pass-recording-action-of-the-same-block.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 1,\n    \"warnings\": 0\n  },\n  \"findings\": [\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"record-voice\",\n      \"message\": \"Recording is enabled on a path that plays no message first. Announce recording before starting it.\",\n      \"rule\": \"recording-consent-before-record\",\n      \"doc\": \"record-calls\"\n    }\n  ]\n}\n",
+   "text": "record-calls\n  error (record-voice): Recording is enabled on a path that plays no message first. Announce recording before starting it. [recording-consent-before-record]\n\n1 finding(s): 1 error(s), 0 warning(s).\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/channel-restricted-action/pass-resume-contact-event-hook.json",
    "json": "{\n  \"summary\": {\n    \"total\": 0,\n    \"errors\": 0,\n    \"warnings\": 0\n  },\n  \"findings\": []\n}\n",
    "text": "No findings.\n",
    "blocking": false
@@ -176,15 +260,69 @@
    "blocking": false
   },
   {
+   "file": "lint/error-branches/fail-associate-profile-without-catch-all.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 1,\n    \"warnings\": 0\n  },\n  \"findings\": [\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"link-contact\",\n      \"message\": \"AssociateContactToCustomerProfile does not wire its \\\"NoMatchingError\\\" branch.\",\n      \"rule\": \"error-branches\",\n      \"doc\": \"customer-profile-check\"\n    }\n  ]\n}\n",
+   "text": "customer-profile-check\n  error (link-contact): AssociateContactToCustomerProfile does not wire its \"NoMatchingError\" branch. [error-branches]\n\n1 finding(s): 1 error(s), 0 warning(s).\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/error-branches/fail-calculated-attributes-without-catch-all.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 1,\n    \"warnings\": 0\n  },\n  \"findings\": [\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"calculated\",\n      \"message\": \"GetCalculatedAttributesForCustomerProfile does not wire its \\\"NoMatchingError\\\" branch.\",\n      \"rule\": \"error-branches\",\n      \"doc\": \"customer-profile-check\"\n    }\n  ]\n}\n",
+   "text": "customer-profile-check\n  error (calculated): GetCalculatedAttributesForCustomerProfile does not wire its \"NoMatchingError\" branch. [error-branches]\n\n1 finding(s): 1 error(s), 0 warning(s).\n",
+   "blocking": false
+  },
+  {
    "file": "lint/error-branches/fail-callback-number-half-wired.json",
    "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 1,\n    \"warnings\": 0\n  },\n  \"findings\": [\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"set-number\",\n      \"message\": \"UpdateContactCallbackNumber does not wire its \\\"CallbackNumberNotDialable\\\" branch.\",\n      \"rule\": \"error-branches\",\n      \"doc\": \"case\"\n    }\n  ]\n}\n",
    "text": "case\n  error (set-number): UpdateContactCallbackNumber does not wire its \"CallbackNumberNotDialable\" branch. [error-branches]\n\n1 finding(s): 1 error(s), 0 warning(s).\n",
    "blocking": false
   },
   {
+   "file": "lint/error-branches/fail-create-case-linking-without-contact-not-linked.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 1,\n    \"warnings\": 0\n  },\n  \"findings\": [\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"open-case\",\n      \"message\": \"CreateCase does not wire its \\\"ContactNotLinked\\\" branch.\",\n      \"rule\": \"error-branches\",\n      \"doc\": \"case-intake\"\n    }\n  ]\n}\n",
+   "text": "case-intake\n  error (open-case): CreateCase does not wire its \"ContactNotLinked\" branch. [error-branches]\n\n1 finding(s): 1 error(s), 0 warning(s).\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/error-branches/fail-create-profile-without-catch-all.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 1,\n    \"warnings\": 0\n  },\n  \"findings\": [\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"create-profile\",\n      \"message\": \"CreateCustomerProfile does not wire its \\\"NoMatchingError\\\" branch.\",\n      \"rule\": \"error-branches\",\n      \"doc\": \"customer-profile-check\"\n    }\n  ]\n}\n",
+   "text": "customer-profile-check\n  error (create-profile): CreateCustomerProfile does not wire its \"NoMatchingError\" branch. [error-branches]\n\n1 finding(s): 1 error(s), 0 warning(s).\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/error-branches/fail-create-task-without-catch-all.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 1,\n    \"warnings\": 0\n  },\n  \"findings\": [\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"follow-up\",\n      \"message\": \"CreateTask does not wire its \\\"NoMatchingError\\\" branch.\",\n      \"rule\": \"error-branches\",\n      \"doc\": \"task-follow-up\"\n    }\n  ]\n}\n",
+   "text": "task-follow-up\n  error (follow-up): CreateTask does not wire its \"NoMatchingError\" branch. [error-branches]\n\n1 finding(s): 1 error(s), 0 warning(s).\n",
+   "blocking": false
+  },
+  {
    "file": "lint/error-branches/fail-dequeue-without-queue-at-capacity.json",
    "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 1,\n    \"warnings\": 0\n  },\n  \"findings\": [\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"move\",\n      \"message\": \"DequeueContactAndTransferToQueue does not wire its \\\"QueueAtCapacity\\\" branch.\",\n      \"rule\": \"error-branches\",\n      \"doc\": \"case\"\n    }\n  ]\n}\n",
    "text": "case\n  error (move): DequeueContactAndTransferToQueue does not wire its \"QueueAtCapacity\" branch. [error-branches]\n\n1 finding(s): 1 error(s), 0 warning(s).\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/error-branches/fail-get-case-linking-without-contact-not-linked.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 1,\n    \"warnings\": 0\n  },\n  \"findings\": [\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"find-case\",\n      \"message\": \"GetCase does not wire its \\\"ContactNotLinked\\\" branch.\",\n      \"rule\": \"error-branches\",\n      \"doc\": \"case-lookup\"\n    }\n  ]\n}\n",
+   "text": "case-lookup\n  error (find-case): GetCase does not wire its \"ContactNotLinked\" branch. [error-branches]\n\n1 finding(s): 1 error(s), 0 warning(s).\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/error-branches/fail-get-profile-object-without-catch-all.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 1,\n    \"warnings\": 0\n  },\n  \"findings\": [\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"latest-order\",\n      \"message\": \"GetCustomerProfileObject does not wire its \\\"NoMatchingError\\\" branch.\",\n      \"rule\": \"error-branches\",\n      \"doc\": \"customer-profile-check\"\n    }\n  ]\n}\n",
+   "text": "customer-profile-check\n  error (latest-order): GetCustomerProfileObject does not wire its \"NoMatchingError\" branch. [error-branches]\n\n1 finding(s): 1 error(s), 0 warning(s).\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/error-branches/fail-get-profile-without-catch-all.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 1,\n    \"warnings\": 0\n  },\n  \"findings\": [\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"find-caller\",\n      \"message\": \"GetCustomerProfile does not wire its \\\"NoMatchingError\\\" branch.\",\n      \"rule\": \"error-branches\",\n      \"doc\": \"customer-profile-check\"\n    }\n  ]\n}\n",
+   "text": "customer-profile-check\n  error (find-caller): GetCustomerProfile does not wire its \"NoMatchingError\" branch. [error-branches]\n\n1 finding(s): 1 error(s), 0 warning(s).\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/error-branches/fail-message-processor-without-catch-all.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 2,\n    \"errors\": 1,\n    \"warnings\": 1\n  },\n  \"findings\": [\n    {\n      \"severity\": \"warning\",\n      \"blockId\": \"process-messages\",\n      \"message\": \"UpdateContactMediaProcessing is supported only on the CHAT channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatecontactmediaprocessing.html\",\n      \"rule\": \"channel-restricted-action\",\n      \"doc\": \"chat-redaction\"\n    },\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"process-messages\",\n      \"message\": \"UpdateContactMediaProcessing does not wire its \\\"NoMatchingError\\\" branch.\",\n      \"rule\": \"error-branches\",\n      \"doc\": \"chat-redaction\"\n    }\n  ]\n}\n",
+   "text": "chat-redaction\n  warning (process-messages): UpdateContactMediaProcessing is supported only on the CHAT channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatecontactmediaprocessing.html [channel-restricted-action]\n  error (process-messages): UpdateContactMediaProcessing does not wire its \"NoMatchingError\" branch. [error-branches]\n\n2 finding(s): 1 error(s), 1 warning(s).\n",
    "blocking": false
   },
   {
@@ -218,6 +356,12 @@
    "blocking": false
   },
   {
+   "file": "lint/error-branches/fail-routing-criteria-without-catch-all.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 1,\n    \"warnings\": 0\n  },\n  \"findings\": [\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"routing\",\n      \"message\": \"UpdateRoutingCriteria does not wire its \\\"NoMatchingError\\\" branch.\",\n      \"rule\": \"error-branches\",\n      \"doc\": \"proficiency-routing\"\n    }\n  ]\n}\n",
+   "text": "proficiency-routing\n  error (routing): UpdateRoutingCriteria does not wire its \"NoMatchingError\" branch. [error-branches]\n\n1 finding(s): 1 error(s), 0 warning(s).\n",
+   "blocking": false
+  },
+  {
    "file": "lint/error-branches/fail-show-view-without-no-match.json",
    "json": "{\n  \"summary\": {\n    \"total\": 2,\n    \"errors\": 1,\n    \"warnings\": 1\n  },\n  \"findings\": [\n    {\n      \"severity\": \"warning\",\n      \"blockId\": \"show\",\n      \"message\": \"ShowView is supported only on the CHAT channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/participant-actions-showview.html\",\n      \"rule\": \"channel-restricted-action\",\n      \"doc\": \"case\"\n    },\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"show\",\n      \"message\": \"ShowView does not wire its \\\"NoMatchingCondition\\\" branch.\",\n      \"rule\": \"error-branches\",\n      \"doc\": \"case\"\n    }\n  ]\n}\n",
    "text": "case\n  warning (show): ShowView is supported only on the CHAT channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/participant-actions-showview.html [channel-restricted-action]\n  error (show): ShowView does not wire its \"NoMatchingCondition\" branch. [error-branches]\n\n2 finding(s): 1 error(s), 1 warning(s).\n",
@@ -248,7 +392,49 @@
    "blocking": false
   },
   {
+   "file": "lint/error-branches/fail-update-case-linking-without-contact-not-linked.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 1,\n    \"warnings\": 0\n  },\n  \"findings\": [\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"update-case\",\n      \"message\": \"UpdateCase does not wire its \\\"ContactNotLinked\\\" branch.\",\n      \"rule\": \"error-branches\",\n      \"doc\": \"case-update\"\n    }\n  ]\n}\n",
+   "text": "case-update\n  error (update-case): UpdateCase does not wire its \"ContactNotLinked\" branch. [error-branches]\n\n1 finding(s): 1 error(s), 0 warning(s).\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/error-branches/fail-update-profile-without-catch-all.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 1,\n    \"warnings\": 0\n  },\n  \"findings\": [\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"update-profile\",\n      \"message\": \"UpdateCustomerProfile does not wire its \\\"NoMatchingError\\\" branch.\",\n      \"rule\": \"error-branches\",\n      \"doc\": \"customer-profile-check\"\n    }\n  ]\n}\n",
+   "text": "customer-profile-check\n  error (update-profile): UpdateCustomerProfile does not wire its \"NoMatchingError\" branch. [error-branches]\n\n1 finding(s): 1 error(s), 0 warning(s).\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/error-branches/fail-wisdom-session-without-catch-all.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 2,\n    \"errors\": 1,\n    \"warnings\": 1\n  },\n  \"findings\": [\n    {\n      \"severity\": \"warning\",\n      \"blockId\": \"assist\",\n      \"message\": \"CreateWisdomSession is supported only on the VOICE channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/createwisdomsession.html\",\n      \"rule\": \"channel-restricted-action\",\n      \"doc\": \"agent-assist\"\n    },\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"assist\",\n      \"message\": \"CreateWisdomSession does not wire its \\\"NoMatchingError\\\" branch.\",\n      \"rule\": \"error-branches\",\n      \"doc\": \"agent-assist\"\n    }\n  ]\n}\n",
+   "text": "agent-assist\n  warning (assist): CreateWisdomSession is supported only on the VOICE channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/createwisdomsession.html [channel-restricted-action]\n  error (assist): CreateWisdomSession does not wire its \"NoMatchingError\" branch. [error-branches]\n\n2 finding(s): 1 error(s), 1 warning(s).\n",
+   "blocking": false
+  },
+  {
    "file": "lint/error-branches/pass-callback-number-wired.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 0,\n    \"errors\": 0,\n    \"warnings\": 0\n  },\n  \"findings\": []\n}\n",
+   "text": "No findings.\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/error-branches/pass-create-case-link-from-attribute.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 0,\n    \"errors\": 0,\n    \"warnings\": 0\n  },\n  \"findings\": []\n}\n",
+   "text": "No findings.\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/error-branches/pass-create-case-not-linking.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 0,\n    \"errors\": 0,\n    \"warnings\": 0\n  },\n  \"findings\": []\n}\n",
+   "text": "No findings.\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/error-branches/pass-get-case-catch-all-only.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 0,\n    \"errors\": 0,\n    \"warnings\": 0\n  },\n  \"findings\": []\n}\n",
+   "text": "No findings.\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/error-branches/pass-get-profile-catch-all-only.json",
    "json": "{\n  \"summary\": {\n    \"total\": 0,\n    \"errors\": 0,\n    \"warnings\": 0\n  },\n  \"findings\": []\n}\n",
    "text": "No findings.\n",
    "blocking": false
@@ -263,6 +449,12 @@
    "file": "lint/error-branches/pass-loop-prompts-without-catch-all.json",
    "json": "{\n  \"summary\": {\n    \"total\": 0,\n    \"errors\": 0,\n    \"warnings\": 0\n  },\n  \"findings\": []\n}\n",
    "text": "No findings.\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/error-branches/pass-message-processor-without-channel-mismatch.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 0,\n    \"warnings\": 1\n  },\n  \"findings\": [\n    {\n      \"severity\": \"warning\",\n      \"blockId\": \"process-messages\",\n      \"message\": \"UpdateContactMediaProcessing is supported only on the CHAT channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatecontactmediaprocessing.html\",\n      \"rule\": \"channel-restricted-action\",\n      \"doc\": \"chat-redaction\"\n    }\n  ]\n}\n",
+   "text": "chat-redaction\n  warning (process-messages): UpdateContactMediaProcessing is supported only on the CHAT channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatecontactmediaprocessing.html [channel-restricted-action]\n\n1 finding(s): 0 error(s), 1 warning(s).\n",
    "blocking": false
   },
   {
@@ -392,9 +584,27 @@
    "blocking": true
   },
   {
+   "file": "lint/no-literal-arn/fail-arn-in-message-processor.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 2,\n    \"errors\": 1,\n    \"warnings\": 1\n  },\n  \"findings\": [\n    {\n      \"severity\": \"warning\",\n      \"blockId\": \"process-messages\",\n      \"message\": \"UpdateContactMediaProcessing is supported only on the CHAT channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatecontactmediaprocessing.html\",\n      \"rule\": \"channel-restricted-action\",\n      \"doc\": \"chat-redaction\"\n    },\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"process-messages\",\n      \"message\": \"Parameter \\\"ChatProcessor.LambdaProcessorARN\\\" contains a literal ARN. Use a ${cdref:type:name} token instead.\",\n      \"rule\": \"no-literal-arn\",\n      \"doc\": \"chat-redaction\"\n    }\n  ]\n}\n",
+   "text": "chat-redaction\n  warning (process-messages): UpdateContactMediaProcessing is supported only on the CHAT channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatecontactmediaprocessing.html [channel-restricted-action]\n  error (process-messages): Parameter \"ChatProcessor.LambdaProcessorARN\" contains a literal ARN. Use a ${cdref:type:name} token instead. [no-literal-arn]\n\n2 finding(s): 1 error(s), 1 warning(s).\n",
+   "blocking": true
+  },
+  {
    "file": "lint/no-literal-arn/fail-arn-in-refs-token.json",
    "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 1,\n    \"warnings\": 0\n  },\n  \"findings\": [\n    {\n      \"severity\": \"error\",\n      \"message\": \"\\\"refs[0].token\\\" contains a literal ARN. Use a ${cdref:type:name} token instead.\",\n      \"rule\": \"no-literal-arn\",\n      \"doc\": \"case\"\n    }\n  ]\n}\n",
    "text": "case\n  error: \"refs[0].token\" contains a literal ARN. Use a ${cdref:type:name} token instead. [no-literal-arn]\n\n1 finding(s): 1 error(s), 0 warning(s).\n",
+   "blocking": true
+  },
+  {
+   "file": "lint/no-literal-arn/fail-arn-in-task-template.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 1,\n    \"warnings\": 0\n  },\n  \"findings\": [\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"follow-up\",\n      \"message\": \"Parameter \\\"TaskTemplateId\\\" contains a literal ARN. Use a ${cdref:type:name} token instead.\",\n      \"rule\": \"no-literal-arn\",\n      \"doc\": \"task-follow-up\"\n    }\n  ]\n}\n",
+   "text": "task-follow-up\n  error (follow-up): Parameter \"TaskTemplateId\" contains a literal ARN. Use a ${cdref:type:name} token instead. [no-literal-arn]\n\n1 finding(s): 1 error(s), 0 warning(s).\n",
+   "blocking": true
+  },
+  {
+   "file": "lint/no-literal-arn/fail-arn-in-wisdom-assistant.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 2,\n    \"errors\": 1,\n    \"warnings\": 1\n  },\n  \"findings\": [\n    {\n      \"severity\": \"warning\",\n      \"blockId\": \"assist\",\n      \"message\": \"CreateWisdomSession is supported only on the VOICE channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/createwisdomsession.html\",\n      \"rule\": \"channel-restricted-action\",\n      \"doc\": \"agent-assist\"\n    },\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"assist\",\n      \"message\": \"Parameter \\\"WisdomAssistantArn\\\" contains a literal ARN. Use a ${cdref:type:name} token instead.\",\n      \"rule\": \"no-literal-arn\",\n      \"doc\": \"agent-assist\"\n    }\n  ]\n}\n",
+   "text": "agent-assist\n  warning (assist): CreateWisdomSession is supported only on the VOICE channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/createwisdomsession.html [channel-restricted-action]\n  error (assist): Parameter \"WisdomAssistantArn\" contains a literal ARN. Use a ${cdref:type:name} token instead. [no-literal-arn]\n\n2 finding(s): 1 error(s), 1 warning(s).\n",
    "blocking": true
   },
   {

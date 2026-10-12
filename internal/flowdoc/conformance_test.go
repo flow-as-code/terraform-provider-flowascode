@@ -281,16 +281,20 @@ func TestCatalogLoads(t *testing.T) {
 			}
 		}
 	}
-	// The channel restriction (C03) is on Wait and ShowView alone, CHAT only,
-	// and the ChannelRestriction helper reads nil as "none", as
-	// channelRestriction reads undefined.
+	// The channel restrictions: Wait and ShowView (C03), then the Phase D
+	// types whose pages name channels (D02, D05). The ChannelRestriction
+	// helper reads nil as "none", as channelRestriction reads undefined.
 	restricted := map[string][]Channel{}
 	for _, a := range c.Actions {
 		if a.Model != nil && a.Model.Channels != nil {
 			restricted[a.Type] = a.Model.Channels
 		}
 	}
-	if want := map[string][]Channel{"Wait": {"CHAT"}, "ShowView": {"CHAT"}}; !reflect.DeepEqual(restricted, want) {
+	if want := map[string][]Channel{
+		"Wait": {"CHAT"}, "ShowView": {"CHAT"}, "ResumeContact": {"TASK"},
+		"UpdatePreviousContactParticipantState": {"VOICE"}, "UpdateContactMediaStreamingBehavior": {"VOICE"},
+		"UpdateContactMediaProcessing": {"CHAT"}, "CreateWisdomSession": {"VOICE"},
+	}; !reflect.DeepEqual(restricted, want) {
 		t.Errorf("channel restrictions %v, want %v", restricted, want)
 	}
 	if got, ok := ChannelRestriction("Wait"); !ok || !reflect.DeepEqual(got, []Channel{"CHAT"}) {
@@ -383,9 +387,9 @@ func phaseDCatalog(t *testing.T, extra *string) []byte {
 		return o
 	}
 
-	createCase := entry("CreateCase")
-	createCase.Set("channels", []any{"VOICE", "CHAT"})
-	actions.Set("CreateCase", surprise("unmodeled", createCase))
+	unmodeled := entry("CheckOutboundCallStatus")
+	unmodeled.Set("channels", []any{"VOICE", "CHAT"})
+	actions.Set("CheckOutboundCallStatus", surprise("unmodeled", unmodeled))
 
 	hooks := entry("UpdateContactEventHooks")
 	transitions := field(hooks, "transitions").(jsonv.Object)
@@ -412,8 +416,8 @@ func TestCatalogReadsThePhaseDVocabulary(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if e := c.Entry("CreateCase"); e.Modeled || !reflect.DeepEqual(e.Channels, []Channel{"VOICE", "CHAT"}) {
-		t.Errorf("CreateCase channels %v", e.Channels)
+	if e := c.Entry("CheckOutboundCallStatus"); e.Modeled || !reflect.DeepEqual(e.Channels, []Channel{"VOICE", "CHAT"}) {
+		t.Errorf("CheckOutboundCallStatus channels %v", e.Channels)
 	}
 	if e := c.Entry("Wait"); !reflect.DeepEqual(e.Channels, []Channel{"CHAT"}) {
 		t.Errorf("a modeled entry's channels on CatalogAction: %v", e.Channels)

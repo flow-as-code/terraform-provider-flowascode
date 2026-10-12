@@ -1,5 +1,5 @@
 {
-  "generatedFrom": "flow-as-code 007f9a76b339e7e57179d20f3e62c05305c08898, packages/core/dist",
+  "generatedFrom": "flow-as-code ccee157f7c1915e0212dad52bc59f817d3fe1493, packages/core/dist",
   "perType": {
     "CompleteOutboundCall": {
       "modeled": false,
@@ -26,76 +26,137 @@
       "channels": null
     },
     "CreateCase": {
-      "modeled": false,
-      "requiredErrors": [],
+      "modeled": true,
+      "requiredErrors": [
+        "NoMatchingError"
+      ],
       "requiredErrorsByParameters": [
         {
+          "parameters": {
+            "LinkContactToCase": "not-true"
+          },
+          "errors": [
+            "NoMatchingError"
+          ]
+        },
+        {
+          "parameters": {
+            "LinkContactToCase": "true"
+          },
+          "errors": [
+            "ContactNotLinked",
+            "NoMatchingError"
+          ]
+        },
+        {
           "parameters": {},
-          "errors": []
+          "errors": [
+            "NoMatchingError"
+          ]
         }
       ],
-      "builderErrors": [],
+      "builderErrors": [
+        "ContactNotLinked",
+        "NoMatchingError"
+      ],
       "minConditions": 0,
-      "conditionsKind": null,
-      "nextRule": null,
+      "conditionsKind": "none",
+      "nextRule": "required",
       "holdsParticipant": false,
       "textBodyPaths": [],
       "announcePaths": [],
       "recordingEnablerPath": null,
-      "refPaths": [],
+      "refPaths": [
+        {
+          "path": "CaseTemplateId",
+          "ref": "casetemplate"
+        },
+        {
+          "path": "CaseRequestFields.*~",
+          "ref": "casefield"
+        }
+      ],
       "restrictions": null,
-      "unrestricted": false,
+      "unrestricted": true,
       "terminal": false,
-      "actionType": false,
+      "actionType": true,
       "channels": null
     },
     "CreateTask": {
-      "modeled": false,
-      "requiredErrors": [],
+      "modeled": true,
+      "requiredErrors": [
+        "NoMatchingError"
+      ],
       "requiredErrorsByParameters": [
         {
           "parameters": {},
-          "errors": []
+          "errors": [
+            "NoMatchingError"
+          ]
         }
       ],
-      "builderErrors": [],
+      "builderErrors": [
+        "NoMatchingError"
+      ],
       "minConditions": 0,
-      "conditionsKind": null,
-      "nextRule": null,
+      "conditionsKind": "none",
+      "nextRule": "required",
       "holdsParticipant": false,
       "textBodyPaths": [],
       "announcePaths": [],
       "recordingEnablerPath": null,
-      "refPaths": [],
+      "refPaths": [
+        {
+          "path": "ContactFlowId",
+          "ref": "flow"
+        },
+        {
+          "path": "TaskTemplateId",
+          "ref": "tasktemplate"
+        }
+      ],
       "restrictions": null,
-      "unrestricted": false,
+      "unrestricted": true,
       "terminal": false,
-      "actionType": false,
+      "actionType": true,
       "channels": null
     },
     "CreateWisdomSession": {
-      "modeled": false,
-      "requiredErrors": [],
+      "modeled": true,
+      "requiredErrors": [
+        "NoMatchingError"
+      ],
       "requiredErrorsByParameters": [
         {
           "parameters": {},
-          "errors": []
+          "errors": [
+            "NoMatchingError"
+          ]
         }
       ],
-      "builderErrors": [],
+      "builderErrors": [
+        "NoMatchingError"
+      ],
       "minConditions": 0,
-      "conditionsKind": null,
-      "nextRule": null,
+      "conditionsKind": "none",
+      "nextRule": "required",
       "holdsParticipant": false,
       "textBodyPaths": [],
       "announcePaths": [],
       "recordingEnablerPath": null,
-      "refPaths": [],
+      "refPaths": [
+        {
+          "path": "WisdomAssistantArn",
+          "ref": "assistant"
+        }
+      ],
       "restrictions": null,
-      "unrestricted": false,
+      "unrestricted": true,
       "terminal": false,
-      "actionType": false,
-      "channels": null
+      "actionType": true,
+      "channels": [
+        "VOICE"
+      ]
     },
     "DequeueContactAndTransferToQueue": {
       "modeled": true,
@@ -169,27 +230,62 @@
       "channels": null
     },
     "GetCase": {
-      "modeled": false,
-      "requiredErrors": [],
+      "modeled": true,
+      "requiredErrors": [
+        "NoMatchingError"
+      ],
       "requiredErrorsByParameters": [
         {
+          "parameters": {
+            "LinkContactToCase": "not-true"
+          },
+          "errors": [
+            "NoMatchingError"
+          ]
+        },
+        {
+          "parameters": {
+            "LinkContactToCase": "true"
+          },
+          "errors": [
+            "ContactNotLinked",
+            "NoMatchingError"
+          ]
+        },
+        {
           "parameters": {},
-          "errors": []
+          "errors": [
+            "NoMatchingError"
+          ]
         }
       ],
-      "builderErrors": [],
+      "builderErrors": [
+        "ContactNotLinked",
+        "MultipleFound",
+        "NoneFound",
+        "NoMatchingError"
+      ],
       "minConditions": 0,
-      "conditionsKind": null,
-      "nextRule": null,
+      "conditionsKind": "none",
+      "nextRule": "required",
       "holdsParticipant": false,
       "textBodyPaths": [],
       "announcePaths": [],
       "recordingEnablerPath": null,
-      "refPaths": [],
+      "refPaths": [
+        {
+          "path": "CaseRequestFields.*~",
+          "ref": "casefield"
+        },
+        {
+          "path": "CaseResponseFields[]",
+          "ref": "casefield"
+        }
+      ],
       "restrictions": null,
-      "unrestricted": false,
+      "unrestricted": true,
       "terminal": false,
-      "actionType": false,
+      "actionType": true,
       "channels": null
     },
     "InvokeFlowModule": {
@@ -381,27 +477,56 @@
       "channels": null
     },
     "UpdateCase": {
-      "modeled": false,
-      "requiredErrors": [],
+      "modeled": true,
+      "requiredErrors": [
+        "NoMatchingError"
+      ],
       "requiredErrorsByParameters": [
         {
+          "parameters": {
+            "LinkContactToCase": "not-true"
+          },
+          "errors": [
+            "NoMatchingError"
+          ]
+        },
+        {
+          "parameters": {
+            "LinkContactToCase": "true"
+          },
+          "errors": [
+            "ContactNotLinked",
+            "NoMatchingError"
+          ]
+        },
+        {
           "parameters": {},
-          "errors": []
+          "errors": [
+            "NoMatchingError"
+          ]
         }
       ],
-      "builderErrors": [],
+      "builderErrors": [
+        "ContactNotLinked",
+        "NoMatchingError"
+      ],
       "minConditions": 0,
-      "conditionsKind": null,
-      "nextRule": null,
+      "conditionsKind": "none",
+      "nextRule": "required",
       "holdsParticipant": false,
       "textBodyPaths": [],
       "announcePaths": [],
       "recordingEnablerPath": null,
-      "refPaths": [],
+      "refPaths": [
+        {
+          "path": "CaseRequestFields.*~",
+          "ref": "casefield"
+        }
+      ],
       "restrictions": null,
-      "unrestricted": false,
+      "unrestricted": true,
       "terminal": false,
-      "actionType": false,
+      "actionType": true,
       "channels": null
     },
     "UpdateContactAttributes": {
@@ -539,52 +664,83 @@
       "channels": null
     },
     "UpdateContactMediaProcessing": {
-      "modeled": false,
-      "requiredErrors": [],
+      "modeled": true,
+      "requiredErrors": [
+        "NoMatchingError"
+      ],
       "requiredErrorsByParameters": [
         {
           "parameters": {},
-          "errors": []
+          "errors": [
+            "NoMatchingError"
+          ]
         }
       ],
-      "builderErrors": [],
+      "builderErrors": [
+        "NoMatchingError",
+        "ChannelMismatch"
+      ],
       "minConditions": 0,
-      "conditionsKind": null,
-      "nextRule": null,
+      "conditionsKind": "none",
+      "nextRule": "required",
       "holdsParticipant": false,
       "textBodyPaths": [],
       "announcePaths": [],
       "recordingEnablerPath": null,
-      "refPaths": [],
+      "refPaths": [
+        {
+          "path": "ChatProcessor.LambdaProcessorARN",
+          "ref": "lambda"
+        }
+      ],
       "restrictions": null,
-      "unrestricted": false,
+      "unrestricted": true,
       "terminal": false,
-      "actionType": false,
-      "channels": null
+      "actionType": true,
+      "channels": [
+        "CHAT"
+      ]
     },
     "UpdateContactMediaStreamingBehavior": {
-      "modeled": false,
-      "requiredErrors": [],
+      "modeled": true,
+      "requiredErrors": [
+        "NoMatchingError"
+      ],
       "requiredErrorsByParameters": [
         {
           "parameters": {},
-          "errors": []
+          "errors": [
+            "NoMatchingError"
+          ]
         }
       ],
-      "builderErrors": [],
+      "builderErrors": [
+        "NoMatchingError"
+      ],
       "minConditions": 0,
-      "conditionsKind": null,
-      "nextRule": null,
+      "conditionsKind": "none",
+      "nextRule": "required",
       "holdsParticipant": false,
       "textBodyPaths": [],
       "announcePaths": [],
       "recordingEnablerPath": null,
       "refPaths": [],
-      "restrictions": null,
+      "restrictions": [
+        "CONTACT_FLOW",
+        "CUSTOMER_QUEUE",
+        "AGENT_TRANSFER",
+        "QUEUE_TRANSFER",
+        "CUSTOMER_WHISPER",
+        "AGENT_WHISPER",
+        "OUTBOUND_WHISPER",
+        "MODULE"
+      ],
       "unrestricted": false,
       "terminal": false,
-      "actionType": false,
-      "channels": null
+      "actionType": true,
+      "channels": [
+        "VOICE"
+      ]
     },
     "UpdateContactRecordingAndAnalyticsBehavior": {
       "modeled": true,
@@ -661,28 +817,36 @@
       "channels": null
     },
     "ResumeContact": {
-      "modeled": false,
-      "requiredErrors": [],
+      "modeled": true,
+      "requiredErrors": [
+        "NoMatchingError"
+      ],
       "requiredErrorsByParameters": [
         {
           "parameters": {},
-          "errors": []
+          "errors": [
+            "NoMatchingError"
+          ]
         }
       ],
-      "builderErrors": [],
+      "builderErrors": [
+        "NoMatchingError"
+      ],
       "minConditions": 0,
-      "conditionsKind": null,
-      "nextRule": null,
+      "conditionsKind": "none",
+      "nextRule": "required",
       "holdsParticipant": false,
       "textBodyPaths": [],
       "announcePaths": [],
       "recordingEnablerPath": null,
       "refPaths": [],
       "restrictions": null,
-      "unrestricted": false,
+      "unrestricted": true,
       "terminal": false,
-      "actionType": false,
-      "channels": null
+      "actionType": true,
+      "channels": [
+        "TASK"
+      ]
     },
     "UpdateContactRoutingBehavior": {
       "modeled": true,
@@ -782,28 +946,41 @@
       "channels": null
     },
     "UpdatePreviousContactParticipantState": {
-      "modeled": false,
-      "requiredErrors": [],
+      "modeled": true,
+      "requiredErrors": [
+        "NoMatchingError"
+      ],
       "requiredErrorsByParameters": [
         {
           "parameters": {},
-          "errors": []
+          "errors": [
+            "NoMatchingError"
+          ]
         }
       ],
-      "builderErrors": [],
+      "builderErrors": [
+        "NoMatchingError"
+      ],
       "minConditions": 0,
-      "conditionsKind": null,
-      "nextRule": null,
+      "conditionsKind": "none",
+      "nextRule": "required",
       "holdsParticipant": false,
       "textBodyPaths": [],
       "announcePaths": [],
       "recordingEnablerPath": null,
       "refPaths": [],
-      "restrictions": null,
+      "restrictions": [
+        "CONTACT_FLOW",
+        "AGENT_TRANSFER",
+        "QUEUE_TRANSFER",
+        "MODULE"
+      ],
       "unrestricted": false,
       "terminal": false,
-      "actionType": false,
-      "channels": null
+      "actionType": true,
+      "channels": [
+        "VOICE"
+      ]
     },
     "ConnectParticipantWithLexBot": {
       "modeled": true,
@@ -1497,27 +1674,39 @@
       "channels": null
     },
     "UpdateRoutingCriteria": {
-      "modeled": false,
-      "requiredErrors": [],
+      "modeled": true,
+      "requiredErrors": [
+        "NoMatchingError"
+      ],
       "requiredErrorsByParameters": [
         {
           "parameters": {},
-          "errors": []
+          "errors": [
+            "NoMatchingError"
+          ]
         }
       ],
-      "builderErrors": [],
+      "builderErrors": [
+        "NoMatchingError"
+      ],
       "minConditions": 0,
-      "conditionsKind": null,
-      "nextRule": null,
+      "conditionsKind": "none",
+      "nextRule": "required",
       "holdsParticipant": false,
       "textBodyPaths": [],
       "announcePaths": [],
       "recordingEnablerPath": null,
       "refPaths": [],
-      "restrictions": null,
+      "restrictions": [
+        "CONTACT_FLOW",
+        "CUSTOMER_QUEUE",
+        "AGENT_TRANSFER",
+        "QUEUE_TRANSFER",
+        "MODULE"
+      ],
       "unrestricted": false,
       "terminal": false,
-      "actionType": false,
+      "actionType": true,
       "channels": null
     },
     "Wait": {
@@ -1554,27 +1743,33 @@
       ]
     },
     "AssociateContactToCustomerProfile": {
-      "modeled": false,
-      "requiredErrors": [],
+      "modeled": true,
+      "requiredErrors": [
+        "NoMatchingError"
+      ],
       "requiredErrorsByParameters": [
         {
           "parameters": {},
-          "errors": []
+          "errors": [
+            "NoMatchingError"
+          ]
         }
       ],
-      "builderErrors": [],
+      "builderErrors": [
+        "NoMatchingError"
+      ],
       "minConditions": 0,
-      "conditionsKind": null,
-      "nextRule": null,
+      "conditionsKind": "none",
+      "nextRule": "required",
       "holdsParticipant": false,
       "textBodyPaths": [],
       "announcePaths": [],
       "recordingEnablerPath": null,
       "refPaths": [],
       "restrictions": null,
-      "unrestricted": false,
+      "unrestricted": true,
       "terminal": false,
-      "actionType": false,
+      "actionType": true,
       "channels": null
     },
     "CreateCallbackContact": {
@@ -1627,27 +1822,33 @@
       "channels": null
     },
     "CreateCustomerProfile": {
-      "modeled": false,
-      "requiredErrors": [],
+      "modeled": true,
+      "requiredErrors": [
+        "NoMatchingError"
+      ],
       "requiredErrorsByParameters": [
         {
           "parameters": {},
-          "errors": []
+          "errors": [
+            "NoMatchingError"
+          ]
         }
       ],
-      "builderErrors": [],
+      "builderErrors": [
+        "NoMatchingError"
+      ],
       "minConditions": 0,
-      "conditionsKind": null,
-      "nextRule": null,
+      "conditionsKind": "none",
+      "nextRule": "required",
       "holdsParticipant": false,
       "textBodyPaths": [],
       "announcePaths": [],
       "recordingEnablerPath": null,
       "refPaths": [],
       "restrictions": null,
-      "unrestricted": false,
+      "unrestricted": true,
       "terminal": false,
-      "actionType": false,
+      "actionType": true,
       "channels": null
     },
     "InvokeLambdaFunction": {
@@ -1686,99 +1887,127 @@
       "channels": null
     },
     "GetCustomerProfile": {
-      "modeled": false,
-      "requiredErrors": [],
+      "modeled": true,
+      "requiredErrors": [
+        "NoMatchingError"
+      ],
       "requiredErrorsByParameters": [
         {
           "parameters": {},
-          "errors": []
+          "errors": [
+            "NoMatchingError"
+          ]
         }
       ],
-      "builderErrors": [],
+      "builderErrors": [
+        "NoMatchingError",
+        "MultipleFoundError",
+        "NoneFoundError"
+      ],
       "minConditions": 0,
-      "conditionsKind": null,
-      "nextRule": null,
+      "conditionsKind": "none",
+      "nextRule": "required",
       "holdsParticipant": false,
       "textBodyPaths": [],
       "announcePaths": [],
       "recordingEnablerPath": null,
       "refPaths": [],
       "restrictions": null,
-      "unrestricted": false,
+      "unrestricted": true,
       "terminal": false,
-      "actionType": false,
+      "actionType": true,
       "channels": null
     },
     "GetCustomerProfileObject": {
-      "modeled": false,
-      "requiredErrors": [],
+      "modeled": true,
+      "requiredErrors": [
+        "NoMatchingError"
+      ],
       "requiredErrorsByParameters": [
         {
           "parameters": {},
-          "errors": []
+          "errors": [
+            "NoMatchingError"
+          ]
         }
       ],
-      "builderErrors": [],
+      "builderErrors": [
+        "NoMatchingError",
+        "NoneFoundError"
+      ],
       "minConditions": 0,
-      "conditionsKind": null,
-      "nextRule": null,
+      "conditionsKind": "none",
+      "nextRule": "required",
       "holdsParticipant": false,
       "textBodyPaths": [],
       "announcePaths": [],
       "recordingEnablerPath": null,
       "refPaths": [],
       "restrictions": null,
-      "unrestricted": false,
+      "unrestricted": true,
       "terminal": false,
-      "actionType": false,
+      "actionType": true,
       "channels": null
     },
     "GetCalculatedAttributesForCustomerProfile": {
-      "modeled": false,
-      "requiredErrors": [],
+      "modeled": true,
+      "requiredErrors": [
+        "NoMatchingError"
+      ],
       "requiredErrorsByParameters": [
         {
           "parameters": {},
-          "errors": []
+          "errors": [
+            "NoMatchingError"
+          ]
         }
       ],
-      "builderErrors": [],
+      "builderErrors": [
+        "NoMatchingError",
+        "NoneFoundError"
+      ],
       "minConditions": 0,
-      "conditionsKind": null,
-      "nextRule": null,
+      "conditionsKind": "none",
+      "nextRule": "required",
       "holdsParticipant": false,
       "textBodyPaths": [],
       "announcePaths": [],
       "recordingEnablerPath": null,
       "refPaths": [],
       "restrictions": null,
-      "unrestricted": false,
+      "unrestricted": true,
       "terminal": false,
-      "actionType": false,
+      "actionType": true,
       "channels": null
     },
     "UpdateCustomerProfile": {
-      "modeled": false,
-      "requiredErrors": [],
+      "modeled": true,
+      "requiredErrors": [
+        "NoMatchingError"
+      ],
       "requiredErrorsByParameters": [
         {
           "parameters": {},
-          "errors": []
+          "errors": [
+            "NoMatchingError"
+          ]
         }
       ],
-      "builderErrors": [],
+      "builderErrors": [
+        "NoMatchingError"
+      ],
       "minConditions": 0,
-      "conditionsKind": null,
-      "nextRule": null,
+      "conditionsKind": "none",
+      "nextRule": "required",
       "holdsParticipant": false,
       "textBodyPaths": [],
       "announcePaths": [],
       "recordingEnablerPath": null,
       "refPaths": [],
       "restrictions": null,
-      "unrestricted": false,
+      "unrestricted": true,
       "terminal": false,
-      "actionType": false,
+      "actionType": true,
       "channels": null
     },
     "RouteContactToAgent": {
@@ -1950,22 +2179,31 @@
     }
   },
   "catalogOrder": [
+    "CreateCase",
+    "CreateTask",
+    "CreateWisdomSession",
     "DequeueContactAndTransferToQueue",
     "EndFlowModuleExecution",
+    "GetCase",
     "InvokeFlowModule",
     "TagContact",
     "TransferContactToAgent",
     "TransferContactToQueue",
     "UntagContact",
+    "UpdateCase",
     "UpdateContactAttributes",
     "UpdateContactCallbackNumber",
     "UpdateContactData",
     "UpdateContactEventHooks",
+    "UpdateContactMediaProcessing",
+    "UpdateContactMediaStreamingBehavior",
     "UpdateContactRecordingAndAnalyticsBehavior",
     "UpdateContactRecordingBehavior",
+    "ResumeContact",
     "UpdateContactRoutingBehavior",
     "UpdateContactTargetQueue",
     "UpdateContactTextToSpeechVoice",
+    "UpdatePreviousContactParticipantState",
     "ConnectParticipantWithLexBot",
     "DisconnectParticipant",
     "GetParticipantInput",
@@ -1982,9 +2220,16 @@
     "TransferToFlow",
     "UpdateFlowAttributes",
     "UpdateFlowLoggingBehavior",
+    "UpdateRoutingCriteria",
     "Wait",
+    "AssociateContactToCustomerProfile",
     "CreateCallbackContact",
-    "InvokeLambdaFunction"
+    "CreateCustomerProfile",
+    "InvokeLambdaFunction",
+    "GetCustomerProfile",
+    "GetCustomerProfileObject",
+    "GetCalculatedAttributesForCustomerProfile",
+    "UpdateCustomerProfile"
   ],
   "collect": [
     {
