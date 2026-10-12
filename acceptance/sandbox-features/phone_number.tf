@@ -6,6 +6,14 @@
 # prevent_destroy makes `tofu destroy` refuse while this resource is in state;
 # the README's teardown removes it from state first so the number stays claimed.
 #
+# prefix, description, country_code and type all force a new resource in
+# hashicorp/aws, and Read never sets prefix (so an imported number has none):
+# https://github.com/hashicorp/terraform-provider-aws/blob/main/internal/service/connect/phone_number.go
+# prefix only steers the claim, so later differences are ignored rather than
+# planned as a replacement, which prevent_destroy would turn into an error
+# that blocks every apply of this root. Do not edit the description: that
+# would plan the same replacement.
+#
 # Cost: about $0.03 a day ($0.90 a month) for a US DID, $0.0022 a minute
 # inbound. Nothing else idle.
 
@@ -18,5 +26,6 @@ resource "aws_connect_phone_number" "did" {
 
   lifecycle {
     prevent_destroy = true
+    ignore_changes  = [prefix]
   }
 }

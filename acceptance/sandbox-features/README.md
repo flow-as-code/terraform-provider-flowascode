@@ -76,6 +76,9 @@ Three things to know before the first apply:
   source succeeds on first use.
 - The phone number is claimed at apply. `prefix` is optional; set
   `-var phone_number_prefix=+1512` (any E.164 prefix) to steer the choice.
+  It matters only on the claiming apply: the root ignores later changes to
+  it, so later applies need not repeat it. Do not edit the number's
+  description; that forces a new number, which `prevent_destroy` refuses.
 
 ## Reading the outputs into the probe runner
 
@@ -112,8 +115,13 @@ claim-and-release cycles beyond 200% of the quota block further claims
 `prevent_destroy` on the number makes `tofu destroy` refuse while it is in
 state, so:
 
-1. `tofu state rm aws_connect_phone_number.did` leaves the number claimed to
-   the instance and out of this root's reach.
+1. Note `tofu output -raw phone_number_id` somewhere untracked, then
+   `tofu state rm aws_connect_phone_number.did` leaves the number claimed to
+   the instance and out of this root's reach. The resource is still in the
+   configuration, so from here on a `tofu apply` would claim a second,
+   billed number. Before any later apply, re-import the kept one (without a
+   prefix):
+   `tofu import -var instance_id=<id> aws_connect_phone_number.did <phone_number_id>`.
 2. `tofu destroy -var instance_id=<id>` removes the rest in dependency
    order: the three integration associations (`MESSAGE_PROCESSOR`,
    `WISDOM_ASSISTANT`, `CASES_DOMAIN`), then the Lambda, its permission and
