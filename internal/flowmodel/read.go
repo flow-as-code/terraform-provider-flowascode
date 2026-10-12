@@ -436,13 +436,14 @@ func (r *reader) typed(block string, body map[string]any, p string, attr path.Pa
 	}
 	params := jsonv.Object{}
 	ok := true
+	positions := RefPositions(entry)
 	for _, param := range entry.Parameters {
 		v := body[param.Attr]
 		if v == nil {
 			// Terraform reads null as unset; so does the document.
 			continue
 		}
-		val, good := r.value(v, param.CatalogElement, p+"."+param.Attr, attr.AtName(param.Attr))
+		val, good := r.positionedValue(v, param.CatalogElement, positions[param.Key], p+"."+param.Attr, attr.AtName(param.Attr))
 		if !good {
 			ok = false
 			continue
@@ -450,6 +451,100 @@ func (r *reader) typed(block string, body map[string]any, p string, attr path.Pa
 		params = append(params, jsonv.Member{Key: param.Key, Value: val})
 	}
 	return typ, params, ok
+}
+
+// positionedValue is value for a top-level parameter, with the strings at
+// its reference key or item position read by refOrLiteral (rules 11 and
+// 20). Two keys that read to one token are refused as one attribute given
+// twice (DUPLICATE_ATTRIBUTE).
+func (r *reader) positionedValue(v any, e flowdoc.CatalogElement, at RefPosition, p string, attr path.Path) (any, bool) {
+	if at.Keys == "" && at.Items == "" {
+		return r.value(v, e, p, attr)
+	}
+	if e.Kind == "list" && at.Items != "" {
+		val, ok := r.value(v, e, p, attr)
+		if !ok {
+			return nil, false
+		}
+		list, _ := val.([]any)
+		good := true
+		for k, item := range list {
+			if s, isStr := item.(string); isStr {
+				read, ok := r.refOrLiteral(s, at.Items, fmt.Sprintf("%s[%d]", p, k), attr.AtListIndex(k))
+				if !ok {
+					good = false
+					continue
+				}
+				list[k] = read
+			}
+		}
+		return list, good
+	}
+	if e.Kind == "map" && at.Keys != "" {
+		if _, unknown := v.(Unknown); unknown {
+			return r.value(v, e, p, attr)
+		}
+		m, ok := v.(map[string]any)
+		if !ok {
+			r.fail("NON_LITERAL_VALUE", p, attr, "%s must be a map literal.", p)
+			return nil, false
+		}
+		of := flowdoc.CatalogElement{Kind: "string"}
+		if e.Of != nil {
+			of = *e.Of
+		}
+		out := jsonv.Object{}
+		seen := map[string]string{}
+		good := true
+		for _, written := range sortedKeys(m) {
+			k, ok := r.refOrLiteral(written, at.Keys, p+"."+written, attr.AtMapKey(written))
+			if !ok {
+				good = false
+				continue
+			}
+			if first, dup := seen[k]; dup {
+				r.fail("DUPLICATE_ATTRIBUTE", p+"."+written, attr.AtMapKey(written), "%s.%s is %s, already given as %q.", p, written, k, first)
+				good = false
+				continue
+			}
+			seen[k] = written
+			if m[written] == nil {
+				continue
+			}
+			val, ok := r.value(m[written], of, p+"."+written, attr.AtMapKey(written))
+			if !ok {
+				good = false
+				continue
+			}
+			out = append(out, jsonv.Member{Key: k, Value: val})
+		}
+		return out, good
+	}
+	return r.value(v, e, p, attr)
+}
+
+// refOrLiteral is read.ts's refOrLiteral: a string at a reference key or
+// item position (rules 11 and 20). A reference key of the type or the full
+// token reads as the token, and any other string holding neither a
+// reference key nor `${` as the literal it is (a Cases system field id). A
+// key of another type, or a token of another type or malformed, is refused
+// (REF_KEY_MALFORMED).
+func (r *reader) refOrLiteral(s, refType, p string, attr path.Path) (string, bool) {
+	key := s
+	_, isToken := flowdoc.ParseToken(s)
+	if isToken {
+		key = s[len(flowdoc.TokenOpen) : len(s)-1]
+	}
+	m := RefKeyPattern.FindStringSubmatch(key)
+	if m == nil && !isToken && !strings.Contains(s, "${") {
+		return s, true
+	}
+	if m == nil || m[1] != refType {
+		r.fail("REF_KEY_MALFORMED", p, attr,
+			"%s must be a %s reference key such as %q, the full token, or a literal holding neither; got %q.", p, refType, refType+":<name>", s)
+		return "", false
+	}
+	return flowdoc.TokenOpen + key + "}", true
 }
 
 // value is one parameter or field by its catalog kind (rule 11, read

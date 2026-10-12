@@ -50,7 +50,11 @@ func actionValue(a jsonv.Object, layout jsonv.Object, auto map[string]flowdoc.Po
 	out := map[string]any{"id": id}
 
 	entry := flowdoc.ModeledEntry(typ)
-	if entry != nil && Accepts(params, entry.Parameters) {
+	var positions map[string]RefPosition
+	if entry != nil {
+		positions = RefPositions(entry)
+	}
+	if entry != nil && AcceptsAt(params, entry.Parameters, positions) {
 		block := map[string]any{}
 		byKey := map[string]flowdoc.CatalogParameter{}
 		for _, p := range entry.Parameters {
@@ -58,7 +62,11 @@ func actionValue(a jsonv.Object, layout jsonv.Object, auto map[string]flowdoc.Po
 		}
 		for _, m := range params {
 			p := byKey[m.Key]
-			block[p.Attr] = attrValue(m.Value, p.CatalogElement)
+			if at, ok := positions[m.Key]; ok {
+				block[p.Attr] = positioned(m.Value, p.CatalogElement, at)
+			} else {
+				block[p.Attr] = attrValue(m.Value, p.CatalogElement)
+			}
 		}
 		out[entry.Block] = block
 	} else {
@@ -138,6 +146,39 @@ func stringOf(v any) string {
 	return string(jsonv.Encode(v, ""))
 }
 
+// positioned is write.ts's positioned: a map whose keys, or a list of
+// strings whose items, hold references (rule 11), each token written as its
+// reference key and each literal as itself. AcceptsAt has already refused
+// anything writeRefOrLiteral cannot write.
+func positioned(v any, e flowdoc.CatalogElement, at RefPosition) any {
+	if e.Kind == "map" && at.Keys != "" {
+		o, _ := v.(jsonv.Object)
+		of := flowdoc.CatalogElement{Kind: "string"}
+		if e.Of != nil {
+			of = *e.Of
+		}
+		out := map[string]any{}
+		for _, m := range o {
+			k, _ := writeRefOrLiteral(m.Key, at.Keys)
+			out[k] = attrValue(m.Value, of)
+		}
+		return out
+	}
+	if e.Kind == "list" && at.Items != "" {
+		list, _ := v.([]any)
+		items := make([]any, len(list))
+		for i, x := range list {
+			if s, ok := x.(string); ok {
+				items[i], _ = writeRefOrLiteral(s, at.Items)
+			} else {
+				items[i] = x
+			}
+		}
+		return attrValue(items, e)
+	}
+	return attrValue(v, e)
+}
+
 // attrValue is one parameter or field as its attribute holds it (rule 11).
 func attrValue(v any, e flowdoc.CatalogElement) any {
 	switch e.Kind {
@@ -195,6 +236,14 @@ func attrValue(v any, e flowdoc.CatalogElement) any {
 // rule 10): whether the catalog's shape takes these Parameters, so the
 // action is written typed rather than generic.
 func Accepts(params jsonv.Object, elems []flowdoc.CatalogParameter) bool {
+	return AcceptsAt(params, elems, nil)
+}
+
+// AcceptsAt is accepts with the entry's reference positions (rule 11): a
+// key or item at one that writeRefOrLiteral cannot write (a token of
+// another type, a string holding `${`, one that reads as a reference key)
+// makes the action generic.
+func AcceptsAt(params jsonv.Object, elems []flowdoc.CatalogParameter, positions map[string]RefPosition) bool {
 	byKey := map[string]flowdoc.CatalogParameter{}
 	for _, p := range elems {
 		byKey[p.Key] = p
@@ -203,6 +252,23 @@ func Accepts(params jsonv.Object, elems []flowdoc.CatalogParameter) bool {
 		e, ok := byKey[m.Key]
 		if !ok || !acceptsValue(m.Value, e.CatalogElement) {
 			return false
+		}
+		at := positions[m.Key]
+		if o, isObj := m.Value.(jsonv.Object); isObj && at.Keys != "" {
+			for _, k := range o.Keys() {
+				if _, ok := writeRefOrLiteral(k, at.Keys); !ok {
+					return false
+				}
+			}
+		}
+		if list, isList := m.Value.([]any); isList && at.Items != "" {
+			for _, x := range list {
+				if s, isStr := x.(string); isStr {
+					if _, ok := writeRefOrLiteral(s, at.Items); !ok {
+						return false
+					}
+				}
+			}
 		}
 	}
 	for _, e := range elems {

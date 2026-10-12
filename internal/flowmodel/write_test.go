@@ -55,3 +55,43 @@ func TestDynamicListStaysAListAndAJSONPathGoesGeneric(t *testing.T) {
 		t.Error("a JSONPath in a list position was accepted typed")
 	}
 }
+
+// A reference in key or item position (rule 11, since flow-as-code D06): a
+// casefield token is written as its reference key and a system field id as
+// itself; a token of another type, or a string that reads as a reference
+// key, writes the action generic.
+func TestReferenceKeysAndItemsAreWrittenAsKeys(t *testing.T) {
+	action := func(fields jsonv.Object, response []any) jsonv.Object {
+		return jsonv.Object{
+			{Key: "Identifier", Value: "c"}, {Key: "Type", Value: "GetCase"},
+			{Key: "Parameters", Value: jsonv.Object{
+				{Key: "LinkContactToCase", Value: "false"}, {Key: "GetLastUpdatedCase", Value: "true"},
+				{Key: "CaseRequestFields", Value: fields}, {Key: "CaseResponseFields", Value: response},
+			}},
+			{Key: "Transitions", Value: jsonv.Object{}},
+		}
+	}
+	typed := actionValue(action(
+		jsonv.Object{{Key: "${cdref:casefield:priority}", Value: "high"}, {Key: "status", Value: "open"}},
+		[]any{"${cdref:casefield:priority}", "summary"}), nil, nil)
+	block, ok := typed["get_case"].(map[string]any)
+	if !ok {
+		t.Fatalf("written %v", typed)
+	}
+	fields := block["case_request_fields"].(map[string]any)
+	if fields["casefield:priority"] != "high" || fields["status"] != "open" || len(fields) != 2 {
+		t.Errorf("case_request_fields %v", fields)
+	}
+	if items := block["case_response_fields"].([]any); items[0] != "casefield:priority" || items[1] != "summary" {
+		t.Errorf("case_response_fields %v", items)
+	}
+	for _, fields := range []jsonv.Object{
+		{{Key: "${cdref:queue:q}", Value: "x"}},
+		{{Key: "casefield:priority", Value: "x"}},
+		{{Key: "x-${cdref:casefield:p}", Value: "x"}},
+	} {
+		if got := actionValue(action(fields, []any{}), nil, nil); got["generic"] == nil {
+			t.Errorf("%v written typed: %v", fields, got)
+		}
+	}
+}
