@@ -20,15 +20,22 @@ import (
 //	LexV2Bot.AliasArn     a key inside an object
 //	Messages[].PromptId   a key inside every element of a list
 //	EventHooks.*          every value of a map
+//	CaseRequestFields.*~  every key of a map (the key itself, as a string)
+//
+// The key form is FlowDoc 0.3's, for a Cases field id standing as a map key
+// (ADR 0008); the trailing `~` is JSONPath Plus's property-name operator.
 
 // PathHit is paths.ts's PathHit: one value found at a concrete path,
-// `Messages[2].PromptId` for example.
+// `Messages[2].PromptId` for example. A hit from a `*~` segment names the
+// key with a trailing `~` (`CaseRequestFields.priority~`) and its value is
+// the key string, so a key hit and the value hit beside it never share a
+// path.
 type PathHit struct {
 	Path  string
 	Value any
 }
 
-var segmentPattern = regexp.MustCompile(`^(?:\*|([A-Za-z0-9_$-]+)(\[\])?)$`)
+var segmentPattern = regexp.MustCompile(`^(?:\*~?|([A-Za-z0-9_$-]+)(\[\])?)$`)
 
 // IsCatalogPath is paths.ts's isCatalogPath: whether a string is a
 // well-formed catalog path.
@@ -48,7 +55,8 @@ func IsCatalogPath(p string) bool {
 // value does not have yields nothing; a malformed path is an error, because
 // it is a catalog error rather than a document one. A `*` segment visits a
 // map's keys in JavaScript's Object.entries order (array-index keys first,
-// ascending, then creation order).
+// ascending, then creation order), and a `*~` segment visits the same keys
+// but yields each key itself.
 func ReadPath(value any, p string) ([]PathHit, error) {
 	if !IsCatalogPath(p) {
 		return nil, fmt.Errorf(`"%s" is not a catalog path.`, p)
@@ -65,6 +73,15 @@ func ReadPath(value any, p string) ([]PathHit, error) {
 				for _, k := range jsKeyOrder(obj.Keys()) {
 					v, _ := obj.Get(k)
 					next = append(next, PathHit{Path: joinPath(hit.Path, k), Value: v})
+				}
+				continue
+			}
+			if segment == "*~" {
+				if !isRecord {
+					continue
+				}
+				for _, k := range jsKeyOrder(obj.Keys()) {
+					next = append(next, PathHit{Path: joinPath(hit.Path, k) + "~", Value: k})
 				}
 				continue
 			}

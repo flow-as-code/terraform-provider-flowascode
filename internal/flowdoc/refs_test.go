@@ -119,12 +119,12 @@ func TestRefPathsOf(t *testing.T) {
 }
 
 func TestIsCatalogPath(t *testing.T) {
-	for _, p := range []string{"PromptId", "LexV2Bot.AliasArn", "Messages[].PromptId", "EventHooks.*", "A.B[].C.*"} {
+	for _, p := range []string{"PromptId", "LexV2Bot.AliasArn", "Messages[].PromptId", "EventHooks.*", "A.B[].C.*", "CaseRequestFields.*~", "*~", "A.*~.B"} {
 		if !IsCatalogPath(p) {
 			t.Errorf("rejects %s", p)
 		}
 	}
-	for _, p := range []string{"", ".", "A.", "A[0]", "A[", "A b", "*.[]", "A\n", "*[]"} {
+	for _, p := range []string{"", ".", "A.", "A[0]", "A[", "A b", "*.[]", "A\n", "*[]", "A~", "*~~", "~", "A[]~", "*~[]"} {
 		if IsCatalogPath(p) {
 			t.Errorf("accepts %q", p)
 		}
@@ -139,6 +139,9 @@ func TestReadPathOnNonObjects(t *testing.T) {
 		}
 		if hits, _ := ReadPath(v, "*"); len(hits) != 0 {
 			t.Errorf("%v: * found %v", v, hits)
+		}
+		if hits, _ := ReadPath(v, "*~"); len(hits) != 0 {
+			t.Errorf("%v: *~ found %v", v, hits)
 		}
 	}
 }

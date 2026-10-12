@@ -74,7 +74,6 @@ func TestOraclePerTypeTables(t *testing.T) {
 	if len(perType) != len(Catalog().Actions)+2 {
 		t.Fatalf("oracle holds %d types", len(perType))
 	}
-	chat := jsonv.Object{{Key: "ChatBehavior", Value: nil}}
 	for _, m := range perType {
 		typ, want := m.Key, m.Value
 		check := func(name string, got any) {
@@ -98,7 +97,19 @@ func TestOraclePerTypeTables(t *testing.T) {
 		}
 		check("modeled", ModeledEntry(typ) != nil)
 		check("requiredErrors", anyStrs(RequiredErrors(typ)))
-		check("requiredErrorsForChat", anyStrs(RequiredErrorsFor(typ, chat)))
+		// requiredErrorsFor over every parameter object the recorder names
+		// for the type: the empty one and one per conditional error, a
+		// requiredWhenValue key at its value and at another.
+		byParameters := field(want, "requiredErrorsByParameters").([]any)
+		if len(byParameters) == 0 {
+			t.Errorf("%s: no requiredErrorsByParameters case", typ)
+		}
+		for _, c := range byParameters {
+			params := field(c, "parameters").(jsonv.Object)
+			if got := anyStrs(RequiredErrorsFor(typ, params)); enc(got) != enc(field(c, "errors")) {
+				t.Errorf("%s requiredErrorsFor(%s): got %s, TypeScript %s", typ, enc(params), enc(got), enc(field(c, "errors")))
+			}
+		}
 		check("builderErrors", anyStrs(BuilderErrors(typ)))
 		check("minConditions", float64(MinConditionsFor(typ)))
 		k, ok := ConditionsKindOf(typ)
@@ -121,6 +132,15 @@ func TestOraclePerTypeTables(t *testing.T) {
 		check("unrestricted", IsFlowTypeUnrestricted(typ))
 		check("terminal", IsTerminalAction(typ))
 		check("actionType", IsModeledType(typ))
+		if channels, ok := ChannelRestriction(typ); ok {
+			names := []any{}
+			for _, c := range channels {
+				names = append(names, string(c))
+			}
+			check("channels", names)
+		} else {
+			check("channels", nil)
+		}
 	}
 }
 

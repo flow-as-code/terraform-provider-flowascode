@@ -4,8 +4,14 @@
     "CompleteOutboundCall": {
       "modeled": false,
       "requiredErrors": [],
-      "requiredErrorsForChat": [],
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": []
+        }
+      ],
       "builderErrors": [],
+      "minConditions": 0,
       "conditionsKind": null,
       "nextRule": null,
       "holdsParticipant": false,
@@ -17,13 +23,19 @@
       "unrestricted": false,
       "terminal": false,
       "actionType": false,
-      "minConditions": 0
+      "channels": null
     },
     "CreateCase": {
       "modeled": false,
       "requiredErrors": [],
-      "requiredErrorsForChat": [],
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": []
+        }
+      ],
       "builderErrors": [],
+      "minConditions": 0,
       "conditionsKind": null,
       "nextRule": null,
       "holdsParticipant": false,
@@ -35,13 +47,19 @@
       "unrestricted": false,
       "terminal": false,
       "actionType": false,
-      "minConditions": 0
+      "channels": null
     },
     "CreateTask": {
       "modeled": false,
       "requiredErrors": [],
-      "requiredErrorsForChat": [],
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": []
+        }
+      ],
       "builderErrors": [],
+      "minConditions": 0,
       "conditionsKind": null,
       "nextRule": null,
       "holdsParticipant": false,
@@ -53,13 +71,19 @@
       "unrestricted": false,
       "terminal": false,
       "actionType": false,
-      "minConditions": 0
+      "channels": null
     },
     "CreateWisdomSession": {
       "modeled": false,
       "requiredErrors": [],
-      "requiredErrorsForChat": [],
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": []
+        }
+      ],
       "builderErrors": [],
+      "minConditions": 0,
       "conditionsKind": null,
       "nextRule": null,
       "holdsParticipant": false,
@@ -71,7 +95,7 @@
       "unrestricted": false,
       "terminal": false,
       "actionType": false,
-      "minConditions": 0
+      "channels": null
     },
     "DequeueContactAndTransferToQueue": {
       "modeled": true,
@@ -79,14 +103,20 @@
         "QueueAtCapacity",
         "NoMatchingError"
       ],
-      "requiredErrorsForChat": [
-        "QueueAtCapacity",
-        "NoMatchingError"
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": [
+            "QueueAtCapacity",
+            "NoMatchingError"
+          ]
+        }
       ],
       "builderErrors": [
         "QueueAtCapacity",
         "NoMatchingError"
       ],
+      "minConditions": 0,
       "conditionsKind": "none",
       "nextRule": "required",
       "holdsParticipant": false,
@@ -110,13 +140,19 @@
       "unrestricted": false,
       "terminal": false,
       "actionType": true,
-      "minConditions": 0
+      "channels": null
     },
     "EndFlowModuleExecution": {
       "modeled": true,
       "requiredErrors": [],
-      "requiredErrorsForChat": [],
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": []
+        }
+      ],
       "builderErrors": [],
+      "minConditions": 0,
       "conditionsKind": "none",
       "nextRule": "none",
       "holdsParticipant": false,
@@ -130,13 +166,19 @@
       "unrestricted": false,
       "terminal": true,
       "actionType": true,
-      "minConditions": 0
+      "channels": null
     },
     "GetCase": {
       "modeled": false,
       "requiredErrors": [],
-      "requiredErrorsForChat": [],
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": []
+        }
+      ],
       "builderErrors": [],
+      "minConditions": 0,
       "conditionsKind": null,
       "nextRule": null,
       "holdsParticipant": false,
@@ -148,19 +190,25 @@
       "unrestricted": false,
       "terminal": false,
       "actionType": false,
-      "minConditions": 0
+      "channels": null
     },
     "InvokeFlowModule": {
       "modeled": true,
       "requiredErrors": [
         "NoMatchingError"
       ],
-      "requiredErrorsForChat": [
-        "NoMatchingError"
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": [
+            "NoMatchingError"
+          ]
+        }
       ],
       "builderErrors": [
         "NoMatchingError"
       ],
+      "minConditions": 0,
       "conditionsKind": "none",
       "nextRule": "required",
       "holdsParticipant": false,
@@ -180,13 +228,19 @@
       "unrestricted": false,
       "terminal": false,
       "actionType": true,
-      "minConditions": 0
+      "channels": null
     },
     "StartOutboundChatContact": {
       "modeled": false,
       "requiredErrors": [],
-      "requiredErrorsForChat": [],
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": []
+        }
+      ],
       "builderErrors": [],
+      "minConditions": 0,
       "conditionsKind": null,
       "nextRule": null,
       "holdsParticipant": false,
@@ -198,19 +252,25 @@
       "unrestricted": false,
       "terminal": false,
       "actionType": false,
-      "minConditions": 0
+      "channels": null
     },
     "TagContact": {
       "modeled": true,
       "requiredErrors": [
         "NoMatchingError"
       ],
-      "requiredErrorsForChat": [
-        "NoMatchingError"
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": [
+            "NoMatchingError"
+          ]
+        }
       ],
       "builderErrors": [
         "NoMatchingError"
       ],
+      "minConditions": 0,
       "conditionsKind": "none",
       "nextRule": "required",
       "holdsParticipant": false,
@@ -222,13 +282,19 @@
       "unrestricted": true,
       "terminal": false,
       "actionType": true,
-      "minConditions": 0
+      "channels": null
     },
     "TransferContactToAgent": {
       "modeled": true,
       "requiredErrors": [],
-      "requiredErrorsForChat": [],
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": []
+        }
+      ],
       "builderErrors": [],
+      "minConditions": 0,
       "conditionsKind": "none",
       "nextRule": "none",
       "holdsParticipant": false,
@@ -244,7 +310,7 @@
       "unrestricted": false,
       "terminal": true,
       "actionType": true,
-      "minConditions": 0
+      "channels": null
     },
     "TransferContactToQueue": {
       "modeled": true,
@@ -252,14 +318,20 @@
         "QueueAtCapacity",
         "NoMatchingError"
       ],
-      "requiredErrorsForChat": [
-        "QueueAtCapacity",
-        "NoMatchingError"
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": [
+            "QueueAtCapacity",
+            "NoMatchingError"
+          ]
+        }
       ],
       "builderErrors": [
         "QueueAtCapacity",
         "NoMatchingError"
       ],
+      "minConditions": 0,
       "conditionsKind": "none",
       "nextRule": "required",
       "holdsParticipant": false,
@@ -276,19 +348,25 @@
       "unrestricted": false,
       "terminal": false,
       "actionType": true,
-      "minConditions": 0
+      "channels": null
     },
     "UntagContact": {
       "modeled": true,
       "requiredErrors": [
         "NoMatchingError"
       ],
-      "requiredErrorsForChat": [
-        "NoMatchingError"
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": [
+            "NoMatchingError"
+          ]
+        }
       ],
       "builderErrors": [
         "NoMatchingError"
       ],
+      "minConditions": 0,
       "conditionsKind": "none",
       "nextRule": "required",
       "holdsParticipant": false,
@@ -300,13 +378,19 @@
       "unrestricted": true,
       "terminal": false,
       "actionType": true,
-      "minConditions": 0
+      "channels": null
     },
     "UpdateCase": {
       "modeled": false,
       "requiredErrors": [],
-      "requiredErrorsForChat": [],
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": []
+        }
+      ],
       "builderErrors": [],
+      "minConditions": 0,
       "conditionsKind": null,
       "nextRule": null,
       "holdsParticipant": false,
@@ -318,19 +402,25 @@
       "unrestricted": false,
       "terminal": false,
       "actionType": false,
-      "minConditions": 0
+      "channels": null
     },
     "UpdateContactAttributes": {
       "modeled": true,
       "requiredErrors": [
         "NoMatchingError"
       ],
-      "requiredErrorsForChat": [
-        "NoMatchingError"
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": [
+            "NoMatchingError"
+          ]
+        }
       ],
       "builderErrors": [
         "NoMatchingError"
       ],
+      "minConditions": 0,
       "conditionsKind": "none",
       "nextRule": "required",
       "holdsParticipant": false,
@@ -342,7 +432,7 @@
       "unrestricted": true,
       "terminal": false,
       "actionType": true,
-      "minConditions": 0
+      "channels": null
     },
     "UpdateContactCallbackNumber": {
       "modeled": true,
@@ -350,14 +440,20 @@
         "InvalidCallbackNumber",
         "CallbackNumberNotDialable"
       ],
-      "requiredErrorsForChat": [
-        "InvalidCallbackNumber",
-        "CallbackNumberNotDialable"
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": [
+            "InvalidCallbackNumber",
+            "CallbackNumberNotDialable"
+          ]
+        }
       ],
       "builderErrors": [
         "InvalidCallbackNumber",
         "CallbackNumberNotDialable"
       ],
+      "minConditions": 0,
       "conditionsKind": "none",
       "nextRule": "required",
       "holdsParticipant": false,
@@ -375,19 +471,25 @@
       "unrestricted": false,
       "terminal": false,
       "actionType": true,
-      "minConditions": 0
+      "channels": null
     },
     "UpdateContactData": {
       "modeled": true,
       "requiredErrors": [
         "NoMatchingError"
       ],
-      "requiredErrorsForChat": [
-        "NoMatchingError"
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": [
+            "NoMatchingError"
+          ]
+        }
       ],
       "builderErrors": [
         "NoMatchingError"
       ],
+      "minConditions": 0,
       "conditionsKind": "none",
       "nextRule": "required",
       "holdsParticipant": false,
@@ -399,19 +501,25 @@
       "unrestricted": true,
       "terminal": false,
       "actionType": true,
-      "minConditions": 0
+      "channels": null
     },
     "UpdateContactEventHooks": {
       "modeled": true,
       "requiredErrors": [
         "NoMatchingError"
       ],
-      "requiredErrorsForChat": [
-        "NoMatchingError"
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": [
+            "NoMatchingError"
+          ]
+        }
       ],
       "builderErrors": [
         "NoMatchingError"
       ],
+      "minConditions": 0,
       "conditionsKind": "none",
       "nextRule": "required",
       "holdsParticipant": false,
@@ -428,13 +536,19 @@
       "unrestricted": true,
       "terminal": false,
       "actionType": true,
-      "minConditions": 0
+      "channels": null
     },
     "UpdateContactMediaProcessing": {
       "modeled": false,
       "requiredErrors": [],
-      "requiredErrorsForChat": [],
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": []
+        }
+      ],
       "builderErrors": [],
+      "minConditions": 0,
       "conditionsKind": null,
       "nextRule": null,
       "holdsParticipant": false,
@@ -446,13 +560,19 @@
       "unrestricted": false,
       "terminal": false,
       "actionType": false,
-      "minConditions": 0
+      "channels": null
     },
     "UpdateContactMediaStreamingBehavior": {
       "modeled": false,
       "requiredErrors": [],
-      "requiredErrorsForChat": [],
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": []
+        }
+      ],
       "builderErrors": [],
+      "minConditions": 0,
       "conditionsKind": null,
       "nextRule": null,
       "holdsParticipant": false,
@@ -464,7 +584,7 @@
       "unrestricted": false,
       "terminal": false,
       "actionType": false,
-      "minConditions": 0
+      "channels": null
     },
     "UpdateContactRecordingAndAnalyticsBehavior": {
       "modeled": true,
@@ -472,15 +592,30 @@
         "NoMatchingError",
         "ChannelMismatch"
       ],
-      "requiredErrorsForChat": [
-        "NoMatchingError",
-        "ChannelMismatch",
-        "InFlightRedactionConfigurationFailed"
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {
+            "ChatBehavior": null
+          },
+          "errors": [
+            "NoMatchingError",
+            "ChannelMismatch",
+            "InFlightRedactionConfigurationFailed"
+          ]
+        },
+        {
+          "parameters": {},
+          "errors": [
+            "NoMatchingError",
+            "ChannelMismatch"
+          ]
+        }
       ],
       "builderErrors": [
         "NoMatchingError",
         "ChannelMismatch"
       ],
+      "minConditions": 0,
       "conditionsKind": "none",
       "nextRule": "required",
       "holdsParticipant": false,
@@ -492,13 +627,19 @@
       "unrestricted": true,
       "terminal": false,
       "actionType": true,
-      "minConditions": 0
+      "channels": null
     },
     "UpdateContactRecordingBehavior": {
       "modeled": true,
       "requiredErrors": [],
-      "requiredErrorsForChat": [],
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": []
+        }
+      ],
       "builderErrors": [],
+      "minConditions": 0,
       "conditionsKind": "none",
       "nextRule": "required",
       "holdsParticipant": false,
@@ -517,13 +658,19 @@
       "unrestricted": false,
       "terminal": false,
       "actionType": true,
-      "minConditions": 0
+      "channels": null
     },
     "ResumeContact": {
       "modeled": false,
       "requiredErrors": [],
-      "requiredErrorsForChat": [],
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": []
+        }
+      ],
       "builderErrors": [],
+      "minConditions": 0,
       "conditionsKind": null,
       "nextRule": null,
       "holdsParticipant": false,
@@ -535,13 +682,19 @@
       "unrestricted": false,
       "terminal": false,
       "actionType": false,
-      "minConditions": 0
+      "channels": null
     },
     "UpdateContactRoutingBehavior": {
       "modeled": true,
       "requiredErrors": [],
-      "requiredErrorsForChat": [],
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": []
+        }
+      ],
       "builderErrors": [],
+      "minConditions": 0,
       "conditionsKind": "none",
       "nextRule": "required",
       "holdsParticipant": false,
@@ -556,19 +709,25 @@
       "unrestricted": false,
       "terminal": false,
       "actionType": true,
-      "minConditions": 0
+      "channels": null
     },
     "UpdateContactTargetQueue": {
       "modeled": true,
       "requiredErrors": [
         "NoMatchingError"
       ],
-      "requiredErrorsForChat": [
-        "NoMatchingError"
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": [
+            "NoMatchingError"
+          ]
+        }
       ],
       "builderErrors": [
         "NoMatchingError"
       ],
+      "minConditions": 0,
       "conditionsKind": "none",
       "nextRule": "required",
       "holdsParticipant": false,
@@ -594,15 +753,21 @@
       "unrestricted": false,
       "terminal": false,
       "actionType": true,
-      "minConditions": 0
+      "channels": null
     },
     "UpdateContactTextToSpeechVoice": {
       "modeled": true,
       "requiredErrors": [],
-      "requiredErrorsForChat": [],
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": []
+        }
+      ],
       "builderErrors": [
         "NoMatchingError"
       ],
+      "minConditions": 0,
       "conditionsKind": "none",
       "nextRule": "required",
       "holdsParticipant": false,
@@ -614,13 +779,19 @@
       "unrestricted": true,
       "terminal": false,
       "actionType": true,
-      "minConditions": 0
+      "channels": null
     },
     "UpdatePreviousContactParticipantState": {
       "modeled": false,
       "requiredErrors": [],
-      "requiredErrorsForChat": [],
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": []
+        }
+      ],
       "builderErrors": [],
+      "minConditions": 0,
       "conditionsKind": null,
       "nextRule": null,
       "holdsParticipant": false,
@@ -632,21 +803,27 @@
       "unrestricted": false,
       "terminal": false,
       "actionType": false,
-      "minConditions": 0
+      "channels": null
     },
     "ConnectParticipantWithLexBot": {
       "modeled": true,
       "requiredErrors": [
         "NoMatchingError"
       ],
-      "requiredErrorsForChat": [
-        "NoMatchingError"
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": [
+            "NoMatchingError"
+          ]
+        }
       ],
       "builderErrors": [
         "InputTimeLimitExceeded",
         "NoMatchingError",
         "NoMatchingCondition"
       ],
+      "minConditions": 0,
       "conditionsKind": "enum",
       "nextRule": "mirrors:error:NoMatchingCondition",
       "holdsParticipant": false,
@@ -680,13 +857,19 @@
       "unrestricted": false,
       "terminal": false,
       "actionType": true,
-      "minConditions": 0
+      "channels": null
     },
     "DisconnectParticipant": {
       "modeled": true,
       "requiredErrors": [],
-      "requiredErrorsForChat": [],
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": []
+        }
+      ],
       "builderErrors": [],
+      "minConditions": 0,
       "conditionsKind": "none",
       "nextRule": "none",
       "holdsParticipant": false,
@@ -704,15 +887,20 @@
       "unrestricted": false,
       "terminal": true,
       "actionType": true,
-      "minConditions": 0
+      "channels": null
     },
     "GetParticipantInput": {
       "modeled": true,
       "requiredErrors": [
         "NoMatchingError"
       ],
-      "requiredErrorsForChat": [
-        "NoMatchingError"
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": [
+            "NoMatchingError"
+          ]
+        }
       ],
       "builderErrors": [
         "InputTimeLimitExceeded",
@@ -720,6 +908,7 @@
         "InvalidPhoneNumber",
         "NoMatchingError"
       ],
+      "minConditions": 0,
       "conditionsKind": "dtmf",
       "nextRule": "mirrors:error:NoMatchingCondition",
       "holdsParticipant": false,
@@ -750,15 +939,21 @@
       "unrestricted": false,
       "terminal": false,
       "actionType": true,
-      "minConditions": 0
+      "channels": null
     },
     "MessageParticipant": {
       "modeled": true,
       "requiredErrors": [],
-      "requiredErrorsForChat": [],
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": []
+        }
+      ],
       "builderErrors": [
         "NoMatchingError"
       ],
+      "minConditions": 0,
       "conditionsKind": "none",
       "nextRule": "required",
       "holdsParticipant": false,
@@ -792,15 +987,21 @@
       "unrestricted": false,
       "terminal": false,
       "actionType": true,
-      "minConditions": 0
+      "channels": null
     },
     "MessageParticipantIteratively": {
       "modeled": true,
       "requiredErrors": [],
-      "requiredErrorsForChat": [],
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": []
+        }
+      ],
       "builderErrors": [
         "NoMatchingError"
       ],
+      "minConditions": 0,
       "conditionsKind": "enum",
       "nextRule": "none",
       "holdsParticipant": true,
@@ -830,7 +1031,7 @@
       "unrestricted": false,
       "terminal": false,
       "actionType": true,
-      "minConditions": 0
+      "channels": null
     },
     "ShowView": {
       "modeled": true,
@@ -839,16 +1040,22 @@
         "NoMatchingError",
         "TimeLimitExceeded"
       ],
-      "requiredErrorsForChat": [
-        "NoMatchingCondition",
-        "NoMatchingError",
-        "TimeLimitExceeded"
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": [
+            "NoMatchingCondition",
+            "NoMatchingError",
+            "TimeLimitExceeded"
+          ]
+        }
       ],
       "builderErrors": [
         "NoMatchingCondition",
         "NoMatchingError",
         "TimeLimitExceeded"
       ],
+      "minConditions": 0,
       "conditionsKind": "enum",
       "nextRule": "mirrors:error:NoMatchingError",
       "holdsParticipant": false,
@@ -869,19 +1076,27 @@
       "unrestricted": false,
       "terminal": false,
       "actionType": true,
-      "minConditions": 0
+      "channels": [
+        "CHAT"
+      ]
     },
     "CheckHoursOfOperation": {
       "modeled": true,
       "requiredErrors": [
         "NoMatchingError"
       ],
-      "requiredErrorsForChat": [
-        "NoMatchingError"
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": [
+            "NoMatchingError"
+          ]
+        }
       ],
       "builderErrors": [
         "NoMatchingError"
       ],
+      "minConditions": 0,
       "conditionsKind": "fixed",
       "nextRule": "mirrors:condition:False",
       "holdsParticipant": false,
@@ -904,7 +1119,7 @@
       "unrestricted": false,
       "terminal": false,
       "actionType": true,
-      "minConditions": 0
+      "channels": null
     },
     "CheckMetricData": {
       "modeled": true,
@@ -912,14 +1127,20 @@
         "NoMatchingError",
         "NoMatchingCondition"
       ],
-      "requiredErrorsForChat": [
-        "NoMatchingError",
-        "NoMatchingCondition"
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": [
+            "NoMatchingError",
+            "NoMatchingCondition"
+          ]
+        }
       ],
       "builderErrors": [
         "NoMatchingError",
         "NoMatchingCondition"
       ],
+      "minConditions": 1,
       "conditionsKind": "numeric",
       "nextRule": "mirrors:error:NoMatchingError",
       "holdsParticipant": false,
@@ -946,13 +1167,19 @@
       "unrestricted": false,
       "terminal": false,
       "actionType": true,
-      "minConditions": 1
+      "channels": null
     },
     "CheckOutboundCallStatus": {
       "modeled": false,
       "requiredErrors": [],
-      "requiredErrorsForChat": [],
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": []
+        }
+      ],
       "builderErrors": [],
+      "minConditions": 0,
       "conditionsKind": null,
       "nextRule": null,
       "holdsParticipant": false,
@@ -964,13 +1191,19 @@
       "unrestricted": false,
       "terminal": false,
       "actionType": false,
-      "minConditions": 0
+      "channels": null
     },
     "CheckVoiceId": {
       "modeled": false,
       "requiredErrors": [],
-      "requiredErrorsForChat": [],
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": []
+        }
+      ],
       "builderErrors": [],
+      "minConditions": 0,
       "conditionsKind": null,
       "nextRule": null,
       "holdsParticipant": false,
@@ -982,19 +1215,25 @@
       "unrestricted": false,
       "terminal": false,
       "actionType": false,
-      "minConditions": 0
+      "channels": null
     },
     "Compare": {
       "modeled": true,
       "requiredErrors": [
         "NoMatchingCondition"
       ],
-      "requiredErrorsForChat": [
-        "NoMatchingCondition"
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": [
+            "NoMatchingCondition"
+          ]
+        }
       ],
       "builderErrors": [
         "NoMatchingCondition"
       ],
+      "minConditions": 0,
       "conditionsKind": "custom",
       "nextRule": "mirrors:error:NoMatchingCondition",
       "holdsParticipant": false,
@@ -1006,19 +1245,25 @@
       "unrestricted": true,
       "terminal": false,
       "actionType": true,
-      "minConditions": 0
+      "channels": null
     },
     "DistributeByPercentage": {
       "modeled": true,
       "requiredErrors": [
         "NoMatchingCondition"
       ],
-      "requiredErrorsForChat": [
-        "NoMatchingCondition"
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": [
+            "NoMatchingCondition"
+          ]
+        }
       ],
       "builderErrors": [
         "NoMatchingCondition"
       ],
+      "minConditions": 0,
       "conditionsKind": "numeric",
       "nextRule": "mirrors:error:NoMatchingCondition",
       "holdsParticipant": false,
@@ -1036,13 +1281,19 @@
       "unrestricted": false,
       "terminal": false,
       "actionType": true,
-      "minConditions": 0
+      "channels": null
     },
     "EndFlowExecution": {
       "modeled": true,
       "requiredErrors": [],
-      "requiredErrorsForChat": [],
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": []
+        }
+      ],
       "builderErrors": [],
+      "minConditions": 0,
       "conditionsKind": "none",
       "nextRule": "none",
       "holdsParticipant": false,
@@ -1060,19 +1311,25 @@
       "unrestricted": false,
       "terminal": true,
       "actionType": true,
-      "minConditions": 0
+      "channels": null
     },
     "GetMetricData": {
       "modeled": true,
       "requiredErrors": [
         "NoMatchingError"
       ],
-      "requiredErrorsForChat": [
-        "NoMatchingError"
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": [
+            "NoMatchingError"
+          ]
+        }
       ],
       "builderErrors": [
         "NoMatchingError"
       ],
+      "minConditions": 0,
       "conditionsKind": "none",
       "nextRule": "required",
       "holdsParticipant": false,
@@ -1093,15 +1350,21 @@
       "unrestricted": true,
       "terminal": false,
       "actionType": true,
-      "minConditions": 0
+      "channels": null
     },
     "Loop": {
       "modeled": true,
       "requiredErrors": [],
-      "requiredErrorsForChat": [],
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": []
+        }
+      ],
       "builderErrors": [
         "NoMatchingError"
       ],
+      "minConditions": 0,
       "conditionsKind": "fixed",
       "nextRule": "mirrors:condition:DoneLooping",
       "holdsParticipant": false,
@@ -1113,13 +1376,19 @@
       "unrestricted": true,
       "terminal": false,
       "actionType": true,
-      "minConditions": 0
+      "channels": null
     },
     "StartVoiceIdStream": {
       "modeled": false,
       "requiredErrors": [],
-      "requiredErrorsForChat": [],
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": []
+        }
+      ],
       "builderErrors": [],
+      "minConditions": 0,
       "conditionsKind": null,
       "nextRule": null,
       "holdsParticipant": false,
@@ -1131,19 +1400,25 @@
       "unrestricted": false,
       "terminal": false,
       "actionType": false,
-      "minConditions": 0
+      "channels": null
     },
     "TransferToFlow": {
       "modeled": true,
       "requiredErrors": [
         "NoMatchingError"
       ],
-      "requiredErrorsForChat": [
-        "NoMatchingError"
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": [
+            "NoMatchingError"
+          ]
+        }
       ],
       "builderErrors": [
         "NoMatchingError"
       ],
+      "minConditions": 0,
       "conditionsKind": "none",
       "nextRule": "required",
       "holdsParticipant": false,
@@ -1165,19 +1440,25 @@
       "unrestricted": false,
       "terminal": false,
       "actionType": true,
-      "minConditions": 0
+      "channels": null
     },
     "UpdateFlowAttributes": {
       "modeled": true,
       "requiredErrors": [
         "NoMatchingError"
       ],
-      "requiredErrorsForChat": [
-        "NoMatchingError"
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": [
+            "NoMatchingError"
+          ]
+        }
       ],
       "builderErrors": [
         "NoMatchingError"
       ],
+      "minConditions": 0,
       "conditionsKind": "none",
       "nextRule": "required",
       "holdsParticipant": false,
@@ -1189,13 +1470,19 @@
       "unrestricted": true,
       "terminal": false,
       "actionType": true,
-      "minConditions": 0
+      "channels": null
     },
     "UpdateFlowLoggingBehavior": {
       "modeled": true,
       "requiredErrors": [],
-      "requiredErrorsForChat": [],
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": []
+        }
+      ],
       "builderErrors": [],
+      "minConditions": 0,
       "conditionsKind": "none",
       "nextRule": "required",
       "holdsParticipant": false,
@@ -1207,13 +1494,19 @@
       "unrestricted": true,
       "terminal": false,
       "actionType": true,
-      "minConditions": 0
+      "channels": null
     },
     "UpdateRoutingCriteria": {
       "modeled": false,
       "requiredErrors": [],
-      "requiredErrorsForChat": [],
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": []
+        }
+      ],
       "builderErrors": [],
+      "minConditions": 0,
       "conditionsKind": null,
       "nextRule": null,
       "holdsParticipant": false,
@@ -1225,20 +1518,26 @@
       "unrestricted": false,
       "terminal": false,
       "actionType": false,
-      "minConditions": 0
+      "channels": null
     },
     "Wait": {
       "modeled": true,
       "requiredErrors": [
         "NoMatchingError"
       ],
-      "requiredErrorsForChat": [
-        "NoMatchingError"
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": [
+            "NoMatchingError"
+          ]
+        }
       ],
       "builderErrors": [
         "NoMatchingError",
         "ParticipantNotFound"
       ],
+      "minConditions": 0,
       "conditionsKind": "enum",
       "nextRule": "mirrors:error:NoMatchingError",
       "holdsParticipant": false,
@@ -1250,13 +1549,21 @@
       "unrestricted": true,
       "terminal": false,
       "actionType": true,
-      "minConditions": 0
+      "channels": [
+        "CHAT"
+      ]
     },
     "AssociateContactToCustomerProfile": {
       "modeled": false,
       "requiredErrors": [],
-      "requiredErrorsForChat": [],
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": []
+        }
+      ],
       "builderErrors": [],
+      "minConditions": 0,
       "conditionsKind": null,
       "nextRule": null,
       "holdsParticipant": false,
@@ -1268,19 +1575,25 @@
       "unrestricted": false,
       "terminal": false,
       "actionType": false,
-      "minConditions": 0
+      "channels": null
     },
     "CreateCallbackContact": {
       "modeled": true,
       "requiredErrors": [
         "NoMatchingError"
       ],
-      "requiredErrorsForChat": [
-        "NoMatchingError"
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": [
+            "NoMatchingError"
+          ]
+        }
       ],
       "builderErrors": [
         "NoMatchingError"
       ],
+      "minConditions": 0,
       "conditionsKind": "none",
       "nextRule": "required",
       "holdsParticipant": false,
@@ -1311,13 +1624,19 @@
       "unrestricted": false,
       "terminal": false,
       "actionType": true,
-      "minConditions": 0
+      "channels": null
     },
     "CreateCustomerProfile": {
       "modeled": false,
       "requiredErrors": [],
-      "requiredErrorsForChat": [],
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": []
+        }
+      ],
       "builderErrors": [],
+      "minConditions": 0,
       "conditionsKind": null,
       "nextRule": null,
       "holdsParticipant": false,
@@ -1329,19 +1648,25 @@
       "unrestricted": false,
       "terminal": false,
       "actionType": false,
-      "minConditions": 0
+      "channels": null
     },
     "InvokeLambdaFunction": {
       "modeled": true,
       "requiredErrors": [
         "NoMatchingError"
       ],
-      "requiredErrorsForChat": [
-        "NoMatchingError"
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": [
+            "NoMatchingError"
+          ]
+        }
       ],
       "builderErrors": [
         "NoMatchingError"
       ],
+      "minConditions": 0,
       "conditionsKind": "none",
       "nextRule": "required",
       "holdsParticipant": false,
@@ -1358,13 +1683,19 @@
       "unrestricted": true,
       "terminal": false,
       "actionType": true,
-      "minConditions": 0
+      "channels": null
     },
     "GetCustomerProfile": {
       "modeled": false,
       "requiredErrors": [],
-      "requiredErrorsForChat": [],
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": []
+        }
+      ],
       "builderErrors": [],
+      "minConditions": 0,
       "conditionsKind": null,
       "nextRule": null,
       "holdsParticipant": false,
@@ -1376,13 +1707,19 @@
       "unrestricted": false,
       "terminal": false,
       "actionType": false,
-      "minConditions": 0
+      "channels": null
     },
     "GetCustomerProfileObject": {
       "modeled": false,
       "requiredErrors": [],
-      "requiredErrorsForChat": [],
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": []
+        }
+      ],
       "builderErrors": [],
+      "minConditions": 0,
       "conditionsKind": null,
       "nextRule": null,
       "holdsParticipant": false,
@@ -1394,13 +1731,19 @@
       "unrestricted": false,
       "terminal": false,
       "actionType": false,
-      "minConditions": 0
+      "channels": null
     },
     "GetCalculatedAttributesForCustomerProfile": {
       "modeled": false,
       "requiredErrors": [],
-      "requiredErrorsForChat": [],
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": []
+        }
+      ],
       "builderErrors": [],
+      "minConditions": 0,
       "conditionsKind": null,
       "nextRule": null,
       "holdsParticipant": false,
@@ -1412,13 +1755,19 @@
       "unrestricted": false,
       "terminal": false,
       "actionType": false,
-      "minConditions": 0
+      "channels": null
     },
     "UpdateCustomerProfile": {
       "modeled": false,
       "requiredErrors": [],
-      "requiredErrorsForChat": [],
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": []
+        }
+      ],
       "builderErrors": [],
+      "minConditions": 0,
       "conditionsKind": null,
       "nextRule": null,
       "holdsParticipant": false,
@@ -1430,13 +1779,19 @@
       "unrestricted": false,
       "terminal": false,
       "actionType": false,
-      "minConditions": 0
+      "channels": null
     },
     "RouteContactToAgent": {
       "modeled": false,
       "requiredErrors": [],
-      "requiredErrorsForChat": [],
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": []
+        }
+      ],
       "builderErrors": [],
+      "minConditions": 0,
       "conditionsKind": null,
       "nextRule": null,
       "holdsParticipant": false,
@@ -1448,13 +1803,19 @@
       "unrestricted": false,
       "terminal": false,
       "actionType": false,
-      "minConditions": 0
+      "channels": null
     },
     "LoadContactContent": {
       "modeled": false,
       "requiredErrors": [],
-      "requiredErrorsForChat": [],
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": []
+        }
+      ],
       "builderErrors": [],
+      "minConditions": 0,
       "conditionsKind": null,
       "nextRule": null,
       "holdsParticipant": false,
@@ -1466,13 +1827,19 @@
       "unrestricted": false,
       "terminal": false,
       "actionType": false,
-      "minConditions": 0
+      "channels": null
     },
     "AuthenticateParticipant": {
       "modeled": false,
       "requiredErrors": [],
-      "requiredErrorsForChat": [],
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": []
+        }
+      ],
       "builderErrors": [],
+      "minConditions": 0,
       "conditionsKind": null,
       "nextRule": null,
       "holdsParticipant": false,
@@ -1484,13 +1851,19 @@
       "unrestricted": false,
       "terminal": false,
       "actionType": false,
-      "minConditions": 0
+      "channels": null
     },
     "CheckSegmentMembership": {
       "modeled": false,
       "requiredErrors": [],
-      "requiredErrorsForChat": [],
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": []
+        }
+      ],
       "builderErrors": [],
+      "minConditions": 0,
       "conditionsKind": null,
       "nextRule": null,
       "holdsParticipant": false,
@@ -1502,13 +1875,19 @@
       "unrestricted": false,
       "terminal": false,
       "actionType": false,
-      "minConditions": 0
+      "channels": null
     },
     "TransferParticipantToThirdParty": {
       "modeled": false,
       "requiredErrors": [],
-      "requiredErrorsForChat": [],
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": []
+        }
+      ],
       "builderErrors": [],
+      "minConditions": 0,
       "conditionsKind": null,
       "nextRule": null,
       "holdsParticipant": false,
@@ -1520,13 +1899,19 @@
       "unrestricted": false,
       "terminal": false,
       "actionType": false,
-      "minConditions": 0
+      "channels": null
     },
     "NotAType": {
       "modeled": false,
       "requiredErrors": [],
-      "requiredErrorsForChat": [],
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": []
+        }
+      ],
       "builderErrors": [],
+      "minConditions": 0,
       "conditionsKind": null,
       "nextRule": null,
       "holdsParticipant": false,
@@ -1538,13 +1923,19 @@
       "unrestricted": false,
       "terminal": false,
       "actionType": false,
-      "minConditions": 0
+      "channels": null
     },
     "constructor": {
       "modeled": false,
       "requiredErrors": [],
-      "requiredErrorsForChat": [],
+      "requiredErrorsByParameters": [
+        {
+          "parameters": {},
+          "errors": []
+        }
+      ],
       "builderErrors": [],
+      "minConditions": 0,
       "conditionsKind": null,
       "nextRule": null,
       "holdsParticipant": false,
@@ -1555,7 +1946,7 @@
       "unrestricted": false,
       "terminal": false,
       "actionType": false,
-      "minConditions": 0
+      "channels": null
     }
   },
   "catalogOrder": [
@@ -2225,6 +2616,86 @@
       "path": "*.[]",
       "out": {
         "err": "\"*.[]\" is not a catalog path."
+      }
+    },
+    {
+      "in": "{\"M\":{\"b\":1,\"10\":2,\"${cdref:casefield:priority}\":3,\"2\":4}}",
+      "path": "M.*~",
+      "out": {
+        "ok": [
+          {
+            "path": "M.2~",
+            "value": "2"
+          },
+          {
+            "path": "M.10~",
+            "value": "10"
+          },
+          {
+            "path": "M.b~",
+            "value": "b"
+          },
+          {
+            "path": "M.${cdref:casefield:priority}~",
+            "value": "${cdref:casefield:priority}"
+          }
+        ]
+      }
+    },
+    {
+      "in": "{\"L\":[{\"M\":{\"k\":1}},{\"M\":[1]},{\"M\":\"x\"},{\"M\":{\"j\":{\"x\":1}}}]}",
+      "path": "L[].M.*~",
+      "out": {
+        "ok": [
+          {
+            "path": "L[0].M.k~",
+            "value": "k"
+          },
+          {
+            "path": "L[3].M.j~",
+            "value": "j"
+          }
+        ]
+      }
+    },
+    {
+      "in": "{\"M\":{\"a\":{\"x\":1}}}",
+      "path": "M.*~.x",
+      "out": {
+        "ok": []
+      }
+    },
+    {
+      "in": "{\"M\":{\"a\":1}}",
+      "path": "*~",
+      "out": {
+        "ok": [
+          {
+            "path": "M~",
+            "value": "M"
+          }
+        ]
+      }
+    },
+    {
+      "in": "{}",
+      "path": "M~",
+      "out": {
+        "err": "\"M~\" is not a catalog path."
+      }
+    },
+    {
+      "in": "{}",
+      "path": "M.*~~",
+      "out": {
+        "err": "\"M.*~~\" is not a catalog path."
+      }
+    },
+    {
+      "in": "{}",
+      "path": "~",
+      "out": {
+        "err": "\"~\" is not a catalog path."
       }
     }
   ],

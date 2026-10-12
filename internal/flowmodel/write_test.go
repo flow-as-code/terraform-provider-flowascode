@@ -7,6 +7,9 @@ import (
 	"math/big"
 	"testing"
 
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+
+	"github.com/flow-as-code/terraform-provider-flowascode/internal/flowdoc"
 	"github.com/flow-as-code/terraform-provider-flowascode/internal/jsonv"
 )
 
@@ -32,5 +35,23 @@ func TestActionsFromDocRoundsANegativeHalfUp(t *testing.T) {
 	y, _ := pos["y"].(*big.Float).Float64()
 	if x != -40 || y != -7 {
 		t.Fatalf("position (%v, %v), want (-40, -7)", x, y)
+	}
+}
+
+// A list the catalog marks dynamic (FlowDoc 0.3, ADR 0009) stays a list
+// attribute, and a JSONPath standing for the whole list is not accepted
+// typed, so the action is written generic (conformance/hcl/README.md, rule
+// 11) rather than as a list attribute holding a string.
+func TestDynamicListStaysAListAndAJSONPathGoesGeneric(t *testing.T) {
+	list := flowdoc.CatalogParameter{Key: "Steps", Attr: "steps", CatalogElement: flowdoc.CatalogElement{Kind: "list", Dynamic: true}}
+	if _, ok := attribute(list.CatalogElement, "d").(schema.ListAttribute); !ok {
+		t.Errorf("a dynamic list is %T", attribute(list.CatalogElement, "d"))
+	}
+	elems := []flowdoc.CatalogParameter{list}
+	if !Accepts(jsonv.Object{{Key: "Steps", Value: []any{"a"}}}, elems) {
+		t.Error("a static list was refused")
+	}
+	if Accepts(jsonv.Object{{Key: "Steps", Value: "$.Attributes.steps"}}, elems) {
+		t.Error("a JSONPath in a list position was accepted typed")
 	}
 }

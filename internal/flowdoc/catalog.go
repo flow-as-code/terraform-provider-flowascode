@@ -28,10 +28,14 @@ import (
 type ParameterKind string
 
 // CatalogConstraint is catalog.ts's CatalogConstraint. Rule is exactlyOne,
-// atMostOne or neverBoth.
+// atMostOne or neverBoth. Keys names single parameters; Groups (FlowDoc 0.3
+// vocabulary) names alternatives that are each several keys
+// (GetCustomerProfile's IdentifierName and IdentifierValue pair, or
+// SearchCriteria). A constraint carries one of the two; the other is nil.
 type CatalogConstraint struct {
-	Rule string   `json:"rule"`
-	Keys []string `json:"keys"`
+	Rule   string     `json:"rule"`
+	Keys   []string   `json:"keys,omitempty"`
+	Groups [][]string `json:"groups,omitempty"`
 }
 
 // CatalogElement is catalog.ts's CatalogElement: the shape of a value, a
@@ -54,8 +58,17 @@ type CatalogElement struct {
 	Max *float64 `json:"max,omitempty"`
 	// map: the keys the page allows, when it lists them.
 	Keys []string `json:"keys,omitempty"`
-	// The page also accepts a single JSONPath identifier in this position.
-	// Absent reads false, as TypeScript's `dynamic === true` tests do.
+	// map: patterns a key may match beside Keys, as anchored ECMAScript
+	// regular expression sources (FlowDoc 0.3 vocabulary). A map with
+	// neither admits any key. Nothing in the provider reads them yet; they
+	// change no attribute.
+	KeyPatterns []string `json:"keyPatterns,omitempty"`
+	// The page also accepts a single JSONPath identifier in this position:
+	// on a scalar kind since FlowDoc 0.1, on a list since 0.3 (ADR 0009),
+	// where a JSONPath may stand for the whole list. The attribute stays
+	// typed; a JSONPath where the type is a list makes the action generic
+	// (Accepts in flowmodel). Absent reads false, as TypeScript's
+	// `dynamic === true` tests do.
 	Dynamic bool `json:"dynamic,omitempty"`
 }
 
@@ -89,6 +102,17 @@ type CatalogError struct {
 	// A top-level Parameters key whose presence makes the branch required;
 	// "" when absent.
 	RequiredWhenKey string `json:"requiredWhenKey,omitempty"`
+	// A top-level Parameters key whose static value makes the branch
+	// required (CreateCase's ContactNotLinked when LinkContactToCase is
+	// "true"), where presence alone says nothing; nil when absent. FlowDoc
+	// 0.3 vocabulary.
+	RequiredWhenValue *RequiredWhenValue `json:"requiredWhenValue,omitempty"`
+}
+
+// RequiredWhenValue is catalog.ts's CatalogError.requiredWhenValue.
+type RequiredWhenValue struct {
+	Key    string `json:"key"`
+	Equals string `json:"equals"`
 }
 
 // ConditionsKind is catalog.ts's ConditionsKind: none, fixed, dtmf, enum,
@@ -222,6 +246,10 @@ type CatalogAction struct {
 	Doc      string
 	Modeled  bool
 	Source   CatalogSource
+	// The channels the page restricts the type to, on either kind of entry
+	// (an unmodeled one may record them since FlowDoc 0.3); nil when the
+	// page names none.
+	Channels []Channel
 	Model    *ModeledAction
 }
 
@@ -393,18 +421,19 @@ func ParseCatalog(b []byte) (*ActionCatalog, error) {
 			if err := strictUnmarshal(raw, &model); err != nil {
 				return nil, fmt.Errorf("actions.%s: %w", m.Key, err)
 			}
-			entry.Category, entry.Doc, entry.Source, entry.Model = model.Category, model.Doc, model.Source, &model
+			entry.Category, entry.Doc, entry.Source, entry.Channels, entry.Model = model.Category, model.Doc, model.Source, model.Channels, &model
 		} else {
 			var plain struct {
 				Category ActionCategory `json:"category"`
 				Doc      string         `json:"doc"`
 				Modeled  bool           `json:"modeled"`
 				Source   CatalogSource  `json:"source,omitempty"`
+				Channels []Channel      `json:"channels,omitempty"`
 			}
 			if err := strictUnmarshal(raw, &plain); err != nil {
 				return nil, fmt.Errorf("actions.%s: %w", m.Key, err)
 			}
-			entry.Category, entry.Doc, entry.Source = plain.Category, plain.Doc, plain.Source
+			entry.Category, entry.Doc, entry.Source, entry.Channels = plain.Category, plain.Doc, plain.Source, plain.Channels
 		}
 		c.byType[m.Key] = len(c.Actions)
 		c.Actions = append(c.Actions, entry)
@@ -458,10 +487,6 @@ func RequiredErrors(actionType string) []string {
 	return out
 }
 
-// RequiredErrorsFor is catalog.ts's requiredErrorsFor: the always required
-// branches and those required by a parameter the action carries
-// (requiredWhenKey), in catalog order. A key is carried when it is present,
-
 // MinConditionsFor is catalog.ts's minConditionsFor: the fewest conditions an
 // action of this type must carry, 0 when the catalog sets none or the type is
 // not modeled.
@@ -472,15 +497,34 @@ func MinConditionsFor(typ string) int {
 	return 0
 }
 
-// whatever its value, as TypeScript's `!== undefined` reads a parsed null.
+// RequiredErrorsFor is catalog.ts's requiredErrorsFor: the always required
+// branches, those required by a parameter the action carries
+// (requiredWhenKey) and those required by a parameter's static value
+// (requiredWhenValue), in catalog order; empty for an unmodeled type.
 func RequiredErrorsFor(actionType string, parameters jsonv.Object) []string {
+	return RequiredErrorsOf(catalogErrors(actionType), parameters)
+}
+
+// RequiredErrorsOf is catalog.ts's requiredErrorsOf: RequiredErrorsFor over
+// a given error list. A requiredWhenKey key is carried when it is present,
+// whatever its value, as TypeScript's `!== undefined` reads a parsed null.
+// A requiredWhenValue key requires the branch only when its value is the
+// string Equals (`===`), so a JSONPath, or any value that is not that
+// string, requires nothing.
+func RequiredErrorsOf(errors []CatalogError, parameters jsonv.Object) []string {
 	out := []string{}
-	for _, e := range catalogErrors(actionType) {
+	for _, e := range errors {
 		carried := false
 		if e.RequiredWhenKey != "" {
 			_, carried = parameters.Get(e.RequiredWhenKey)
 		}
-		if e.Required || carried {
+		valued := false
+		if e.RequiredWhenValue != nil {
+			v, _ := parameters.Get(e.RequiredWhenValue.Key)
+			s, isString := v.(string)
+			valued = isString && s == e.RequiredWhenValue.Equals
+		}
+		if e.Required || carried || valued {
 			out = append(out, e.Type)
 		}
 	}
@@ -543,9 +587,10 @@ func AnnouncePaths(actionType string) []string {
 
 // ChannelRestriction is catalog.ts's channelRestriction: the channels an
 // action of this type is restricted to; ok is false when its page names
-// none, or the type is not modeled.
+// none, or the type is unknown. It reads any entry, modeled or not, since a
+// page's restriction may be recorded before the type is modeled.
 func ChannelRestriction(actionType string) ([]Channel, bool) {
-	if e := ModeledEntry(actionType); e != nil && e.Channels != nil {
+	if e := CatalogEntry(actionType); e != nil && e.Channels != nil {
 		return e.Channels, true
 	}
 	return nil, false

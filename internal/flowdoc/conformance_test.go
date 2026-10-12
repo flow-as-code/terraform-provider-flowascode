@@ -250,8 +250,16 @@ func TestCatalogLoads(t *testing.T) {
 	if !reflect.DeepEqual(groups, all) {
 		t.Errorf("flowTypeGroups cover %v", groups)
 	}
-	if len(ModeledTypes()) != 35 {
-		t.Errorf("%d modeled types", len(ModeledTypes()))
+	// The count comes from the vendored file read on its own, not from the
+	// port that ModeledTypes reads through.
+	modeled := 0
+	for _, m := range field(decodeDoc(t, CatalogPath), "actions").(jsonv.Object) {
+		if field(m.Value, "modeled") == true {
+			modeled++
+		}
+	}
+	if modeled == 0 || len(ModeledTypes()) != modeled {
+		t.Errorf("%d modeled types, the vendored catalog has %d", len(ModeledTypes()), modeled)
 	}
 	for _, a := range c.Actions {
 		if a.Modeled != (a.Model != nil) {
@@ -339,6 +347,129 @@ func TestCatalogDecodingIsStrict(t *testing.T) {
 		}
 		if _, err := ParseCatalog([]byte(mutated)); err == nil {
 			t.Errorf("%s: accepted", name)
+		}
+	}
+}
+
+// phaseDCatalog is the vendored catalog with one of each FlowDoc 0.3
+// vocabulary field written in, the way a group task's catalog will carry
+// them: channels on an unmodeled entry, requiredWhenValue on an error,
+// keyPatterns on a map, groups on a constraint, dynamic on a list and a `*~`
+// ref path. extra, when not nil, adds a key the port does not know to the
+// structure it names.
+func phaseDCatalog(t *testing.T, extra *string) []byte {
+	t.Helper()
+	root := decodeDoc(t, CatalogPath)
+	actions := field(root, "actions").(jsonv.Object)
+	entry := func(typ string) jsonv.Object { return field(actions, typ).(jsonv.Object) }
+	// setParam writes a member into a parameter in place: Set appends a new
+	// key to a copy of the slice, so the element is stored back.
+	setParam := func(typ, key, member string, value any) {
+		params := field(entry(typ), "parameters").([]any)
+		for i, p := range params {
+			if field(p, "key") == key {
+				o := p.(jsonv.Object)
+				o.Set(member, value)
+				params[i] = o
+				return
+			}
+		}
+		t.Fatalf("%s has no %s", typ, key)
+	}
+	surprise := func(name string, o jsonv.Object) jsonv.Object {
+		if extra != nil && *extra == name {
+			o = append(o, jsonv.Member{Key: "surprise", Value: 1.0})
+		}
+		return o
+	}
+
+	createCase := entry("CreateCase")
+	createCase.Set("channels", []any{"VOICE", "CHAT"})
+	actions.Set("CreateCase", surprise("unmodeled", createCase))
+
+	hooks := entry("UpdateContactEventHooks")
+	transitions := field(hooks, "transitions").(jsonv.Object)
+	errs := field(transitions, "errors").([]any)
+	first := errs[0].(jsonv.Object)
+	first.Set("requiredWhenValue", surprise("requiredWhenValue", jsonv.Object{{Key: "key", Value: "LinkContactToCase"}, {Key: "equals", Value: "true"}}))
+	errs[0] = first
+
+	setParam("UpdateContactAttributes", "Attributes", "keyPatterns", []any{`^Attributes\.[^.]+$`})
+	setParam("MessageParticipantIteratively", "Messages", "dynamic", true)
+
+	mp := entry("MessageParticipant")
+	mp.Set("constraints", []any{surprise("groups", jsonv.Object{
+		{Key: "rule", Value: "exactlyOne"},
+		{Key: "groups", Value: []any{[]any{"PromptId"}, []any{"Text", "SSML"}}},
+	})})
+	return jsonv.Encode(root, "")
+}
+
+// The FlowDoc 0.3 catalog vocabulary is read, and decoding stays strict
+// inside each new structure.
+func TestCatalogReadsThePhaseDVocabulary(t *testing.T) {
+	c, err := ParseCatalog(phaseDCatalog(t, nil))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if e := c.Entry("CreateCase"); e.Modeled || !reflect.DeepEqual(e.Channels, []Channel{"VOICE", "CHAT"}) {
+		t.Errorf("CreateCase channels %v", e.Channels)
+	}
+	if e := c.Entry("Wait"); !reflect.DeepEqual(e.Channels, []Channel{"CHAT"}) {
+		t.Errorf("a modeled entry's channels on CatalogAction: %v", e.Channels)
+	}
+	hooks := c.Entry("UpdateContactEventHooks").Model
+	if w := hooks.Transitions.Errors[0].RequiredWhenValue; w == nil || w.Key != "LinkContactToCase" || w.Equals != "true" {
+		t.Errorf("requiredWhenValue %+v", w)
+	}
+	for _, p := range c.Entry("UpdateContactAttributes").Model.Parameters {
+		if p.Key == "Attributes" && !reflect.DeepEqual(p.KeyPatterns, []string{`^Attributes\.[^.]+$`}) {
+			t.Errorf("keyPatterns %v", p.KeyPatterns)
+		}
+	}
+	for _, p := range c.Entry("MessageParticipantIteratively").Model.Parameters {
+		if p.Key == "Messages" && (!p.Dynamic || p.Kind != "list") {
+			t.Errorf("dynamic list %+v", p.CatalogElement)
+		}
+	}
+	got := c.Entry("MessageParticipant").Model.Constraints
+	if len(got) != 1 || got[0].Keys != nil || !reflect.DeepEqual(got[0].Groups, [][]string{{"PromptId"}, {"Text", "SSML"}}) {
+		t.Errorf("groups %+v", got)
+	}
+	for _, name := range []string{"unmodeled", "requiredWhenValue", "groups"} {
+		if _, err := ParseCatalog(phaseDCatalog(t, &name)); err == nil {
+			t.Errorf("an unknown key in %s was accepted", name)
+		}
+	}
+}
+
+// requiredErrorsOf: a requiredWhenValue error is required when its key holds
+// exactly the string it names, and not for another value, a JSONPath, a
+// non-string or an absent key; requiredWhenKey keeps reading presence.
+func TestRequiredErrorsOfReadsAValue(t *testing.T) {
+	errs := []CatalogError{
+		{Type: "Always", Required: true},
+		{Type: "ByKey", RequiredWhenKey: "K"},
+		{Type: "ByValue", RequiredWhenValue: &RequiredWhenValue{Key: "LinkContactToCase", Equals: "true"}},
+		{Type: "Never"},
+	}
+	for _, c := range []struct {
+		params string
+		want   []string
+	}{
+		{`{}`, []string{"Always"}},
+		{`{"LinkContactToCase":"true"}`, []string{"Always", "ByValue"}},
+		{`{"LinkContactToCase":"false"}`, []string{"Always"}},
+		{`{"LinkContactToCase":"$.Attributes.link"}`, []string{"Always"}},
+		{`{"LinkContactToCase":true}`, []string{"Always"}},
+		{`{"K":null,"LinkContactToCase":"true"}`, []string{"Always", "ByKey", "ByValue"}},
+	} {
+		v, err := jsonv.Decode([]byte(c.params))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if got := RequiredErrorsOf(errs, v.(jsonv.Object)); !reflect.DeepEqual(got, c.want) {
+			t.Errorf("%s: got %v, want %v", c.params, got, c.want)
 		}
 	}
 }

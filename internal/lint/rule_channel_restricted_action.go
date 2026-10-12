@@ -12,7 +12,9 @@ import (
 // ChannelRestrictedAction is rules/channel-restricted-action.ts. Two modeled
 // actions are restricted by channel rather than by flow type: Wait "is
 // supported only by the chat channel" and ShowView "is only supported on
-// the chat channel" (the catalog's channels, from each action's page). A
+// the chat channel" (the catalog's channels, from each action's page; an
+// unmodeled entry may carry them too since FlowDoc 0.3, so a generic block
+// is reported the same way once its page is recorded). A
 // contact flow's channel is decided by the contact that reaches it, not by
 // the document, and FlowDoc records no channel, so the finding is a warning:
 // an inbound flow may serve chat alone, and the document cannot say so. The
@@ -39,7 +41,7 @@ var ChannelRestrictedAction = Rule{
 				plural = "s"
 			}
 			page := ""
-			if e := flowdoc.ModeledEntry(a.typ); e != nil {
+			if e := flowdoc.CatalogEntry(a.typ); e != nil {
 				page = e.Doc
 			}
 			ctx.Report(Report{
