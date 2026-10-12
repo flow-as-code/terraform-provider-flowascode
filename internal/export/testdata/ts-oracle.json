@@ -1,5 +1,5 @@
 {
-  "generatedFrom": "e78970ffb56d7d47fece5ca7db5c5f89102e7eff",
+  "generatedFrom": "e9d3c2119260bc425d8e10e0eca07f9a4e136dc7",
   "parseConnectArn": [
     {
       "input": "arn:aws:connect:us-east-1:111122223333:instance/11111111-2222-3333-4444-555555555555/queue/q1",

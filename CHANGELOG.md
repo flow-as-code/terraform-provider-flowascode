@@ -9,11 +9,11 @@ it reads.
 ## Unreleased
 
 The Phase D type groups, vendored from flow-as-code
-`e78970ffb56d7d47fece5ca7db5c5f89102e7eff` (the tip of its D02 to D04
+`e9d3c2119260bc425d8e10e0eca07f9a4e136dc7` (the tip of its D02 to D09
 stack on D01's head, unmerged; re-vendored at the merge commits before
 release):
 
-- Nineteen action types are modeled, each a typed sub-block of
+- Twenty-one action types are newly modeled, each a typed sub-block of
   `action`: `resume_contact`, `update_previous_contact_participant_state`,
   `update_contact_media_streaming_behavior` and
   `update_contact_media_processing` (contact state); `create_task` and
@@ -23,7 +23,8 @@ release):
   `check_outbound_call_status`, `complete_outbound_call` (its caller ID
   form; the voice connector form stays `generic`) and
   `start_outbound_chat_contact`, whose source number is a `phonenumber`
-  reference. 54 action types are modeled. A configuration that
+  reference; and `load_contact_content` and
+  `transfer_participant_to_third_party`. 56 action types are modeled. A configuration that
   writes one of them as a `generic` block keeps working unchanged; import
   and drift now show it typed where its parameters fit the typed form.
 - A Cases field reference stands as a key of `case_request_fields` and as

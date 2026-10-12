@@ -1,5 +1,5 @@
 {
- "generatedFrom": "e78970ffb56d7d47fece5ca7db5c5f89102e7eff",
+ "generatedFrom": "e9d3c2119260bc425d8e10e0eca07f9a4e136dc7",
  "ajv": "8.20.0",
  "cases": [
   {
@@ -4324,6 +4324,101 @@
    "sha256": "1197a963e8fea9dec571f69aa4f5b0cbb9038ad23e58437ec1acfcf38093ac11",
    "valid": true,
    "errors": []
+  },
+  {
+   "id": "FlowDoc schema rejections: census additions: accepts the fixture as committed",
+   "version": "0.3",
+   "sha256": "d0a1ae9af71775b29e083dee51a72aa05e10c2bcacfdd7c7ab349f87f6857538",
+   "valid": true,
+   "errors": []
+  },
+  {
+   "id": "FlowDoc schema rejections: census additions: rejects a stored content type the page does not list",
+   "version": "0.3",
+   "sha256": "b543ea0defe7a1b485c90e5bf8944061e32c8af74e809304a19595caa6e8b0aa",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/2/Parameters/ContentType",
+     "schemaPath": "#/allOf/48/then/properties/Parameters/properties/ContentType/enum",
+     "keyword": "enum",
+     "message": "must be equal to one of the allowed values",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/2",
+     "schemaPath": "#/allOf/48/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: census additions: rejects a destination number that is not a string",
+   "version": "0.3",
+   "sha256": "7132db0adfc5597b2efcec5c14fdd36a5e2529518cb49151dcea9e03dcae6a59",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/0/Parameters/ThirdPartyPhoneNumber",
+     "schemaPath": "#/allOf/49/then/properties/Parameters/properties/ThirdPartyPhoneNumber/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/0",
+     "schemaPath": "#/allOf/49/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: census additions: rejects a connection time limit that is not a string",
+   "version": "0.3",
+   "sha256": "6e0f32ccba4afe1f788d2acbabf35114484c10d41d68ebbcce5bbaf6ad10c08f",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/0/Parameters/ThirdPartyConnectionTimeLimitSeconds",
+     "schemaPath": "#/allOf/49/then/properties/Parameters/properties/ThirdPartyConnectionTimeLimitSeconds/type",
+     "keyword": "type",
+     "message": "must be string",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/0",
+     "schemaPath": "#/allOf/49/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
+  },
+  {
+   "id": "FlowDoc schema rejections: census additions: rejects a resume flag spelled other than True or False",
+   "version": "0.3",
+   "sha256": "0e44d72bf88f235c33f21c6e02e83b87498f7c30bbc61a5d8f595101c8ff5d9f",
+   "valid": false,
+   "errors": [
+    {
+     "instancePath": "/content/Actions/1/Parameters/ContinueFlowExecution",
+     "schemaPath": "#/allOf/49/then/properties/Parameters/properties/ContinueFlowExecution/enum",
+     "keyword": "enum",
+     "message": "must be equal to one of the allowed values",
+     "property": ""
+    },
+    {
+     "instancePath": "/content/Actions/1",
+     "schemaPath": "#/allOf/49/if",
+     "keyword": "if",
+     "message": "must match \"then\" schema",
+     "property": ""
+    }
+   ]
   },
   {
    "id": "FlowDoc migration: 0.3 accepts what 0.2 could not say: the five Phase D reference types",

@@ -159,6 +159,7 @@ Optional:
 - `get_participant_input` (Block, Optional) A GetParticipantInput action: https://docs.aws.amazon.com/connect/latest/devguide/participant-actions-getparticipantinput.html (see [below for nested schema](#nestedblock--action--get_participant_input))
 - `invoke_flow_module` (Block, Optional) A InvokeFlowModule action: https://docs.aws.amazon.com/connect/latest/devguide/flow-language-actions-invoke-flow-module.html (see [below for nested schema](#nestedblock--action--invoke_flow_module))
 - `invoke_lambda_function` (Block, Optional) A InvokeLambdaFunction action: https://docs.aws.amazon.com/connect/latest/devguide/interactions-invokelambdafunction.html (see [below for nested schema](#nestedblock--action--invoke_lambda_function))
+- `load_contact_content` (Block, Optional) A LoadContactContent action: https://docs.aws.amazon.com/connect/latest/adminguide/get-stored-content.html (see [below for nested schema](#nestedblock--action--load_contact_content))
 - `loop` (Block, Optional) A Loop action: https://docs.aws.amazon.com/connect/latest/devguide/flow-control-actions-loop.html (see [below for nested schema](#nestedblock--action--loop))
 - `message_participant` (Block, Optional) A MessageParticipant action: https://docs.aws.amazon.com/connect/latest/devguide/participant-actions-messageparticipant.html (see [below for nested schema](#nestedblock--action--message_participant))
 - `message_participant_iteratively` (Block, Optional) A MessageParticipantIteratively action: https://docs.aws.amazon.com/connect/latest/devguide/participant-actions-messageparticipantiteratively.html (see [below for nested schema](#nestedblock--action--message_participant_iteratively))
@@ -170,6 +171,7 @@ Optional:
 - `tag_contact` (Block, Optional) A TagContact action: https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-tagcontact.html (see [below for nested schema](#nestedblock--action--tag_contact))
 - `transfer_contact_to_agent` (Block, Optional) A TransferContactToAgent action: https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-transfercontacttoagent.html (see [below for nested schema](#nestedblock--action--transfer_contact_to_agent))
 - `transfer_contact_to_queue` (Block, Optional) A TransferContactToQueue action: https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-transfercontacttoqueue.html (see [below for nested schema](#nestedblock--action--transfer_contact_to_queue))
+- `transfer_participant_to_third_party` (Block, Optional) A TransferParticipantToThirdParty action: conformance/flow-language/exports/transfer-participant-to-third-party.json (see [below for nested schema](#nestedblock--action--transfer_participant_to_third_party))
 - `transfer_to_flow` (Block, Optional) A TransferToFlow action: https://docs.aws.amazon.com/connect/latest/devguide/flow-control-actions-transfertoflow.html (see [below for nested schema](#nestedblock--action--transfer_to_flow))
 - `untag_contact` (Block, Optional) A UntagContact action: https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-untagcontact.html (see [below for nested schema](#nestedblock--action--untag_contact))
 - `update_case` (Block, Optional) A UpdateCase action: https://docs.aws.amazon.com/connect/latest/devguide/updatecase.html (see [below for nested schema](#nestedblock--action--update_case))
@@ -615,6 +617,14 @@ Optional:
 
 
 
+<a id="nestedblock--action--load_contact_content"></a>
+### Nested Schema for `action.load_contact_content`
+
+Optional:
+
+- `content_type` (String) Flow language parameter ContentType.
+
+
 <a id="nestedblock--action--loop"></a>
 ### Nested Schema for `action.loop`
 
@@ -768,6 +778,16 @@ Optional:
 
 <a id="nestedblock--action--transfer_contact_to_queue"></a>
 ### Nested Schema for `action.transfer_contact_to_queue`
+
+
+<a id="nestedblock--action--transfer_participant_to_third_party"></a>
+### Nested Schema for `action.transfer_participant_to_third_party`
+
+Optional:
+
+- `continue_flow_execution` (String) Flow language parameter ContinueFlowExecution.
+- `third_party_connection_time_limit_seconds` (String) Flow language parameter ThirdPartyConnectionTimeLimitSeconds.
+- `third_party_phone_number` (String) Flow language parameter ThirdPartyPhoneNumber.
 
 
 <a id="nestedblock--action--transfer_to_flow"></a>

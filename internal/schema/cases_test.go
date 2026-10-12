@@ -32,6 +32,7 @@ const (
 	casesFixture        = "roundtrip/cases/doc.flowdoc.json"
 	routingCritFixture  = "roundtrip/routing-criteria/doc.flowdoc.json"
 	outboundFixture     = "roundtrip/outbound/doc.flowdoc.json"
+	censusFixture       = "roundtrip/census-additions/doc.flowdoc.json"
 )
 
 // docCase is one document and the verdict Ajv gives it.
@@ -502,6 +503,15 @@ func docCases() []docCase {
 		"still accepts a connection time limit as the page's integer", setP("place-call-via-sip", "Parameters.ConnectionTimeLimitSeconds", 30.0),
 		"still accepts a connection time limit as the decimal string", setP("place-call-via-sip", "Parameters.ConnectionTimeLimitSeconds", "30"),
 		"still accepts a connection time limit as a JSONPath", setP("place-call-via-sip", "Parameters.ConnectionTimeLimitSeconds", "$.Attributes.connectionLimit"),
+	)
+
+	g = "FlowDoc schema rejections: census additions"
+	add(g, censusFixture, true, "accepts the fixture as committed", nil)
+	add(g, censusFixture, false,
+		"rejects a stored content type the page does not list", setP("load-email", "Parameters.ContentType", "EmailAttachment"),
+		"rejects a destination number that is not a string", setP("transfer-desk", "Parameters.ThirdPartyPhoneNumber", 15555550100.0),
+		"rejects a connection time limit that is not a string", setP("transfer-desk", "Parameters.ThirdPartyConnectionTimeLimitSeconds", 30.0),
+		"rejects a resume flag spelled other than True or False", setP("transfer-on-call", "Parameters.ContinueFlowExecution", "false"),
 	)
 
 	g = "FlowDoc migration"

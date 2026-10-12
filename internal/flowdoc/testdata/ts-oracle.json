@@ -1,5 +1,5 @@
 {
-  "generatedFrom": "flow-as-code e78970ffb56d7d47fece5ca7db5c5f89102e7eff, packages/core/dist",
+  "generatedFrom": "flow-as-code e9d3c2119260bc425d8e10e0eca07f9a4e136dc7, packages/core/dist",
   "perType": {
     "CompleteOutboundCall": {
       "modeled": true,
@@ -2063,28 +2063,36 @@
       "channels": null
     },
     "LoadContactContent": {
-      "modeled": false,
-      "requiredErrors": [],
+      "modeled": true,
+      "requiredErrors": [
+        "NoMatchingError"
+      ],
       "requiredErrorsByParameters": [
         {
           "parameters": {},
-          "errors": []
+          "errors": [
+            "NoMatchingError"
+          ]
         }
       ],
-      "builderErrors": [],
+      "builderErrors": [
+        "NoMatchingError"
+      ],
       "minConditions": 0,
-      "conditionsKind": null,
-      "nextRule": null,
+      "conditionsKind": "none",
+      "nextRule": "required",
       "holdsParticipant": false,
       "textBodyPaths": [],
       "announcePaths": [],
       "recordingEnablerPath": null,
       "refPaths": [],
       "restrictions": null,
-      "unrestricted": false,
+      "unrestricted": true,
       "terminal": false,
-      "actionType": false,
-      "channels": null
+      "actionType": true,
+      "channels": [
+        "EMAIL"
+      ]
     },
     "AuthenticateParticipant": {
       "modeled": false,
@@ -2135,28 +2143,44 @@
       "channels": null
     },
     "TransferParticipantToThirdParty": {
-      "modeled": false,
-      "requiredErrors": [],
+      "modeled": true,
+      "requiredErrors": [
+        "NoMatchingError"
+      ],
       "requiredErrorsByParameters": [
         {
           "parameters": {},
-          "errors": []
+          "errors": [
+            "NoMatchingError"
+          ]
         }
       ],
-      "builderErrors": [],
+      "builderErrors": [
+        "CallFailed",
+        "ConnectionTimeLimitExceeded",
+        "NoMatchingError"
+      ],
       "minConditions": 0,
-      "conditionsKind": null,
-      "nextRule": null,
+      "conditionsKind": "none",
+      "nextRule": "required",
       "holdsParticipant": false,
       "textBodyPaths": [],
       "announcePaths": [],
       "recordingEnablerPath": null,
       "refPaths": [],
-      "restrictions": null,
+      "restrictions": [
+        "CONTACT_FLOW",
+        "CUSTOMER_QUEUE",
+        "AGENT_TRANSFER",
+        "QUEUE_TRANSFER",
+        "MODULE"
+      ],
       "unrestricted": false,
       "terminal": false,
-      "actionType": false,
-      "channels": null
+      "actionType": true,
+      "channels": [
+        "VOICE"
+      ]
     },
     "NotAType": {
       "modeled": false,
@@ -2260,7 +2284,9 @@
     "GetCustomerProfile",
     "GetCustomerProfileObject",
     "GetCalculatedAttributesForCustomerProfile",
-    "UpdateCustomerProfile"
+    "UpdateCustomerProfile",
+    "LoadContactContent",
+    "TransferParticipantToThirdParty"
   ],
   "collect": [
     {

@@ -1,5 +1,5 @@
 {
- "generatedFrom": "flow-as-code e78970ffb56d7d47fece5ca7db5c5f89102e7eff, packages/core/src/materialize.ts built with tsc",
+ "generatedFrom": "flow-as-code e9d3c2119260bc425d8e10e0eca07f9a4e136dc7, packages/core/src/materialize.ts built with tsc",
  "materialize": [
   {
    "name": "demo-full",

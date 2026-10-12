@@ -1,5 +1,5 @@
 {
- "source": "packages/core/dist built from flow-as-code e78970f, Node v26.10.0, ICU 78.3, locale en-US",
+ "source": "packages/core/dist built from flow-as-code e9d3c21, Node v26.10.0, ICU 78.3, locale en-US",
  "fixtures": [
   {
    "file": "lint/action-allowed-in-flow-type/fail-callback-in-whisper-flow.json",
@@ -68,6 +68,12 @@
    "blocking": false
   },
   {
+   "file": "lint/action-allowed-in-flow-type/fail-third-party-transfer-in-whisper-flow.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 2,\n    \"errors\": 1,\n    \"warnings\": 1\n  },\n  \"findings\": [\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"transfer-desk\",\n      \"message\": \"TransferParticipantToThirdParty is not allowed in a CUSTOMER_WHISPER flow. Allowed: CONTACT_FLOW, CUSTOMER_QUEUE, AGENT_TRANSFER, QUEUE_TRANSFER, MODULE.\",\n      \"rule\": \"action-allowed-in-flow-type\",\n      \"doc\": \"whisper-desk-transfer\"\n    },\n    {\n      \"severity\": \"warning\",\n      \"blockId\": \"transfer-desk\",\n      \"message\": \"TransferParticipantToThirdParty is supported only on the VOICE channel, and the document does not record which channels this flow serves. conformance/flow-language/exports/transfer-participant-to-third-party.json\",\n      \"rule\": \"channel-restricted-action\",\n      \"doc\": \"whisper-desk-transfer\"\n    }\n  ]\n}\n",
+   "text": "whisper-desk-transfer\n  error (transfer-desk): TransferParticipantToThirdParty is not allowed in a CUSTOMER_WHISPER flow. Allowed: CONTACT_FLOW, CUSTOMER_QUEUE, AGENT_TRANSFER, QUEUE_TRANSFER, MODULE. [action-allowed-in-flow-type]\n  warning (transfer-desk): TransferParticipantToThirdParty is supported only on the VOICE channel, and the document does not record which channels this flow serves. conformance/flow-language/exports/transfer-participant-to-third-party.json [channel-restricted-action]\n\n2 finding(s): 1 error(s), 1 warning(s).\n",
+   "blocking": false
+  },
+  {
    "file": "lint/action-allowed-in-flow-type/fail-transfer-to-agent-in-inbound-flow.json",
    "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 1,\n    \"warnings\": 0\n  },\n  \"findings\": [\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"agent\",\n      \"message\": \"TransferContactToAgent is not allowed in a CONTACT_FLOW flow. Allowed: AGENT_TRANSFER, QUEUE_TRANSFER, MODULE.\",\n      \"rule\": \"action-allowed-in-flow-type\",\n      \"doc\": \"case\"\n    }\n  ]\n}\n",
    "text": "case\n  error (agent): TransferContactToAgent is not allowed in a CONTACT_FLOW flow. Allowed: AGENT_TRANSFER, QUEUE_TRANSFER, MODULE. [action-allowed-in-flow-type]\n\n1 finding(s): 1 error(s), 0 warning(s).\n",
@@ -92,6 +98,12 @@
    "blocking": false
   },
   {
+   "file": "lint/action-allowed-in-flow-type/pass-load-content-in-customer-hold.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 2,\n    \"errors\": 1,\n    \"warnings\": 1\n  },\n  \"findings\": [\n    {\n      \"severity\": \"warning\",\n      \"blockId\": \"load-email\",\n      \"message\": \"LoadContactContent is supported only on the EMAIL channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/adminguide/get-stored-content.html\",\n      \"rule\": \"channel-restricted-action\",\n      \"doc\": \"hold-email-body\"\n    },\n    {\n      \"severity\": \"error\",\n      \"message\": \"No terminal action is reachable from StartAction; the flow cannot end.\",\n      \"rule\": \"terminal-blocks\",\n      \"doc\": \"hold-email-body\"\n    }\n  ]\n}\n",
+   "text": "hold-email-body\n  warning (load-email): LoadContactContent is supported only on the EMAIL channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/adminguide/get-stored-content.html [channel-restricted-action]\n  error: No terminal action is reachable from StartAction; the flow cannot end. [terminal-blocks]\n\n2 finding(s): 1 error(s), 1 warning(s).\n",
+   "blocking": false
+  },
+  {
    "file": "lint/action-allowed-in-flow-type/pass-media-streaming-in-agent-whisper.json",
    "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 0,\n    \"warnings\": 1\n  },\n  \"findings\": [\n    {\n      \"severity\": \"warning\",\n      \"blockId\": \"start-stream\",\n      \"message\": \"UpdateContactMediaStreamingBehavior is supported only on the VOICE channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatecontactmediastreamingbehavior.html\",\n      \"rule\": \"channel-restricted-action\",\n      \"doc\": \"whisper-stream\"\n    }\n  ]\n}\n",
    "text": "whisper-stream\n  warning (start-stream): UpdateContactMediaStreamingBehavior is supported only on the VOICE channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatecontactmediastreamingbehavior.html [channel-restricted-action]\n\n1 finding(s): 0 error(s), 1 warning(s).\n",
@@ -107,6 +119,12 @@
    "file": "lint/action-allowed-in-flow-type/pass-routing-criteria-in-customer-queue.json",
    "json": "{\n  \"summary\": {\n    \"total\": 0,\n    \"errors\": 0,\n    \"warnings\": 0\n  },\n  \"findings\": []\n}\n",
    "text": "No findings.\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/action-allowed-in-flow-type/pass-third-party-transfer-in-customer-queue.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 0,\n    \"warnings\": 1\n  },\n  \"findings\": [\n    {\n      \"severity\": \"warning\",\n      \"blockId\": \"transfer-desk\",\n      \"message\": \"TransferParticipantToThirdParty is supported only on the VOICE channel, and the document does not record which channels this flow serves. conformance/flow-language/exports/transfer-participant-to-third-party.json\",\n      \"rule\": \"channel-restricted-action\",\n      \"doc\": \"queue-desk-transfer\"\n    }\n  ]\n}\n",
+   "text": "queue-desk-transfer\n  warning (transfer-desk): TransferParticipantToThirdParty is supported only on the VOICE channel, and the document does not record which channels this flow serves. conformance/flow-language/exports/transfer-participant-to-third-party.json [channel-restricted-action]\n\n1 finding(s): 0 error(s), 1 warning(s).\n",
    "blocking": false
   },
   {
@@ -164,6 +182,12 @@
    "blocking": false
   },
   {
+   "file": "lint/channel-restricted-action/fail-load-contact-content.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 0,\n    \"warnings\": 1\n  },\n  \"findings\": [\n    {\n      \"severity\": \"warning\",\n      \"blockId\": \"load-email\",\n      \"message\": \"LoadContactContent is supported only on the EMAIL channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/adminguide/get-stored-content.html\",\n      \"rule\": \"channel-restricted-action\",\n      \"doc\": \"load-email-body\"\n    }\n  ]\n}\n",
+   "text": "load-email-body\n  warning (load-email): LoadContactContent is supported only on the EMAIL channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/adminguide/get-stored-content.html [channel-restricted-action]\n\n1 finding(s): 0 error(s), 1 warning(s).\n",
+   "blocking": false
+  },
+  {
    "file": "lint/channel-restricted-action/fail-media-streaming.json",
    "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 0,\n    \"warnings\": 1\n  },\n  \"findings\": [\n    {\n      \"severity\": \"warning\",\n      \"blockId\": \"start-stream\",\n      \"message\": \"UpdateContactMediaStreamingBehavior is supported only on the VOICE channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatecontactmediastreamingbehavior.html\",\n      \"rule\": \"channel-restricted-action\",\n      \"doc\": \"stream-customer-audio\"\n    }\n  ]\n}\n",
    "text": "stream-customer-audio\n  warning (start-stream): UpdateContactMediaStreamingBehavior is supported only on the VOICE channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatecontactmediastreamingbehavior.html [channel-restricted-action]\n\n1 finding(s): 0 error(s), 1 warning(s).\n",
@@ -185,6 +209,12 @@
    "file": "lint/channel-restricted-action/fail-show-view-in-contact-flow.json",
    "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 0,\n    \"warnings\": 1\n  },\n  \"findings\": [\n    {\n      \"severity\": \"warning\",\n      \"blockId\": \"show-form\",\n      \"message\": \"ShowView is supported only on the CHAT channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/participant-actions-showview.html\",\n      \"rule\": \"channel-restricted-action\",\n      \"doc\": \"guide\"\n    }\n  ]\n}\n",
    "text": "guide\n  warning (show-form): ShowView is supported only on the CHAT channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/participant-actions-showview.html [channel-restricted-action]\n\n1 finding(s): 0 error(s), 1 warning(s).\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/channel-restricted-action/fail-third-party-transfer.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 0,\n    \"warnings\": 1\n  },\n  \"findings\": [\n    {\n      \"severity\": \"warning\",\n      \"blockId\": \"transfer-desk\",\n      \"message\": \"TransferParticipantToThirdParty is supported only on the VOICE channel, and the document does not record which channels this flow serves. conformance/flow-language/exports/transfer-participant-to-third-party.json\",\n      \"rule\": \"channel-restricted-action\",\n      \"doc\": \"desk-transfer\"\n    }\n  ]\n}\n",
+   "text": "desk-transfer\n  warning (transfer-desk): TransferParticipantToThirdParty is supported only on the VOICE channel, and the document does not record which channels this flow serves. conformance/flow-language/exports/transfer-participant-to-third-party.json [channel-restricted-action]\n\n1 finding(s): 0 error(s), 1 warning(s).\n",
    "blocking": false
   },
   {
@@ -266,6 +296,18 @@
    "blocking": false
   },
   {
+   "file": "lint/conditional-shape/fail-third-party-resume-without-call-failed.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 2,\n    \"errors\": 1,\n    \"warnings\": 1\n  },\n  \"findings\": [\n    {\n      \"severity\": \"warning\",\n      \"blockId\": \"transfer-desk\",\n      \"message\": \"TransferParticipantToThirdParty is supported only on the VOICE channel, and the document does not record which channels this flow serves. conformance/flow-language/exports/transfer-participant-to-third-party.json\",\n      \"rule\": \"channel-restricted-action\",\n      \"doc\": \"desk-transfer\"\n    },\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"transfer-desk\",\n      \"message\": \"TransferParticipantToThirdParty with ContinueFlowExecution \\\"True\\\" needs its \\\"CallFailed\\\" branch.\",\n      \"rule\": \"conditional-shape\",\n      \"doc\": \"desk-transfer\"\n    }\n  ]\n}\n",
+   "text": "desk-transfer\n  warning (transfer-desk): TransferParticipantToThirdParty is supported only on the VOICE channel, and the document does not record which channels this flow serves. conformance/flow-language/exports/transfer-participant-to-third-party.json [channel-restricted-action]\n  error (transfer-desk): TransferParticipantToThirdParty with ContinueFlowExecution \"True\" needs its \"CallFailed\" branch. [conditional-shape]\n\n2 finding(s): 1 error(s), 1 warning(s).\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/conditional-shape/fail-third-party-resume-without-timeout.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 2,\n    \"errors\": 1,\n    \"warnings\": 1\n  },\n  \"findings\": [\n    {\n      \"severity\": \"warning\",\n      \"blockId\": \"transfer-desk\",\n      \"message\": \"TransferParticipantToThirdParty is supported only on the VOICE channel, and the document does not record which channels this flow serves. conformance/flow-language/exports/transfer-participant-to-third-party.json\",\n      \"rule\": \"channel-restricted-action\",\n      \"doc\": \"desk-transfer\"\n    },\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"transfer-desk\",\n      \"message\": \"TransferParticipantToThirdParty with ContinueFlowExecution \\\"True\\\" needs its \\\"ConnectionTimeLimitExceeded\\\" branch.\",\n      \"rule\": \"conditional-shape\",\n      \"doc\": \"desk-transfer\"\n    }\n  ]\n}\n",
+   "text": "desk-transfer\n  warning (transfer-desk): TransferParticipantToThirdParty is supported only on the VOICE channel, and the document does not record which channels this flow serves. conformance/flow-language/exports/transfer-participant-to-third-party.json [channel-restricted-action]\n  error (transfer-desk): TransferParticipantToThirdParty with ContinueFlowExecution \"True\" needs its \"ConnectionTimeLimitExceeded\" branch. [conditional-shape]\n\n2 finding(s): 1 error(s), 1 warning(s).\n",
+   "blocking": false
+  },
+  {
    "file": "lint/conditional-shape/pass-gathered-with-timeout-branch.json",
    "json": "{\n  \"summary\": {\n    \"total\": 0,\n    \"errors\": 0,\n    \"warnings\": 0\n  },\n  \"findings\": []\n}\n",
    "text": "No findings.\n",
@@ -281,6 +323,12 @@
    "file": "lint/conditional-shape/pass-stored-with-validation.json",
    "json": "{\n  \"summary\": {\n    \"total\": 0,\n    \"errors\": 0,\n    \"warnings\": 0\n  },\n  \"findings\": []\n}\n",
    "text": "No findings.\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/conditional-shape/pass-third-party-end-catch-all-only.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 0,\n    \"warnings\": 1\n  },\n  \"findings\": [\n    {\n      \"severity\": \"warning\",\n      \"blockId\": \"transfer-desk\",\n      \"message\": \"TransferParticipantToThirdParty is supported only on the VOICE channel, and the document does not record which channels this flow serves. conformance/flow-language/exports/transfer-participant-to-third-party.json\",\n      \"rule\": \"channel-restricted-action\",\n      \"doc\": \"desk-transfer\"\n    }\n  ]\n}\n",
+   "text": "desk-transfer\n  warning (transfer-desk): TransferParticipantToThirdParty is supported only on the VOICE channel, and the document does not record which channels this flow serves. conformance/flow-language/exports/transfer-participant-to-third-party.json [channel-restricted-action]\n\n1 finding(s): 0 error(s), 1 warning(s).\n",
    "blocking": false
   },
   {
@@ -350,6 +398,12 @@
    "blocking": false
   },
   {
+   "file": "lint/error-branches/fail-load-content-without-catch-all.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 2,\n    \"errors\": 1,\n    \"warnings\": 1\n  },\n  \"findings\": [\n    {\n      \"severity\": \"warning\",\n      \"blockId\": \"load-email\",\n      \"message\": \"LoadContactContent is supported only on the EMAIL channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/adminguide/get-stored-content.html\",\n      \"rule\": \"channel-restricted-action\",\n      \"doc\": \"load-email-body\"\n    },\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"load-email\",\n      \"message\": \"LoadContactContent does not wire its \\\"NoMatchingError\\\" branch.\",\n      \"rule\": \"error-branches\",\n      \"doc\": \"load-email-body\"\n    }\n  ]\n}\n",
+   "text": "load-email-body\n  warning (load-email): LoadContactContent is supported only on the EMAIL channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/adminguide/get-stored-content.html [channel-restricted-action]\n  error (load-email): LoadContactContent does not wire its \"NoMatchingError\" branch. [error-branches]\n\n2 finding(s): 1 error(s), 1 warning(s).\n",
+   "blocking": false
+  },
+  {
    "file": "lint/error-branches/fail-message-processor-without-catch-all.json",
    "json": "{\n  \"summary\": {\n    \"total\": 2,\n    \"errors\": 1,\n    \"warnings\": 1\n  },\n  \"findings\": [\n    {\n      \"severity\": \"warning\",\n      \"blockId\": \"process-messages\",\n      \"message\": \"UpdateContactMediaProcessing is supported only on the CHAT channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatecontactmediaprocessing.html\",\n      \"rule\": \"channel-restricted-action\",\n      \"doc\": \"chat-redaction\"\n    },\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"process-messages\",\n      \"message\": \"UpdateContactMediaProcessing does not wire its \\\"NoMatchingError\\\" branch.\",\n      \"rule\": \"error-branches\",\n      \"doc\": \"chat-redaction\"\n    }\n  ]\n}\n",
    "text": "chat-redaction\n  warning (process-messages): UpdateContactMediaProcessing is supported only on the CHAT channel, and the document does not record which channels this flow serves. https://docs.aws.amazon.com/connect/latest/devguide/contact-actions-updatecontactmediaprocessing.html [channel-restricted-action]\n  error (process-messages): UpdateContactMediaProcessing does not wire its \"NoMatchingError\" branch. [error-branches]\n\n2 finding(s): 1 error(s), 1 warning(s).\n",
@@ -413,6 +467,12 @@
    "file": "lint/error-branches/fail-split-without-remainder.json",
    "json": "{\n  \"summary\": {\n    \"total\": 1,\n    \"errors\": 1,\n    \"warnings\": 0\n  },\n  \"findings\": [\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"split\",\n      \"message\": \"DistributeByPercentage does not wire its \\\"NoMatchingCondition\\\" branch.\",\n      \"rule\": \"error-branches\",\n      \"doc\": \"case\"\n    }\n  ]\n}\n",
    "text": "case\n  error (split): DistributeByPercentage does not wire its \"NoMatchingCondition\" branch. [error-branches]\n\n1 finding(s): 1 error(s), 0 warning(s).\n",
+   "blocking": false
+  },
+  {
+   "file": "lint/error-branches/fail-third-party-transfer-without-catch-all.json",
+   "json": "{\n  \"summary\": {\n    \"total\": 2,\n    \"errors\": 1,\n    \"warnings\": 1\n  },\n  \"findings\": [\n    {\n      \"severity\": \"warning\",\n      \"blockId\": \"transfer-desk\",\n      \"message\": \"TransferParticipantToThirdParty is supported only on the VOICE channel, and the document does not record which channels this flow serves. conformance/flow-language/exports/transfer-participant-to-third-party.json\",\n      \"rule\": \"channel-restricted-action\",\n      \"doc\": \"desk-transfer\"\n    },\n    {\n      \"severity\": \"error\",\n      \"blockId\": \"transfer-desk\",\n      \"message\": \"TransferParticipantToThirdParty does not wire its \\\"NoMatchingError\\\" branch.\",\n      \"rule\": \"error-branches\",\n      \"doc\": \"desk-transfer\"\n    }\n  ]\n}\n",
+   "text": "desk-transfer\n  warning (transfer-desk): TransferParticipantToThirdParty is supported only on the VOICE channel, and the document does not record which channels this flow serves. conformance/flow-language/exports/transfer-participant-to-third-party.json [channel-restricted-action]\n  error (transfer-desk): TransferParticipantToThirdParty does not wire its \"NoMatchingError\" branch. [error-branches]\n\n2 finding(s): 1 error(s), 1 warning(s).\n",
    "blocking": false
   },
   {
