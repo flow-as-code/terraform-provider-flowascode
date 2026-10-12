@@ -8,8 +8,10 @@ prerequisites and cost" section of each of D02 to D09). The acceptance lane
 `state/` (gitignored), and stays on the operator's machine; nothing here is
 shared through CI.
 
-Everything it creates is named `fac-sbx-*` and tagged `Project=flow-as-code`,
-`Purpose=phase-d-probes`, `Root=acceptance/sandbox-features`. Nothing costs
+Everything it creates is named `fac-sbx-*` (the Customer Profiles domain
+`amazon-connect-fac-sbx-profiles`, for the reason in its table row) and
+tagged `Project=flow-as-code`, `Purpose=phase-d-probes`,
+`Root=acceptance/sandbox-features`. Nothing costs
 money while idle except the Customer Profiles KMS key (about $1 a month) and
 the claimed phone number (about $0.90 a month). Creating a flow that names
 any of these runs nothing and bills nothing.
@@ -18,7 +20,7 @@ any of these runs nothing and bills nothing.
 
 | Resource (names)                                                                   | Task     | Why the probes need it                                                                                                                      | Cost when used                                                                                   |
 | ---------------------------------------------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
-| Customer Profiles domain `fac-sbx-profiles`, its customer managed key, the standard CTR object type and the integration whose Uri is the instance ARN | D03      | The six Customer Profiles actions are refused on an instance with no domain; the integration is what links instance and domain             | Profiles holding only Connect data are free; the key about $1 a month                            |
+| Customer Profiles domain `amazon-connect-fac-sbx-profiles`, its customer managed key `alias/fac-sbx-profiles`, the standard CTR object type and the integration whose Uri is the instance ARN | D03      | The six Customer Profiles actions are refused on an instance with no domain; the integration is what links instance and domain. The Connect service-linked role may use only domains named `amazon-connect-*`, hence the name | Profiles holding only Connect data are free; the key about $1 a month                            |
 | Cases domain `fac-sbx-cases`, `CASES_DOMAIN` association, fields `fac-sbx-notes` (text) and `fac-sbx-lantern` (single select), template `fac-sbx-probe` | D06      | `CreateCase`, `GetCase` and `UpdateCase` name a template id and per-domain field ids; the system field `title` needs no creation           | $0.12 per case created; a flow create creates none                                               |
 | AI agents assistant `fac-sbx-assistant` (AWS-owned key, no knowledge base) and its `WISDOM_ASSISTANT` association | D05      | `CreateWisdomSession` names the assistant; the `AmazonConnectEnabled=True` tag is set here so an apply never strips what Connect expects   | Included under Connect Customer pricing; $0.0080 a minute of voice under Customer Basic          |
 | Task template `fac-sbx-task`                                                       | D05      | `CreateTask` carries a static `TaskTemplateId`                                                                                              | $0.070 per task run                                                                              |
@@ -134,7 +136,13 @@ state, so:
    list-domains`, `aws connectcases list-domains`, `aws qconnect
    list-assistants`, `aws lambda list-functions`.
 
-A Customer Profiles domain with data refuses deletion until its objects are
-gone; the probes create no profiles, so that does not arise unless something
-else used the domain. If `tofu destroy` is interrupted, re-run it; every
+Destroying the Customer Profiles domain deletes every profile and object
+in it without asking: DeleteDomain "Deletes a specific domain and all of
+its customer data"
+(https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_DeleteDomain.html).
+The CTR integration creates a profile for each contact on the instance, so
+test calls to the kept number leave profiles there. The probes need none of
+them; `aws customer-profiles get-domain --domain-name
+amazon-connect-fac-sbx-profiles` shows the profile count first, should
+anything else depend on them. If `tofu destroy` is interrupted, re-run it; every
 resource here is safe to delete twice.
