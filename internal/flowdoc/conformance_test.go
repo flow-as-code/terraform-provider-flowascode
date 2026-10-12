@@ -311,17 +311,39 @@ func TestCatalogLoads(t *testing.T) {
 	if got, ok := ChannelRestriction("Compare"); ok || got != nil {
 		t.Errorf("ChannelRestriction(Compare) = %v, %v", got, ok)
 	}
-	// Every entry under other carries a source (D00); nothing under the four
-	// Developer Guide categories does.
+	// catalog.test.ts's docProblem: every entry under other carries a source
+	// (D00) and nothing under the four Developer Guide categories does,
+	// modeled or not (D09 models two types from outside the Developer
+	// Guide); a source says where doc points, and a console-export doc that
+	// is not an API Reference page is a file kept in the vendored tree.
 	for _, a := range c.Actions {
 		if (a.Category == "other") != (a.Source != "") {
 			t.Errorf("%s: category %s with source %q", a.Type, a.Category, a.Source)
 		}
-		if a.Modeled && a.Source != "" {
-			t.Errorf("%s: a modeled type carries source %q", a.Type, a.Source)
+		page := func(prefix string) bool { return strings.HasPrefix(a.Doc, prefix) && strings.HasSuffix(a.Doc, ".html") }
+		switch a.Source {
+		case "":
+			if !page("https://docs.aws.amazon.com/connect/latest/devguide/") {
+				t.Errorf("%s: doc %q is not a developer guide page", a.Type, a.Doc)
+			}
+		case "adminguide":
+			if !page("https://docs.aws.amazon.com/connect/latest/adminguide/") {
+				t.Errorf("%s: doc %q is not an admin guide page", a.Type, a.Doc)
+			}
+		case "console-export":
+			kept := false
+			if rest, ok := strings.CutPrefix(a.Doc, "conformance/"); ok {
+				_, err := fs.Stat(conformance.FS(), rest)
+				kept = err == nil
+			}
+			if !page("https://docs.aws.amazon.com/connect/latest/APIReference/") && !kept {
+				t.Errorf("%s: doc %q is neither an API Reference page nor a kept console export", a.Type, a.Doc)
+			}
+		default:
+			t.Errorf("%s: source %q is unknown", a.Type, a.Source)
 		}
 	}
-	if e := CatalogEntry("TransferParticipantToThirdParty"); e == nil || e.Source != "console-export" || e.Doc != "conformance/roundtrip/unknown-actions/doc.flowdoc.json" {
+	if e := CatalogEntry("TransferParticipantToThirdParty"); e == nil || e.Source != "console-export" {
 		t.Errorf("TransferParticipantToThirdParty decoded as %+v", e)
 	}
 	if e := CatalogEntry("RouteContactToAgent"); e == nil || e.Source != "adminguide" {
