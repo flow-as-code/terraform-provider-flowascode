@@ -195,3 +195,136 @@ output "phone_number" {
   value       = aws_connect_phone_number.did.phone_number
   sensitive   = false
 }
+
+# ---------------------------------------------------------------------------
+# Probe placeholders. Each output below is named for the placeholder a probe
+# set under flow-as-code conformance/flow-language/probes/<rule>/ uses, so
+# the README's one-line export fills every set with no mapping. Some repeat
+# an output above under the set's name. Not here, and why (the README's "Not
+# created yet" list): {{AGENT_ID}} (rule 45; a user of the instance, read
+# with `aws connect list-users`), {{PROFILE_ID}} and
+# {{CALCULATED_ATTRIBUTE}} (rule 43), {{ENCRYPTION_KEY_ID}} and
+# {{ENCRYPTION_KEY}} (rule 47).
+
+# A "missing" id must look like a real one and name nothing. These are
+# derived from md5 of a fixed string, so they are UUID-shaped, stable across
+# plans, and need no provider and no state.
+locals {
+  missing_ids = {
+    for k in ["task-template", "case-field", "case-template"] : k => join("-", [
+      substr(md5("${local.prefix}-missing-${k}"), 0, 8),
+      substr(md5("${local.prefix}-missing-${k}"), 8, 4),
+      substr(md5("${local.prefix}-missing-${k}"), 12, 4),
+      substr(md5("${local.prefix}-missing-${k}"), 16, 4),
+      substr(md5("${local.prefix}-missing-${k}"), 20, 12),
+    ])
+  }
+}
+
+# Rule 41 (D02).
+output "message_processor_name" {
+  description = "Rule 41: a Lambda the instance has associated as MESSAGE_PROCESSOR, by name."
+  value       = aws_lambda_function.message_processor.function_name
+  sensitive   = false
+}
+
+output "unassociated_lambda_name" {
+  description = "Rule 41: a Lambda in the same account and Region the instance has never associated, by name."
+  value       = aws_lambda_function.unassociated.function_name
+  sensitive   = false
+}
+
+# Rule 42 (D05). task_template_id and assistant_id are above.
+output "task_flow_id" {
+  description = "Rule 42: a published contact flow, the flow a task runs (the probe target flow)."
+  value       = aws_connect_contact_flow.probe_target.contact_flow_id
+  sensitive   = false
+}
+
+output "missing_task_template_id" {
+  description = "Rule 42: a UUID that names no task template on the instance."
+  value       = local.missing_ids["task-template"]
+  sensitive   = false
+}
+
+output "unlinked_assistant_id" {
+  description = "Rule 42: an assistant in the same account and Region the instance has not linked."
+  value       = awscc_wisdom_assistant.unlinked.assistant_id
+  sensitive   = false
+}
+
+# Rule 43 (D03).
+output "object_type" {
+  description = "Rule 43: the domain's object type, by name."
+  value       = awscc_customerprofiles_object_type.ctr.object_type_name
+  sensitive   = false
+}
+
+output "object_identifier" {
+  description = "Rule 43: a search key of that object type: _ctrContactId, a key of the standard CTR template (GetProfileObjectTypeTemplate, TemplateId CTR)."
+  value       = "_ctrContactId"
+  sensitive   = false
+}
+
+# Rule 44 (D06). cases_domain_id is above.
+output "case_template_id" {
+  description = "Rule 44: the Cases template id."
+  value       = awscc_cases_template.probe.template_id
+  sensitive   = false
+}
+
+output "case_text_field_id" {
+  description = "Rule 44: the custom text field's id."
+  value       = awscc_cases_field.notes.field_id
+  sensitive   = false
+}
+
+output "case_select_field_id" {
+  description = "Rule 44: the custom single-select field's id."
+  value       = awscc_cases_field.lantern.field_id
+  sensitive   = false
+}
+
+output "case_select_option" {
+  description = "Rule 44: one option value of the single-select field."
+  value       = local.lantern_options[0].value
+  sensitive   = false
+}
+
+output "missing_case_field_id" {
+  description = "Rule 44: a UUID that names no field in the Cases domain."
+  value       = local.missing_ids["case-field"]
+  sensitive   = false
+}
+
+output "missing_case_template_id" {
+  description = "Rule 44: a UUID that names no template in the Cases domain."
+  value       = local.missing_ids["case-template"]
+  sensitive   = false
+}
+
+# Rule 45 (D07).
+output "predefined_attribute" {
+  description = "Rule 45: the predefined attribute, by name."
+  value       = awscc_connect_predefined_attribute.lantern_certified.name
+  sensitive   = false
+}
+
+output "predefined_value" {
+  description = "Rule 45: one value the predefined attribute defines."
+  value       = awscc_connect_predefined_attribute.lantern_certified.values.string_list[0]
+  sensitive   = false
+}
+
+# Rule 46 (D04). flow_id is above.
+output "did_number" {
+  description = "Rule 46: the claimed DID in E.164 form."
+  value       = aws_connect_phone_number.did.phone_number
+  sensitive   = false
+}
+
+output "did_id" {
+  description = "Rule 46: the claimed DID's phone number id."
+  value       = aws_connect_phone_number.did.id
+  sensitive   = false
+}

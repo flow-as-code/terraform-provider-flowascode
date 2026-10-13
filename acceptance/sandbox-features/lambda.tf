@@ -103,3 +103,23 @@ resource "aws_connect_lambda_function_association" "plain" {
   instance_id  = var.instance_id
   function_arn = aws_lambda_function.plain.arn
 }
+
+# The unassociated function: the same code, in the same account and Region,
+# never associated with the instance in either way. Rule 41's
+# {{UNASSOCIATED_LAMBDA_NAME}} names it, so a media processing probe can ask
+# whether the create checks that the instance knows the function at all,
+# beside the plain-only function above, which it knows but not as a
+# MESSAGE_PROCESSOR. No aws_lambda_permission names it: Connect has no grant
+# to invoke it, which is the point.
+resource "aws_lambda_function" "unassociated" {
+  function_name    = "${local.prefix}-unassociated-lambda"
+  description      = "Never associated with the instance; for the Phase D probes"
+  role             = aws_iam_role.message_processor.arn
+  runtime          = "nodejs22.x"
+  handler          = "index.handler"
+  architectures    = ["arm64"]
+  filename         = data.archive_file.message_processor.output_path
+  source_code_hash = data.archive_file.message_processor.output_base64sha256
+  timeout          = 3
+  memory_size      = 128
+}

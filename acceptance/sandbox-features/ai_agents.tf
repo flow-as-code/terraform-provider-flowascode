@@ -39,3 +39,24 @@ resource "awscc_connect_integration_association" "assistant" {
   integration_type = "WISDOM_ASSISTANT"
   tags             = local.awscc_tags
 }
+
+# A second assistant, never associated with the instance (no WISDOM_ASSISTANT
+# integration association), so rule 42's wisdom-unlinked-assistant probe
+# names an assistant that exists in this account and Region but is not the
+# instance's. Without it the probe could only name an id that exists
+# nowhere, a different question. It carries no AmazonConnectEnabled tag:
+# Connect tags only what it associates. The same replacement caveat as above
+# applies; change nothing on it between sweeps. Free while idle: no
+# knowledge base, nothing run.
+resource "awscc_wisdom_assistant" "unlinked" {
+  name        = "${local.prefix}-unlinked-assistant"
+  type        = "AGENT"
+  description = "Never linked to the instance; for the Phase D CreateWisdomSession probes"
+
+  tags = [
+    { key = "Project", value = "flow-as-code" },
+    { key = "Purpose", value = "phase-d-probes" },
+    { key = "Root", value = "acceptance/sandbox-features" },
+    { key = "ManagedBy", value = "opentofu" },
+  ]
+}

@@ -13,9 +13,9 @@ Everything it creates is named `fac-sbx-*` (the Customer Profiles domain
 `amazon-connect-fac-sbx-profiles`, for the reason in its table row) and
 tagged `Project=flow-as-code`, `Purpose=phase-d-probes`,
 `Root=acceptance/sandbox-features`, except the predefined attribute, which
-takes no tags. The assistant's tags are written out on it rather than taken
-from `locals.tf`, because any change to an assistant's tags or description
-replaces it and changes its ARN. Nothing costs
+takes no tags. The two assistants' tags are written out on them rather than
+taken from `locals.tf`, because any change to an assistant's tags or
+description replaces it and changes its ARN. Nothing costs
 money while idle except the Customer Profiles KMS key (about $1 a month) and
 the claimed phone number (about $0.90 a month). Creating a flow that names
 any of these runs nothing and bills nothing.
@@ -26,12 +26,12 @@ any of these runs nothing and bills nothing.
 | ---------------------------------------------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
 | Customer Profiles domain `amazon-connect-fac-sbx-profiles`, its customer managed key `alias/fac-sbx-profiles`, the standard CTR object type and the integration whose Uri is the instance ARN | D03      | The six Customer Profiles actions are refused on an instance with no domain; the integration is what links instance and domain. The Connect service-linked role may use only domains named `amazon-connect-*`, hence the name | Profiles holding only Connect data are free; the key about $1 a month                            |
 | Cases domain `fac-sbx-cases`, `CASES_DOMAIN` association, fields `fac-sbx-notes` (text) and `fac-sbx-lantern` (single select), template `fac-sbx-probe` | D06      | `CreateCase`, `GetCase` and `UpdateCase` name a template id and per-domain field ids; the system field `title` needs no creation           | $0.12 per case created; a flow create creates none                                               |
-| AI agents assistant `fac-sbx-assistant` (AWS-owned key, no knowledge base) and its `WISDOM_ASSISTANT` association | D05      | `CreateWisdomSession` names the assistant; the `AmazonConnectEnabled=True` tag is set here so an apply never strips what Connect expects   | Included under Connect Customer pricing; $0.0080 a minute of voice under Customer Basic          |
+| AI agents assistant `fac-sbx-assistant` (AWS-owned key, no knowledge base) and its `WISDOM_ASSISTANT` association; assistant `fac-sbx-unlinked-assistant`, never associated | D05      | `CreateWisdomSession` names the assistant; the `AmazonConnectEnabled=True` tag is set here so an apply never strips what Connect expects. Rule 42's `wisdom-unlinked-assistant` names the second, which exists but is not the instance's   | Included under Connect Customer pricing; $0.0080 a minute of voice under Customer Basic          |
 | Task template `fac-sbx-task` (a `NAME` field, a `QUICK_CONNECT` field and one text field) | D05      | `CreateTask` carries a static `TaskTemplateId`                                                                                              | $0.070 per task run                                                                              |
 | Flow `fac-sbx-probe-target` (disconnects), and the default `BasicQueue` read, not created | D04, D05 | `CreateTask.ContactFlowId` and `StartOutboundChatContact.ContactFlowArn` name a flow; `{{QUEUE_ID}}` is the probes README's worked example | Free                                                                                             |
 | Predefined attribute `fac-sbx-lantern-certified` (`apprentice`, `keeper`, `master`) | D07      | `UpdateRoutingCriteria` names a predefined attribute                                                                                        | Free                                                                                             |
 | Live media streaming, prefix `fac-sbx-media`, no data retention, `aws/kinesisvideo` key | D02      | `UpdateContactMediaStreamingBehavior` is refused on an instance without media streaming                                                     | $0.0085 per GB ingested; nothing stored                                                          |
-| Lambda `fac-sbx-message-processor`, associated plainly and as `MESSAGE_PROCESSOR`; Lambda `fac-sbx-plain-lambda`, associated plainly only | D02      | `UpdateContactMediaProcessing` names a message processor, and D02 compares one associated as `MESSAGE_PROCESSOR` with one that is not; the plain association gives an `InvokeLambdaFunction` probe a function to name | Invocations only                                                                                 |
+| Lambda `fac-sbx-message-processor`, associated plainly and as `MESSAGE_PROCESSOR`; Lambda `fac-sbx-plain-lambda`, associated plainly only; Lambda `fac-sbx-unassociated-lambda`, never associated | D02      | `UpdateContactMediaProcessing` names a message processor, and D02 compares one associated as `MESSAGE_PROCESSOR` with one that is not; the plain association gives an `InvokeLambdaFunction` probe a function to name. Rule 41's `{{UNASSOCIATED_LAMBDA_NAME}}` names the third | Invocations only                                                                                 |
 | One US DID, kept                                                                   | D04, D09 | `CompleteOutboundCall` and `TransferParticipantToThirdParty` take a caller id; inbound test calls need a number                             | About $0.03 a day, $0.0022 a minute inbound                                                      |
 
 Not created, by owner decision 6 and the Voice ID end of support: outbound
@@ -52,6 +52,20 @@ refusal it records may be the missing feature's rather than the catalog's:
 - D09, `CheckSegmentMembership`: a segment definition on the Profiles domain.
 - D09, `LoadContactContent`: an email address on the instance, if D00's
   probe shows one is needed.
+- D07, `{{AGENT_ID}}` (rule 45's preferred-agent probes): a user of the
+  instance. No user is created here; the operator reads one with
+  `aws connect list-users` and exports `PROBE_AGENT_ID`.
+- D03, `{{PROFILE_ID}}` and `{{CALCULATED_ATTRIBUTE}}` (rule 43): the two
+  items above, a profile and a calculated attribute definition. No output
+  fills them, and a refusal of a probe naming either is the missing
+  feature's.
+- D09, `{{ENCRYPTION_KEY_ID}}` and `{{ENCRYPTION_KEY}}` (rule 47's
+  `dtmf-buffer-stop-store-encrypted`): a security key uploaded to the
+  instance in .pem form and the X.509 certificate signed with it, which is
+  what Store customer input's encryption takes; not a KMS key, so the
+  Profiles key cannot stand in
+  (https://docs.aws.amazon.com/connect/latest/adminguide/encrypt-data.html).
+  That probe is recorded as the missing feature's until one is added.
 
 Cases is enabled here through the API (the domain and its `CASES_DOMAIN`
 association). The console's onboarding also needs `iam:PutRolePolicy`
@@ -128,6 +142,16 @@ eval "$(tofu output -json | jq -r 'to_entries[] | select(.value.value | type == 
 export CONNECT_INSTANCE_ID=<id> AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
 ```
 
+The outputs at the end of `outputs.tf` are named for the placeholders the
+probe sets under `conformance/flow-language/probes/<rule>/` use
+(`{{UNASSOCIATED_LAMBDA_NAME}}`, `{{UNLINKED_ASSISTANT_ID}}`,
+`{{CASE_TEMPLATE_ID}}`, `{{PREDEFINED_ATTRIBUTE}}`, `{{DID_NUMBER}}` and the
+rest), some repeating an output above under the set's name, so that one
+line fills every set with no mapping. The three "missing" ids
+(`missing_task_template_id`, `missing_case_field_id`,
+`missing_case_template_id`) are UUID-shaped strings derived from md5 of a
+fixed name: they name nothing, and they stay the same across plans.
+
 So a probe reads `{{CASES_TEMPLATE_ID}}` where it needs the template,
 `{{ASSISTANT_ARN}}` for the assistant, `{{TASK_TEMPLATE_ID}}`,
 `{{PREDEFINED_ATTRIBUTE_NAME}}`, `{{LAMBDA_ARN}}`, `{{PHONE_NUMBER_ARN}}`,
@@ -162,8 +186,8 @@ state, so:
 2. `tofu destroy -var instance_id=<id>` removes the rest in dependency
    order: the three integration associations (`MESSAGE_PROCESSOR`,
    `WISDOM_ASSISTANT`, `CASES_DOMAIN`) and the two plain Lambda
-   associations, then the two Lambdas, the permission and the role, the
-   assistant, the task template, the flow `fac-sbx-probe-target`, the
+   associations, then the three Lambdas, the permission and the role, the
+   two assistants, the task template, the flow `fac-sbx-probe-target`, the
    predefined attribute, the media streaming storage config, the Cases
    template, fields and domain, then the Customer Profiles integration,
    object type and domain, and last the KMS key, which enters its 7 day
